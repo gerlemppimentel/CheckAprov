@@ -1,0 +1,1890 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
+    <title>CheckAprovação | Guarda Municipal Florianópolis</title>
+    <style>
+        :root {
+            --ms-blue: #0067b8;
+            --ms-blue-dark: #004e8c;
+            --ms-blue-light: #deecf9;
+            --ms-green: #107c10;
+            --ms-green-light: #dff6dd;
+            --ms-yellow: #f2c811;
+            --ms-yellow-light: #fff4ce;
+            --ms-red: #d13438;
+            --ms-red-light: #fde7e9;
+            --ms-gold: #d4af37;
+            --ms-gold-light: #fef8e7;
+            --ms-gold-dark: #b8962e;
+            --ms-gray-100: #f3f2f1;
+            --ms-gray-200: #edebe9;
+            --ms-gray-300: #e1dfdd;
+            --ms-gray-400: #c8c6c4;
+            --ms-gray-500: #a19f9d;
+            --ms-gray-700: #605e5c;
+            --ms-gray-900: #323130;
+            --ms-font: 'Segoe UI', 'Segoe UI Web (West European)', -apple-system, BlinkMacSystemFont, Roboto, 'Helvetica Neue', sans-serif;
+            --radius-sm: 4px;
+            --radius-md: 8px;
+            --shadow-sm: 0 2px 4px rgba(0,0,0,0.06);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.1);
+            --transition: 0.25s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--ms-font);
+            background-color: var(--ms-gray-100);
+            color: var(--ms-gray-900);
+            line-height: 1.5;
+            min-height: 100vh;
+            -webkit-tap-highlight-color: transparent;
+            overflow-x: hidden;
+        }
+
+        .app-shell {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 12px;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        .tela {
+            display: none;
+        }
+        .tela.ativa {
+            display: block;
+            animation: fadeInTela 0.35s ease;
+        }
+        @keyframes fadeInTela {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .ms-header {
+            background: var(--ms-blue);
+            color: #fff;
+            border-radius: var(--radius-md);
+            padding: 18px 16px;
+            margin-bottom: 14px;
+            box-shadow: var(--shadow-md);
+            position: relative;
+            overflow: hidden;
+        }
+        .ms-header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #4cc2ff, #82c7ff, #4cc2ff);
+        }
+        .ms-header h1 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .ms-header .subtitle {
+            font-size: 0.85rem;
+            opacity: 0.9;
+            margin-top: 4px;
+            font-weight: 400;
+        }
+        .header-icon { font-size: 1.7rem; }
+
+        .header-right {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .sino-btn {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: #fff;
+            font-size: 1.4rem;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 50%;
+            position: relative;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+        }
+        .sino-btn:hover {
+            background: rgba(255,255,255,0.3);
+        }
+        .sino-badge {
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            background: var(--ms-red);
+            color: #fff;
+            font-size: 0.65rem;
+            font-weight: 700;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: pulseBadge 1.5s infinite;
+        }
+        @keyframes pulseBadge {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .notificacoes-painel {
+            position: fixed;
+            top: 60px;
+            right: 16px;
+            width: 320px;
+            max-width: 90vw;
+            background: #fff;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-lg);
+            z-index: 100;
+            display: none;
+            overflow: hidden;
+            max-height: 400px;
+            border: 1px solid var(--ms-gray-300);
+        }
+        .notificacoes-painel.visivel {
+            display: block;
+            animation: fadeInNotif 0.25s ease;
+        }
+        @keyframes fadeInNotif {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .notificacoes-header {
+            padding: 12px 16px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            border-bottom: 1px solid var(--ms-gray-300);
+            background: var(--ms-gray-100);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .notificacoes-lista {
+            overflow-y: auto;
+            max-height: 320px;
+        }
+        .notificacao-item {
+            padding: 10px 16px;
+            border-bottom: 1px solid var(--ms-gray-200);
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            font-size: 0.8rem;
+            transition: var(--transition);
+        }
+        .notificacao-item:hover {
+            background: var(--ms-gray-100);
+        }
+        .notificacao-item .notif-icone {
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+        .notificacao-item .notif-texto {
+            flex: 1;
+        }
+        .notificacao-item .notif-btn-visto {
+            background: var(--ms-blue);
+            color: #fff;
+            border: none;
+            padding: 4px 10px;
+            border-radius: var(--radius-sm);
+            font-size: 0.7rem;
+            cursor: pointer;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        .notificacao-item .notif-btn-visto:hover {
+            background: var(--ms-blue-dark);
+        }
+        .notificacao-item.visto {
+            opacity: 0.6;
+        }
+        .notificacao-item.visto .notif-btn-visto {
+            background: var(--ms-gray-400);
+            cursor: default;
+        }
+
+        .aviso-persistencia {
+            background: #fff3cd;
+            color: #856404;
+            padding: 10px 16px;
+            border-radius: var(--radius-md);
+            margin-bottom: 12px;
+            font-size: 0.85rem;
+            border: 1px solid #ffc107;
+            display: none;
+            align-items: center;
+            gap: 8px;
+        }
+        .aviso-persistencia.visivel { display: flex; }
+        .aviso-persistencia .fechar-aviso {
+            margin-left: auto;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1.2rem;
+            background: none;
+            border: none;
+            color: #856404;
+        }
+
+        .status-container {
+            display: flex;
+            background: #fff;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 14px;
+            border: 1px solid var(--ms-gray-300);
+            overflow: hidden;
+            min-height: 120px;
+        }
+        .farol {
+            width: 10%;
+            min-width: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            padding: 8px 4px;
+            font-weight: 600;
+            font-size: 0.75rem;
+            text-align: center;
+            transition: background 0.4s ease;
+        }
+        .farol .farol-icon { font-size: 1.8rem; line-height: 1; margin-bottom: 2px; }
+        .farol-verde { background: var(--ms-green-light); color: #054b16; }
+        .farol-verde .farol-icon { color: var(--ms-green); }
+        .farol-amarelo { background: var(--ms-yellow-light); color: #6a4b00; animation: pulseYellow 1.8s infinite; }
+        .farol-amarelo .farol-icon { color: #b8860b; }
+        .farol-vermelho { background: var(--ms-red-light); color: #a4262c; animation: pulseRed 1.4s infinite; }
+        .farol-vermelho .farol-icon { color: var(--ms-red); }
+        .farol-azul { background: var(--ms-blue-light); color: var(--ms-blue-dark); }
+        .farol-azul .farol-icon { color: var(--ms-blue); }
+
+        @keyframes pulseYellow {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+        @keyframes pulseRed {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .grafico-progresso {
+            flex: 1;
+            padding: 14px 16px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-width: 0;
+        }
+        .grafico-labels {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--ms-gray-700);
+            margin-bottom: 6px;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .dias-atraso-badge {
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 3px 10px;
+            border-radius: 12px;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .dias-atraso-badge.adiantado {
+            background: var(--ms-green-light);
+            color: #054b16;
+        }
+        .dias-atraso-badge.em-dia {
+            background: var(--ms-blue-light);
+            color: var(--ms-blue-dark);
+        }
+        .dias-atraso-badge.atrasado {
+            background: var(--ms-yellow-light);
+            color: #6a4b00;
+        }
+        .dias-atraso-badge.muito-atrasado {
+            background: var(--ms-red-light);
+            color: #a4262c;
+        }
+
+        .grafico-barra-container {
+            position: relative;
+            height: 40px;
+            margin: 8px 0 4px;
+            background: var(--ms-gray-200);
+            border-radius: 20px;
+            overflow: visible;
+        }
+        .grafico-barra-fundo {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: var(--ms-gray-200);
+            border-radius: 20px;
+            z-index: 1;
+        }
+        .grafico-barra-preenchida {
+            position: absolute;
+            top: 0; left: 0;
+            height: 100%;
+            background: linear-gradient(90deg, #c8e6ff, #4cc2ff);
+            border-radius: 20px 0 0 20px;
+            z-index: 2;
+            transition: width 0.5s ease;
+            min-width: 2px;
+        }
+        .seta-indicadora {
+            position: absolute;
+            top: -14px;
+            width: 2px;
+            height: 68px;
+            z-index: 5;
+            pointer-events: none;
+            transition: left 0.5s ease;
+        }
+        .seta-previsto { background: var(--ms-gray-700); }
+        .seta-previsto::after {
+            content: '▼';
+            position: absolute;
+            top: -12px;
+            left: -8px;
+            font-size: 14px;
+            color: var(--ms-gray-900);
+            font-weight: bold;
+        }
+        .seta-realizado {
+            background: #ff6b00;
+            width: 3px;
+        }
+        .seta-realizado::after {
+            content: '▲';
+            position: absolute;
+            bottom: -16px;
+            left: -8px;
+            font-size: 14px;
+            color: #e65c00;
+            font-weight: bold;
+        }
+        .seta-label {
+            position: absolute;
+            font-size: 0.7rem;
+            font-weight: 600;
+            white-space: nowrap;
+            pointer-events: none;
+        }
+        .seta-label.previsto-label { top: -32px; color: var(--ms-gray-700); }
+        .seta-label.realizado-label { bottom: -32px; color: #e65c00; }
+
+        .grafico-info-adicional {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.7rem;
+            color: var(--ms-gray-700);
+            margin-top: 8px;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+        .previsao-conclusao {
+            font-weight: 600;
+            color: var(--ms-blue);
+        }
+        .ritmo-info {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .ritmo-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .dias-prova {
+            width: 15%;
+            min-width: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            background: var(--ms-gray-100);
+            border-left: 2px solid var(--ms-gray-300);
+            padding: 8px;
+        }
+        .dias-prova .numero-dias {
+            font-size: 2.5rem;
+            font-weight: 700;
+            line-height: 1;
+            color: var(--ms-blue);
+        }
+        .dias-prova .numero-dias.verde { color: var(--ms-green); }
+        .dias-prova .numero-dias.amarelo { color: #b8860b; }
+        .dias-prova .numero-dias.vermelho { color: var(--ms-red); }
+        .dias-prova .texto-dias {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            font-weight: 600;
+            color: var(--ms-gray-700);
+            text-align: center;
+            margin-top: 4px;
+        }
+
+        .modulos-section {
+            margin-bottom: 16px;
+        }
+        .modulos-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .modulos-titulo {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--ms-gray-900);
+        }
+        .modulos-resumo {
+            font-size: 0.75rem;
+            color: var(--ms-gray-700);
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .resumo-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .resumo-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        .resumo-dot.verde { background: var(--ms-green); }
+        .resumo-dot.amarelo { background: var(--ms-yellow); }
+        .resumo-dot.vermelho { background: var(--ms-red); }
+
+        .modulos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+        }
+        .modulo-card {
+            background: #fff;
+            border-radius: var(--radius-md);
+            padding: 12px;
+            box-shadow: var(--shadow-sm);
+            border: 2px solid var(--ms-gray-300);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+        .modulo-card:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+        }
+        .modulo-card.nao-iniciado {
+            border-color: var(--ms-yellow);
+            background: var(--ms-yellow-light);
+        }
+        .modulo-card.em-progresso {
+            border-color: var(--ms-green);
+            background: #f0f9f0;
+        }
+        .modulo-card.estagnado {
+            border-color: var(--ms-yellow);
+            background: var(--ms-yellow-light);
+        }
+        .modulo-card.abandonado {
+            border-color: var(--ms-red);
+            background: var(--ms-red-light);
+            animation: pulseRed 2s infinite;
+        }
+        .modulo-card .modulo-nome {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--ms-gray-900);
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            flex-wrap: wrap;
+        }
+        .modulo-card .modulo-icon {
+            font-size: 1.2rem;
+        }
+        .modulo-card .modulo-percentual {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--ms-blue);
+            line-height: 1;
+            margin-bottom: 4px;
+        }
+        .modulo-card.em-progresso .modulo-percentual,
+        .modulo-card.nao-iniciado .modulo-percentual {
+            color: var(--ms-green);
+        }
+        .modulo-card.estagnado .modulo-percentual {
+            color: #b8860b;
+        }
+        .modulo-card.abandonado .modulo-percentual {
+            color: var(--ms-red);
+        }
+        .modulo-card .modulo-contagem {
+            font-size: 0.7rem;
+            color: var(--ms-gray-700);
+            margin-bottom: 6px;
+        }
+        .modulo-card .modulo-bar {
+            height: 6px;
+            background: var(--ms-gray-200);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 4px;
+        }
+        .modulo-card .modulo-bar-fill {
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.5s ease;
+            background: var(--ms-blue);
+        }
+        .modulo-card.em-progresso .modulo-bar-fill,
+        .modulo-card.nao-iniciado .modulo-bar-fill {
+            background: var(--ms-green);
+        }
+        .modulo-card.estagnado .modulo-bar-fill {
+            background: var(--ms-yellow);
+        }
+        .modulo-card.abandonado .modulo-bar-fill {
+            background: var(--ms-red);
+        }
+        .modulo-card .modulo-alerta {
+            font-size: 0.65rem;
+            font-weight: 600;
+            color: var(--ms-red);
+            display: flex;
+            align-items: center;
+            gap: 3px;
+            min-height: 16px;
+        }
+        .modulo-card .modulo-alerta.amarelo {
+            color: #b8860b;
+        }
+
+        .topic-section {
+            background: #fff;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 12px;
+            overflow: hidden;
+            border: 1px solid var(--ms-gray-300);
+        }
+        .topic-header {
+            background: var(--ms-blue);
+            color: #fff;
+            padding: 13px 16px;
+            font-weight: 600;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            user-select: none;
+            transition: var(--transition);
+        }
+        .topic-header:hover { background: var(--ms-blue-dark); }
+        .topic-header .arrow {
+            margin-left: auto;
+            transition: transform 0.3s;
+        }
+        .topic-header.collapsed .arrow { transform: rotate(-90deg); }
+        .subtopic-header {
+            background: var(--ms-blue-light);
+            color: var(--ms-blue-dark);
+            font-weight: 600;
+            padding: 9px 16px;
+            font-size: 0.9rem;
+            border-left: 4px solid var(--ms-blue);
+        }
+        .table-responsive {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 440px;
+        }
+        th {
+            background: var(--ms-gray-100);
+            color: var(--ms-gray-700);
+            font-weight: 600;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+            padding: 8px 6px;
+            border-bottom: 2px solid var(--ms-gray-300);
+            text-align: center;
+        }
+        th.assunto-col {
+            text-align: left;
+            min-width: 180px;
+            padding-left: 14px;
+        }
+        td {
+            padding: 9px 6px;
+            border-bottom: 1px solid var(--ms-gray-200);
+            text-align: center;
+            font-size: 0.85rem;
+            vertical-align: middle;
+        }
+        td.assunto-col {
+            text-align: left;
+            padding-left: 14px;
+        }
+        tr:hover td { background: var(--ms-gray-100); }
+        .checkbox-cell { text-align: center; min-width: 55px; }
+        .checkbox-cell input[type="checkbox"] {
+            width: 19px;
+            height: 19px;
+            accent-color: var(--ms-blue);
+            cursor: pointer;
+            border-radius: 4px;
+            transition: var(--transition);
+        }
+        .checkbox-cell input[type="checkbox"]:hover {
+            transform: scale(1.2);
+            box-shadow: 0 0 6px rgba(0,103,184,0.4);
+        }
+        .checkbox-cell input[type="checkbox"].concluido-check:checked {
+            accent-color: var(--ms-green);
+        }
+
+        .rodape {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 0 8px;
+            flex-wrap: wrap;
+        }
+        .btn-rodape {
+            background: var(--ms-gray-200);
+            color: var(--ms-gray-900);
+            border: 1px solid var(--ms-gray-400);
+            padding: 10px 18px;
+            border-radius: var(--radius-sm);
+            font-family: var(--ms-font);
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: var(--shadow-sm);
+        }
+        .btn-rodape:hover {
+            background: var(--ms-gray-300);
+            box-shadow: var(--shadow-md);
+        }
+        .btn-rodape:active { transform: scale(0.96); }
+        .resumo-rodape {
+            font-size: 0.7rem;
+            color: var(--ms-gray-500);
+        }
+
+        .config-section {
+            background: #fff;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-md);
+            padding: 18px;
+            margin-bottom: 20px;
+            border: 1px solid var(--ms-gray-300);
+        }
+        .config-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 18px;
+        }
+        .config-header h2 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--ms-blue);
+            flex: 1;
+        }
+        .btn-voltar {
+            background: var(--ms-gray-200);
+            color: var(--ms-gray-900);
+            border: 1px solid var(--ms-gray-400);
+            padding: 8px 16px;
+            border-radius: var(--radius-sm);
+            font-family: var(--ms-font);
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .btn-voltar:hover { background: var(--ms-gray-300); }
+        .config-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+            align-items: flex-end;
+            margin-bottom: 14px;
+        }
+        .config-field {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .config-field label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--ms-gray-700);
+        }
+        .config-field input[type="date"] {
+            padding: 9px 12px;
+            border: 1px solid var(--ms-gray-400);
+            border-radius: var(--radius-sm);
+            font-family: var(--ms-font);
+            font-size: 0.9rem;
+            min-width: 150px;
+        }
+        .btn-ms {
+            background: var(--ms-blue);
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: var(--radius-sm);
+            font-family: var(--ms-font);
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: var(--shadow-sm);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            white-space: nowrap;
+        }
+        .btn-ms:hover { background: var(--ms-blue-dark); }
+        .btn-ms.danger { background: var(--ms-red); }
+        .btn-ms.danger:hover { background: #b02a2e; }
+        .config-info {
+            background: var(--ms-gray-100);
+            padding: 12px 16px;
+            border-radius: var(--radius-sm);
+            text-align: center;
+            font-size: 0.9rem;
+            margin-top: 8px;
+        }
+        .config-info strong { color: var(--ms-blue); }
+
+        .data-simulada-section {
+            border-top: 1px solid var(--ms-gray-300);
+            margin-top: 16px;
+            padding-top: 16px;
+        }
+        .data-simulada-toggle {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--ms-gray-700);
+        }
+        .data-simulada-toggle input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--ms-blue);
+            cursor: pointer;
+        }
+
+        .sparkline-container {
+            display: flex;
+            align-items: flex-end;
+            gap: 3px;
+            height: 30px;
+            margin-top: 6px;
+        }
+        .sparkline-bar {
+            flex: 1;
+            background: var(--ms-blue);
+            border-radius: 2px 2px 0 0;
+            min-width: 4px;
+            transition: height 0.3s ease;
+            opacity: 0.7;
+        }
+        .sparkline-bar.hoje {
+            opacity: 1;
+            background: var(--ms-green);
+        }
+
+        @media (max-width: 600px) {
+            .app-shell { padding: 6px; }
+            .ms-header { padding: 14px 12px; }
+            .ms-header h1 { font-size: 1.1rem; }
+            .header-right { top: 10px; right: 10px; }
+            .sino-btn { width: 34px; height: 34px; font-size: 1.2rem; }
+            .status-container { flex-direction: column; }
+            .farol {
+                width: 100%;
+                flex-direction: row;
+                justify-content: center;
+                gap: 8px;
+                padding: 6px 8px;
+            }
+            .farol .farol-icon { font-size: 1.3rem; margin-bottom: 0; }
+            .dias-prova {
+                width: 100%;
+                border-left: none;
+                border-top: 2px solid var(--ms-gray-300);
+                padding: 8px;
+            }
+            .dias-prova .numero-dias { font-size: 2rem; }
+            .modulos-grid { grid-template-columns: 1fr; }
+            .notificacoes-painel { right: 8px; top: 50px; width: 290px; }
+            th { font-size: 0.6rem; padding: 5px 3px; }
+            td { font-size: 0.78rem; padding: 6px 3px; }
+            .checkbox-cell input[type="checkbox"] { width: 16px; height: 16px; }
+            th.assunto-col, td.assunto-col { padding-left: 8px; }
+            .config-grid { flex-direction: column; align-items: stretch; }
+            .config-field input[type="date"] { width: 100%; min-width: auto; }
+            .btn-ms { justify-content: center; }
+            .grafico-info-adicional { flex-direction: column; align-items: flex-start; }
+        }
+        @media (max-width: 400px) {
+            .modulos-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-shell" id="appShell">
+        <div id="telaPrincipal" class="tela ativa">
+            <div class="aviso-persistencia" id="avisoPersistencia">
+                <span>⚠️ O armazenamento local não está disponível. Os dados não serão salvos ao fechar a página.</span>
+                <button class="fechar-aviso" id="fecharAviso">×</button>
+            </div>
+
+            <header class="ms-header">
+                <h1>
+                    <span class="header-icon">📋</span> 
+                    CheckAprovação
+                    <span style="font-size:0.7rem;font-weight:400;background:rgba(255,255,255,0.2);padding:3px 10px;border-radius:16px;">Guarda Municipal</span>
+                </h1>
+                <div class="subtitle">Concurso Florianópolis • 50 assuntos • Edital 2015 + LC 734/2022 e 788/2026</div>
+                <div class="header-right">
+                    <button class="sino-btn" id="btnSino" title="Notificações">
+                        🔔
+                        <span class="sino-badge" id="sinoBadge" style="display:none;">0</span>
+                    </button>
+                </div>
+            </header>
+
+            <div class="notificacoes-painel" id="notificacoesPainel">
+                <div class="notificacoes-header">
+                    <span>🔔 Notificações</span>
+                    <span id="notifContador" style="font-size:0.75rem;color:var(--ms-gray-500);"></span>
+                </div>
+                <div class="notificacoes-lista" id="notificacoesLista">
+                    <!-- Preenchido via JavaScript -->
+                </div>
+            </div>
+
+            <div class="status-container">
+                <div class="farol farol-verde" id="farol">
+                    <span class="farol-icon" id="farolIcon">🟢</span>
+                    <span id="farolTexto">Em dia</span>
+                </div>
+                <div class="grafico-progresso">
+                    <div class="grafico-labels">
+                        <span>Progresso: <span id="modoGraficoTexto">Leitura</span></span>
+                        <span class="dias-atraso-badge em-dia" id="diasAtrasoBadge">✓ Em dia</span>
+                        <span id="statusDetalheTexto">Configure as datas</span>
+                    </div>
+                    <div class="grafico-barra-container">
+                        <div class="grafico-barra-fundo"></div>
+                        <div class="grafico-barra-preenchida" id="graficoBarraPreenchida" style="width:0%;"></div>
+                        <div class="seta-indicadora seta-previsto" id="setaPrevisto" style="left:0%;">
+                            <span class="seta-label previsto-label" id="labelPrevisto">Prev: 0%</span>
+                        </div>
+                        <div class="seta-indicadora seta-realizado" id="setaRealizado" style="left:0%;">
+                            <span class="seta-label realizado-label" id="labelRealizado">Real: 0%</span>
+                        </div>
+                    </div>
+                    <div class="grafico-info-adicional">
+                        <span class="previsao-conclusao" id="previsaoConclusao">—</span>
+                        <div class="ritmo-info">
+                            <span class="ritmo-item">📈 <span id="ritmoAtual">—/dia</span></span>
+                            <span class="ritmo-item">🎯 <span id="ritmoNecessario">—/dia</span></span>
+                        </div>
+                    </div>
+                    <div class="sparkline-container" id="sparklineContainer"></div>
+                </div>
+                <div class="dias-prova" id="diasProvaContainer">
+                    <div class="numero-dias" id="numeroDiasProva">—</div>
+                    <div class="texto-dias" id="textoDiasProva">dias até a prova</div>
+                </div>
+            </div>
+
+            <div class="modulos-section">
+                <div class="modulos-header">
+                    <span class="modulos-titulo">📊 Progresso por Módulo</span>
+                    <div class="modulos-resumo" id="modulosResumo"></div>
+                </div>
+                <div class="modulos-grid" id="modulosGrid"></div>
+            </div>
+
+            <div id="conteudoPrincipal"></div>
+
+            <div class="rodape">
+                <button class="btn-rodape" id="btnAbrirConfig">⚙️ Configurações</button>
+                <span class="resumo-rodape" id="resumoRodape"></span>
+            </div>
+        </div>
+
+        <div id="telaConfig" class="tela">
+            <div class="config-section">
+                <div class="config-header">
+                    <button class="btn-voltar" id="btnVoltarPrincipal">← Voltar</button>
+                    <h2>⚙️ Configurações do Plano</h2>
+                </div>
+                <div class="config-grid">
+                    <div class="config-field">
+                        <label for="dataInicial">Data Inicial</label>
+                        <input type="date" id="dataInicial">
+                    </div>
+                    <div class="config-field">
+                        <label for="dataFinal">Data Final</label>
+                        <input type="date" id="dataFinal">
+                    </div>
+                    <button class="btn-ms" id="btnAtualizar">🔄 Atualizar Plano</button>
+                </div>
+                <div class="config-info">
+                    <div>Dias totais: <strong id="diasTotais">—</strong></div>
+                    <div>Meta "Lido" em 60%: <strong id="diasMetaLido">—</strong> dias</div>
+                </div>
+                <div class="data-simulada-section">
+                    <h3 style="font-size:0.9rem;font-weight:600;color:var(--ms-blue);margin-bottom:8px;">🔧 Modo de Teste</h3>
+                    <div class="data-simulada-toggle">
+                        <input type="checkbox" id="usarDataSistema" checked>
+                        <label for="usarDataSistema">Usar data do sistema</label>
+                    </div>
+                    <div class="config-field" style="margin-top:8px;">
+                        <label for="dataSimulada">Data simulada</label>
+                        <input type="date" id="dataSimulada" disabled>
+                    </div>
+                </div>
+                <div style="margin-top:14px;text-align:center;">
+                    <button class="btn-ms danger" id="btnResetar">🗑️ Resetar Progresso</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            function verificarArmazenamento() {
+                try {
+                    const testKey = '__teste__';
+                    localStorage.setItem(testKey, 'teste');
+                    localStorage.removeItem(testKey);
+                    return { disponivel: true, tipo: 'localStorage' };
+                } catch (e) {
+                    try {
+                        const testKey = '__teste__';
+                        sessionStorage.setItem(testKey, 'teste');
+                        sessionStorage.removeItem(testKey);
+                        return { disponivel: true, tipo: 'sessionStorage' };
+                    } catch (e2) {
+                        return { disponivel: false, tipo: null };
+                    }
+                }
+            }
+
+            const armazenamento = verificarArmazenamento();
+
+            let notificacoes = [];
+            let historicoProgresso = [];
+
+            function salvarDados() {
+                const dados = {
+                    checkboxes: estadoCheckboxes,
+                    ultimasAtividades: ultimasAtividades,
+                    notificacoes: notificacoes,
+                    historicoProgresso: historicoProgresso,
+                    dataInicial: dataInicial,
+                    dataFinal: dataFinal,
+                    dataSimulada: dataSimulada,
+                    usarDataSistema: usarDataSistema,
+                    telaAtual: telaAtual
+                };
+                const json = JSON.stringify(dados);
+                if (armazenamento.disponivel) {
+                    try {
+                        if (armazenamento.tipo === 'localStorage') {
+                            localStorage.setItem('checkaprovacao_v4', json);
+                        } else {
+                            sessionStorage.setItem('checkaprovacao_v4', json);
+                        }
+                        esconderAvisoPersistencia();
+                    } catch (e) {
+                        mostrarAvisoPersistencia();
+                    }
+                } else {
+                    mostrarAvisoPersistencia();
+                }
+            }
+
+            function carregarDados() {
+                try {
+                    let json = null;
+                    if (armazenamento.disponivel) {
+                        if (armazenamento.tipo === 'localStorage') {
+                            json = localStorage.getItem('checkaprovacao_v4');
+                        } else {
+                            json = sessionStorage.getItem('checkaprovacao_v4');
+                        }
+                    }
+                    if (json) {
+                        const parsed = JSON.parse(json);
+                        estadoCheckboxes = parsed.checkboxes || {};
+                        ultimasAtividades = parsed.ultimasAtividades || {};
+                        notificacoes = parsed.notificacoes || [];
+                        historicoProgresso = parsed.historicoProgresso || [];
+                        dataInicial = parsed.dataInicial || '';
+                        dataFinal = parsed.dataFinal || '';
+                        dataSimulada = parsed.dataSimulada || '';
+                        usarDataSistema = parsed.usarDataSistema !== undefined ? parsed.usarDataSistema : true;
+                        telaAtual = parsed.telaAtual || 'principal';
+                        if (dataInicial) dataInicialInput.value = dataInicial;
+                        if (dataFinal) dataFinalInput.value = dataFinal;
+                        if (dataSimulada) dataSimuladaInput.value = dataSimulada;
+                        usarDataSistemaCheckbox.checked = usarDataSistema;
+                        atualizarEstadoDataSimulada();
+                        return true;
+                    }
+                } catch (e) {}
+                return false;
+            }
+
+            function mostrarAvisoPersistencia() {
+                document.getElementById('avisoPersistencia').classList.add('visivel');
+            }
+            function esconderAvisoPersistencia() {
+                document.getElementById('avisoPersistencia').classList.remove('visivel');
+            }
+
+            function obterDataAtual() {
+                if (!usarDataSistema && dataSimulada) {
+                    return new Date(dataSimulada + 'T00:00:00');
+                }
+                const agora = new Date();
+                agora.setHours(0, 0, 0, 0);
+                return agora;
+            }
+
+            function gerarNotificacoes() {
+                const novasNotifs = [];
+                const hoje = obterDataAtual();
+                
+                // Verificar módulos abandonados
+                modulos.forEach(modulo => {
+                    const ultimaAtividade = ultimasAtividades[modulo.chave] || null;
+                    const concluidos = contarPorTipo('Concluido', modulo.chave);
+                    if (concluidos > 0 && ultimaAtividade) {
+                        const dataUltima = new Date(ultimaAtividade);
+                        dataUltima.setHours(0,0,0,0);
+                        const diffDias = Math.floor((hoje.getTime() - dataUltima.getTime()) / (1000*60*60*24));
+                        if (diffDias >= 10) {
+                            novasNotifs.push({
+                                id: `abandono-${modulo.chave}-${diffDias}`,
+                                texto: `⚠️ ${modulo.nome}: ${diffDias} dias sem estudar!`,
+                                icone: '🔴',
+                                visto: false,
+                                data: Date.now()
+                            });
+                        } else if (diffDias >= 4) {
+                            novasNotifs.push({
+                                id: `estagnado-${modulo.chave}-${diffDias}`,
+                                texto: `📌 ${modulo.nome}: ${diffDias} dias sem estudar.`,
+                                icone: '🟡',
+                                visto: false,
+                                data: Date.now()
+                            });
+                        }
+                    }
+                });
+
+                // Verificar ritmo
+                const lidosAtual = contarPorTipo('Lido');
+                const concluidosAtual = contarPorTipo('Concluido');
+                if (dataInicial && dataFinal) {
+                    const diasTotais = calcularDiasTotais();
+                    if (diasTotais) {
+                        const dataIni = new Date(dataInicial + 'T00:00:00');
+                        const diasPassados = Math.floor((hoje.getTime() - dataIni.getTime()) / (1000*60*60*24)) + 1;
+                        if (diasPassados > 0 && diasPassados <= diasTotais) {
+                            const metaLeituraDias = Math.ceil(diasTotais * 0.6);
+                            const esperadoLido = Math.floor(TOTAL_ASSUNTOS * Math.min(1, diasPassados / metaLeituraDias));
+                            if (lidosAtual < esperadoLido - 3) {
+                                novasNotifs.push({
+                                    id: `ritmo-lento-${diasPassados}`,
+                                    texto: `🐢 Ritmo lento: você leu ${lidosAtual}/${TOTAL_ASSUNTOS} (esperado ~${esperadoLido}).`,
+                                    icone: '🐢',
+                                    visto: false,
+                                    data: Date.now()
+                                });
+                            }
+                            if (concluidosAtual > 0 && concluidosAtual >= TOTAL_ASSUNTOS * 0.9) {
+                                novasNotifs.push({
+                                    id: `quase-la-${concluidosAtual}`,
+                                    texto: `🎉 Quase lá! ${concluidosAtual}/${TOTAL_ASSUNTOS} concluídos!`,
+                                    icone: '🎉',
+                                    visto: false,
+                                    data: Date.now()
+                                });
+                            }
+                        }
+                    }
+                }
+
+                // Verificar se completou leitura
+                if (lidosAtual >= TOTAL_ASSUNTOS && concluidosAtual < TOTAL_ASSUNTOS) {
+                    novasNotifs.push({
+                        id: 'leitura-completa',
+                        texto: '📚 Leitura completa! Agora foque em concluir os assuntos.',
+                        icone: '📚',
+                        visto: false,
+                        data: Date.now()
+                    });
+                }
+
+                // Merge com notificações existentes (evitar duplicatas)
+                novasNotifs.forEach(nova => {
+                    const existe = notificacoes.some(n => n.id === nova.id);
+                    if (!existe) {
+                        notificacoes.unshift(nova);
+                    }
+                });
+
+                // Limitar a 50 notificações
+                if (notificacoes.length > 50) {
+                    notificacoes = notificacoes.slice(0, 50);
+                }
+            }
+
+            function renderizarNotificacoes() {
+                const lista = document.getElementById('notificacoesLista');
+                const contador = document.getElementById('notifContador');
+                const badge = document.getElementById('sinoBadge');
+                const naoLidas = notificacoes.filter(n => !n.visto).length;
+
+                if (naoLidas > 0) {
+                    badge.style.display = 'flex';
+                    badge.textContent = naoLidas;
+                } else {
+                    badge.style.display = 'none';
+                }
+                contador.textContent = `${naoLidas} não lidas`;
+
+                lista.innerHTML = '';
+                if (notificacoes.length === 0) {
+                    lista.innerHTML = '<div style="padding:16px;text-align:center;color:var(--ms-gray-500);">Nenhuma notificação</div>';
+                    return;
+                }
+
+                notificacoes.forEach((notif, idx) => {
+                    const item = document.createElement('div');
+                    item.className = `notificacao-item ${notif.visto ? 'visto' : ''}`;
+                    item.innerHTML = `
+                        <span class="notif-icone">${notif.icone}</span>
+                        <span class="notif-texto">${notif.texto}</span>
+                        ${!notif.visto ? `<button class="notif-btn-visto" data-idx="${idx}">Visto</button>` : ''}
+                    `;
+                    lista.appendChild(item);
+                });
+
+                // Adicionar eventos aos botões "Visto"
+                lista.querySelectorAll('.notif-btn-visto').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const idx = parseInt(this.dataset.idx);
+                        if (notificacoes[idx]) {
+                            notificacoes[idx].visto = true;
+                            salvarDados();
+                            renderizarNotificacoes();
+                        }
+                    });
+                });
+            }
+
+            function registrarProgresso() {
+                const lidos = contarPorTipo('Lido');
+                const hoje = obterDataAtual();
+                const dataStr = hoje.toISOString().split('T')[0];
+                const registroExistente = historicoProgresso.find(h => h.data === dataStr);
+                if (registroExistente) {
+                    registroExistente.lidos = lidos;
+                } else {
+                    historicoProgresso.push({ data: dataStr, lidos: lidos });
+                    if (historicoProgresso.length > 14) {
+                        historicoProgresso.shift();
+                    }
+                }
+            }
+
+            function renderizarSparkline() {
+                const container = document.getElementById('sparklineContainer');
+                container.innerHTML = '';
+                if (historicoProgresso.length === 0) {
+                    container.innerHTML = '<div style="font-size:0.65rem;color:var(--ms-gray-500);">Sem histórico ainda</div>';
+                    return;
+                }
+
+                const maxLidos = Math.max(...historicoProgresso.map(h => h.lidos), 1);
+                const hojeStr = obterDataAtual().toISOString().split('T')[0];
+
+                historicoProgresso.forEach(h => {
+                    const bar = document.createElement('div');
+                    bar.className = `sparkline-bar ${h.data === hojeStr ? 'hoje' : ''}`;
+                    const altura = Math.max(5, (h.lidos / maxLidos) * 100);
+                    bar.style.height = `${altura}%`;
+                    bar.title = `${h.data}: ${h.lidos} lidos`;
+                    container.appendChild(bar);
+                });
+            }
+
+            function atualizarPrevisaoConclusao() {
+                const el = document.getElementById('previsaoConclusao');
+                const ritmoAtualEl = document.getElementById('ritmoAtual');
+                const ritmoNecessarioEl = document.getElementById('ritmoNecessario');
+                
+                if (!dataFinal || !dataInicial) {
+                    el.textContent = '—';
+                    ritmoAtualEl.textContent = '—/dia';
+                    ritmoNecessarioEl.textContent = '—/dia';
+                    return;
+                }
+
+                const diasTotais = calcularDiasTotais();
+                if (!diasTotais) {
+                    el.textContent = '—';
+                    ritmoAtualEl.textContent = '—/dia';
+                    ritmoNecessarioEl.textContent = '—/dia';
+                    return;
+                }
+
+                const hoje = obterDataAtual();
+                const dataIni = new Date(dataInicial + 'T00:00:00');
+                const dataFim = new Date(dataFinal + 'T00:00:00');
+                const diasPassados = Math.floor((hoje.getTime() - dataIni.getTime()) / (1000*60*60*24)) + 1;
+                const diasRestantes = Math.max(0, Math.ceil((dataFim.getTime() - hoje.getTime()) / (1000*60*60*24)));
+
+                const concluidosAtual = contarPorTipo('Concluido');
+                const lidosAtual = contarPorTipo('Lido');
+                const todosLidos = lidosAtual >= TOTAL_ASSUNTOS;
+                const baseAtual = todosLidos ? concluidosAtual : lidosAtual;
+                const restantes = TOTAL_ASSUNTOS - baseAtual;
+
+                // Ritmo atual
+                const ritmoAtualValor = diasPassados > 0 ? baseAtual / diasPassados : 0;
+                ritmoAtualEl.textContent = `${ritmoAtualValor.toFixed(1)}/dia`;
+
+                // Ritmo necessário
+                const ritmoNecessarioValor = diasRestantes > 0 ? restantes / diasRestantes : 0;
+                ritmoNecessarioEl.textContent = `${ritmoNecessarioValor.toFixed(1)}/dia`;
+
+                // Previsão de conclusão
+                if (ritmoAtualValor > 0 && restantes > 0) {
+                    const diasNecessarios = Math.ceil(restantes / ritmoAtualValor);
+                    const dataPrevista = new Date(hoje);
+                    dataPrevista.setDate(dataPrevista.getDate() + diasNecessarios);
+                    const dataPrevistaStr = dataPrevista.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' });
+                    el.textContent = `📅 Conclusão prevista: ${dataPrevistaStr}`;
+                } else if (restantes === 0) {
+                    el.textContent = '🎉 Conteúdo concluído!';
+                } else {
+                    el.textContent = '—';
+                }
+            }
+
+            function atualizarDiasAtrasoBadge(diasAtraso) {
+                const badge = document.getElementById('diasAtrasoBadge');
+                if (diasAtraso <= -10) {
+                    badge.className = 'dias-atraso-badge muito-atrasado';
+                    badge.textContent = `🔴 ${Math.abs(diasAtraso)} dias atrasado`;
+                } else if (diasAtraso <= -1) {
+                    badge.className = 'dias-atraso-badge atrasado';
+                    badge.textContent = `🟡 ${Math.abs(diasAtraso)} dias atrasado`;
+                } else if (diasAtraso >= 1) {
+                    badge.className = 'dias-atraso-badge adiantado';
+                    badge.textContent = `🔵 ${diasAtraso} dias adiantado`;
+                } else {
+                    badge.className = 'dias-atraso-badge em-dia';
+                    badge.textContent = '✓ Em dia';
+                }
+            }
+
+            const assuntos = {
+                portugues: [
+                    "Compreensão e interpretação de textos", "Significação das palavras: sinônimos, antônimos, sentido próprio e figurado", "Ortografia vigente", "Pontuação", "Acentuação gráfica", "Emprego das classes de palavras: substantivo, adjetivo, numeral, pronome, verbo, advérbio, preposição, conjunção", "Concordância verbal e nominal", "Regência verbal e nominal", "Crase", "Emprego dos verbos e dos porquês", "Linguagem figurada, conotação e denotação", "Vícios de linguagem"
+                ],
+                legislacao: [
+                    "Lei Federal nº 13.022/2014: Estatuto Geral das Guardas Municipais", "Lei Complementar Municipal nº 734/2022 (com LC 788/2026) – Guarda Municipal de Florianópolis", "Lei Federal nº 10.826/2003: Estatuto do Desarmamento", "Estatuto dos Servidores Públicos do Município de Florianópolis", "Código de Trânsito Brasileiro (CTB) e resoluções do CONTRAN"
+                ],
+                dirAdmin: [
+                    "Conceito, objeto, princípios e fontes do Direito Administrativo", "Organização administrativa: direta e indireta, autarquias, fundações, empresas públicas, sociedades de economia mista", "Atos administrativos: conceito, requisitos, elementos, atributos, classificação, validade, extinção, revogação e anulação", "Controle dos atos administrativos", "Licitações e Contratos Administrativos: Lei Federal nº 14.133/2021", "Lei de Responsabilidade Fiscal: LC Federal nº 101/2000", "Lei de Improbidade Administrativa: Lei nº 8.429/1992 (com alterações da 14.230/2021)"
+                ],
+                dirConst: [
+                    "Conceito, princípios fundamentais e aplicabilidade da CF/88", "Hierarquia das leis e controle de constitucionalidade", "Organização do Estado e dos Poderes (Legislativo, Executivo e Judiciário)", "Direitos e Garantias Fundamentais: Art. 5º e seguintes da CF/88", "Segurança Pública: Art. 144 da CF/88 (papel das Guardas Municipais)", "Autonomia Municipal e Política Urbana: Arts. 29 a 31 e 182 a 183", "Sistema Constitucional Tributário e Finanças Públicas"
+                ],
+                dirPenal: [
+                    "Teoria do crime: fato típico, ilicitude e culpabilidade", "Imputabilidade penal; infração penal: elementos e espécies; sujeito ativo e passivo", "Crimes contra a Administração Pública: Arts. 312 a 359-H do CP", "Abuso de Autoridade: Lei Federal nº 13.869/2019", "Lei de Drogas: Lei Federal nº 11.343/2006", "Crimes Hediondos: Lei Federal nº 8.072/1990", "Lei de Tortura: Lei Federal nº 9.455/1997", "Lei de Execução Penal: Lei Federal nº 7.210/1984", "Lei Maria da Penha: Lei Federal nº 11.340/2006"
+                ],
+                dirProcPenal: [
+                    "Inquérito policial e notitia criminis", "Ação penal: espécies", "Prova no processo penal (arts. 155 a 184 do CPP)", "Prisão em Flagrante e Medidas Cautelares: Arts. 301 a 310 do CPP (Pacote Anticrime)", "Processos Especiais: Crimes de responsabilidade dos funcionários públicos (arts. 513 a 518 do CPP)"
+                ],
+                complementar: [
+                    "Estatuto da Criança e do Adolescente (ECA) – medidas protetivas e atos infracionais", "Estatuto do Idoso: Lei Federal nº 10.741/2003", "Direito Ambiental: Lei Federal nº 9.605/1998 e competências municipais", "Direitos Humanos: noções gerais aplicadas à segurança pública e policiamento comunitário", "Política Nacional de Segurança Pública e Defesa Social"
+                ]
+            };
+
+            const estruturaTopicos = [
+                { id: 'portugues', titulo: '📚 Língua Portuguesa', subtopicos: [{ titulo: null, assuntos: assuntos.portugues }] },
+                { id: 'legislacao', titulo: '⚖️ Legislação Específica', subtopicos: [{ titulo: null, assuntos: assuntos.legislacao }] },
+                { 
+                    id: 'direito', 
+                    titulo: '🏛️ Noções de Direito', 
+                    subtopicos: [
+                        { titulo: '📌 Direito Administrativo', assuntos: assuntos.dirAdmin, modulo: 'dirAdmin' },
+                        { titulo: '📌 Direito Constitucional', assuntos: assuntos.dirConst, modulo: 'dirConst' },
+                        { titulo: '📌 Direito Penal', assuntos: assuntos.dirPenal, modulo: 'dirPenal' },
+                        { titulo: '📌 Direito Processual Penal', assuntos: assuntos.dirProcPenal, modulo: 'dirProcPenal' }
+                    ] 
+                },
+                { id: 'complementar', titulo: '🌐 Legislação Complementar e Temas Transversais', subtopicos: [{ titulo: null, assuntos: assuntos.complementar }] }
+            ];
+
+            const modulos = [
+                { id: 'portugues', nome: 'Língua Portuguesa', icone: '📚', chave: 'portugues', topicoId: 'portugues' },
+                { id: 'legislacao', nome: 'Legislação Específica', icone: '⚖️', chave: 'legislacao', topicoId: 'legislacao' },
+                { id: 'dirAdmin', nome: 'Direito Administrativo', icone: '🏛️', chave: 'dirAdmin', topicoId: 'direito' },
+                { id: 'dirConst', nome: 'Direito Constitucional', icone: '📜', chave: 'dirConst', topicoId: 'direito' },
+                { id: 'dirPenal', nome: 'Direito Penal', icone: '⚖️', chave: 'dirPenal', topicoId: 'direito' },
+                { id: 'dirProcPenal', nome: 'Direito Processual Penal', icone: '📋', chave: 'dirProcPenal', topicoId: 'direito' },
+                { id: 'complementar', nome: 'Legislação Complementar', icone: '🌐', chave: 'complementar', topicoId: 'complementar' }
+            ];
+
+            const TOTAL_ASSUNTOS = Object.values(assuntos).reduce((acc, arr) => acc + arr.length, 0);
+
+            let estadoCheckboxes = {};
+            let ultimasAtividades = {};
+            let dataInicial = '';
+            let dataFinal = '';
+            let dataSimulada = '';
+            let usarDataSistema = true;
+            let telaAtual = 'principal';
+
+            const telaPrincipal = document.getElementById('telaPrincipal');
+            const telaConfig = document.getElementById('telaConfig');
+            const btnAbrirConfig = document.getElementById('btnAbrirConfig');
+            const btnVoltarPrincipal = document.getElementById('btnVoltarPrincipal');
+            const btnAtualizar = document.getElementById('btnAtualizar');
+            const btnResetar = document.getElementById('btnResetar');
+            const dataInicialInput = document.getElementById('dataInicial');
+            const dataFinalInput = document.getElementById('dataFinal');
+            const dataSimuladaInput = document.getElementById('dataSimulada');
+            const usarDataSistemaCheckbox = document.getElementById('usarDataSistema');
+            const diasTotaisEl = document.getElementById('diasTotais');
+            const diasMetaLidoEl = document.getElementById('diasMetaLido');
+            const resumoRodape = document.getElementById('resumoRodape');
+            const conteudoPrincipal = document.getElementById('conteudoPrincipal');
+            const farol = document.getElementById('farol');
+            const farolIcon = document.getElementById('farolIcon');
+            const farolTexto = document.getElementById('farolTexto');
+            const statusDetalheTexto = document.getElementById('statusDetalheTexto');
+            const graficoBarraPreenchida = document.getElementById('graficoBarraPreenchida');
+            const setaPrevisto = document.getElementById('setaPrevisto');
+            const setaRealizado = document.getElementById('setaRealizado');
+            const labelPrevisto = document.getElementById('labelPrevisto');
+            const labelRealizado = document.getElementById('labelRealizado');
+            const numeroDiasProva = document.getElementById('numeroDiasProva');
+            const textoDiasProva = document.getElementById('textoDiasProva');
+            const modoGraficoTexto = document.getElementById('modoGraficoTexto');
+            const modulosGrid = document.getElementById('modulosGrid');
+            const modulosResumo = document.getElementById('modulosResumo');
+            const diasAtrasoBadge = document.getElementById('diasAtrasoBadge');
+            const previsaoConclusao = document.getElementById('previsaoConclusao');
+            const ritmoAtual = document.getElementById('ritmoAtual');
+            const ritmoNecessario = document.getElementById('ritmoNecessario');
+            const sparklineContainer = document.getElementById('sparklineContainer');
+            const btnSino = document.getElementById('btnSino');
+            const notificacoesPainel = document.getElementById('notificacoesPainel');
+
+            function atualizarEstadoDataSimulada() {
+                if (usarDataSistema) {
+                    dataSimuladaInput.disabled = true;
+                    dataSimuladaInput.value = '';
+                } else {
+                    dataSimuladaInput.disabled = false;
+                }
+            }
+
+            usarDataSistemaCheckbox.addEventListener('change', function() {
+                usarDataSistema = this.checked;
+                atualizarEstadoDataSimulada();
+                salvarDados();
+                renderizarModulos();
+                atualizarGraficoStatus();
+            });
+
+            dataSimuladaInput.addEventListener('change', function() {
+                dataSimulada = this.value;
+                salvarDados();
+                renderizarModulos();
+                atualizarGraficoStatus();
+            });
+
+            btnSino.addEventListener('click', function(e) {
+                e.stopPropagation();
+                notificacoesPainel.classList.toggle('visivel');
+            });
+
+            document.addEventListener('click', function(e) {
+                if (!notificacoesPainel.contains(e.target) && e.target !== btnSino) {
+                    notificacoesPainel.classList.remove('visivel');
+                }
+            });
+
+            function mostrarTela(nomeTela) {
+                telaAtual = nomeTela;
+                if (nomeTela === 'principal') {
+                    telaConfig.classList.remove('ativa');
+                    telaPrincipal.classList.add('ativa');
+                } else {
+                    telaPrincipal.classList.remove('ativa');
+                    telaConfig.classList.add('ativa');
+                }
+                salvarDados();
+            }
+
+            btnAbrirConfig.addEventListener('click', () => mostrarTela('config'));
+            btnVoltarPrincipal.addEventListener('click', () => mostrarTela('principal'));
+            btnAtualizar.addEventListener('click', () => {
+                dataInicial = dataInicialInput.value;
+                dataFinal = dataFinalInput.value;
+                salvarDados();
+                atualizarConfigInfo();
+                atualizarGraficoStatus();
+                atualizarResumoRodape();
+                mostrarTela('principal');
+            });
+            btnResetar.addEventListener('click', () => {
+                if (confirm('Tem certeza que deseja apagar TODOS os checkboxes e progresso?')) {
+                    estadoCheckboxes = {};
+                    ultimasAtividades = {};
+                    notificacoes = [];
+                    historicoProgresso = [];
+                    renderizarTopicos();
+                    renderizarModulos();
+                    atualizarGraficoStatus();
+                    salvarDados();
+                }
+            });
+            document.getElementById('fecharAviso').addEventListener('click', esconderAvisoPersistencia);
+
+            function renderizarTopicos() {
+                conteudoPrincipal.innerHTML = '';
+                estruturaTopicos.forEach(topico => {
+                    const topicSection = document.createElement('div');
+                    topicSection.className = 'topic-section';
+                    topicSection.id = `modulo-${topico.id}`;
+                    topicSection.dataset.topic = topico.id;
+
+                    const topicHeader = document.createElement('div');
+                    topicHeader.className = 'topic-header';
+                    topicHeader.innerHTML = `<span>${topico.titulo}</span><span class="arrow">▼</span>`;
+                    topicHeader.addEventListener('click', function() {
+                        const content = this.nextElementSibling;
+                        if (content) {
+                            const isHidden = content.style.display === 'none';
+                            content.style.display = isHidden ? 'block' : 'none';
+                            this.classList.toggle('collapsed', !isHidden);
+                        }
+                    });
+                    topicSection.appendChild(topicHeader);
+
+                    const topicContent = document.createElement('div');
+                    topicContent.className = 'topic-content';
+                    topicContent.style.display = 'block';
+
+                    topico.subtopicos.forEach(subtopico => {
+                        if (subtopico.titulo) {
+                            const subtopicHeader = document.createElement('div');
+                            subtopicHeader.className = 'subtopic-header';
+                            subtopicHeader.textContent = subtopico.titulo;
+                            topicContent.appendChild(subtopicHeader);
+                        }
+
+                        const moduloChave = subtopico.modulo || topico.id;
+                        const tableResponsive = document.createElement('div');
+                        tableResponsive.className = 'table-responsive';
+                        const table = document.createElement('table');
+                        
+                        const thead = document.createElement('thead');
+                        const trHead = document.createElement('tr');
+                        trHead.innerHTML = `<th class="assunto-col">Assunto</th><th>Lido</th><th>Revisado</th><th>Exercitado</th><th>Concluído</th>`;
+                        thead.appendChild(trHead);
+                        table.appendChild(thead);
+
+                        const tbody = document.createElement('tbody');
+                        
+                        subtopico.assuntos.forEach((assunto, idx) => {
+                            const tr = document.createElement('tr');
+                            const chaveBase = `${moduloChave}-${subtopico.titulo || 'geral'}-${idx}`;
+                            
+                            const tdAssunto = document.createElement('td');
+                            tdAssunto.className = 'assunto-col';
+                            tdAssunto.textContent = assunto;
+                            tr.appendChild(tdAssunto);
+
+                            ['Lido', 'Revisado', 'Exercitado', 'Concluido'].forEach(tipo => {
+                                const tdCheck = document.createElement('td');
+                                tdCheck.className = 'checkbox-cell';
+                                const input = document.createElement('input');
+                                input.type = 'checkbox';
+                                input.dataset.chave = `${chaveBase}-${tipo}`;
+                                input.dataset.tipo = tipo;
+                                input.dataset.modulo = moduloChave;
+                                input.className = tipo === 'Concluido' ? 'concluido-check' : '';
+                                input.checked = !!estadoCheckboxes[input.dataset.chave];
+                                input.addEventListener('change', function() {
+                                    estadoCheckboxes[this.dataset.chave] = this.checked;
+                                    if (this.checked) {
+                                        ultimasAtividades[this.dataset.modulo] = obterDataAtual().getTime();
+                                    }
+                                    registrarProgresso();
+                                    gerarNotificacoes();
+                                    salvarDados();
+                                    renderizarModulos();
+                                    renderizarNotificacoes();
+                                    renderizarSparkline();
+                                    atualizarGraficoStatus();
+                                });
+                                tdCheck.appendChild(input);
+                                tr.appendChild(tdCheck);
+                            });
+
+                            tbody.appendChild(tr);
+                        });
+
+                        table.appendChild(tbody);
+                        tableResponsive.appendChild(table);
+                        topicContent.appendChild(tableResponsive);
+                    });
+
+                    topicSection.appendChild(topicContent);
+                    conteudoPrincipal.appendChild(topicSection);
+                });
+            }
+
+            function contarPorTipo(tipo, chaveModulo) {
+                let contador = 0;
+                for (const chave in estadoCheckboxes) {
+                    if (chaveModulo && !chave.startsWith(chaveModulo)) continue;
+                    if (estadoCheckboxes[chave] && chave.endsWith(`-${tipo}`)) contador++;
+                }
+                return contador;
+            }
+
+            function contarAssuntosModulo(chaveModulo) {
+                return assuntos[chaveModulo] ? assuntos[chaveModulo].length : 0;
+            }
+
+            function renderizarModulos() {
+                modulosGrid.innerHTML = '';
+                let ativos = 0, estagnados = 0, abandonados = 0, naoIniciados = 0;
+                const hoje = obterDataAtual();
+
+                modulos.forEach(modulo => {
+                    const total = contarAssuntosModulo(modulo.chave);
+                    const concluidos = contarPorTipo('Concluido', modulo.chave);
+                    const percentual = total > 0 ? Math.round((concluidos / total) * 100) : 0;
+                    const ultimaAtividade = ultimasAtividades[modulo.chave] || null;
+                    let estado = 'nao-iniciado';
+                    let alerta = '';
+
+                    if (concluidos > 0) {
+                        if (ultimaAtividade) {
+                            const dataUltima = new Date(ultimaAtividade);
+                            dataUltima.setHours(0,0,0,0);
+                            const diffDias = Math.floor((hoje.getTime() - dataUltima.getTime()) / (1000*60*60*24));
+                            if (diffDias >= 10) {
+                                estado = 'abandonado';
+                                alerta = `${diffDias} dias sem estudar`;
+                                abandonados++;
+                            } else if (diffDias >= 4) {
+                                estado = 'estagnado';
+                                alerta = `${diffDias} dias sem estudar`;
+                                estagnados++;
+                            } else {
+                                estado = 'em-progresso';
+                                ativos++;
+                            }
+                        } else {
+                            estado = 'em-progresso';
+                            ativos++;
+                        }
+                    } else {
+                        naoIniciados++;
+                        alerta = 'Não iniciado';
+                    }
+
+                    const card = document.createElement('a');
+                    card.className = `modulo-card ${estado}`;
+                    card.href = `#modulo-${modulo.topicoId}`;
+                    card.innerHTML = `
+                        <div class="modulo-nome"><span class="modulo-icon">${modulo.icone}</span> ${modulo.nome}</div>
+                        <div class="modulo-percentual">${percentual}%</div>
+                        <div class="modulo-contagem">${concluidos}/${total} concluídos</div>
+                        <div class="modulo-bar"><div class="modulo-bar-fill" style="width:${percentual}%;"></div></div>
+                        <div class="modulo-alerta ${estado === 'estagnado' ? 'amarelo' : ''}">${alerta ? '⚠️ ' + alerta : ''}</div>
+                    `;
+                    card.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        const target = document.getElementById(`modulo-${modulo.topicoId}`);
+                        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    });
+                    modulosGrid.appendChild(card);
+                });
+
+                modulosResumo.innerHTML = `
+                    <span class="resumo-item"><span class="resumo-dot verde"></span> ${ativos} ativos</span>
+                    <span class="resumo-item"><span class="resumo-dot amarelo"></span> ${estagnados + naoIniciados} atenção</span>
+                    <span class="resumo-item"><span class="resumo-dot vermelho"></span> ${abandonados} abandonados</span>
+                `;
+            }
+
+            function calcularDiasTotais() {
+                if (dataInicial && dataFinal) {
+                    const d1 = new Date(dataInicial + 'T00:00:00');
+                    const d2 = new Date(dataFinal + 'T00:00:00');
+                    if (d2 >= d1) return Math.floor((d2.getTime() - d1.getTime()) / (1000*60*60*24)) + 1;
+                }
+                return null;
+            }
+
+            function atualizarConfigInfo() {
+                const dias = calcularDiasTotais();
+                if (dias && dias > 0) {
+                    diasTotaisEl.textContent = dias;
+                    diasMetaLidoEl.textContent = Math.ceil(dias * 0.6);
+                } else {
+                    diasTotaisEl.textContent = '—';
+                    diasMetaLidoEl.textContent = '—';
+                }
+            }
+
+            function atualizarResumoRodape() {
+                const dias = calcularDiasTotais();
+                resumoRodape.textContent = dias && dias > 0 ? `Período: ${dataInicial} a ${dataFinal} • ${dias} dias` : 'Configure as datas nas Configurações';
+            }
+
+            function calcularDiasAteProva() {
+                if (!dataFinal) return null;
+                const hoje = obterDataAtual();
+                const dataFim = new Date(dataFinal + 'T00:00:00');
+                return Math.ceil((dataFim.getTime() - hoje.getTime()) / (1000*60*60*24));
+            }
+
+            function atualizarDiasProva() {
+                const dias = calcularDiasAteProva();
+                const el = numeroDiasProva;
+                if (dias === null || isNaN(dias)) {
+                    el.textContent = '—';
+                    textoDiasProva.textContent = 'defina a data';
+                    el.className = 'numero-dias';
+                } else if (dias < 0) {
+                    el.textContent = '✓';
+                    textoDiasProva.textContent = 'prova realizada';
+                    el.className = 'numero-dias verde';
+                } else if (dias === 0) {
+                    el.textContent = 'HOJE';
+                    textoDiasProva.textContent = 'dia da prova';
+                    el.className = 'numero-dias vermelho';
+                } else {
+                    el.textContent = dias;
+                    textoDiasProva.textContent = dias === 1 ? 'dia até a prova' : 'dias até a prova';
+                    el.className = dias > 30 ? 'numero-dias verde' : dias >= 10 ? 'numero-dias amarelo' : 'numero-dias vermelho';
+                }
+            }
+
+            function atualizarGraficoStatus() {
+                const diasTotais = calcularDiasTotais();
+                const lidosAtual = contarPorTipo('Lido');
+                const concluidosAtual = contarPorTipo('Concluido');
+                const todosLidos = lidosAtual >= TOTAL_ASSUNTOS;
+                modoGraficoTexto.textContent = todosLidos ? 'Conclusão' : 'Leitura';
+                atualizarDiasProva();
+                atualizarPrevisaoConclusao();
+                renderizarSparkline();
+
+                if (!diasTotais || diasTotais <= 0 || !dataInicial || !dataFinal) {
+                    farol.className = 'farol farol-verde';
+                    farolIcon.textContent = '🟢';
+                    farolTexto.textContent = 'Em dia';
+                    statusDetalheTexto.textContent = 'Configure as datas';
+                    graficoBarraPreenchida.style.width = '0%';
+                    setaPrevisto.style.left = '0%';
+                    setaRealizado.style.left = '0%';
+                    labelPrevisto.textContent = 'Prev: 0%';
+                    labelRealizado.textContent = 'Real: 0%';
+                    atualizarDiasAtrasoBadge(0);
+                    return;
+                }
+
+                const hoje = obterDataAtual();
+                const dataIni = new Date(dataInicial + 'T00:00:00');
+                const dataFim = new Date(dataFinal + 'T00:00:00');
+                const metaLeituraDias = Math.ceil(diasTotais * 0.6);
+                let progressoPrevistoPct = 0;
+                let statusFarol = 'verde';
+                let textoFarol = 'Em dia';
+                let detalhe = '';
+                let diasAtraso = 0;
+
+                if (hoje < dataIni) {
+                    textoFarol = 'Aguardando';
+                    detalhe = `Início em ${dataInicial}`;
+                } else if (hoje > dataFim) {
+                    progressoPrevistoPct = 100;
+                    if (todosLidos) {
+                        if (concluidosAtual >= TOTAL_ASSUNTOS) {
+                            statusFarol = 'azul';
+                            textoFarol = 'Concluído';
+                            detalhe = 'Todos os assuntos concluídos!';
+                        } else {
+                            statusFarol = 'vermelho';
+                            textoFarol = 'Atrasado';
+                            detalhe = `Prazo encerrado. Faltam ${TOTAL_ASSUNTOS - concluidosAtual} conclusões.`;
+                        }
+                    } else {
+                        statusFarol = 'vermelho';
+                        textoFarol = 'Atrasado';
+                        detalhe = `Prazo encerrado. Faltam ${TOTAL_ASSUNTOS - lidosAtual} leituras.`;
+                    }
+                } else {
+                    const diasPassados = Math.floor((hoje.getTime() - dataIni.getTime()) / (1000*60*60*24)) + 1;
+                    if (todosLidos) {
+                        const progressoEsperado = Math.min(1, diasPassados / diasTotais);
+                        progressoPrevistoPct = progressoEsperado * 100;
+                        const esperados = Math.floor(TOTAL_ASSUNTOS * progressoEsperado);
+                        const diff = concluidosAtual - esperados;
+                        const porDia = TOTAL_ASSUNTOS / diasTotais;
+                        diasAtraso = Math.round(diff / porDia);
+                        if (diasAtraso <= -10) { statusFarol = 'vermelho'; textoFarol = `Atrasado ${Math.abs(diasAtraso)}d`; }
+                        else if (diasAtraso <= -1) { statusFarol = 'amarelo'; textoFarol = `Atrasado ${Math.abs(diasAtraso)}d`; }
+                        else if (diasAtraso >= 1) { statusFarol = 'azul'; textoFarol = `Adiantado ${diasAtraso}d`; }
+                        detalhe = `Conclusão: ${concluidosAtual}/${TOTAL_ASSUNTOS} • Dia ${diasPassados} de ${diasTotais}`;
+                    } else {
+                        const progressoEsperado = Math.min(1, diasPassados / metaLeituraDias);
+                        progressoPrevistoPct = progressoEsperado * 100;
+                        const esperados = Math.floor(TOTAL_ASSUNTOS * progressoEsperado);
+                        const diff = lidosAtual - esperados;
+                        const porDia = TOTAL_ASSUNTOS / metaLeituraDias;
+                        diasAtraso = Math.round(diff / porDia);
+                        if (diasAtraso <= -10) { statusFarol = 'vermelho'; textoFarol = `Atrasado ${Math.abs(diasAtraso)}d`; }
+                        else if (diasAtraso <= -1) { statusFarol = 'amarelo'; textoFarol = `Atrasado ${Math.abs(diasAtraso)}d`; }
+                        else if (diasAtraso >= 1) { statusFarol = 'azul'; textoFarol = `Adiantado ${diasAtraso}d`; }
+                        detalhe = `Leitura: ${lidosAtual}/${TOTAL_ASSUNTOS} • Meta até dia ${metaLeituraDias}`;
+                    }
+                }
+
+                farol.className = `farol farol-${statusFarol}`;
+                farolIcon.textContent = statusFarol === 'vermelho' ? '🔴' : statusFarol === 'amarelo' ? '🟡' : statusFarol === 'azul' ? '🔵' : '🟢';
+                farolTexto.textContent = textoFarol;
+                statusDetalheTexto.textContent = detalhe;
+                atualizarDiasAtrasoBadge(diasAtraso);
+
+                const realPct = todosLidos ? (concluidosAtual / TOTAL_ASSUNTOS) * 100 : (lidosAtual / TOTAL_ASSUNTOS) * 100;
+                const pctPrevisto = Math.min(100, Math.max(0, progressoPrevistoPct));
+                const pctReal = Math.min(100, Math.max(0, realPct));
+                graficoBarraPreenchida.style.width = `${pctReal}%`;
+                setaPrevisto.style.left = `${pctPrevisto}%`;
+                setaRealizado.style.left = `${pctReal}%`;
+                labelPrevisto.textContent = `Prev: ${Math.round(pctPrevisto)}%`;
+                labelRealizado.textContent = `Real: ${Math.round(pctReal)}%`;
+            }
+
+            function iniciar() {
+                carregarDados();
+                renderizarTopicos();
+                renderizarModulos();
+                renderizarNotificacoes();
+                renderizarSparkline();
+                gerarNotificacoes();
+                renderizarNotificacoes();
+                atualizarConfigInfo();
+                atualizarGraficoStatus();
+                atualizarResumoRodape();
+                if (dataInicial) dataInicialInput.value = dataInicial;
+                if (dataFinal) dataFinalInput.value = dataFinal;
+                if (dataSimulada) dataSimuladaInput.value = dataSimulada;
+                usarDataSistemaCheckbox.checked = usarDataSistema;
+                atualizarEstadoDataSimulada();
+                if (telaAtual === 'config') mostrarTela('config');
+                else mostrarTela('principal');
+                if (!armazenamento.disponivel) mostrarAvisoPersistencia();
+            }
+
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', iniciar);
+            } else {
+                iniciar();
+            }
+        })();
+    </script>
+</body>
+</html>
