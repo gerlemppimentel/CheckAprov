@@ -422,9 +422,9 @@
         }
 
         .feedback-textual {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
             background: var(--ms-gray-100);
             border-radius: var(--radius-md);
             padding: 12px 14px;
@@ -435,6 +435,10 @@
             align-items: flex-start;
             gap: 6px;
             line-height: 1.4;
+            background: #fff;
+            border-radius: var(--radius-sm);
+            padding: 10px 12px;
+            box-shadow: var(--shadow-sm);
         }
         .feedback-item .feedback-icone {
             flex-shrink: 0;
@@ -888,6 +892,7 @@
                 padding: 8px;
             }
             .dias-prova .numero-dias { font-size: 2rem; }
+            .feedback-textual { grid-template-columns: 1fr; }
             .modulos-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
             .modulo-card { padding: 10px 8px; }
             .modulo-card .modulo-percentual { font-size: 1.2rem; }
@@ -899,7 +904,6 @@
             .config-grid { flex-direction: column; align-items: stretch; }
             .config-field input[type="date"] { width: 100%; min-width: auto; }
             .btn-ms { justify-content: center; }
-            .grafico-info-adicional { flex-direction: column; align-items: flex-start; }
         }
     </style>
 </head>
@@ -972,9 +976,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="feedback-textual" id="feedbackTextual">
-                        <!-- Preenchido via JavaScript -->
-                    </div>
+                    <div class="feedback-textual" id="feedbackTextual"></div>
                 </div>
                 <div class="dias-prova" id="diasProvaContainer">
                     <div class="numero-dias" id="numeroDiasProva">—</div>
@@ -1010,14 +1012,15 @@
                         <input type="date" id="dataInicial">
                     </div>
                     <div class="config-field">
-                        <label for="dataFinal">Data Final</label>
+                        <label for="dataFinal">Data Final (véspera da prova)</label>
                         <input type="date" id="dataFinal">
                     </div>
                     <button class="btn-ms" id="btnAtualizar">🔄 Atualizar Plano</button>
                 </div>
                 <div class="config-info">
-                    <div>Dias totais: <strong id="diasTotais">—</strong></div>
+                    <div>Dias totais de estudo: <strong id="diasTotais">—</strong></div>
                     <div>Meta "Lido" em 60%: <strong id="diasMetaLido">—</strong> dias</div>
+                    <div style="font-size:0.8rem;margin-top:4px;">📅 Dia da prova: <strong id="diaProva">—</strong></div>
                 </div>
                 <div class="data-simulada-section">
                     <h3 style="font-size:0.9rem;font-weight:600;color:var(--ms-blue);margin-bottom:8px;">🔧 Modo de Teste</h3>
@@ -1085,9 +1088,9 @@
                 if (armazenamento.disponivel) {
                     try {
                         if (armazenamento.tipo === 'localStorage') {
-                            localStorage.setItem('checkaprovacao_v12', json);
+                            localStorage.setItem('checkaprovacao_v13', json);
                         } else {
-                            sessionStorage.setItem('checkaprovacao_v12', json);
+                            sessionStorage.setItem('checkaprovacao_v13', json);
                         }
                         esconderAvisoPersistencia();
                     } catch (e) {
@@ -1103,9 +1106,9 @@
                     let json = null;
                     if (armazenamento.disponivel) {
                         if (armazenamento.tipo === 'localStorage') {
-                            json = localStorage.getItem('checkaprovacao_v12');
+                            json = localStorage.getItem('checkaprovacao_v13');
                         } else {
-                            json = sessionStorage.getItem('checkaprovacao_v12');
+                            json = sessionStorage.getItem('checkaprovacao_v13');
                         }
                     }
                     if (json) {
@@ -1148,6 +1151,13 @@
                 const agora = new Date();
                 agora.setHours(0, 0, 0, 0);
                 return agora;
+            }
+
+            function obterDataProva() {
+                if (!dataFinal) return null;
+                const dataProva = new Date(dataFinal + 'T00:00:00');
+                dataProva.setDate(dataProva.getDate() + 1);
+                return dataProva;
             }
 
             function atualizarStreak() {
@@ -1221,6 +1231,7 @@
                     const lidosSemana = contarPorTipo('Lido');
                     const concluidosSemana = contarPorTipo('Concluido');
                     const modulosAtivos = modulos.filter(m => contarPorTipo('Concluido', m.chave) > 0).length;
+                    const diasTotais = calcularDiasTotais();
                     const ritmoMedio = diasTotais && diasTotais > 0 ? (lidosSemana / Math.min(7, diasTotais)).toFixed(1) : '0';
                     notificacoes.unshift({
                         id: `relatorio-${hojeStr}`,
@@ -1234,10 +1245,10 @@
             }
 
             function verificarContagemRegressiva() {
-                if (!dataFinal) return;
+                const dataProva = obterDataProva();
+                if (!dataProva) return;
                 const hoje = obterDataAtual();
-                const dataFim = new Date(dataFinal + 'T00:00:00');
-                const diasRestantes = Math.ceil((dataFim.getTime() - hoje.getTime()) / (1000*60*60*24));
+                const diasRestantes = Math.ceil((dataProva.getTime() - hoje.getTime()) / (1000*60*60*24));
                 const marcos = [30, 15, 7, 3, 1];
                 if (marcos.includes(diasRestantes)) {
                     const id = `contagem-${diasRestantes}`;
@@ -1480,6 +1491,7 @@
             const usarDataSistemaCheckbox = document.getElementById('usarDataSistema');
             const diasTotaisEl = document.getElementById('diasTotais');
             const diasMetaLidoEl = document.getElementById('diasMetaLido');
+            const diaProvaEl = document.getElementById('diaProva');
             const resumoRodape = document.getElementById('resumoRodape');
             const conteudoPrincipal = document.getElementById('conteudoPrincipal');
             const farol = document.getElementById('farol');
@@ -1746,7 +1758,17 @@
 
             function atualizarConfigInfo() {
                 const dias = calcularDiasTotais();
-                if (dias && dias > 0) { diasTotaisEl.textContent = dias; diasMetaLidoEl.textContent = Math.ceil(dias * 0.6); } else { diasTotaisEl.textContent = '—'; diasMetaLidoEl.textContent = '—'; }
+                if (dias && dias > 0) {
+                    diasTotaisEl.textContent = dias;
+                    diasMetaLidoEl.textContent = Math.ceil(dias * 0.6);
+                    const dataProva = obterDataProva();
+                    if (dataProva) diaProvaEl.textContent = dataProva.toLocaleDateString('pt-BR');
+                    else diaProvaEl.textContent = '—';
+                } else {
+                    diasTotaisEl.textContent = '—';
+                    diasMetaLidoEl.textContent = '—';
+                    diaProvaEl.textContent = '—';
+                }
             }
 
             function atualizarResumoRodape() {
@@ -1755,10 +1777,10 @@
             }
 
             function calcularDiasAteProva() {
-                if (!dataFinal) return null;
+                const dataProva = obterDataProva();
+                if (!dataProva) return null;
                 const hoje = obterDataAtual();
-                const dataFim = new Date(dataFinal + 'T00:00:00');
-                return Math.ceil((dataFim.getTime() - hoje.getTime()) / (1000*60*60*24));
+                return Math.ceil((dataProva.getTime() - hoje.getTime()) / (1000*60*60*24));
             }
 
             function atualizarDiasProva() {
@@ -1772,12 +1794,12 @@
 
             function atualizarFeedbackTextual() {
                 if (!dataInicial || !dataFinal) {
-                    feedbackTextual.innerHTML = '<div style="color:var(--ms-gray-500);">Configure as datas para ver o feedback.</div>';
+                    feedbackTextual.innerHTML = '<div style="color:var(--ms-gray-500);grid-column:1/-1;">Configure as datas para ver o feedback.</div>';
                     return;
                 }
                 const diasTotais = calcularDiasTotais();
                 if (!diasTotais) {
-                    feedbackTextual.innerHTML = '<div style="color:var(--ms-gray-500);">Configure as datas para ver o feedback.</div>';
+                    feedbackTextual.innerHTML = '<div style="color:var(--ms-gray-500);grid-column:1/-1;">Configure as datas para ver o feedback.</div>';
                     return;
                 }
                 const hoje = obterDataAtual();
@@ -1792,7 +1814,6 @@
                 const lidosAtual = contarPorTipo('Lido');
                 const concluidosAtual = contarPorTipo('Concluido');
                 
-                // Leitura
                 const restantesLeitura = TOTAL_ASSUNTOS - lidosAtual;
                 const ritmoAtualLeitura = diasPassados > 0 ? lidosAtual / diasPassados : 0;
                 const ritmoNecessarioLeitura = metaLeituraDias > 0 && diasPassados <= metaLeituraDias ? restantesLeitura / Math.max(1, metaLeituraDias - diasPassados + 1) : 0;
@@ -1802,7 +1823,6 @@
                 else if (ritmoAtualLeitura >= ritmoNecessarioLeitura * 0.7) { statusLeitura = 'precisa melhorar o ritmo'; classeLeitura = 'melhorar'; iconeLeitura = '⚠️'; }
                 else { statusLeitura = 'não vai conseguir'; classeLeitura = 'nao-conseguir'; iconeLeitura = '❌'; }
                 
-                // Conclusão
                 const restantesConclusao = TOTAL_ASSUNTOS - concluidosAtual;
                 const ritmoAtualConclusao = diasPassados > 0 ? concluidosAtual / diasPassados : 0;
                 const ritmoNecessarioConclusao = diasRestantes > 0 ? restantesConclusao / diasRestantes : 0;
