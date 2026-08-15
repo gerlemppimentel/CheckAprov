@@ -15,9 +15,6 @@
             --ms-yellow-light: #fff4ce;
             --ms-red: #d13438;
             --ms-red-light: #fde7e9;
-            --ms-gold: #d4af37;
-            --ms-gold-light: #fef8e7;
-            --ms-gold-dark: #b8962e;
             --ms-gray-100: #f3f2f1;
             --ms-gray-200: #edebe9;
             --ms-gray-300: #e1dfdd;
@@ -302,6 +299,7 @@
             flex-direction: column;
             justify-content: center;
             min-width: 0;
+            gap: 12px;
         }
         .grafico-labels {
             display: flex;
@@ -310,7 +308,6 @@
             font-size: 0.75rem;
             font-weight: 600;
             color: var(--ms-gray-700);
-            margin-bottom: 6px;
             gap: 8px;
             flex-wrap: wrap;
         }
@@ -340,72 +337,89 @@
             color: #a4262c;
         }
 
-        .grafico-barra-container {
+        .barra-dupla-section {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        .barra-item {
             position: relative;
-            height: 40px;
-            margin: 8px 0 4px;
+        }
+        .barra-item-container {
+            position: relative;
+            height: 30px;
             background: var(--ms-gray-200);
-            border-radius: 20px;
+            border-radius: 15px;
             overflow: visible;
         }
-        .grafico-barra-fundo {
+        .barra-item-fundo {
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
             background: var(--ms-gray-200);
-            border-radius: 20px;
+            border-radius: 15px;
             z-index: 1;
         }
-        .grafico-barra-preenchida {
+        .barra-item-preenchida {
             position: absolute;
             top: 0; left: 0;
             height: 100%;
-            background: linear-gradient(90deg, #c8e6ff, #4cc2ff);
-            border-radius: 20px 0 0 20px;
+            border-radius: 15px 0 0 15px;
             z-index: 2;
             transition: width 0.5s ease;
             min-width: 2px;
         }
-        .seta-indicadora {
+        .barra-leitura .barra-item-preenchida {
+            background: linear-gradient(90deg, #c8e6ff, #4cc2ff);
+        }
+        .barra-conclusao .barra-item-preenchida {
+            background: linear-gradient(90deg, #d4edda, #28a745);
+        }
+        .barra-item-legenda {
             position: absolute;
-            top: -14px;
-            width: 2px;
-            height: 68px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 3;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--ms-gray-900);
+            text-shadow: 0 0 4px rgba(255,255,255,0.8);
+            pointer-events: none;
+            white-space: nowrap;
+        }
+        .linha-indicadora {
+            position: absolute;
+            top: -5px;
+            width: 4px;
+            height: 40px;
             z-index: 5;
             pointer-events: none;
             transition: left 0.5s ease;
+            border-radius: 2px;
         }
-        .seta-previsto { background: var(--ms-gray-700); }
-        .seta-previsto::after {
-            content: '▼';
-            position: absolute;
-            top: -12px;
-            left: -8px;
-            font-size: 14px;
-            color: var(--ms-gray-900);
-            font-weight: bold;
+        .linha-previsto {
+            background: var(--ms-gray-700);
         }
-        .seta-realizado {
+        .linha-realizado {
             background: #ff6b00;
-            width: 3px;
         }
-        .seta-realizado::after {
-            content: '▲';
+        .linha-label {
             position: absolute;
-            bottom: -16px;
-            left: -8px;
-            font-size: 14px;
-            color: #e65c00;
-            font-weight: bold;
-        }
-        .seta-label {
-            position: absolute;
-            font-size: 0.7rem;
-            font-weight: 600;
+            font-size: 0.65rem;
+            font-weight: 700;
             white-space: nowrap;
             pointer-events: none;
         }
-        .seta-label.previsto-label { top: -32px; color: var(--ms-gray-700); }
-        .seta-label.realizado-label { bottom: -32px; color: #e65c00; }
+        .linha-previsto-label {
+            top: -18px;
+            color: var(--ms-gray-700);
+            transform: translateX(-50%);
+        }
+        .linha-realizado-label {
+            bottom: -18px;
+            color: #e65c00;
+            transform: translateX(-50%);
+        }
 
         .grafico-info-adicional {
             display: flex;
@@ -413,7 +427,6 @@
             align-items: center;
             font-size: 0.7rem;
             color: var(--ms-gray-700);
-            margin-top: 8px;
             flex-wrap: wrap;
             gap: 6px;
         }
@@ -928,9 +941,7 @@
                     <span>🔔 Notificações</span>
                     <span id="notifContador" style="font-size:0.75rem;color:var(--ms-gray-500);"></span>
                 </div>
-                <div class="notificacoes-lista" id="notificacoesLista">
-                    <!-- Preenchido via JavaScript -->
-                </div>
+                <div class="notificacoes-lista" id="notificacoesLista"></div>
             </div>
 
             <div class="status-container">
@@ -940,18 +951,35 @@
                 </div>
                 <div class="grafico-progresso">
                     <div class="grafico-labels">
-                        <span>Progresso: <span id="modoGraficoTexto">Leitura</span></span>
-                        <span class="dias-atraso-badge em-dia" id="diasAtrasoBadge">✓ Em dia</span>
                         <span id="statusDetalheTexto">Configure as datas</span>
+                        <span class="dias-atraso-badge em-dia" id="diasAtrasoBadge">✓ Em dia</span>
                     </div>
-                    <div class="grafico-barra-container">
-                        <div class="grafico-barra-fundo"></div>
-                        <div class="grafico-barra-preenchida" id="graficoBarraPreenchida" style="width:0%;"></div>
-                        <div class="seta-indicadora seta-previsto" id="setaPrevisto" style="left:0%;">
-                            <span class="seta-label previsto-label" id="labelPrevisto">Prev: 0%</span>
+                    <div class="barra-dupla-section">
+                        <div class="barra-item barra-leitura">
+                            <div class="barra-item-container">
+                                <div class="barra-item-fundo"></div>
+                                <div class="barra-item-preenchida" id="barraLeituraPreenchida" style="width:0%;"></div>
+                                <div class="barra-item-legenda" id="barraLeituraLegenda">Leitura: 0% (0/50)</div>
+                                <div class="linha-indicadora linha-previsto" id="linhaPrevistoLeitura" style="left:0%;">
+                                    <span class="linha-label linha-previsto-label" id="leituraPrevistoLabel">Previsto: 0%</span>
+                                </div>
+                                <div class="linha-indicadora linha-realizado" id="linhaRealizadoLeitura" style="left:0%;">
+                                    <span class="linha-label linha-realizado-label" id="leituraRealizadoLabel">Realizado: 0%</span>
+                                </div>
+                            </div>
                         </div>
-                        <div class="seta-indicadora seta-realizado" id="setaRealizado" style="left:0%;">
-                            <span class="seta-label realizado-label" id="labelRealizado">Real: 0%</span>
+                        <div class="barra-item barra-conclusao">
+                            <div class="barra-item-container">
+                                <div class="barra-item-fundo"></div>
+                                <div class="barra-item-preenchida" id="barraConclusaoPreenchida" style="width:0%;"></div>
+                                <div class="barra-item-legenda" id="barraConclusaoLegenda">Conclusão: 0% (0/50)</div>
+                                <div class="linha-indicadora linha-previsto" id="linhaPrevistoConclusao" style="left:0%;">
+                                    <span class="linha-label linha-previsto-label" id="conclusaoPrevistoLabel">Previsto: 0%</span>
+                                </div>
+                                <div class="linha-indicadora linha-realizado" id="linhaRealizadoConclusao" style="left:0%;">
+                                    <span class="linha-label linha-realizado-label" id="conclusaoRealizadoLabel">Realizado: 0%</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="grafico-info-adicional">
@@ -1045,7 +1073,6 @@
             }
 
             const armazenamento = verificarArmazenamento();
-
             let notificacoes = [];
             let historicoProgresso = [];
 
@@ -1065,9 +1092,9 @@
                 if (armazenamento.disponivel) {
                     try {
                         if (armazenamento.tipo === 'localStorage') {
-                            localStorage.setItem('checkaprovacao_v4', json);
+                            localStorage.setItem('checkaprovacao_v7', json);
                         } else {
-                            sessionStorage.setItem('checkaprovacao_v4', json);
+                            sessionStorage.setItem('checkaprovacao_v7', json);
                         }
                         esconderAvisoPersistencia();
                     } catch (e) {
@@ -1083,9 +1110,9 @@
                     let json = null;
                     if (armazenamento.disponivel) {
                         if (armazenamento.tipo === 'localStorage') {
-                            json = localStorage.getItem('checkaprovacao_v4');
+                            json = localStorage.getItem('checkaprovacao_v7');
                         } else {
-                            json = sessionStorage.getItem('checkaprovacao_v4');
+                            json = sessionStorage.getItem('checkaprovacao_v7');
                         }
                     }
                     if (json) {
@@ -1130,7 +1157,6 @@
                 const novasNotifs = [];
                 const hoje = obterDataAtual();
                 
-                // Verificar módulos abandonados
                 modulos.forEach(modulo => {
                     const ultimaAtividade = ultimasAtividades[modulo.chave] || null;
                     const concluidos = contarPorTipo('Concluido', modulo.chave);
@@ -1158,7 +1184,6 @@
                     }
                 });
 
-                // Verificar ritmo
                 const lidosAtual = contarPorTipo('Lido');
                 const concluidosAtual = contarPorTipo('Concluido');
                 if (dataInicial && dataFinal) {
@@ -1191,7 +1216,6 @@
                     }
                 }
 
-                // Verificar se completou leitura
                 if (lidosAtual >= TOTAL_ASSUNTOS && concluidosAtual < TOTAL_ASSUNTOS) {
                     novasNotifs.push({
                         id: 'leitura-completa',
@@ -1202,7 +1226,6 @@
                     });
                 }
 
-                // Merge com notificações existentes (evitar duplicatas)
                 novasNotifs.forEach(nova => {
                     const existe = notificacoes.some(n => n.id === nova.id);
                     if (!existe) {
@@ -1210,7 +1233,6 @@
                     }
                 });
 
-                // Limitar a 50 notificações
                 if (notificacoes.length > 50) {
                     notificacoes = notificacoes.slice(0, 50);
                 }
@@ -1247,7 +1269,6 @@
                     lista.appendChild(item);
                 });
 
-                // Adicionar eventos aos botões "Visto"
                 lista.querySelectorAll('.notif-btn-visto').forEach(btn => {
                     btn.addEventListener('click', function() {
                         const idx = parseInt(this.dataset.idx);
@@ -1323,20 +1344,14 @@
                 const diasRestantes = Math.max(0, Math.ceil((dataFim.getTime() - hoje.getTime()) / (1000*60*60*24)));
 
                 const concluidosAtual = contarPorTipo('Concluido');
-                const lidosAtual = contarPorTipo('Lido');
-                const todosLidos = lidosAtual >= TOTAL_ASSUNTOS;
-                const baseAtual = todosLidos ? concluidosAtual : lidosAtual;
-                const restantes = TOTAL_ASSUNTOS - baseAtual;
+                const restantes = TOTAL_ASSUNTOS - concluidosAtual;
 
-                // Ritmo atual
-                const ritmoAtualValor = diasPassados > 0 ? baseAtual / diasPassados : 0;
+                const ritmoAtualValor = diasPassados > 0 ? concluidosAtual / diasPassados : 0;
                 ritmoAtualEl.textContent = `${ritmoAtualValor.toFixed(1)}/dia`;
 
-                // Ritmo necessário
                 const ritmoNecessarioValor = diasRestantes > 0 ? restantes / diasRestantes : 0;
                 ritmoNecessarioEl.textContent = `${ritmoNecessarioValor.toFixed(1)}/dia`;
 
-                // Previsão de conclusão
                 if (ritmoAtualValor > 0 && restantes > 0) {
                     const diasNecessarios = Math.ceil(restantes / ritmoAtualValor);
                     const dataPrevista = new Date(hoje);
@@ -1369,25 +1384,68 @@
 
             const assuntos = {
                 portugues: [
-                    "Compreensão e interpretação de textos", "Significação das palavras: sinônimos, antônimos, sentido próprio e figurado", "Ortografia vigente", "Pontuação", "Acentuação gráfica", "Emprego das classes de palavras: substantivo, adjetivo, numeral, pronome, verbo, advérbio, preposição, conjunção", "Concordância verbal e nominal", "Regência verbal e nominal", "Crase", "Emprego dos verbos e dos porquês", "Linguagem figurada, conotação e denotação", "Vícios de linguagem"
+                    "Compreensão e interpretação de textos",
+                    "Significação das palavras: sinônimos, antônimos, sentido próprio e figurado",
+                    "Ortografia vigente",
+                    "Pontuação",
+                    "Acentuação gráfica",
+                    "Emprego das classes de palavras: substantivo, adjetivo, numeral, pronome, verbo, advérbio, preposição, conjunção",
+                    "Concordância verbal e nominal",
+                    "Regência verbal e nominal",
+                    "Crase",
+                    "Emprego dos verbos e dos porquês",
+                    "Linguagem figurada, conotação e denotação",
+                    "Vícios de linguagem"
                 ],
                 legislacao: [
-                    "Lei Federal nº 13.022/2014: Estatuto Geral das Guardas Municipais", "Lei Complementar Municipal nº 734/2022 (com LC 788/2026) – Guarda Municipal de Florianópolis", "Lei Federal nº 10.826/2003: Estatuto do Desarmamento", "Estatuto dos Servidores Públicos do Município de Florianópolis", "Código de Trânsito Brasileiro (CTB) e resoluções do CONTRAN"
+                    "Lei Federal nº 13.022/2014: Estatuto Geral das Guardas Municipais",
+                    "Lei Complementar Municipal nº 734/2022 (com LC 788/2026) – Guarda Municipal de Florianópolis",
+                    "Lei Federal nº 10.826/2003: Estatuto do Desarmamento",
+                    "Estatuto dos Servidores Públicos do Município de Florianópolis",
+                    "Código de Trânsito Brasileiro (CTB) e resoluções do CONTRAN"
                 ],
                 dirAdmin: [
-                    "Conceito, objeto, princípios e fontes do Direito Administrativo", "Organização administrativa: direta e indireta, autarquias, fundações, empresas públicas, sociedades de economia mista", "Atos administrativos: conceito, requisitos, elementos, atributos, classificação, validade, extinção, revogação e anulação", "Controle dos atos administrativos", "Licitações e Contratos Administrativos: Lei Federal nº 14.133/2021", "Lei de Responsabilidade Fiscal: LC Federal nº 101/2000", "Lei de Improbidade Administrativa: Lei nº 8.429/1992 (com alterações da 14.230/2021)"
+                    "Conceito, objeto, princípios e fontes do Direito Administrativo",
+                    "Organização administrativa: administração direta e indireta, autarquias, fundações públicas, empresas públicas e sociedades de economia mista",
+                    "Atos administrativos: conceito, requisitos, elementos, atributos, classificação, validade, extinção, revogação e anulação",
+                    "Controle dos atos administrativos",
+                    "Licitações e Contratos Administrativos: Lei Federal nº 14.133/2021 (Nova Lei de Licitações e Contratos Administrativos)",
+                    "Lei de Responsabilidade Fiscal: Lei Complementar Federal nº 101/2000",
+                    "Lei de Improbidade Administrativa: Lei nº 8.429/1992 (com as alterações da Lei nº 14.230/2021)"
                 ],
                 dirConst: [
-                    "Conceito, princípios fundamentais e aplicabilidade da CF/88", "Hierarquia das leis e controle de constitucionalidade", "Organização do Estado e dos Poderes (Legislativo, Executivo e Judiciário)", "Direitos e Garantias Fundamentais: Art. 5º e seguintes da CF/88", "Segurança Pública: Art. 144 da CF/88 (papel das Guardas Municipais)", "Autonomia Municipal e Política Urbana: Arts. 29 a 31 e 182 a 183", "Sistema Constitucional Tributário e Finanças Públicas"
+                    "Conceito, princípios fundamentais e aplicabilidade da Constituição Federal de 1988",
+                    "Hierarquia das leis e controle de constitucionalidade",
+                    "Organização do Estado e dos Poderes (Legislativo, Executivo e Judiciário): composição e atribuições",
+                    "Direitos e Garantias Fundamentais: Artigo 5º e seguintes da CF/88",
+                    "Segurança Pública: Artigo 144 da CF/88 (incluindo o papel das Guardas Municipais)",
+                    "Autonomia Municipal e Política Urbana: Artigos 29 a 31 e 182 a 183 da CF/88",
+                    "Sistema Constitucional Tributário e Finanças Públicas"
                 ],
                 dirPenal: [
-                    "Teoria do crime: fato típico, ilicitude e culpabilidade", "Imputabilidade penal; infração penal: elementos e espécies; sujeito ativo e passivo", "Crimes contra a Administração Pública: Arts. 312 a 359-H do CP", "Abuso de Autoridade: Lei Federal nº 13.869/2019", "Lei de Drogas: Lei Federal nº 11.343/2006", "Crimes Hediondos: Lei Federal nº 8.072/1990", "Lei de Tortura: Lei Federal nº 9.455/1997", "Lei de Execução Penal: Lei Federal nº 7.210/1984", "Lei Maria da Penha: Lei Federal nº 11.340/2006"
+                    "Teoria do crime: fato típico, ilicitude e culpabilidade. Imputabilidade penal. Infração penal: elementos e espécies. Sujeito ativo e passivo",
+                    "Crimes contra a Administração Pública: Arts. 312 a 359-H do Código Penal",
+                    "Abuso de Autoridade: Lei Federal nº 13.869/2019",
+                    "Lei de Drogas: Lei Federal nº 11.343/2006",
+                    "Estatuto do Desarmamento: Lei Federal nº 10.826/2003",
+                    "Crimes Hediondos: Lei Federal nº 8.072/1990 (atualizada)",
+                    "Lei de Tortura: Lei Federal nº 9.455/1997",
+                    "Lei de Execução Penal: Lei Federal nº 7.210/1984",
+                    "Lei Maria da Penha: Lei Federal nº 11.340/2006"
                 ],
                 dirProcPenal: [
-                    "Inquérito policial e notitia criminis", "Ação penal: espécies", "Prova no processo penal (arts. 155 a 184 do CPP)", "Prisão em Flagrante e Medidas Cautelares: Arts. 301 a 310 do CPP (Pacote Anticrime)", "Processos Especiais: Crimes de responsabilidade dos funcionários públicos (arts. 513 a 518 do CPP)"
+                    "Inquérito policial e notitia criminis",
+                    "Ação penal: espécies",
+                    "Prova no processo penal (arts. 155 a 184 do CPP)",
+                    "Prisão em Flagrante e Medidas Cautelares: Arts. 301 a 310 do Código de Processo Penal (com as alterações da Lei nº 13.964/2019 – Pacote Anticrime)",
+                    "Processos Especiais: Crimes de responsabilidade dos funcionários públicos (arts. 513 a 518 do CPP)"
                 ],
                 complementar: [
-                    "Estatuto da Criança e do Adolescente (ECA) – medidas protetivas e atos infracionais", "Estatuto do Idoso: Lei Federal nº 10.741/2003", "Direito Ambiental: Lei Federal nº 9.605/1998 e competências municipais", "Direitos Humanos: noções gerais aplicadas à segurança pública e policiamento comunitário", "Política Nacional de Segurança Pública e Defesa Social"
+                    "Estatuto da Criança e do Adolescente (ECA): Lei Federal nº 8.069/1990 (foco em medidas protetivas e atos infracionais)",
+                    "Estatuto do Idoso: Lei Federal nº 10.741/2003",
+                    "Direito Ambiental: Lei Federal nº 9.605/1998 (Lei de Crimes Ambientais) e competências municipais",
+                    "Direitos Humanos: Noções gerais aplicadas à segurança pública e policiamento comunitário",
+                    "Política Nacional de Segurança Pública e Defesa Social"
                 ]
             };
 
@@ -1445,14 +1503,8 @@
             const farolIcon = document.getElementById('farolIcon');
             const farolTexto = document.getElementById('farolTexto');
             const statusDetalheTexto = document.getElementById('statusDetalheTexto');
-            const graficoBarraPreenchida = document.getElementById('graficoBarraPreenchida');
-            const setaPrevisto = document.getElementById('setaPrevisto');
-            const setaRealizado = document.getElementById('setaRealizado');
-            const labelPrevisto = document.getElementById('labelPrevisto');
-            const labelRealizado = document.getElementById('labelRealizado');
             const numeroDiasProva = document.getElementById('numeroDiasProva');
             const textoDiasProva = document.getElementById('textoDiasProva');
-            const modoGraficoTexto = document.getElementById('modoGraficoTexto');
             const modulosGrid = document.getElementById('modulosGrid');
             const modulosResumo = document.getElementById('modulosResumo');
             const diasAtrasoBadge = document.getElementById('diasAtrasoBadge');
@@ -1462,6 +1514,18 @@
             const sparklineContainer = document.getElementById('sparklineContainer');
             const btnSino = document.getElementById('btnSino');
             const notificacoesPainel = document.getElementById('notificacoesPainel');
+            const barraLeituraPreenchida = document.getElementById('barraLeituraPreenchida');
+            const barraConclusaoPreenchida = document.getElementById('barraConclusaoPreenchida');
+            const barraLeituraLegenda = document.getElementById('barraLeituraLegenda');
+            const barraConclusaoLegenda = document.getElementById('barraConclusaoLegenda');
+            const linhaPrevistoLeitura = document.getElementById('linhaPrevistoLeitura');
+            const linhaRealizadoLeitura = document.getElementById('linhaRealizadoLeitura');
+            const linhaPrevistoConclusao = document.getElementById('linhaPrevistoConclusao');
+            const linhaRealizadoConclusao = document.getElementById('linhaRealizadoConclusao');
+            const leituraPrevistoLabel = document.getElementById('leituraPrevistoLabel');
+            const leituraRealizadoLabel = document.getElementById('leituraRealizadoLabel');
+            const conclusaoPrevistoLabel = document.getElementById('conclusaoPrevistoLabel');
+            const conclusaoRealizadoLabel = document.getElementById('conclusaoRealizadoLabel');
 
             function atualizarEstadoDataSimulada() {
                 if (usarDataSistema) {
@@ -1529,6 +1593,8 @@
                     historicoProgresso = [];
                     renderizarTopicos();
                     renderizarModulos();
+                    renderizarNotificacoes();
+                    renderizarSparkline();
                     atualizarGraficoStatus();
                     salvarDados();
                 }
@@ -1600,19 +1666,49 @@
                                 input.dataset.modulo = moduloChave;
                                 input.className = tipo === 'Concluido' ? 'concluido-check' : '';
                                 input.checked = !!estadoCheckboxes[input.dataset.chave];
-                                input.addEventListener('change', function() {
-                                    estadoCheckboxes[this.dataset.chave] = this.checked;
-                                    if (this.checked) {
-                                        ultimasAtividades[this.dataset.modulo] = obterDataAtual().getTime();
-                                    }
-                                    registrarProgresso();
-                                    gerarNotificacoes();
-                                    salvarDados();
-                                    renderizarModulos();
-                                    renderizarNotificacoes();
-                                    renderizarSparkline();
-                                    atualizarGraficoStatus();
-                                });
+                                
+                                if (tipo === 'Concluido') {
+                                    input.addEventListener('change', function() {
+                                        const baseChave = this.dataset.chave.replace('-Concluido', '');
+                                        if (this.checked) {
+                                            estadoCheckboxes[`${baseChave}-Lido`] = true;
+                                            estadoCheckboxes[`${baseChave}-Revisado`] = true;
+                                            estadoCheckboxes[`${baseChave}-Exercitado`] = true;
+                                            estadoCheckboxes[`${baseChave}-Concluido`] = true;
+                                            ultimasAtividades[this.dataset.modulo] = obterDataAtual().getTime();
+                                            
+                                            const trElement = this.closest('tr');
+                                            trElement.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+                                                const cbBase = cb.dataset.chave.replace(/-[^-]+$/, '');
+                                                if (cbBase === baseChave) {
+                                                    cb.checked = true;
+                                                }
+                                            });
+                                        } else {
+                                            estadoCheckboxes[`${baseChave}-Concluido`] = false;
+                                        }
+                                        registrarProgresso();
+                                        gerarNotificacoes();
+                                        salvarDados();
+                                        renderizarModulos();
+                                        renderizarNotificacoes();
+                                        renderizarSparkline();
+                                        atualizarGraficoStatus();
+                                    });
+                                } else {
+                                    input.addEventListener('change', function() {
+                                        estadoCheckboxes[this.dataset.chave] = this.checked;
+                                        if (this.checked) {
+                                            ultimasAtividades[this.dataset.modulo] = obterDataAtual().getTime();
+                                        }
+                                        salvarDados();
+                                        renderizarModulos();
+                                        renderizarNotificacoes();
+                                        renderizarSparkline();
+                                        atualizarGraficoStatus();
+                                    });
+                                }
+                                
                                 tdCheck.appendChild(input);
                                 tr.appendChild(tdCheck);
                             });
@@ -1765,8 +1861,15 @@
                 const diasTotais = calcularDiasTotais();
                 const lidosAtual = contarPorTipo('Lido');
                 const concluidosAtual = contarPorTipo('Concluido');
-                const todosLidos = lidosAtual >= TOTAL_ASSUNTOS;
-                modoGraficoTexto.textContent = todosLidos ? 'Conclusão' : 'Leitura';
+                
+                const pctLeitura = (lidosAtual / TOTAL_ASSUNTOS) * 100;
+                const pctConclusao = (concluidosAtual / TOTAL_ASSUNTOS) * 100;
+                
+                barraLeituraPreenchida.style.width = `${pctLeitura}%`;
+                barraConclusaoPreenchida.style.width = `${pctConclusao}%`;
+                barraLeituraLegenda.textContent = `Leitura: ${Math.round(pctLeitura)}% (${lidosAtual}/${TOTAL_ASSUNTOS})`;
+                barraConclusaoLegenda.textContent = `Conclusão: ${Math.round(pctConclusao)}% (${concluidosAtual}/${TOTAL_ASSUNTOS})`;
+                
                 atualizarDiasProva();
                 atualizarPrevisaoConclusao();
                 renderizarSparkline();
@@ -1776,11 +1879,14 @@
                     farolIcon.textContent = '🟢';
                     farolTexto.textContent = 'Em dia';
                     statusDetalheTexto.textContent = 'Configure as datas';
-                    graficoBarraPreenchida.style.width = '0%';
-                    setaPrevisto.style.left = '0%';
-                    setaRealizado.style.left = '0%';
-                    labelPrevisto.textContent = 'Prev: 0%';
-                    labelRealizado.textContent = 'Real: 0%';
+                    linhaPrevistoLeitura.style.left = '0%';
+                    linhaRealizadoLeitura.style.left = `${pctLeitura}%`;
+                    linhaPrevistoConclusao.style.left = '0%';
+                    linhaRealizadoConclusao.style.left = `${pctConclusao}%`;
+                    leituraPrevistoLabel.textContent = 'Previsto: 0%';
+                    leituraRealizadoLabel.textContent = `Realizado: ${Math.round(pctLeitura)}%`;
+                    conclusaoPrevistoLabel.textContent = 'Previsto: 0%';
+                    conclusaoRealizadoLabel.textContent = `Realizado: ${Math.round(pctConclusao)}%`;
                     atualizarDiasAtrasoBadge(0);
                     return;
                 }
@@ -1789,7 +1895,6 @@
                 const dataIni = new Date(dataInicial + 'T00:00:00');
                 const dataFim = new Date(dataFinal + 'T00:00:00');
                 const metaLeituraDias = Math.ceil(diasTotais * 0.6);
-                let progressoPrevistoPct = 0;
                 let statusFarol = 'verde';
                 let textoFarol = 'Em dia';
                 let detalhe = '';
@@ -1798,64 +1903,65 @@
                 if (hoje < dataIni) {
                     textoFarol = 'Aguardando';
                     detalhe = `Início em ${dataInicial}`;
+                    linhaPrevistoLeitura.style.left = '0%';
+                    linhaRealizadoLeitura.style.left = `${pctLeitura}%`;
+                    linhaPrevistoConclusao.style.left = '0%';
+                    linhaRealizadoConclusao.style.left = `${pctConclusao}%`;
                 } else if (hoje > dataFim) {
-                    progressoPrevistoPct = 100;
-                    if (todosLidos) {
-                        if (concluidosAtual >= TOTAL_ASSUNTOS) {
-                            statusFarol = 'azul';
-                            textoFarol = 'Concluído';
-                            detalhe = 'Todos os assuntos concluídos!';
-                        } else {
-                            statusFarol = 'vermelho';
-                            textoFarol = 'Atrasado';
-                            detalhe = `Prazo encerrado. Faltam ${TOTAL_ASSUNTOS - concluidosAtual} conclusões.`;
-                        }
+                    if (concluidosAtual >= TOTAL_ASSUNTOS) {
+                        statusFarol = 'azul';
+                        textoFarol = 'Concluído';
+                        detalhe = 'Todos os assuntos concluídos!';
                     } else {
                         statusFarol = 'vermelho';
                         textoFarol = 'Atrasado';
-                        detalhe = `Prazo encerrado. Faltam ${TOTAL_ASSUNTOS - lidosAtual} leituras.`;
+                        detalhe = `Prazo encerrado. Faltam ${TOTAL_ASSUNTOS - concluidosAtual} conclusões.`;
                     }
+                    linhaPrevistoLeitura.style.left = '100%';
+                    linhaRealizadoLeitura.style.left = `${pctLeitura}%`;
+                    linhaPrevistoConclusao.style.left = '100%';
+                    linhaRealizadoConclusao.style.left = `${pctConclusao}%`;
                 } else {
                     const diasPassados = Math.floor((hoje.getTime() - dataIni.getTime()) / (1000*60*60*24)) + 1;
-                    if (todosLidos) {
-                        const progressoEsperado = Math.min(1, diasPassados / diasTotais);
-                        progressoPrevistoPct = progressoEsperado * 100;
-                        const esperados = Math.floor(TOTAL_ASSUNTOS * progressoEsperado);
-                        const diff = concluidosAtual - esperados;
-                        const porDia = TOTAL_ASSUNTOS / diasTotais;
-                        diasAtraso = Math.round(diff / porDia);
-                        if (diasAtraso <= -10) { statusFarol = 'vermelho'; textoFarol = `Atrasado ${Math.abs(diasAtraso)}d`; }
-                        else if (diasAtraso <= -1) { statusFarol = 'amarelo'; textoFarol = `Atrasado ${Math.abs(diasAtraso)}d`; }
-                        else if (diasAtraso >= 1) { statusFarol = 'azul'; textoFarol = `Adiantado ${diasAtraso}d`; }
-                        detalhe = `Conclusão: ${concluidosAtual}/${TOTAL_ASSUNTOS} • Dia ${diasPassados} de ${diasTotais}`;
-                    } else {
-                        const progressoEsperado = Math.min(1, diasPassados / metaLeituraDias);
-                        progressoPrevistoPct = progressoEsperado * 100;
-                        const esperados = Math.floor(TOTAL_ASSUNTOS * progressoEsperado);
-                        const diff = lidosAtual - esperados;
-                        const porDia = TOTAL_ASSUNTOS / metaLeituraDias;
-                        diasAtraso = Math.round(diff / porDia);
-                        if (diasAtraso <= -10) { statusFarol = 'vermelho'; textoFarol = `Atrasado ${Math.abs(diasAtraso)}d`; }
-                        else if (diasAtraso <= -1) { statusFarol = 'amarelo'; textoFarol = `Atrasado ${Math.abs(diasAtraso)}d`; }
-                        else if (diasAtraso >= 1) { statusFarol = 'azul'; textoFarol = `Adiantado ${diasAtraso}d`; }
-                        detalhe = `Leitura: ${lidosAtual}/${TOTAL_ASSUNTOS} • Meta até dia ${metaLeituraDias}`;
+                    
+                    const progressoLeituraEsperado = Math.min(1, diasPassados / metaLeituraDias);
+                    const pctLeituraPrevisto = progressoLeituraEsperado * 100;
+                    linhaPrevistoLeitura.style.left = `${pctLeituraPrevisto}%`;
+                    linhaRealizadoLeitura.style.left = `${pctLeitura}%`;
+                    
+                    const progressoConclusaoEsperado = Math.min(1, diasPassados / diasTotais);
+                    const pctConclusaoPrevisto = progressoConclusaoEsperado * 100;
+                    linhaPrevistoConclusao.style.left = `${pctConclusaoPrevisto}%`;
+                    linhaRealizadoConclusao.style.left = `${pctConclusao}%`;
+                    
+                    const esperadosConclusao = Math.floor(TOTAL_ASSUNTOS * progressoConclusaoEsperado);
+                    const diff = concluidosAtual - esperadosConclusao;
+                    const porDia = TOTAL_ASSUNTOS / diasTotais;
+                    diasAtraso = Math.round(diff / porDia);
+                    
+                    if (diasAtraso <= -10) {
+                        statusFarol = 'vermelho';
+                        textoFarol = `Atrasado ${Math.abs(diasAtraso)}d`;
+                    } else if (diasAtraso <= -1) {
+                        statusFarol = 'amarelo';
+                        textoFarol = `Atrasado ${Math.abs(diasAtraso)}d`;
+                    } else if (diasAtraso >= 1) {
+                        statusFarol = 'azul';
+                        textoFarol = `Adiantado ${diasAtraso}d`;
                     }
+                    detalhe = `Conclusão: ${concluidosAtual}/${TOTAL_ASSUNTOS} • Dia ${diasPassados} de ${diasTotais}`;
                 }
+
+                leituraPrevistoLabel.textContent = `Previsto: ${Math.round(parseFloat(linhaPrevistoLeitura.style.left))}%`;
+                leituraRealizadoLabel.textContent = `Realizado: ${Math.round(pctLeitura)}%`;
+                conclusaoPrevistoLabel.textContent = `Previsto: ${Math.round(parseFloat(linhaPrevistoConclusao.style.left))}%`;
+                conclusaoRealizadoLabel.textContent = `Realizado: ${Math.round(pctConclusao)}%`;
 
                 farol.className = `farol farol-${statusFarol}`;
                 farolIcon.textContent = statusFarol === 'vermelho' ? '🔴' : statusFarol === 'amarelo' ? '🟡' : statusFarol === 'azul' ? '🔵' : '🟢';
                 farolTexto.textContent = textoFarol;
                 statusDetalheTexto.textContent = detalhe;
                 atualizarDiasAtrasoBadge(diasAtraso);
-
-                const realPct = todosLidos ? (concluidosAtual / TOTAL_ASSUNTOS) * 100 : (lidosAtual / TOTAL_ASSUNTOS) * 100;
-                const pctPrevisto = Math.min(100, Math.max(0, progressoPrevistoPct));
-                const pctReal = Math.min(100, Math.max(0, realPct));
-                graficoBarraPreenchida.style.width = `${pctReal}%`;
-                setaPrevisto.style.left = `${pctPrevisto}%`;
-                setaRealizado.style.left = `${pctReal}%`;
-                labelPrevisto.textContent = `Prev: ${Math.round(pctPrevisto)}%`;
-                labelRealizado.textContent = `Real: ${Math.round(pctReal)}%`;
             }
 
             function iniciar() {
