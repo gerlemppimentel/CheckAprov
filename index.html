@@ -1088,9 +1088,9 @@
                 if (armazenamento.disponivel) {
                     try {
                         if (armazenamento.tipo === 'localStorage') {
-                            localStorage.setItem('checkaprovacao_v13', json);
+                            localStorage.setItem('checkaprovacao_v14', json);
                         } else {
-                            sessionStorage.setItem('checkaprovacao_v13', json);
+                            sessionStorage.setItem('checkaprovacao_v14', json);
                         }
                         esconderAvisoPersistencia();
                     } catch (e) {
@@ -1106,9 +1106,9 @@
                     let json = null;
                     if (armazenamento.disponivel) {
                         if (armazenamento.tipo === 'localStorage') {
-                            json = localStorage.getItem('checkaprovacao_v13');
+                            json = localStorage.getItem('checkaprovacao_v14');
                         } else {
-                            json = sessionStorage.getItem('checkaprovacao_v13');
+                            json = sessionStorage.getItem('checkaprovacao_v14');
                         }
                     }
                     if (json) {
@@ -1158,6 +1158,31 @@
                 const dataProva = new Date(dataFinal + 'T00:00:00');
                 dataProva.setDate(dataProva.getDate() + 1);
                 return dataProva;
+            }
+
+            function calcularDiasTotais() {
+                if (dataInicial && dataFinal) {
+                    const d1 = new Date(dataInicial + 'T00:00:00');
+                    const d2 = new Date(dataFinal + 'T00:00:00');
+                    if (d2 >= d1) return Math.floor((d2.getTime() - d1.getTime()) / (1000*60*60*24)) + 1;
+                }
+                return null;
+            }
+
+            function calcularDiasPassados() {
+                if (!dataInicial) return 0;
+                const hoje = obterDataAtual();
+                const dataIni = new Date(dataInicial + 'T00:00:00');
+                if (hoje < dataIni) return 0;
+                return Math.floor((hoje.getTime() - dataIni.getTime()) / (1000*60*60*24)) + 1;
+            }
+
+            function calcularDiasRestantes() {
+                if (!dataFinal) return 0;
+                const hoje = obterDataAtual();
+                const dataFim = new Date(dataFinal + 'T00:00:00');
+                if (hoje > dataFim) return 0;
+                return Math.max(0, Math.ceil((dataFim.getTime() - hoje.getTime()) / (1000*60*60*24)));
             }
 
             function atualizarStreak() {
@@ -1249,6 +1274,7 @@
                 if (!dataProva) return;
                 const hoje = obterDataAtual();
                 const diasRestantes = Math.ceil((dataProva.getTime() - hoje.getTime()) / (1000*60*60*24));
+                if (diasRestantes <= 0) return;
                 const marcos = [30, 15, 7, 3, 1];
                 if (marcos.includes(diasRestantes)) {
                     const id = `contagem-${diasRestantes}`;
@@ -1270,11 +1296,12 @@
 
             function verificarInatividade() {
                 const hoje = obterDataAtual();
+                if (Object.keys(ultimasAtividades).length === 0) return;
                 const atividadesRecentes = Object.values(ultimasAtividades).filter(ts => {
                     const dataAtividade = new Date(ts);
                     dataAtividade.setHours(0,0,0,0);
                     const diff = Math.floor((hoje.getTime() - dataAtividade.getTime()) / (1000*60*60*24));
-                    return diff <= 30;
+                    return diff >= 0 && diff <= 30;
                 });
                 if (atividadesRecentes.length === 0) {
                     const ultimaAtividadeGlobal = Object.values(ultimasAtividades).sort((a,b) => b - a)[0];
@@ -1318,21 +1345,16 @@
                 });
                 const lidosAtual = contarPorTipo('Lido');
                 const concluidosAtual = contarPorTipo('Concluido');
-                if (dataInicial && dataFinal) {
-                    const diasTotais = calcularDiasTotais();
-                    if (diasTotais) {
-                        const dataIni = new Date(dataInicial + 'T00:00:00');
-                        const diasPassados = Math.floor((hoje.getTime() - dataIni.getTime()) / (1000*60*60*24)) + 1;
-                        if (diasPassados > 0 && diasPassados <= diasTotais) {
-                            const metaLeituraDias = Math.ceil(diasTotais * 0.6);
-                            const esperadoLido = Math.floor(TOTAL_ASSUNTOS * Math.min(1, diasPassados / metaLeituraDias));
-                            if (lidosAtual < esperadoLido - 3) {
-                                novasNotifs.push({ id: `ritmo-lento-${diasPassados}`, texto: `🐢 Ritmo lento: você leu ${lidosAtual}/${TOTAL_ASSUNTOS} (esperado ~${esperadoLido}).`, icone: '🐢', visto: false, data: Date.now() });
-                            }
-                            if (concluidosAtual > 0 && concluidosAtual >= TOTAL_ASSUNTOS * 0.9 && concluidosAtual < TOTAL_ASSUNTOS) {
-                                novasNotifs.push({ id: `quase-la-${concluidosAtual}`, texto: `🎉 Quase lá! ${concluidosAtual}/${TOTAL_ASSUNTOS} concluídos!`, icone: '🎉', visto: false, data: Date.now() });
-                            }
-                        }
+                const diasTotais = calcularDiasTotais();
+                const diasPassados = calcularDiasPassados();
+                if (diasTotais && diasPassados > 0 && diasPassados <= diasTotais) {
+                    const metaLeituraDias = Math.ceil(diasTotais * 0.6);
+                    const esperadoLido = Math.floor(TOTAL_ASSUNTOS * Math.min(1, diasPassados / metaLeituraDias));
+                    if (lidosAtual < esperadoLido - 3) {
+                        novasNotifs.push({ id: `ritmo-lento-${diasPassados}`, texto: `🐢 Ritmo lento: você leu ${lidosAtual}/${TOTAL_ASSUNTOS} (esperado ~${esperadoLido}).`, icone: '🐢', visto: false, data: Date.now() });
+                    }
+                    if (concluidosAtual > 0 && concluidosAtual >= TOTAL_ASSUNTOS * 0.9 && concluidosAtual < TOTAL_ASSUNTOS) {
+                        novasNotifs.push({ id: `quase-la-${concluidosAtual}`, texto: `🎉 Quase lá! ${concluidosAtual}/${TOTAL_ASSUNTOS} concluídos!`, icone: '🎉', visto: false, data: Date.now() });
                     }
                 }
                 if (lidosAtual >= TOTAL_ASSUNTOS && concluidosAtual < TOTAL_ASSUNTOS) {
@@ -1552,6 +1574,10 @@
             btnAtualizar.addEventListener('click', () => {
                 dataInicial = dataInicialInput.value;
                 dataFinal = dataFinalInput.value;
+                if (dataInicial && dataFinal && new Date(dataFinal) < new Date(dataInicial)) {
+                    alert('Data Final deve ser após a Data Inicial.');
+                    return;
+                }
                 salvarDados();
                 atualizarConfigInfo();
                 atualizarGraficoStatus();
@@ -1705,7 +1731,7 @@
                     const ultimaAtividade = ultimasAtividades[modulo.chave] || null;
                     let estado = 'nao-iniciado';
                     let alerta = '';
-                    if (concluidos > 0) {
+                    if (concluidos > 0 || contarPorTipo('Lido', modulo.chave) > 0) {
                         if (ultimaAtividade) {
                             const dataUltima = new Date(ultimaAtividade);
                             dataUltima.setHours(0,0,0,0);
@@ -1745,15 +1771,6 @@
                     <span class="resumo-item"><span class="resumo-dot amarelo"></span> ${estagnados + naoIniciados} atenção</span>
                     <span class="resumo-item"><span class="resumo-dot vermelho"></span> ${abandonados} abandonados</span>
                 `;
-            }
-
-            function calcularDiasTotais() {
-                if (dataInicial && dataFinal) {
-                    const d1 = new Date(dataInicial + 'T00:00:00');
-                    const d2 = new Date(dataFinal + 'T00:00:00');
-                    if (d2 >= d1) return Math.floor((d2.getTime() - d1.getTime()) / (1000*60*60*24)) + 1;
-                }
-                return null;
             }
 
             function atualizarConfigInfo() {
@@ -1805,8 +1822,8 @@
                 const hoje = obterDataAtual();
                 const dataIni = new Date(dataInicial + 'T00:00:00');
                 const dataFim = new Date(dataFinal + 'T00:00:00');
-                const diasPassados = Math.floor((hoje.getTime() - dataIni.getTime()) / (1000*60*60*24)) + 1;
-                const diasRestantes = Math.max(0, Math.ceil((dataFim.getTime() - hoje.getTime()) / (1000*60*60*24)));
+                const diasPassados = calcularDiasPassados();
+                const diasRestantes = calcularDiasRestantes();
                 const metaLeituraDias = Math.ceil(diasTotais * 0.6);
                 const dataMetaLeitura = new Date(dataIni);
                 dataMetaLeitura.setDate(dataMetaLeitura.getDate() + metaLeituraDias - 1);
@@ -1819,6 +1836,7 @@
                 const ritmoNecessarioLeitura = metaLeituraDias > 0 && diasPassados <= metaLeituraDias ? restantesLeitura / Math.max(1, metaLeituraDias - diasPassados + 1) : 0;
                 let statusLeitura, classeLeitura, iconeLeitura;
                 if (lidosAtual >= TOTAL_ASSUNTOS) { statusLeitura = 'Leitura completa!'; classeLeitura = 'conseguir'; iconeLeitura = '✅'; }
+                else if (diasPassados > metaLeituraDias) { statusLeitura = 'meta de leitura expirada'; classeLeitura = 'nao-conseguir'; iconeLeitura = '❌'; }
                 else if (ritmoAtualLeitura >= ritmoNecessarioLeitura * 0.9) { statusLeitura = 'vai conseguir'; classeLeitura = 'conseguir'; iconeLeitura = '✅'; }
                 else if (ritmoAtualLeitura >= ritmoNecessarioLeitura * 0.7) { statusLeitura = 'precisa melhorar o ritmo'; classeLeitura = 'melhorar'; iconeLeitura = '⚠️'; }
                 else { statusLeitura = 'não vai conseguir'; classeLeitura = 'nao-conseguir'; iconeLeitura = '❌'; }
@@ -1828,6 +1846,7 @@
                 const ritmoNecessarioConclusao = diasRestantes > 0 ? restantesConclusao / diasRestantes : 0;
                 let statusConclusao, classeConclusao, iconeConclusao;
                 if (concluidosAtual >= TOTAL_ASSUNTOS) { statusConclusao = 'Conteúdo concluído!'; classeConclusao = 'conseguir'; iconeConclusao = '🎉'; }
+                else if (diasRestantes === 0) { statusConclusao = 'não vai conseguir - prazo esgotado'; classeConclusao = 'nao-conseguir'; iconeConclusao = '❌'; }
                 else if (ritmoAtualConclusao >= ritmoNecessarioConclusao * 0.9) { statusConclusao = 'vai conseguir'; classeConclusao = 'conseguir'; iconeConclusao = '✅'; }
                 else if (ritmoAtualConclusao >= ritmoNecessarioConclusao * 0.7) { statusConclusao = 'precisa melhorar o ritmo'; classeConclusao = 'melhorar'; iconeConclusao = '⚠️'; }
                 else { statusConclusao = 'não vai conseguir'; classeConclusao = 'nao-conseguir'; iconeConclusao = '❌'; }
@@ -1876,6 +1895,8 @@
                 const dataIni = new Date(dataInicial + 'T00:00:00');
                 const dataFim = new Date(dataFinal + 'T00:00:00');
                 const metaLeituraDias = Math.ceil(diasTotais * 0.6);
+                const diasPassados = calcularDiasPassados();
+                const diasRestantes = calcularDiasRestantes();
                 let statusFarol = 'verde';
                 let textoFarol = 'Em dia';
                 let detalhe = '';
@@ -1889,28 +1910,34 @@
                     linhaRealizadoConclusao.style.left = `${pctConclusao}%`;
                 } else if (hoje > dataFim) {
                     if (concluidosAtual >= TOTAL_ASSUNTOS) { statusFarol = 'azul'; textoFarol = 'Concluído'; detalhe = 'Todos os assuntos concluídos!'; }
-                    else { statusFarol = 'vermelho'; textoFarol = 'Atrasado'; detalhe = `Prazo encerrado. Faltam ${TOTAL_ASSUNTOS - concluidosAtual} conclusões.`; }
+                    else { statusFarol = 'vermelho'; textoFarol = 'Prazo encerrado'; detalhe = `Faltam ${TOTAL_ASSUNTOS - concluidosAtual} conclusões.`; }
                     linhaPrevistoLeitura.style.left = '100%';
                     linhaRealizadoLeitura.style.left = `${pctLeitura}%`;
                     linhaPrevistoConclusao.style.left = '100%';
                     linhaRealizadoConclusao.style.left = `${pctConclusao}%`;
                 } else {
-                    const diasPassados = Math.floor((hoje.getTime() - dataIni.getTime()) / (1000*60*60*24)) + 1;
                     const progressoLeituraEsperado = Math.min(1, diasPassados / metaLeituraDias);
                     const pctLeituraPrevisto = progressoLeituraEsperado * 100;
                     linhaPrevistoLeitura.style.left = `${pctLeituraPrevisto}%`;
                     linhaRealizadoLeitura.style.left = `${pctLeitura}%`;
-                    const progressoConclusaoEsperado = Math.min(1, diasPassados / diasTotais);
+                    const progressoConclusaoEsperado = diasTotais > 0 ? Math.min(1, diasPassados / diasTotais) : 0;
                     const pctConclusaoPrevisto = progressoConclusaoEsperado * 100;
                     linhaPrevistoConclusao.style.left = `${pctConclusaoPrevisto}%`;
                     linhaRealizadoConclusao.style.left = `${pctConclusao}%`;
                     const esperadosConclusao = Math.floor(TOTAL_ASSUNTOS * progressoConclusaoEsperado);
                     const diff = concluidosAtual - esperadosConclusao;
-                    const porDia = TOTAL_ASSUNTOS / diasTotais;
-                    diasAtraso = Math.round(diff / porDia);
-                    if (diasAtraso <= -10) { statusFarol = 'vermelho'; textoFarol = `Atrasado ${Math.abs(diasAtraso)}d`; }
-                    else if (diasAtraso <= -1) { statusFarol = 'amarelo'; textoFarol = `Atrasado ${Math.abs(diasAtraso)}d`; }
-                    else if (diasAtraso >= 1) { statusFarol = 'azul'; textoFarol = `Adiantado ${diasAtraso}d`; }
+                    if (diasRestantes === 0 && concluidosAtual < TOTAL_ASSUNTOS) {
+                        statusFarol = 'vermelho';
+                        textoFarol = 'Prazo encerrado';
+                        diasAtraso = Math.min(30, Math.ceil((TOTAL_ASSUNTOS - concluidosAtual) / Math.max(0.1, ritmoAtualConclusao || 1)));
+                    } else {
+                        const porDia = TOTAL_ASSUNTOS / diasTotais;
+                        diasAtraso = Math.round(diff / porDia);
+                        diasAtraso = Math.max(-30, Math.min(30, diasAtraso));
+                        if (diasAtraso <= -10) { statusFarol = 'vermelho'; textoFarol = `Atrasado ${Math.abs(diasAtraso)}d`; }
+                        else if (diasAtraso <= -1) { statusFarol = 'amarelo'; textoFarol = `Atrasado ${Math.abs(diasAtraso)}d`; }
+                        else if (diasAtraso >= 1) { statusFarol = 'azul'; textoFarol = `Adiantado ${diasAtraso}d`; }
+                    }
                     detalhe = `Conclusão: ${concluidosAtual}/${TOTAL_ASSUNTOS} • Dia ${diasPassados} de ${diasTotais}`;
                 }
                 leituraPrevistoLabel.textContent = `Previsto: ${Math.round(parseFloat(linhaPrevistoLeitura.style.left))}%`;
