@@ -514,7 +514,7 @@
 
         .modulos-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            grid-template-columns: repeat(2, 1fr);
             gap: 10px;
         }
         .modulo-card {
@@ -897,7 +897,9 @@
                 padding: 8px;
             }
             .dias-prova .numero-dias { font-size: 2rem; }
-            .modulos-grid { grid-template-columns: 1fr; }
+            .modulos-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+            .modulo-card { padding: 10px 8px; }
+            .modulo-card .modulo-percentual { font-size: 1.2rem; }
             .notificacoes-painel { right: 8px; top: 50px; width: 290px; }
             th { font-size: 0.6rem; padding: 5px 3px; }
             td { font-size: 0.78rem; padding: 6px 3px; }
@@ -1092,9 +1094,9 @@
                 if (armazenamento.disponivel) {
                     try {
                         if (armazenamento.tipo === 'localStorage') {
-                            localStorage.setItem('checkaprovacao_v7', json);
+                            localStorage.setItem('checkaprovacao_v8', json);
                         } else {
-                            sessionStorage.setItem('checkaprovacao_v7', json);
+                            sessionStorage.setItem('checkaprovacao_v8', json);
                         }
                         esconderAvisoPersistencia();
                     } catch (e) {
@@ -1110,9 +1112,9 @@
                     let json = null;
                     if (armazenamento.disponivel) {
                         if (armazenamento.tipo === 'localStorage') {
-                            json = localStorage.getItem('checkaprovacao_v7');
+                            json = localStorage.getItem('checkaprovacao_v8');
                         } else {
-                            json = sessionStorage.getItem('checkaprovacao_v7');
+                            json = sessionStorage.getItem('checkaprovacao_v8');
                         }
                     }
                     if (json) {
@@ -1610,7 +1612,7 @@
                     topicSection.dataset.topic = topico.id;
 
                     const topicHeader = document.createElement('div');
-                    topicHeader.className = 'topic-header';
+                    topicHeader.className = 'topic-header collapsed';
                     topicHeader.innerHTML = `<span>${topico.titulo}</span><span class="arrow">▼</span>`;
                     topicHeader.addEventListener('click', function() {
                         const content = this.nextElementSibling;
@@ -1624,7 +1626,7 @@
 
                     const topicContent = document.createElement('div');
                     topicContent.className = 'topic-content';
-                    topicContent.style.display = 'block';
+                    topicContent.style.display = 'none';
 
                     topico.subtopicos.forEach(subtopico => {
                         if (subtopico.titulo) {
@@ -1791,7 +1793,15 @@
                     card.addEventListener('click', function(e) {
                         e.preventDefault();
                         const target = document.getElementById(`modulo-${modulo.topicoId}`);
-                        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        if (target) {
+                            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                            const header = target.querySelector('.topic-header');
+                            const content = target.querySelector('.topic-content');
+                            if (header && content && content.style.display === 'none') {
+                                header.classList.remove('collapsed');
+                                content.style.display = 'block';
+                            }
+                        }
                     });
                     modulosGrid.appendChild(card);
                 });
