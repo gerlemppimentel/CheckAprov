@@ -514,7 +514,7 @@
 
         .modulos-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
             gap: 10px;
         }
         .modulo-card {
@@ -1094,9 +1094,9 @@
                 if (armazenamento.disponivel) {
                     try {
                         if (armazenamento.tipo === 'localStorage') {
-                            localStorage.setItem('checkaprovacao_v8', json);
+                            localStorage.setItem('checkaprovacao_v9', json);
                         } else {
-                            sessionStorage.setItem('checkaprovacao_v8', json);
+                            sessionStorage.setItem('checkaprovacao_v9', json);
                         }
                         esconderAvisoPersistencia();
                     } catch (e) {
@@ -1112,9 +1112,9 @@
                     let json = null;
                     if (armazenamento.disponivel) {
                         if (armazenamento.tipo === 'localStorage') {
-                            json = localStorage.getItem('checkaprovacao_v8');
+                            json = localStorage.getItem('checkaprovacao_v9');
                         } else {
-                            json = sessionStorage.getItem('checkaprovacao_v8');
+                            json = sessionStorage.getItem('checkaprovacao_v9');
                         }
                     }
                     if (json) {
