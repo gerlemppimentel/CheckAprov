@@ -910,9 +910,6 @@
             .btn-ms { justify-content: center; }
             .grafico-info-adicional { flex-direction: column; align-items: flex-start; }
         }
-        @media (max-width: 400px) {
-            .modulos-grid { grid-template-columns: 1fr; }
-        }
     </style>
 </head>
 <body>
@@ -1104,9 +1101,9 @@
                 if (armazenamento.disponivel) {
                     try {
                         if (armazenamento.tipo === 'localStorage') {
-                            localStorage.setItem('checkaprovacao_v10', json);
+                            localStorage.setItem('checkaprovacao_v11', json);
                         } else {
-                            sessionStorage.setItem('checkaprovacao_v10', json);
+                            sessionStorage.setItem('checkaprovacao_v11', json);
                         }
                         esconderAvisoPersistencia();
                     } catch (e) {
@@ -1122,9 +1119,9 @@
                     let json = null;
                     if (armazenamento.disponivel) {
                         if (armazenamento.tipo === 'localStorage') {
-                            json = localStorage.getItem('checkaprovacao_v10');
+                            json = localStorage.getItem('checkaprovacao_v11');
                         } else {
-                            json = sessionStorage.getItem('checkaprovacao_v10');
+                            json = sessionStorage.getItem('checkaprovacao_v11');
                         }
                     }
                     if (json) {
@@ -1291,7 +1288,6 @@
 
             function verificarInatividade() {
                 const hoje = obterDataAtual();
-                const hojeStr = hoje.toISOString().split('T')[0];
                 
                 const atividadesRecentes = Object.values(ultimasAtividades).filter(ts => {
                     const dataAtividade = new Date(ts);
