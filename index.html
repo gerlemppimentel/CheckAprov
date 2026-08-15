@@ -421,28 +421,39 @@
             transform: translateX(-50%);
         }
 
-        .grafico-info-adicional {
+        .feedback-textual {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 0.7rem;
-            color: var(--ms-gray-700);
-            flex-wrap: wrap;
+            flex-direction: column;
+            gap: 8px;
+            background: var(--ms-gray-100);
+            border-radius: var(--radius-md);
+            padding: 12px 14px;
+            font-size: 0.8rem;
+        }
+        .feedback-item {
+            display: flex;
+            align-items: flex-start;
             gap: 6px;
+            line-height: 1.4;
         }
-        .previsao-conclusao {
-            font-weight: 600;
-            color: var(--ms-blue);
+        .feedback-item .feedback-icone {
+            flex-shrink: 0;
+            font-size: 1rem;
         }
-        .ritmo-info {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
+        .feedback-item .feedback-texto {
+            flex: 1;
         }
-        .ritmo-item {
-            display: flex;
-            align-items: center;
-            gap: 4px;
+        .feedback-status {
+            font-weight: 700;
+        }
+        .feedback-status.conseguir {
+            color: var(--ms-green);
+        }
+        .feedback-status.melhorar {
+            color: #b8860b;
+        }
+        .feedback-status.nao-conseguir {
+            color: var(--ms-red);
         }
 
         .dias-prova {
@@ -855,26 +866,6 @@
             cursor: pointer;
         }
 
-        .sparkline-container {
-            display: flex;
-            align-items: flex-end;
-            gap: 3px;
-            height: 30px;
-            margin-top: 6px;
-        }
-        .sparkline-bar {
-            flex: 1;
-            background: var(--ms-blue);
-            border-radius: 2px 2px 0 0;
-            min-width: 4px;
-            transition: height 0.3s ease;
-            opacity: 0.7;
-        }
-        .sparkline-bar.hoje {
-            opacity: 1;
-            background: var(--ms-green);
-        }
-
         @media (max-width: 600px) {
             .app-shell { padding: 6px; }
             .ms-header { padding: 14px 12px; }
@@ -981,14 +972,9 @@
                             </div>
                         </div>
                     </div>
-                    <div class="grafico-info-adicional">
-                        <span class="previsao-conclusao" id="previsaoConclusao">—</span>
-                        <div class="ritmo-info">
-                            <span class="ritmo-item">📈 <span id="ritmoAtual">—/dia</span></span>
-                            <span class="ritmo-item">🎯 <span id="ritmoNecessario">—/dia</span></span>
-                        </div>
+                    <div class="feedback-textual" id="feedbackTextual">
+                        <!-- Preenchido via JavaScript -->
                     </div>
-                    <div class="sparkline-container" id="sparklineContainer"></div>
                 </div>
                 <div class="dias-prova" id="diasProvaContainer">
                     <div class="numero-dias" id="numeroDiasProva">—</div>
@@ -1073,7 +1059,6 @@
 
             const armazenamento = verificarArmazenamento();
             let notificacoes = [];
-            let historicoProgresso = [];
             let streakAtual = 0;
             let ultimoDiaEstudo = null;
             let modulosConcluidosNotificados = [];
@@ -1085,7 +1070,6 @@
                     checkboxes: estadoCheckboxes,
                     ultimasAtividades: ultimasAtividades,
                     notificacoes: notificacoes,
-                    historicoProgresso: historicoProgresso,
                     streakAtual: streakAtual,
                     ultimoDiaEstudo: ultimoDiaEstudo,
                     modulosConcluidosNotificados: modulosConcluidosNotificados,
@@ -1101,9 +1085,9 @@
                 if (armazenamento.disponivel) {
                     try {
                         if (armazenamento.tipo === 'localStorage') {
-                            localStorage.setItem('checkaprovacao_v11', json);
+                            localStorage.setItem('checkaprovacao_v12', json);
                         } else {
-                            sessionStorage.setItem('checkaprovacao_v11', json);
+                            sessionStorage.setItem('checkaprovacao_v12', json);
                         }
                         esconderAvisoPersistencia();
                     } catch (e) {
@@ -1119,9 +1103,9 @@
                     let json = null;
                     if (armazenamento.disponivel) {
                         if (armazenamento.tipo === 'localStorage') {
-                            json = localStorage.getItem('checkaprovacao_v11');
+                            json = localStorage.getItem('checkaprovacao_v12');
                         } else {
-                            json = sessionStorage.getItem('checkaprovacao_v11');
+                            json = sessionStorage.getItem('checkaprovacao_v12');
                         }
                     }
                     if (json) {
@@ -1129,7 +1113,6 @@
                         estadoCheckboxes = parsed.checkboxes || {};
                         ultimasAtividades = parsed.ultimasAtividades || {};
                         notificacoes = parsed.notificacoes || [];
-                        historicoProgresso = parsed.historicoProgresso || [];
                         streakAtual = parsed.streakAtual || 0;
                         ultimoDiaEstudo = parsed.ultimoDiaEstudo || null;
                         modulosConcluidosNotificados = parsed.modulosConcluidosNotificados || [];
@@ -1170,15 +1153,10 @@
             function atualizarStreak() {
                 const hoje = obterDataAtual();
                 const hojeStr = hoje.toISOString().split('T')[0];
-                
-                if (ultimoDiaEstudo === hojeStr) {
-                    return;
-                }
-
+                if (ultimoDiaEstudo === hojeStr) return;
                 const ontem = new Date(hoje);
                 ontem.setDate(ontem.getDate() - 1);
                 const ontemStr = ontem.toISOString().split('T')[0];
-
                 if (ultimoDiaEstudo === ontemStr) {
                     streakAtual++;
                 } else if (ultimoDiaEstudo && ultimoDiaEstudo !== hojeStr) {
@@ -1197,9 +1175,7 @@
                 } else {
                     streakAtual = 1;
                 }
-
                 ultimoDiaEstudo = hojeStr;
-
                 const marcosStreak = [3, 5, 7, 10, 15, 30];
                 if (marcosStreak.includes(streakAtual)) {
                     const existe = notificacoes.some(n => n.id === `streak-${streakAtual}`);
@@ -1238,18 +1214,14 @@
             function verificarRelatorioSemanal() {
                 const hoje = obterDataAtual();
                 const hojeStr = hoje.toISOString().split('T')[0];
-                
                 if (relatorioSemanalEnviado === hojeStr) return;
-
                 const ultimoRelatorio = relatorioSemanalEnviado ? new Date(relatorioSemanalEnviado + 'T00:00:00') : null;
                 const diffDias = ultimoRelatorio ? Math.floor((hoje.getTime() - ultimoRelatorio.getTime()) / (1000*60*60*24)) : 999;
-
                 if (diffDias >= 7) {
                     const lidosSemana = contarPorTipo('Lido');
                     const concluidosSemana = contarPorTipo('Concluido');
                     const modulosAtivos = modulos.filter(m => contarPorTipo('Concluido', m.chave) > 0).length;
                     const ritmoMedio = diasTotais && diasTotais > 0 ? (lidosSemana / Math.min(7, diasTotais)).toFixed(1) : '0';
-
                     notificacoes.unshift({
                         id: `relatorio-${hojeStr}`,
                         texto: `📊 Relatório semanal: ${lidosSemana} leituras, ${concluidosSemana} conclusões, ${modulosAtivos} módulos ativos. Ritmo: ${ritmoMedio}/dia.`,
@@ -1266,7 +1238,6 @@
                 const hoje = obterDataAtual();
                 const dataFim = new Date(dataFinal + 'T00:00:00');
                 const diasRestantes = Math.ceil((dataFim.getTime() - hoje.getTime()) / (1000*60*60*24));
-
                 const marcos = [30, 15, 7, 3, 1];
                 if (marcos.includes(diasRestantes)) {
                     const id = `contagem-${diasRestantes}`;
@@ -1288,14 +1259,12 @@
 
             function verificarInatividade() {
                 const hoje = obterDataAtual();
-                
                 const atividadesRecentes = Object.values(ultimasAtividades).filter(ts => {
                     const dataAtividade = new Date(ts);
                     dataAtividade.setHours(0,0,0,0);
                     const diff = Math.floor((hoje.getTime() - dataAtividade.getTime()) / (1000*60*60*24));
                     return diff <= 30;
                 });
-
                 if (atividadesRecentes.length === 0) {
                     const ultimaAtividadeGlobal = Object.values(ultimasAtividades).sort((a,b) => b - a)[0];
                     if (ultimaAtividadeGlobal) {
@@ -1322,7 +1291,6 @@
             function gerarNotificacoes() {
                 const novasNotifs = [];
                 const hoje = obterDataAtual();
-                
                 modulos.forEach(modulo => {
                     const ultimaAtividade = ultimasAtividades[modulo.chave] || null;
                     const concluidos = contarPorTipo('Concluido', modulo.chave);
@@ -1331,25 +1299,12 @@
                         dataUltima.setHours(0,0,0,0);
                         const diffDias = Math.floor((hoje.getTime() - dataUltima.getTime()) / (1000*60*60*24));
                         if (diffDias >= 10) {
-                            novasNotifs.push({
-                                id: `abandono-${modulo.chave}-${diffDias}`,
-                                texto: `⚠️ ${modulo.nome}: ${diffDias} dias sem estudar!`,
-                                icone: '🔴',
-                                visto: false,
-                                data: Date.now()
-                            });
+                            novasNotifs.push({ id: `abandono-${modulo.chave}-${diffDias}`, texto: `⚠️ ${modulo.nome}: ${diffDias} dias sem estudar!`, icone: '🔴', visto: false, data: Date.now() });
                         } else if (diffDias >= 4) {
-                            novasNotifs.push({
-                                id: `estagnado-${modulo.chave}-${diffDias}`,
-                                texto: `📌 ${modulo.nome}: ${diffDias} dias sem estudar.`,
-                                icone: '🟡',
-                                visto: false,
-                                data: Date.now()
-                            });
+                            novasNotifs.push({ id: `estagnado-${modulo.chave}-${diffDias}`, texto: `📌 ${modulo.nome}: ${diffDias} dias sem estudar.`, icone: '🟡', visto: false, data: Date.now() });
                         }
                     }
                 });
-
                 const lidosAtual = contarPorTipo('Lido');
                 const concluidosAtual = contarPorTipo('Concluido');
                 if (dataInicial && dataFinal) {
@@ -1361,53 +1316,27 @@
                             const metaLeituraDias = Math.ceil(diasTotais * 0.6);
                             const esperadoLido = Math.floor(TOTAL_ASSUNTOS * Math.min(1, diasPassados / metaLeituraDias));
                             if (lidosAtual < esperadoLido - 3) {
-                                novasNotifs.push({
-                                    id: `ritmo-lento-${diasPassados}`,
-                                    texto: `🐢 Ritmo lento: você leu ${lidosAtual}/${TOTAL_ASSUNTOS} (esperado ~${esperadoLido}).`,
-                                    icone: '🐢',
-                                    visto: false,
-                                    data: Date.now()
-                                });
+                                novasNotifs.push({ id: `ritmo-lento-${diasPassados}`, texto: `🐢 Ritmo lento: você leu ${lidosAtual}/${TOTAL_ASSUNTOS} (esperado ~${esperadoLido}).`, icone: '🐢', visto: false, data: Date.now() });
                             }
                             if (concluidosAtual > 0 && concluidosAtual >= TOTAL_ASSUNTOS * 0.9 && concluidosAtual < TOTAL_ASSUNTOS) {
-                                novasNotifs.push({
-                                    id: `quase-la-${concluidosAtual}`,
-                                    texto: `🎉 Quase lá! ${concluidosAtual}/${TOTAL_ASSUNTOS} concluídos!`,
-                                    icone: '🎉',
-                                    visto: false,
-                                    data: Date.now()
-                                });
+                                novasNotifs.push({ id: `quase-la-${concluidosAtual}`, texto: `🎉 Quase lá! ${concluidosAtual}/${TOTAL_ASSUNTOS} concluídos!`, icone: '🎉', visto: false, data: Date.now() });
                             }
                         }
                     }
                 }
-
                 if (lidosAtual >= TOTAL_ASSUNTOS && concluidosAtual < TOTAL_ASSUNTOS) {
-                    novasNotifs.push({
-                        id: 'leitura-completa',
-                        texto: '📚 Leitura completa! Agora foque em concluir os assuntos.',
-                        icone: '📚',
-                        visto: false,
-                        data: Date.now()
-                    });
+                    novasNotifs.push({ id: 'leitura-completa', texto: '📚 Leitura completa! Agora foque em concluir os assuntos.', icone: '📚', visto: false, data: Date.now() });
                 }
-
                 verificarConclusaoModulos();
                 verificarRelatorioSemanal();
                 verificarContagemRegressiva();
                 verificarInatividade();
                 atualizarStreak();
-
                 novasNotifs.forEach(nova => {
                     const existe = notificacoes.some(n => n.id === nova.id);
-                    if (!existe) {
-                        notificacoes.unshift(nova);
-                    }
+                    if (!existe) notificacoes.unshift(nova);
                 });
-
-                if (notificacoes.length > 100) {
-                    notificacoes = notificacoes.slice(0, 100);
-                }
+                if (notificacoes.length > 100) notificacoes = notificacoes.slice(0, 100);
             }
 
             function renderizarNotificacoes() {
@@ -1415,144 +1344,25 @@
                 const contador = document.getElementById('notifContador');
                 const badge = document.getElementById('sinoBadge');
                 const naoLidas = notificacoes.filter(n => !n.visto).length;
-
-                if (naoLidas > 0) {
-                    badge.style.display = 'flex';
-                    badge.textContent = naoLidas;
-                } else {
-                    badge.style.display = 'none';
-                }
+                if (naoLidas > 0) { badge.style.display = 'flex'; badge.textContent = naoLidas; } else { badge.style.display = 'none'; }
                 contador.textContent = `${naoLidas} não lidas`;
-
                 lista.innerHTML = '';
                 if (notificacoes.length === 0) {
                     lista.innerHTML = '<div style="padding:16px;text-align:center;color:var(--ms-gray-500);">Nenhuma notificação</div>';
                     return;
                 }
-
                 notificacoes.forEach((notif, idx) => {
                     const item = document.createElement('div');
                     item.className = `notificacao-item ${notif.visto ? 'visto' : ''}`;
-                    item.innerHTML = `
-                        <span class="notif-icone">${notif.icone}</span>
-                        <span class="notif-texto">${notif.texto}</span>
-                        ${!notif.visto ? `<button class="notif-btn-visto" data-idx="${idx}">Visto</button>` : ''}
-                    `;
+                    item.innerHTML = `<span class="notif-icone">${notif.icone}</span><span class="notif-texto">${notif.texto}</span>${!notif.visto ? `<button class="notif-btn-visto" data-idx="${idx}">Visto</button>` : ''}`;
                     lista.appendChild(item);
                 });
-
                 lista.querySelectorAll('.notif-btn-visto').forEach(btn => {
                     btn.addEventListener('click', function() {
                         const idx = parseInt(this.dataset.idx);
-                        if (notificacoes[idx]) {
-                            notificacoes[idx].visto = true;
-                            salvarDados();
-                            renderizarNotificacoes();
-                        }
+                        if (notificacoes[idx]) { notificacoes[idx].visto = true; salvarDados(); renderizarNotificacoes(); }
                     });
                 });
-            }
-
-            function registrarProgresso() {
-                const lidos = contarPorTipo('Lido');
-                const hoje = obterDataAtual();
-                const dataStr = hoje.toISOString().split('T')[0];
-                const registroExistente = historicoProgresso.find(h => h.data === dataStr);
-                if (registroExistente) {
-                    registroExistente.lidos = lidos;
-                } else {
-                    historicoProgresso.push({ data: dataStr, lidos: lidos });
-                    if (historicoProgresso.length > 14) {
-                        historicoProgresso.shift();
-                    }
-                }
-                atualizarStreak();
-            }
-
-            function renderizarSparkline() {
-                const container = document.getElementById('sparklineContainer');
-                container.innerHTML = '';
-                if (historicoProgresso.length === 0) {
-                    container.innerHTML = '<div style="font-size:0.65rem;color:var(--ms-gray-500);">Sem histórico ainda</div>';
-                    return;
-                }
-
-                const maxLidos = Math.max(...historicoProgresso.map(h => h.lidos), 1);
-                const hojeStr = obterDataAtual().toISOString().split('T')[0];
-
-                historicoProgresso.forEach(h => {
-                    const bar = document.createElement('div');
-                    bar.className = `sparkline-bar ${h.data === hojeStr ? 'hoje' : ''}`;
-                    const altura = Math.max(5, (h.lidos / maxLidos) * 100);
-                    bar.style.height = `${altura}%`;
-                    bar.title = `${h.data}: ${h.lidos} lidos`;
-                    container.appendChild(bar);
-                });
-            }
-
-            function atualizarPrevisaoConclusao() {
-                const el = document.getElementById('previsaoConclusao');
-                const ritmoAtualEl = document.getElementById('ritmoAtual');
-                const ritmoNecessarioEl = document.getElementById('ritmoNecessario');
-                
-                if (!dataFinal || !dataInicial) {
-                    el.textContent = '—';
-                    ritmoAtualEl.textContent = '—/dia';
-                    ritmoNecessarioEl.textContent = '—/dia';
-                    return;
-                }
-
-                const diasTotais = calcularDiasTotais();
-                if (!diasTotais) {
-                    el.textContent = '—';
-                    ritmoAtualEl.textContent = '—/dia';
-                    ritmoNecessarioEl.textContent = '—/dia';
-                    return;
-                }
-
-                const hoje = obterDataAtual();
-                const dataIni = new Date(dataInicial + 'T00:00:00');
-                const dataFim = new Date(dataFinal + 'T00:00:00');
-                const diasPassados = Math.floor((hoje.getTime() - dataIni.getTime()) / (1000*60*60*24)) + 1;
-                const diasRestantes = Math.max(0, Math.ceil((dataFim.getTime() - hoje.getTime()) / (1000*60*60*24)));
-
-                const concluidosAtual = contarPorTipo('Concluido');
-                const restantes = TOTAL_ASSUNTOS - concluidosAtual;
-
-                const ritmoAtualValor = diasPassados > 0 ? concluidosAtual / diasPassados : 0;
-                ritmoAtualEl.textContent = `${ritmoAtualValor.toFixed(1)}/dia`;
-
-                const ritmoNecessarioValor = diasRestantes > 0 ? restantes / diasRestantes : 0;
-                ritmoNecessarioEl.textContent = `${ritmoNecessarioValor.toFixed(1)}/dia`;
-
-                if (ritmoAtualValor > 0 && restantes > 0) {
-                    const diasNecessarios = Math.ceil(restantes / ritmoAtualValor);
-                    const dataPrevista = new Date(hoje);
-                    dataPrevista.setDate(dataPrevista.getDate() + diasNecessarios);
-                    const dataPrevistaStr = dataPrevista.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' });
-                    el.textContent = `📅 Conclusão prevista: ${dataPrevistaStr}`;
-                } else if (restantes === 0) {
-                    el.textContent = '🎉 Conteúdo concluído!';
-                } else {
-                    el.textContent = '—';
-                }
-            }
-
-            function atualizarDiasAtrasoBadge(diasAtraso) {
-                const badge = document.getElementById('diasAtrasoBadge');
-                if (diasAtraso <= -10) {
-                    badge.className = 'dias-atraso-badge muito-atrasado';
-                    badge.textContent = `🔴 ${Math.abs(diasAtraso)} dias atrasado`;
-                } else if (diasAtraso <= -1) {
-                    badge.className = 'dias-atraso-badge atrasado';
-                    badge.textContent = `🟡 ${Math.abs(diasAtraso)} dias atrasado`;
-                } else if (diasAtraso >= 1) {
-                    badge.className = 'dias-atraso-badge adiantado';
-                    badge.textContent = `🔵 ${diasAtraso} dias adiantado`;
-                } else {
-                    badge.className = 'dias-atraso-badge em-dia';
-                    badge.textContent = '✓ Em dia';
-                }
             }
 
             const assuntos = {
@@ -1681,10 +1491,6 @@
             const modulosGrid = document.getElementById('modulosGrid');
             const modulosResumo = document.getElementById('modulosResumo');
             const diasAtrasoBadge = document.getElementById('diasAtrasoBadge');
-            const previsaoConclusao = document.getElementById('previsaoConclusao');
-            const ritmoAtual = document.getElementById('ritmoAtual');
-            const ritmoNecessario = document.getElementById('ritmoNecessario');
-            const sparklineContainer = document.getElementById('sparklineContainer');
             const btnSino = document.getElementById('btnSino');
             const notificacoesPainel = document.getElementById('notificacoesPainel');
             const barraLeituraPreenchida = document.getElementById('barraLeituraPreenchida');
@@ -1699,14 +1505,10 @@
             const leituraRealizadoLabel = document.getElementById('leituraRealizadoLabel');
             const conclusaoPrevistoLabel = document.getElementById('conclusaoPrevistoLabel');
             const conclusaoRealizadoLabel = document.getElementById('conclusaoRealizadoLabel');
+            const feedbackTextual = document.getElementById('feedbackTextual');
 
             function atualizarEstadoDataSimulada() {
-                if (usarDataSistema) {
-                    dataSimuladaInput.disabled = true;
-                    dataSimuladaInput.value = '';
-                } else {
-                    dataSimuladaInput.disabled = false;
-                }
+                if (usarDataSistema) { dataSimuladaInput.disabled = true; dataSimuladaInput.value = ''; } else { dataSimuladaInput.disabled = false; }
             }
 
             usarDataSistemaCheckbox.addEventListener('change', function() {
@@ -1724,26 +1526,12 @@
                 atualizarGraficoStatus();
             });
 
-            btnSino.addEventListener('click', function(e) {
-                e.stopPropagation();
-                notificacoesPainel.classList.toggle('visivel');
-            });
-
-            document.addEventListener('click', function(e) {
-                if (!notificacoesPainel.contains(e.target) && e.target !== btnSino) {
-                    notificacoesPainel.classList.remove('visivel');
-                }
-            });
+            btnSino.addEventListener('click', function(e) { e.stopPropagation(); notificacoesPainel.classList.toggle('visivel'); });
+            document.addEventListener('click', function(e) { if (!notificacoesPainel.contains(e.target) && e.target !== btnSino) { notificacoesPainel.classList.remove('visivel'); } });
 
             function mostrarTela(nomeTela) {
                 telaAtual = nomeTela;
-                if (nomeTela === 'principal') {
-                    telaConfig.classList.remove('ativa');
-                    telaPrincipal.classList.add('ativa');
-                } else {
-                    telaPrincipal.classList.remove('ativa');
-                    telaConfig.classList.add('ativa');
-                }
+                if (nomeTela === 'principal') { telaConfig.classList.remove('ativa'); telaPrincipal.classList.add('ativa'); } else { telaPrincipal.classList.remove('ativa'); telaConfig.classList.add('ativa'); }
                 salvarDados();
             }
 
@@ -1763,7 +1551,6 @@
                     estadoCheckboxes = {};
                     ultimasAtividades = {};
                     notificacoes = [];
-                    historicoProgresso = [];
                     streakAtual = 0;
                     ultimoDiaEstudo = null;
                     modulosConcluidosNotificados = [];
@@ -1772,7 +1559,6 @@
                     renderizarTopicos();
                     renderizarModulos();
                     renderizarNotificacoes();
-                    renderizarSparkline();
                     atualizarGraficoStatus();
                     salvarDados();
                 }
@@ -1786,7 +1572,6 @@
                     topicSection.className = 'topic-section';
                     topicSection.id = `modulo-${topico.id}`;
                     topicSection.dataset.topic = topico.id;
-
                     const topicHeader = document.createElement('div');
                     topicHeader.className = 'topic-header collapsed';
                     topicHeader.innerHTML = `<span>${topico.titulo}</span><span class="arrow">▼</span>`;
@@ -1799,11 +1584,9 @@
                         }
                     });
                     topicSection.appendChild(topicHeader);
-
                     const topicContent = document.createElement('div');
                     topicContent.className = 'topic-content';
                     topicContent.style.display = 'none';
-
                     topico.subtopicos.forEach(subtopico => {
                         if (subtopico.titulo) {
                             const subtopicHeader = document.createElement('div');
@@ -1811,29 +1594,23 @@
                             subtopicHeader.textContent = subtopico.titulo;
                             topicContent.appendChild(subtopicHeader);
                         }
-
                         const moduloChave = subtopico.modulo || topico.id;
                         const tableResponsive = document.createElement('div');
                         tableResponsive.className = 'table-responsive';
                         const table = document.createElement('table');
-                        
                         const thead = document.createElement('thead');
                         const trHead = document.createElement('tr');
                         trHead.innerHTML = `<th class="assunto-col">Assunto</th><th>Lido</th><th>Revisado</th><th>Exercitado</th><th>Concluído</th>`;
                         thead.appendChild(trHead);
                         table.appendChild(thead);
-
                         const tbody = document.createElement('tbody');
-                        
                         subtopico.assuntos.forEach((assunto, idx) => {
                             const tr = document.createElement('tr');
                             const chaveBase = `${moduloChave}-${subtopico.titulo || 'geral'}-${idx}`;
-                            
                             const tdAssunto = document.createElement('td');
                             tdAssunto.className = 'assunto-col';
                             tdAssunto.textContent = assunto;
                             tr.appendChild(tdAssunto);
-
                             ['Lido', 'Revisado', 'Exercitado', 'Concluido'].forEach(tipo => {
                                 const tdCheck = document.createElement('td');
                                 tdCheck.className = 'checkbox-cell';
@@ -1844,7 +1621,6 @@
                                 input.dataset.modulo = moduloChave;
                                 input.className = tipo === 'Concluido' ? 'concluido-check' : '';
                                 input.checked = !!estadoCheckboxes[input.dataset.chave];
-                                
                                 if (tipo === 'Concluido') {
                                     input.addEventListener('change', function() {
                                         const baseChave = this.dataset.chave.replace('-Concluido', '');
@@ -1854,53 +1630,40 @@
                                             estadoCheckboxes[`${baseChave}-Exercitado`] = true;
                                             estadoCheckboxes[`${baseChave}-Concluido`] = true;
                                             ultimasAtividades[this.dataset.modulo] = obterDataAtual().getTime();
-                                            
                                             const trElement = this.closest('tr');
                                             trElement.querySelectorAll('input[type="checkbox"]').forEach(cb => {
                                                 const cbBase = cb.dataset.chave.replace(/-[^-]+$/, '');
-                                                if (cbBase === baseChave) {
-                                                    cb.checked = true;
-                                                }
+                                                if (cbBase === baseChave) cb.checked = true;
                                             });
                                         } else {
                                             estadoCheckboxes[`${baseChave}-Concluido`] = false;
                                         }
-                                        registrarProgresso();
                                         gerarNotificacoes();
                                         salvarDados();
                                         renderizarModulos();
                                         renderizarNotificacoes();
-                                        renderizarSparkline();
                                         atualizarGraficoStatus();
                                     });
                                 } else {
                                     input.addEventListener('change', function() {
                                         estadoCheckboxes[this.dataset.chave] = this.checked;
-                                        if (this.checked) {
-                                            ultimasAtividades[this.dataset.modulo] = obterDataAtual().getTime();
-                                        }
-                                        registrarProgresso();
+                                        if (this.checked) ultimasAtividades[this.dataset.modulo] = obterDataAtual().getTime();
                                         gerarNotificacoes();
                                         salvarDados();
                                         renderizarModulos();
                                         renderizarNotificacoes();
-                                        renderizarSparkline();
                                         atualizarGraficoStatus();
                                     });
                                 }
-                                
                                 tdCheck.appendChild(input);
                                 tr.appendChild(tdCheck);
                             });
-
                             tbody.appendChild(tr);
                         });
-
                         table.appendChild(tbody);
                         tableResponsive.appendChild(table);
                         topicContent.appendChild(tableResponsive);
                     });
-
                     topicSection.appendChild(topicContent);
                     conteudoPrincipal.appendChild(topicSection);
                 });
@@ -1923,7 +1686,6 @@
                 modulosGrid.innerHTML = '';
                 let ativos = 0, estagnados = 0, abandonados = 0, naoIniciados = 0;
                 const hoje = obterDataAtual();
-
                 modulos.forEach(modulo => {
                     const total = contarAssuntosModulo(modulo.chave);
                     const concluidos = contarPorTipo('Concluido', modulo.chave);
@@ -1931,33 +1693,16 @@
                     const ultimaAtividade = ultimasAtividades[modulo.chave] || null;
                     let estado = 'nao-iniciado';
                     let alerta = '';
-
                     if (concluidos > 0) {
                         if (ultimaAtividade) {
                             const dataUltima = new Date(ultimaAtividade);
                             dataUltima.setHours(0,0,0,0);
                             const diffDias = Math.floor((hoje.getTime() - dataUltima.getTime()) / (1000*60*60*24));
-                            if (diffDias >= 10) {
-                                estado = 'abandonado';
-                                alerta = `${diffDias} dias sem estudar`;
-                                abandonados++;
-                            } else if (diffDias >= 4) {
-                                estado = 'estagnado';
-                                alerta = `${diffDias} dias sem estudar`;
-                                estagnados++;
-                            } else {
-                                estado = 'em-progresso';
-                                ativos++;
-                            }
-                        } else {
-                            estado = 'em-progresso';
-                            ativos++;
-                        }
-                    } else {
-                        naoIniciados++;
-                        alerta = 'Não iniciado';
-                    }
-
+                            if (diffDias >= 10) { estado = 'abandonado'; alerta = `${diffDias} dias sem estudar`; abandonados++; }
+                            else if (diffDias >= 4) { estado = 'estagnado'; alerta = `${diffDias} dias sem estudar`; estagnados++; }
+                            else { estado = 'em-progresso'; ativos++; }
+                        } else { estado = 'em-progresso'; ativos++; }
+                    } else { naoIniciados++; alerta = 'Não iniciado'; }
                     const card = document.createElement('a');
                     card.className = `modulo-card ${estado}`;
                     card.href = `#modulo-${modulo.topicoId}`;
@@ -1983,7 +1728,6 @@
                     });
                     modulosGrid.appendChild(card);
                 });
-
                 modulosResumo.innerHTML = `
                     <span class="resumo-item"><span class="resumo-dot verde"></span> ${ativos} ativos</span>
                     <span class="resumo-item"><span class="resumo-dot amarelo"></span> ${estagnados + naoIniciados} atenção</span>
@@ -2002,13 +1746,7 @@
 
             function atualizarConfigInfo() {
                 const dias = calcularDiasTotais();
-                if (dias && dias > 0) {
-                    diasTotaisEl.textContent = dias;
-                    diasMetaLidoEl.textContent = Math.ceil(dias * 0.6);
-                } else {
-                    diasTotaisEl.textContent = '—';
-                    diasMetaLidoEl.textContent = '—';
-                }
+                if (dias && dias > 0) { diasTotaisEl.textContent = dias; diasMetaLidoEl.textContent = Math.ceil(dias * 0.6); } else { diasTotaisEl.textContent = '—'; diasMetaLidoEl.textContent = '—'; }
             }
 
             function atualizarResumoRodape() {
@@ -2026,42 +1764,78 @@
             function atualizarDiasProva() {
                 const dias = calcularDiasAteProva();
                 const el = numeroDiasProva;
-                if (dias === null || isNaN(dias)) {
-                    el.textContent = '—';
-                    textoDiasProva.textContent = 'defina a data';
-                    el.className = 'numero-dias';
-                } else if (dias < 0) {
-                    el.textContent = '✓';
-                    textoDiasProva.textContent = 'prova realizada';
-                    el.className = 'numero-dias verde';
-                } else if (dias === 0) {
-                    el.textContent = 'HOJE';
-                    textoDiasProva.textContent = 'dia da prova';
-                    el.className = 'numero-dias vermelho';
-                } else {
-                    el.textContent = dias;
-                    textoDiasProva.textContent = dias === 1 ? 'dia até a prova' : 'dias até a prova';
-                    el.className = dias > 30 ? 'numero-dias verde' : dias >= 10 ? 'numero-dias amarelo' : 'numero-dias vermelho';
+                if (dias === null || isNaN(dias)) { el.textContent = '—'; textoDiasProva.textContent = 'defina a data'; el.className = 'numero-dias'; }
+                else if (dias < 0) { el.textContent = '✓'; textoDiasProva.textContent = 'prova realizada'; el.className = 'numero-dias verde'; }
+                else if (dias === 0) { el.textContent = 'HOJE'; textoDiasProva.textContent = 'dia da prova'; el.className = 'numero-dias vermelho'; }
+                else { el.textContent = dias; textoDiasProva.textContent = dias === 1 ? 'dia até a prova' : 'dias até a prova'; el.className = dias > 30 ? 'numero-dias verde' : dias >= 10 ? 'numero-dias amarelo' : 'numero-dias vermelho'; }
+            }
+
+            function atualizarFeedbackTextual() {
+                if (!dataInicial || !dataFinal) {
+                    feedbackTextual.innerHTML = '<div style="color:var(--ms-gray-500);">Configure as datas para ver o feedback.</div>';
+                    return;
                 }
+                const diasTotais = calcularDiasTotais();
+                if (!diasTotais) {
+                    feedbackTextual.innerHTML = '<div style="color:var(--ms-gray-500);">Configure as datas para ver o feedback.</div>';
+                    return;
+                }
+                const hoje = obterDataAtual();
+                const dataIni = new Date(dataInicial + 'T00:00:00');
+                const dataFim = new Date(dataFinal + 'T00:00:00');
+                const diasPassados = Math.floor((hoje.getTime() - dataIni.getTime()) / (1000*60*60*24)) + 1;
+                const diasRestantes = Math.max(0, Math.ceil((dataFim.getTime() - hoje.getTime()) / (1000*60*60*24)));
+                const metaLeituraDias = Math.ceil(diasTotais * 0.6);
+                const dataMetaLeitura = new Date(dataIni);
+                dataMetaLeitura.setDate(dataMetaLeitura.getDate() + metaLeituraDias - 1);
+                const dataMetaLeituraStr = dataMetaLeitura.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' });
+                const lidosAtual = contarPorTipo('Lido');
+                const concluidosAtual = contarPorTipo('Concluido');
+                
+                // Leitura
+                const restantesLeitura = TOTAL_ASSUNTOS - lidosAtual;
+                const ritmoAtualLeitura = diasPassados > 0 ? lidosAtual / diasPassados : 0;
+                const ritmoNecessarioLeitura = metaLeituraDias > 0 && diasPassados <= metaLeituraDias ? restantesLeitura / Math.max(1, metaLeituraDias - diasPassados + 1) : 0;
+                let statusLeitura, classeLeitura, iconeLeitura;
+                if (lidosAtual >= TOTAL_ASSUNTOS) { statusLeitura = 'Leitura completa!'; classeLeitura = 'conseguir'; iconeLeitura = '✅'; }
+                else if (ritmoAtualLeitura >= ritmoNecessarioLeitura * 0.9) { statusLeitura = 'vai conseguir'; classeLeitura = 'conseguir'; iconeLeitura = '✅'; }
+                else if (ritmoAtualLeitura >= ritmoNecessarioLeitura * 0.7) { statusLeitura = 'precisa melhorar o ritmo'; classeLeitura = 'melhorar'; iconeLeitura = '⚠️'; }
+                else { statusLeitura = 'não vai conseguir'; classeLeitura = 'nao-conseguir'; iconeLeitura = '❌'; }
+                
+                // Conclusão
+                const restantesConclusao = TOTAL_ASSUNTOS - concluidosAtual;
+                const ritmoAtualConclusao = diasPassados > 0 ? concluidosAtual / diasPassados : 0;
+                const ritmoNecessarioConclusao = diasRestantes > 0 ? restantesConclusao / diasRestantes : 0;
+                let statusConclusao, classeConclusao, iconeConclusao;
+                if (concluidosAtual >= TOTAL_ASSUNTOS) { statusConclusao = 'Conteúdo concluído!'; classeConclusao = 'conseguir'; iconeConclusao = '🎉'; }
+                else if (ritmoAtualConclusao >= ritmoNecessarioConclusao * 0.9) { statusConclusao = 'vai conseguir'; classeConclusao = 'conseguir'; iconeConclusao = '✅'; }
+                else if (ritmoAtualConclusao >= ritmoNecessarioConclusao * 0.7) { statusConclusao = 'precisa melhorar o ritmo'; classeConclusao = 'melhorar'; iconeConclusao = '⚠️'; }
+                else { statusConclusao = 'não vai conseguir'; classeConclusao = 'nao-conseguir'; iconeConclusao = '❌'; }
+
+                feedbackTextual.innerHTML = `
+                    <div class="feedback-item">
+                        <span class="feedback-icone">📖</span>
+                        <span class="feedback-texto"><strong>Meta de Leitura:</strong> concluir até <strong>${dataMetaLeituraStr}</strong>. No ritmo atual você <span class="feedback-status ${classeLeitura}">${iconeLeitura} ${statusLeitura}</span>.</span>
+                    </div>
+                    <div class="feedback-item">
+                        <span class="feedback-icone">✅</span>
+                        <span class="feedback-texto"><strong>Meta de Conclusão:</strong> até dia <strong>${dataFinal.split('-').reverse().join('/')}</strong> (véspera da prova). No ritmo atual você <span class="feedback-status ${classeConclusao}">${iconeConclusao} ${statusConclusao}</span>.</span>
+                    </div>
+                `;
             }
 
             function atualizarGraficoStatus() {
                 const diasTotais = calcularDiasTotais();
                 const lidosAtual = contarPorTipo('Lido');
                 const concluidosAtual = contarPorTipo('Concluido');
-                
                 const pctLeitura = (lidosAtual / TOTAL_ASSUNTOS) * 100;
                 const pctConclusao = (concluidosAtual / TOTAL_ASSUNTOS) * 100;
-                
                 barraLeituraPreenchida.style.width = `${pctLeitura}%`;
                 barraConclusaoPreenchida.style.width = `${pctConclusao}%`;
                 barraLeituraLegenda.textContent = `Leitura: ${Math.round(pctLeitura)}% (${lidosAtual}/${TOTAL_ASSUNTOS})`;
                 barraConclusaoLegenda.textContent = `Conclusão: ${Math.round(pctConclusao)}% (${concluidosAtual}/${TOTAL_ASSUNTOS})`;
-                
                 atualizarDiasProva();
-                atualizarPrevisaoConclusao();
-                renderizarSparkline();
-
+                atualizarFeedbackTextual();
                 if (!diasTotais || diasTotais <= 0 || !dataInicial || !dataFinal) {
                     farol.className = 'farol farol-verde';
                     farolIcon.textContent = '🟢';
@@ -2078,7 +1852,6 @@
                     atualizarDiasAtrasoBadge(0);
                     return;
                 }
-
                 const hoje = obterDataAtual();
                 const dataIni = new Date(dataInicial + 'T00:00:00');
                 const dataFim = new Date(dataFinal + 'T00:00:00');
@@ -2087,7 +1860,6 @@
                 let textoFarol = 'Em dia';
                 let detalhe = '';
                 let diasAtraso = 0;
-
                 if (hoje < dataIni) {
                     textoFarol = 'Aguardando';
                     detalhe = `Início em ${dataInicial}`;
@@ -2096,55 +1868,35 @@
                     linhaPrevistoConclusao.style.left = '0%';
                     linhaRealizadoConclusao.style.left = `${pctConclusao}%`;
                 } else if (hoje > dataFim) {
-                    if (concluidosAtual >= TOTAL_ASSUNTOS) {
-                        statusFarol = 'azul';
-                        textoFarol = 'Concluído';
-                        detalhe = 'Todos os assuntos concluídos!';
-                    } else {
-                        statusFarol = 'vermelho';
-                        textoFarol = 'Atrasado';
-                        detalhe = `Prazo encerrado. Faltam ${TOTAL_ASSUNTOS - concluidosAtual} conclusões.`;
-                    }
+                    if (concluidosAtual >= TOTAL_ASSUNTOS) { statusFarol = 'azul'; textoFarol = 'Concluído'; detalhe = 'Todos os assuntos concluídos!'; }
+                    else { statusFarol = 'vermelho'; textoFarol = 'Atrasado'; detalhe = `Prazo encerrado. Faltam ${TOTAL_ASSUNTOS - concluidosAtual} conclusões.`; }
                     linhaPrevistoLeitura.style.left = '100%';
                     linhaRealizadoLeitura.style.left = `${pctLeitura}%`;
                     linhaPrevistoConclusao.style.left = '100%';
                     linhaRealizadoConclusao.style.left = `${pctConclusao}%`;
                 } else {
                     const diasPassados = Math.floor((hoje.getTime() - dataIni.getTime()) / (1000*60*60*24)) + 1;
-                    
                     const progressoLeituraEsperado = Math.min(1, diasPassados / metaLeituraDias);
                     const pctLeituraPrevisto = progressoLeituraEsperado * 100;
                     linhaPrevistoLeitura.style.left = `${pctLeituraPrevisto}%`;
                     linhaRealizadoLeitura.style.left = `${pctLeitura}%`;
-                    
                     const progressoConclusaoEsperado = Math.min(1, diasPassados / diasTotais);
                     const pctConclusaoPrevisto = progressoConclusaoEsperado * 100;
                     linhaPrevistoConclusao.style.left = `${pctConclusaoPrevisto}%`;
                     linhaRealizadoConclusao.style.left = `${pctConclusao}%`;
-                    
                     const esperadosConclusao = Math.floor(TOTAL_ASSUNTOS * progressoConclusaoEsperado);
                     const diff = concluidosAtual - esperadosConclusao;
                     const porDia = TOTAL_ASSUNTOS / diasTotais;
                     diasAtraso = Math.round(diff / porDia);
-                    
-                    if (diasAtraso <= -10) {
-                        statusFarol = 'vermelho';
-                        textoFarol = `Atrasado ${Math.abs(diasAtraso)}d`;
-                    } else if (diasAtraso <= -1) {
-                        statusFarol = 'amarelo';
-                        textoFarol = `Atrasado ${Math.abs(diasAtraso)}d`;
-                    } else if (diasAtraso >= 1) {
-                        statusFarol = 'azul';
-                        textoFarol = `Adiantado ${diasAtraso}d`;
-                    }
+                    if (diasAtraso <= -10) { statusFarol = 'vermelho'; textoFarol = `Atrasado ${Math.abs(diasAtraso)}d`; }
+                    else if (diasAtraso <= -1) { statusFarol = 'amarelo'; textoFarol = `Atrasado ${Math.abs(diasAtraso)}d`; }
+                    else if (diasAtraso >= 1) { statusFarol = 'azul'; textoFarol = `Adiantado ${diasAtraso}d`; }
                     detalhe = `Conclusão: ${concluidosAtual}/${TOTAL_ASSUNTOS} • Dia ${diasPassados} de ${diasTotais}`;
                 }
-
                 leituraPrevistoLabel.textContent = `Previsto: ${Math.round(parseFloat(linhaPrevistoLeitura.style.left))}%`;
                 leituraRealizadoLabel.textContent = `Realizado: ${Math.round(pctLeitura)}%`;
                 conclusaoPrevistoLabel.textContent = `Previsto: ${Math.round(parseFloat(linhaPrevistoConclusao.style.left))}%`;
                 conclusaoRealizadoLabel.textContent = `Realizado: ${Math.round(pctConclusao)}%`;
-
                 farol.className = `farol farol-${statusFarol}`;
                 farolIcon.textContent = statusFarol === 'vermelho' ? '🔴' : statusFarol === 'amarelo' ? '🟡' : statusFarol === 'azul' ? '🔵' : '🟢';
                 farolTexto.textContent = textoFarol;
@@ -2152,12 +1904,19 @@
                 atualizarDiasAtrasoBadge(diasAtraso);
             }
 
+            function atualizarDiasAtrasoBadge(diasAtraso) {
+                const badge = document.getElementById('diasAtrasoBadge');
+                if (diasAtraso <= -10) { badge.className = 'dias-atraso-badge muito-atrasado'; badge.textContent = `🔴 ${Math.abs(diasAtraso)} dias atrasado`; }
+                else if (diasAtraso <= -1) { badge.className = 'dias-atraso-badge atrasado'; badge.textContent = `🟡 ${Math.abs(diasAtraso)} dias atrasado`; }
+                else if (diasAtraso >= 1) { badge.className = 'dias-atraso-badge adiantado'; badge.textContent = `🔵 ${diasAtraso} dias adiantado`; }
+                else { badge.className = 'dias-atraso-badge em-dia'; badge.textContent = '✓ Em dia'; }
+            }
+
             function iniciar() {
                 carregarDados();
                 renderizarTopicos();
                 renderizarModulos();
                 renderizarNotificacoes();
-                renderizarSparkline();
                 gerarNotificacoes();
                 renderizarNotificacoes();
                 atualizarConfigInfo();
@@ -2173,11 +1932,7 @@
                 if (!armazenamento.disponivel) mostrarAvisoPersistencia();
             }
 
-            if (document.readyState === 'loading') {
-                document.addEventListener('DOMContentLoaded', iniciar);
-            } else {
-                iniciar();
-            }
+            if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', iniciar); } else { iniciar(); }
         })();
     </script>
 </body>
