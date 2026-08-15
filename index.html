@@ -153,7 +153,7 @@
             position: fixed;
             top: 60px;
             right: 16px;
-            width: 320px;
+            width: 350px;
             max-width: 90vw;
             background: #fff;
             border-radius: var(--radius-md);
@@ -161,7 +161,7 @@
             z-index: 100;
             display: none;
             overflow: hidden;
-            max-height: 400px;
+            max-height: 450px;
             border: 1px solid var(--ms-gray-300);
         }
         .notificacoes-painel.visivel {
@@ -184,7 +184,7 @@
         }
         .notificacoes-lista {
             overflow-y: auto;
-            max-height: 320px;
+            max-height: 370px;
         }
         .notificacao-item {
             padding: 10px 16px;
@@ -900,7 +900,7 @@
             .modulos-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
             .modulo-card { padding: 10px 8px; }
             .modulo-card .modulo-percentual { font-size: 1.2rem; }
-            .notificacoes-painel { right: 8px; top: 50px; width: 290px; }
+            .notificacoes-painel { right: 8px; top: 50px; width: 300px; }
             th { font-size: 0.6rem; padding: 5px 3px; }
             td { font-size: 0.78rem; padding: 6px 3px; }
             .checkbox-cell input[type="checkbox"] { width: 16px; height: 16px; }
@@ -1077,6 +1077,11 @@
             const armazenamento = verificarArmazenamento();
             let notificacoes = [];
             let historicoProgresso = [];
+            let streakAtual = 0;
+            let ultimoDiaEstudo = null;
+            let modulosConcluidosNotificados = [];
+            let relatorioSemanalEnviado = null;
+            let alertasContagemEnviados = [];
 
             function salvarDados() {
                 const dados = {
@@ -1084,6 +1089,11 @@
                     ultimasAtividades: ultimasAtividades,
                     notificacoes: notificacoes,
                     historicoProgresso: historicoProgresso,
+                    streakAtual: streakAtual,
+                    ultimoDiaEstudo: ultimoDiaEstudo,
+                    modulosConcluidosNotificados: modulosConcluidosNotificados,
+                    relatorioSemanalEnviado: relatorioSemanalEnviado,
+                    alertasContagemEnviados: alertasContagemEnviados,
                     dataInicial: dataInicial,
                     dataFinal: dataFinal,
                     dataSimulada: dataSimulada,
@@ -1094,9 +1104,9 @@
                 if (armazenamento.disponivel) {
                     try {
                         if (armazenamento.tipo === 'localStorage') {
-                            localStorage.setItem('checkaprovacao_v9', json);
+                            localStorage.setItem('checkaprovacao_v10', json);
                         } else {
-                            sessionStorage.setItem('checkaprovacao_v9', json);
+                            sessionStorage.setItem('checkaprovacao_v10', json);
                         }
                         esconderAvisoPersistencia();
                     } catch (e) {
@@ -1112,9 +1122,9 @@
                     let json = null;
                     if (armazenamento.disponivel) {
                         if (armazenamento.tipo === 'localStorage') {
-                            json = localStorage.getItem('checkaprovacao_v9');
+                            json = localStorage.getItem('checkaprovacao_v10');
                         } else {
-                            json = sessionStorage.getItem('checkaprovacao_v9');
+                            json = sessionStorage.getItem('checkaprovacao_v10');
                         }
                     }
                     if (json) {
@@ -1123,6 +1133,11 @@
                         ultimasAtividades = parsed.ultimasAtividades || {};
                         notificacoes = parsed.notificacoes || [];
                         historicoProgresso = parsed.historicoProgresso || [];
+                        streakAtual = parsed.streakAtual || 0;
+                        ultimoDiaEstudo = parsed.ultimoDiaEstudo || null;
+                        modulosConcluidosNotificados = parsed.modulosConcluidosNotificados || [];
+                        relatorioSemanalEnviado = parsed.relatorioSemanalEnviado || null;
+                        alertasContagemEnviados = parsed.alertasContagemEnviados || [];
                         dataInicial = parsed.dataInicial || '';
                         dataFinal = parsed.dataFinal || '';
                         dataSimulada = parsed.dataSimulada || '';
@@ -1153,6 +1168,159 @@
                 const agora = new Date();
                 agora.setHours(0, 0, 0, 0);
                 return agora;
+            }
+
+            function atualizarStreak() {
+                const hoje = obterDataAtual();
+                const hojeStr = hoje.toISOString().split('T')[0];
+                
+                if (ultimoDiaEstudo === hojeStr) {
+                    return;
+                }
+
+                const ontem = new Date(hoje);
+                ontem.setDate(ontem.getDate() - 1);
+                const ontemStr = ontem.toISOString().split('T')[0];
+
+                if (ultimoDiaEstudo === ontemStr) {
+                    streakAtual++;
+                } else if (ultimoDiaEstudo && ultimoDiaEstudo !== hojeStr) {
+                    const ultimoDia = new Date(ultimoDiaEstudo + 'T00:00:00');
+                    const diffDias = Math.floor((hoje.getTime() - ultimoDia.getTime()) / (1000*60*60*24));
+                    if (diffDias > 1 && streakAtual >= 3) {
+                        notificacoes.unshift({
+                            id: `streak-quebrado-${hojeStr}`,
+                            texto: `⚠️ Sua sequência de ${streakAtual} dias foi quebrada. Volte hoje!`,
+                            icone: '💔',
+                            visto: false,
+                            data: Date.now()
+                        });
+                    }
+                    streakAtual = 1;
+                } else {
+                    streakAtual = 1;
+                }
+
+                ultimoDiaEstudo = hojeStr;
+
+                const marcosStreak = [3, 5, 7, 10, 15, 30];
+                if (marcosStreak.includes(streakAtual)) {
+                    const existe = notificacoes.some(n => n.id === `streak-${streakAtual}`);
+                    if (!existe) {
+                        notificacoes.unshift({
+                            id: `streak-${streakAtual}`,
+                            texto: `🔥 Você estudou ${streakAtual} dias seguidos! Continue assim!`,
+                            icone: '🔥',
+                            visto: false,
+                            data: Date.now()
+                        });
+                    }
+                }
+            }
+
+            function verificarConclusaoModulos() {
+                modulos.forEach(modulo => {
+                    const total = contarAssuntosModulo(modulo.chave);
+                    const concluidos = contarPorTipo('Concluido', modulo.chave);
+                    if (total > 0 && concluidos >= total && !modulosConcluidosNotificados.includes(modulo.chave)) {
+                        modulosConcluidosNotificados.push(modulo.chave);
+                        const existe = notificacoes.some(n => n.id === `modulo-${modulo.chave}`);
+                        if (!existe) {
+                            notificacoes.unshift({
+                                id: `modulo-${modulo.chave}`,
+                                texto: `🎉 Módulo concluído: ${modulo.nome}! Continue assim!`,
+                                icone: '🏆',
+                                visto: false,
+                                data: Date.now()
+                            });
+                        }
+                    }
+                });
+            }
+
+            function verificarRelatorioSemanal() {
+                const hoje = obterDataAtual();
+                const hojeStr = hoje.toISOString().split('T')[0];
+                
+                if (relatorioSemanalEnviado === hojeStr) return;
+
+                const ultimoRelatorio = relatorioSemanalEnviado ? new Date(relatorioSemanalEnviado + 'T00:00:00') : null;
+                const diffDias = ultimoRelatorio ? Math.floor((hoje.getTime() - ultimoRelatorio.getTime()) / (1000*60*60*24)) : 999;
+
+                if (diffDias >= 7) {
+                    const lidosSemana = contarPorTipo('Lido');
+                    const concluidosSemana = contarPorTipo('Concluido');
+                    const modulosAtivos = modulos.filter(m => contarPorTipo('Concluido', m.chave) > 0).length;
+                    const ritmoMedio = diasTotais && diasTotais > 0 ? (lidosSemana / Math.min(7, diasTotais)).toFixed(1) : '0';
+
+                    notificacoes.unshift({
+                        id: `relatorio-${hojeStr}`,
+                        texto: `📊 Relatório semanal: ${lidosSemana} leituras, ${concluidosSemana} conclusões, ${modulosAtivos} módulos ativos. Ritmo: ${ritmoMedio}/dia.`,
+                        icone: '📊',
+                        visto: false,
+                        data: Date.now()
+                    });
+                    relatorioSemanalEnviado = hojeStr;
+                }
+            }
+
+            function verificarContagemRegressiva() {
+                if (!dataFinal) return;
+                const hoje = obterDataAtual();
+                const dataFim = new Date(dataFinal + 'T00:00:00');
+                const diasRestantes = Math.ceil((dataFim.getTime() - hoje.getTime()) / (1000*60*60*24));
+
+                const marcos = [30, 15, 7, 3, 1];
+                if (marcos.includes(diasRestantes)) {
+                    const id = `contagem-${diasRestantes}`;
+                    const existe = alertasContagemEnviados.includes(id) || notificacoes.some(n => n.id === id);
+                    if (!existe) {
+                        alertasContagemEnviados.push(id);
+                        const concluidosAtual = contarPorTipo('Concluido');
+                        const pct = Math.round((concluidosAtual / TOTAL_ASSUNTOS) * 100);
+                        notificacoes.unshift({
+                            id: id,
+                            texto: `⏳ Faltam ${diasRestantes} dia(s) para a prova! Você concluiu ${pct}% do conteúdo.`,
+                            icone: '⏳',
+                            visto: false,
+                            data: Date.now()
+                        });
+                    }
+                }
+            }
+
+            function verificarInatividade() {
+                const hoje = obterDataAtual();
+                const hojeStr = hoje.toISOString().split('T')[0];
+                
+                const atividadesRecentes = Object.values(ultimasAtividades).filter(ts => {
+                    const dataAtividade = new Date(ts);
+                    dataAtividade.setHours(0,0,0,0);
+                    const diff = Math.floor((hoje.getTime() - dataAtividade.getTime()) / (1000*60*60*24));
+                    return diff <= 30;
+                });
+
+                if (atividadesRecentes.length === 0) {
+                    const ultimaAtividadeGlobal = Object.values(ultimasAtividades).sort((a,b) => b - a)[0];
+                    if (ultimaAtividadeGlobal) {
+                        const dataUltima = new Date(ultimaAtividadeGlobal);
+                        dataUltima.setHours(0,0,0,0);
+                        const diffDias = Math.floor((hoje.getTime() - dataUltima.getTime()) / (1000*60*60*24));
+                        if (diffDias >= 3) {
+                            const id = `inatividade-${diffDias}`;
+                            const existe = notificacoes.some(n => n.id === id);
+                            if (!existe) {
+                                notificacoes.unshift({
+                                    id: id,
+                                    texto: `😴 Você não estuda há ${diffDias} dias. Que tal voltar hoje?`,
+                                    icone: '😴',
+                                    visto: false,
+                                    data: Date.now()
+                                });
+                            }
+                        }
+                    }
+                }
             }
 
             function gerarNotificacoes() {
@@ -1205,7 +1373,7 @@
                                     data: Date.now()
                                 });
                             }
-                            if (concluidosAtual > 0 && concluidosAtual >= TOTAL_ASSUNTOS * 0.9) {
+                            if (concluidosAtual > 0 && concluidosAtual >= TOTAL_ASSUNTOS * 0.9 && concluidosAtual < TOTAL_ASSUNTOS) {
                                 novasNotifs.push({
                                     id: `quase-la-${concluidosAtual}`,
                                     texto: `🎉 Quase lá! ${concluidosAtual}/${TOTAL_ASSUNTOS} concluídos!`,
@@ -1228,6 +1396,12 @@
                     });
                 }
 
+                verificarConclusaoModulos();
+                verificarRelatorioSemanal();
+                verificarContagemRegressiva();
+                verificarInatividade();
+                atualizarStreak();
+
                 novasNotifs.forEach(nova => {
                     const existe = notificacoes.some(n => n.id === nova.id);
                     if (!existe) {
@@ -1235,8 +1409,8 @@
                     }
                 });
 
-                if (notificacoes.length > 50) {
-                    notificacoes = notificacoes.slice(0, 50);
+                if (notificacoes.length > 100) {
+                    notificacoes = notificacoes.slice(0, 100);
                 }
             }
 
@@ -1296,6 +1470,7 @@
                         historicoProgresso.shift();
                     }
                 }
+                atualizarStreak();
             }
 
             function renderizarSparkline() {
@@ -1593,6 +1768,11 @@
                     ultimasAtividades = {};
                     notificacoes = [];
                     historicoProgresso = [];
+                    streakAtual = 0;
+                    ultimoDiaEstudo = null;
+                    modulosConcluidosNotificados = [];
+                    relatorioSemanalEnviado = null;
+                    alertasContagemEnviados = [];
                     renderizarTopicos();
                     renderizarModulos();
                     renderizarNotificacoes();
@@ -1703,6 +1883,8 @@
                                         if (this.checked) {
                                             ultimasAtividades[this.dataset.modulo] = obterDataAtual().getTime();
                                         }
+                                        registrarProgresso();
+                                        gerarNotificacoes();
                                         salvarDados();
                                         renderizarModulos();
                                         renderizarNotificacoes();
