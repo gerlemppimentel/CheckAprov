@@ -109,6 +109,12 @@
             align-items: center;
             gap: 10px;
         }
+        .data-atual {
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.9);
+            font-weight: 600;
+            text-align: right;
+        }
         .sino-btn {
             background: rgba(255,255,255,0.2);
             border: none;
@@ -147,6 +153,30 @@
         @keyframes pulseBadge {
             0%, 100% { transform: scale(1); }
             50% { transform: scale(1.1); }
+        }
+
+        .saudacao-container {
+            background: #fff;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-sm);
+            padding: 14px 18px;
+            margin-bottom: 14px;
+            border: 1px solid var(--ms-gray-300);
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .saudacao-principal {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--ms-gray-900);
+        }
+        .saudacao-meta {
+            font-size: 0.9rem;
+            color: var(--ms-gray-700);
+        }
+        .saudacao-meta strong {
+            color: var(--ms-blue);
         }
 
         .notificacoes-painel {
@@ -458,6 +488,9 @@
         }
         .feedback-status.nao-conseguir {
             color: var(--ms-red);
+        }
+        .feedback-status.iniciar {
+            color: var(--ms-blue);
         }
 
         .dias-prova {
@@ -811,7 +844,8 @@
             font-weight: 600;
             color: var(--ms-gray-700);
         }
-        .config-field input[type="date"] {
+        .config-field input[type="date"],
+        .config-field input[type="text"] {
             padding: 9px 12px;
             border: 1px solid var(--ms-gray-400);
             border-radius: var(--radius-sm);
@@ -875,6 +909,7 @@
             .ms-header { padding: 14px 12px; }
             .ms-header h1 { font-size: 1.1rem; }
             .header-right { top: 10px; right: 10px; }
+            .data-atual { display: none; }
             .sino-btn { width: 34px; height: 34px; font-size: 1.2rem; }
             .status-container { flex-direction: column; }
             .farol {
@@ -902,7 +937,8 @@
             .checkbox-cell input[type="checkbox"] { width: 16px; height: 16px; }
             th.assunto-col, td.assunto-col { padding-left: 8px; }
             .config-grid { flex-direction: column; align-items: stretch; }
-            .config-field input[type="date"] { width: 100%; min-width: auto; }
+            .config-field input[type="date"],
+            .config-field input[type="text"] { width: 100%; min-width: auto; }
             .btn-ms { justify-content: center; }
         }
     </style>
@@ -923,12 +959,18 @@
                 </h1>
                 <div class="subtitle">Concurso Florianópolis • 50 assuntos • Edital 2015 + LC 734/2022 e 788/2026</div>
                 <div class="header-right">
+                    <span class="data-atual" id="dataAtualHeader"></span>
                     <button class="sino-btn" id="btnSino" title="Notificações">
                         🔔
                         <span class="sino-badge" id="sinoBadge" style="display:none;">0</span>
                     </button>
                 </div>
             </header>
+
+            <div class="saudacao-container" id="saudacaoContainer">
+                <div class="saudacao-principal" id="saudacaoPrincipal">Bem-vindo!</div>
+                <div class="saudacao-meta" id="saudacaoMeta"></div>
+            </div>
 
             <div class="notificacoes-painel" id="notificacoesPainel">
                 <div class="notificacoes-header">
@@ -1008,6 +1050,10 @@
                 </div>
                 <div class="config-grid">
                     <div class="config-field">
+                        <label for="nomeUsuario">Seu nome</label>
+                        <input type="text" id="nomeUsuario" placeholder="Ex: João" maxlength="30">
+                    </div>
+                    <div class="config-field">
                         <label for="dataInicial">Data Inicial</label>
                         <input type="date" id="dataInicial">
                     </div>
@@ -1067,6 +1113,7 @@
             let modulosConcluidosNotificados = [];
             let relatorioSemanalEnviado = null;
             let alertasContagemEnviados = [];
+            let nomeUsuario = '';
 
             function salvarDados() {
                 const dados = {
@@ -1078,6 +1125,7 @@
                     modulosConcluidosNotificados: modulosConcluidosNotificados,
                     relatorioSemanalEnviado: relatorioSemanalEnviado,
                     alertasContagemEnviados: alertasContagemEnviados,
+                    nomeUsuario: nomeUsuario,
                     dataInicial: dataInicial,
                     dataFinal: dataFinal,
                     dataSimulada: dataSimulada,
@@ -1088,9 +1136,9 @@
                 if (armazenamento.disponivel) {
                     try {
                         if (armazenamento.tipo === 'localStorage') {
-                            localStorage.setItem('checkaprovacao_v14', json);
+                            localStorage.setItem('checkaprovacao_v16', json);
                         } else {
-                            sessionStorage.setItem('checkaprovacao_v14', json);
+                            sessionStorage.setItem('checkaprovacao_v16', json);
                         }
                         esconderAvisoPersistencia();
                     } catch (e) {
@@ -1106,9 +1154,9 @@
                     let json = null;
                     if (armazenamento.disponivel) {
                         if (armazenamento.tipo === 'localStorage') {
-                            json = localStorage.getItem('checkaprovacao_v14');
+                            json = localStorage.getItem('checkaprovacao_v16');
                         } else {
-                            json = sessionStorage.getItem('checkaprovacao_v14');
+                            json = sessionStorage.getItem('checkaprovacao_v16');
                         }
                     }
                     if (json) {
@@ -1121,11 +1169,13 @@
                         modulosConcluidosNotificados = parsed.modulosConcluidosNotificados || [];
                         relatorioSemanalEnviado = parsed.relatorioSemanalEnviado || null;
                         alertasContagemEnviados = parsed.alertasContagemEnviados || [];
+                        nomeUsuario = parsed.nomeUsuario || '';
                         dataInicial = parsed.dataInicial || '';
                         dataFinal = parsed.dataFinal || '';
                         dataSimulada = parsed.dataSimulada || '';
                         usarDataSistema = parsed.usarDataSistema !== undefined ? parsed.usarDataSistema : true;
                         telaAtual = parsed.telaAtual || 'principal';
+                        if (nomeUsuario) nomeUsuarioInput.value = nomeUsuario;
                         if (dataInicial) dataInicialInput.value = dataInicial;
                         if (dataFinal) dataFinalInput.value = dataFinal;
                         if (dataSimulada) dataSimuladaInput.value = dataSimulada;
@@ -1183,6 +1233,60 @@
                 const dataFim = new Date(dataFinal + 'T00:00:00');
                 if (hoje > dataFim) return 0;
                 return Math.max(0, Math.ceil((dataFim.getTime() - hoje.getTime()) / (1000*60*60*24)));
+            }
+
+            function obterSaudacao() {
+                const hora = new Date().getHours();
+                if (hora >= 5 && hora < 12) return '☀️ Bom dia';
+                if (hora >= 12 && hora < 18) return '🌤️ Boa tarde';
+                return '🌙 Boa noite';
+            }
+
+            function atualizarDataHeader() {
+                const hoje = obterDataAtual();
+                const dataFormatada = hoje.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' });
+                document.getElementById('dataAtualHeader').textContent = `📅 ${dataFormatada}`;
+            }
+
+            function atualizarSaudacao() {
+                const saudacaoEl = document.getElementById('saudacaoPrincipal');
+                const metaEl = document.getElementById('saudacaoMeta');
+                const nome = nomeUsuario ? nomeUsuario : '';
+                const saudacao = obterSaudacao();
+                saudacaoEl.textContent = nome ? `${saudacao}, ${nome}!` : `${saudacao}!`;
+
+                const diasTotais = calcularDiasTotais();
+                const diasPassados = calcularDiasPassados();
+                const diasRestantes = calcularDiasRestantes();
+                const lidosAtual = contarPorTipo('Lido');
+                const concluidosAtual = contarPorTipo('Concluido');
+
+                if (!diasTotais || !dataInicial || !dataFinal) {
+                    metaEl.textContent = 'Configure as datas nas Configurações para ver sua meta diária.';
+                    return;
+                }
+
+                if (diasPassados <= 0) {
+                    metaEl.textContent = 'O plano ainda não começou. Aguarde a data inicial.';
+                    return;
+                }
+
+                if (concluidosAtual >= TOTAL_ASSUNTOS) {
+                    metaEl.textContent = '🎉 Você concluiu todo o conteúdo! Hora de revisar!';
+                    return;
+                }
+
+                if (lidosAtual < TOTAL_ASSUNTOS) {
+                    const metaLeituraDias = Math.ceil(diasTotais * 0.6);
+                    const diasRestantesLeitura = Math.max(1, metaLeituraDias - diasPassados + 1);
+                    const restantes = TOTAL_ASSUNTOS - lidosAtual;
+                    const metaDiaria = Math.ceil(restantes / diasRestantesLeitura);
+                    metaEl.innerHTML = `📚 Para bater sua meta de <strong>leitura</strong> hoje, estude <strong>${metaDiaria} assunto(s)</strong>.`;
+                } else {
+                    const restantes = TOTAL_ASSUNTOS - concluidosAtual;
+                    const metaDiaria = diasRestantes > 0 ? Math.ceil(restantes / diasRestantes) : restantes;
+                    metaEl.innerHTML = `✅ Para bater sua meta de <strong>conclusão</strong> hoje, estude <strong>${metaDiaria} assunto(s)</strong>.`;
+                }
             }
 
             function atualizarStreak() {
@@ -1507,6 +1611,7 @@
             const btnVoltarPrincipal = document.getElementById('btnVoltarPrincipal');
             const btnAtualizar = document.getElementById('btnAtualizar');
             const btnResetar = document.getElementById('btnResetar');
+            const nomeUsuarioInput = document.getElementById('nomeUsuario');
             const dataInicialInput = document.getElementById('dataInicial');
             const dataFinalInput = document.getElementById('dataFinal');
             const dataSimuladaInput = document.getElementById('dataSimulada');
@@ -1540,6 +1645,8 @@
             const conclusaoPrevistoLabel = document.getElementById('conclusaoPrevistoLabel');
             const conclusaoRealizadoLabel = document.getElementById('conclusaoRealizadoLabel');
             const feedbackTextual = document.getElementById('feedbackTextual');
+            const saudacaoPrincipal = document.getElementById('saudacaoPrincipal');
+            const saudacaoMeta = document.getElementById('saudacaoMeta');
 
             function atualizarEstadoDataSimulada() {
                 if (usarDataSistema) { dataSimuladaInput.disabled = true; dataSimuladaInput.value = ''; } else { dataSimuladaInput.disabled = false; }
@@ -1572,6 +1679,7 @@
             btnAbrirConfig.addEventListener('click', () => mostrarTela('config'));
             btnVoltarPrincipal.addEventListener('click', () => mostrarTela('principal'));
             btnAtualizar.addEventListener('click', () => {
+                nomeUsuario = nomeUsuarioInput.value.trim();
                 dataInicial = dataInicialInput.value;
                 dataFinal = dataFinalInput.value;
                 if (dataInicial && dataFinal && new Date(dataFinal) < new Date(dataInicial)) {
@@ -1582,6 +1690,8 @@
                 atualizarConfigInfo();
                 atualizarGraficoStatus();
                 atualizarResumoRodape();
+                atualizarSaudacao();
+                atualizarDataHeader();
                 mostrarTela('principal');
             });
             btnResetar.addEventListener('click', () => {
@@ -1681,6 +1791,7 @@
                                         renderizarModulos();
                                         renderizarNotificacoes();
                                         atualizarGraficoStatus();
+                                        atualizarSaudacao();
                                     });
                                 } else {
                                     input.addEventListener('change', function() {
@@ -1691,6 +1802,7 @@
                                         renderizarModulos();
                                         renderizarNotificacoes();
                                         atualizarGraficoStatus();
+                                        atualizarSaudacao();
                                     });
                                 }
                                 tdCheck.appendChild(input);
@@ -1727,11 +1839,12 @@
                 modulos.forEach(modulo => {
                     const total = contarAssuntosModulo(modulo.chave);
                     const concluidos = contarPorTipo('Concluido', modulo.chave);
+                    const lidos = contarPorTipo('Lido', modulo.chave);
                     const percentual = total > 0 ? Math.round((concluidos / total) * 100) : 0;
                     const ultimaAtividade = ultimasAtividades[modulo.chave] || null;
                     let estado = 'nao-iniciado';
                     let alerta = '';
-                    if (concluidos > 0 || contarPorTipo('Lido', modulo.chave) > 0) {
+                    if (concluidos > 0 || lidos > 0) {
                         if (ultimaAtividade) {
                             const dataUltima = new Date(ultimaAtividade);
                             dataUltima.setHours(0,0,0,0);
@@ -1835,7 +1948,11 @@
                 const ritmoAtualLeitura = diasPassados > 0 ? lidosAtual / diasPassados : 0;
                 const ritmoNecessarioLeitura = metaLeituraDias > 0 && diasPassados <= metaLeituraDias ? restantesLeitura / Math.max(1, metaLeituraDias - diasPassados + 1) : 0;
                 let statusLeitura, classeLeitura, iconeLeitura;
-                if (lidosAtual >= TOTAL_ASSUNTOS) { statusLeitura = 'Leitura completa!'; classeLeitura = 'conseguir'; iconeLeitura = '✅'; }
+                if (diasPassados <= 1 && lidosAtual === 0) {
+                    statusLeitura = 'Este é o melhor momento para começar sua jornada rumo à aprovação! Comece a estudar hoje!';
+                    classeLeitura = 'iniciar';
+                    iconeLeitura = '🚀';
+                } else if (lidosAtual >= TOTAL_ASSUNTOS) { statusLeitura = 'Leitura completa!'; classeLeitura = 'conseguir'; iconeLeitura = '✅'; }
                 else if (diasPassados > metaLeituraDias) { statusLeitura = 'meta de leitura expirada'; classeLeitura = 'nao-conseguir'; iconeLeitura = '❌'; }
                 else if (ritmoAtualLeitura >= ritmoNecessarioLeitura * 0.9) { statusLeitura = 'vai conseguir'; classeLeitura = 'conseguir'; iconeLeitura = '✅'; }
                 else if (ritmoAtualLeitura >= ritmoNecessarioLeitura * 0.7) { statusLeitura = 'precisa melhorar o ritmo'; classeLeitura = 'melhorar'; iconeLeitura = '⚠️'; }
@@ -1845,7 +1962,11 @@
                 const ritmoAtualConclusao = diasPassados > 0 ? concluidosAtual / diasPassados : 0;
                 const ritmoNecessarioConclusao = diasRestantes > 0 ? restantesConclusao / diasRestantes : 0;
                 let statusConclusao, classeConclusao, iconeConclusao;
-                if (concluidosAtual >= TOTAL_ASSUNTOS) { statusConclusao = 'Conteúdo concluído!'; classeConclusao = 'conseguir'; iconeConclusao = '🎉'; }
+                if (diasPassados <= 1 && concluidosAtual === 0) {
+                    statusConclusao = 'Este é o melhor momento para começar sua jornada rumo à aprovação! Comece a estudar hoje!';
+                    classeConclusao = 'iniciar';
+                    iconeConclusao = '🚀';
+                } else if (concluidosAtual >= TOTAL_ASSUNTOS) { statusConclusao = 'Conteúdo concluído!'; classeConclusao = 'conseguir'; iconeConclusao = '🎉'; }
                 else if (diasRestantes === 0) { statusConclusao = 'não vai conseguir - prazo esgotado'; classeConclusao = 'nao-conseguir'; iconeConclusao = '❌'; }
                 else if (ritmoAtualConclusao >= ritmoNecessarioConclusao * 0.9) { statusConclusao = 'vai conseguir'; classeConclusao = 'conseguir'; iconeConclusao = '✅'; }
                 else if (ritmoAtualConclusao >= ritmoNecessarioConclusao * 0.7) { statusConclusao = 'precisa melhorar o ritmo'; classeConclusao = 'melhorar'; iconeConclusao = '⚠️'; }
@@ -1854,11 +1975,11 @@
                 feedbackTextual.innerHTML = `
                     <div class="feedback-item">
                         <span class="feedback-icone">📖</span>
-                        <span class="feedback-texto"><strong>Meta de Leitura:</strong> concluir até <strong>${dataMetaLeituraStr}</strong>. No ritmo atual você <span class="feedback-status ${classeLeitura}">${iconeLeitura} ${statusLeitura}</span>.</span>
+                        <span class="feedback-texto"><strong>Meta de Leitura:</strong> concluir até <strong>${dataMetaLeituraStr}</strong>. ${diasPassados <= 1 && lidosAtual === 0 ? '' : 'No ritmo atual você '}<span class="feedback-status ${classeLeitura}">${iconeLeitura} ${statusLeitura}</span>.</span>
                     </div>
                     <div class="feedback-item">
                         <span class="feedback-icone">✅</span>
-                        <span class="feedback-texto"><strong>Meta de Conclusão:</strong> até dia <strong>${dataFinal.split('-').reverse().join('/')}</strong> (véspera da prova). No ritmo atual você <span class="feedback-status ${classeConclusao}">${iconeConclusao} ${statusConclusao}</span>.</span>
+                        <span class="feedback-texto"><strong>Meta de Conclusão:</strong> até dia <strong>${dataFinal.split('-').reverse().join('/')}</strong> (véspera da prova). ${diasPassados <= 1 && concluidosAtual === 0 ? '' : 'No ritmo atual você '}<span class="feedback-status ${classeConclusao}">${iconeConclusao} ${statusConclusao}</span>.</span>
                     </div>
                 `;
             }
@@ -1929,7 +2050,7 @@
                     if (diasRestantes === 0 && concluidosAtual < TOTAL_ASSUNTOS) {
                         statusFarol = 'vermelho';
                         textoFarol = 'Prazo encerrado';
-                        diasAtraso = Math.min(30, Math.ceil((TOTAL_ASSUNTOS - concluidosAtual) / Math.max(0.1, ritmoAtualConclusao || 1)));
+                        diasAtraso = Math.min(30, Math.ceil((TOTAL_ASSUNTOS - concluidosAtual) / Math.max(0.1, diasPassados > 0 ? concluidosAtual / diasPassados : 1)));
                     } else {
                         const porDia = TOTAL_ASSUNTOS / diasTotais;
                         diasAtraso = Math.round(diff / porDia);
@@ -1969,6 +2090,9 @@
                 atualizarConfigInfo();
                 atualizarGraficoStatus();
                 atualizarResumoRodape();
+                atualizarSaudacao();
+                atualizarDataHeader();
+                if (nomeUsuario) nomeUsuarioInput.value = nomeUsuario;
                 if (dataInicial) dataInicialInput.value = dataInicial;
                 if (dataFinal) dataFinalInput.value = dataFinal;
                 if (dataSimulada) dataSimuladaInput.value = dataSimulada;
