@@ -15,6 +15,9 @@
             --ms-yellow-light: #fff4ce;
             --ms-red: #d13438;
             --ms-red-light: #fde7e9;
+            --ms-gold: #d4af37;
+            --ms-gold-light: #fef8e7;
+            --ms-gold-dark: #b8962e;
             --ms-gray-100: #f3f2f1;
             --ms-gray-200: #edebe9;
             --ms-gray-300: #e1dfdd;
@@ -178,8 +181,8 @@
         .saudacao-meta strong {
             color: var(--ms-blue);
         }
-        .saudacao-meta .alerta-atraso {
-            color: var(--ms-red);
+        .saudacao-meta .alerta-reajuste {
+            color: #b8860b;
             font-weight: 600;
         }
 
@@ -563,6 +566,7 @@
         .resumo-dot.verde { background: var(--ms-green); }
         .resumo-dot.amarelo { background: var(--ms-yellow); }
         .resumo-dot.vermelho { background: var(--ms-red); }
+        .resumo-dot.dourado { background: var(--ms-gold); }
 
         .modulos-grid {
             display: grid;
@@ -604,6 +608,11 @@
             background: var(--ms-red-light);
             animation: pulseRed 2s infinite;
         }
+        .modulo-card.concluido {
+            border-color: var(--ms-gold);
+            background: var(--ms-gold-light);
+            box-shadow: 0 0 8px rgba(212, 175, 55, 0.3);
+        }
         .modulo-card .modulo-nome {
             font-size: 0.8rem;
             font-weight: 600;
@@ -634,6 +643,9 @@
         .modulo-card.abandonado .modulo-percentual {
             color: var(--ms-red);
         }
+        .modulo-card.concluido .modulo-percentual {
+            color: var(--ms-gold-dark);
+        }
         .modulo-card .modulo-contagem {
             font-size: 0.7rem;
             color: var(--ms-gray-700);
@@ -662,6 +674,9 @@
         .modulo-card.abandonado .modulo-bar-fill {
             background: var(--ms-red);
         }
+        .modulo-card.concluido .modulo-bar-fill {
+            background: var(--ms-gold);
+        }
         .modulo-card .modulo-alerta {
             font-size: 0.65rem;
             font-weight: 600;
@@ -673,6 +688,9 @@
         }
         .modulo-card .modulo-alerta.amarelo {
             color: #b8860b;
+        }
+        .modulo-card .modulo-alerta.dourado {
+            color: var(--ms-gold-dark);
         }
 
         .topic-section {
@@ -1140,9 +1158,9 @@
                 if (armazenamento.disponivel) {
                     try {
                         if (armazenamento.tipo === 'localStorage') {
-                            localStorage.setItem('checkaprovacao_v17', json);
+                            localStorage.setItem('checkaprovacao_v19', json);
                         } else {
-                            sessionStorage.setItem('checkaprovacao_v17', json);
+                            sessionStorage.setItem('checkaprovacao_v19', json);
                         }
                         esconderAvisoPersistencia();
                     } catch (e) {
@@ -1158,9 +1176,9 @@
                     let json = null;
                     if (armazenamento.disponivel) {
                         if (armazenamento.tipo === 'localStorage') {
-                            json = localStorage.getItem('checkaprovacao_v17');
+                            json = localStorage.getItem('checkaprovacao_v19');
                         } else {
-                            json = sessionStorage.getItem('checkaprovacao_v17');
+                            json = sessionStorage.getItem('checkaprovacao_v19');
                         }
                     }
                     if (json) {
@@ -1239,16 +1257,6 @@
                 return Math.max(0, Math.ceil((dataFim.getTime() - hoje.getTime()) / (1000*60*60*24)));
             }
 
-            function calcularAtrasoEmAssuntos() {
-                const diasTotais = calcularDiasTotais();
-                const diasPassados = calcularDiasPassados();
-                const concluidosAtual = contarPorTipo('Concluido');
-                if (!diasTotais || diasPassados <= 0) return 0;
-                const progressoEsperado = Math.min(1, diasPassados / diasTotais);
-                const esperados = Math.floor(TOTAL_ASSUNTOS * progressoEsperado);
-                return Math.max(0, esperados - concluidosAtual);
-            }
-
             function obterSaudacao() {
                 const hora = new Date().getHours();
                 if (hora >= 5 && hora < 12) return '☀️ Bom dia';
@@ -1274,7 +1282,6 @@
                 const diasRestantes = calcularDiasRestantes();
                 const lidosAtual = contarPorTipo('Lido');
                 const concluidosAtual = contarPorTipo('Concluido');
-                const atrasoEmAssuntos = calcularAtrasoEmAssuntos();
 
                 if (!diasTotais || !dataInicial || !dataFinal) {
                     metaEl.textContent = 'Configure as datas nas Configurações para ver sua meta diária.';
@@ -1291,27 +1298,26 @@
                     return;
                 }
 
+                const metaLeituraDias = Math.ceil(diasTotais * 0.6);
+
                 if (lidosAtual < TOTAL_ASSUNTOS) {
-                    const metaLeituraDias = Math.ceil(diasTotais * 0.6);
-                    const diasRestantesLeitura = Math.max(1, metaLeituraDias - diasPassados + 1);
                     const restantes = TOTAL_ASSUNTOS - lidosAtual;
-                    const atrasoLeitura = Math.max(0, Math.floor(TOTAL_ASSUNTOS * Math.min(1, diasPassados / metaLeituraDias)) - lidosAtual);
-                    const totalAEstudar = restantes + atrasoLeitura;
-                    const metaDiaria = Math.ceil(totalAEstudar / diasRestantesLeitura);
-                    if (atrasoLeitura > 0) {
-                        metaEl.innerHTML = `📚 Para bater sua meta de <strong>leitura</strong> hoje, estude <strong>${metaDiaria} assunto(s)</strong>. <span class="alerta-atraso">(Você está ${atrasoLeitura} assunto(s) atrasado(s) - meta ajustada para recuperação)</span>`;
+                    let diasRestantesLeitura;
+                    let textoReajuste = '';
+
+                    if (diasPassados <= metaLeituraDias) {
+                        diasRestantesLeitura = Math.max(1, metaLeituraDias - diasPassados + 1);
                     } else {
-                        metaEl.innerHTML = `📚 Para bater sua meta de <strong>leitura</strong> hoje, estude <strong>${metaDiaria} assunto(s)</strong>.`;
+                        diasRestantesLeitura = Math.max(1, diasTotais - diasPassados + 1);
+                        textoReajuste = ' <span class="alerta-reajuste">(Meta de leitura reajustada para a data final)</span>';
                     }
+
+                    const metaDiaria = Math.ceil(restantes / diasRestantesLeitura);
+                    metaEl.innerHTML = `📚 Para bater sua meta de <strong>leitura</strong> hoje, estude <strong>${metaDiaria} assunto(s)</strong>.${textoReajuste}`;
                 } else {
                     const restantes = TOTAL_ASSUNTOS - concluidosAtual;
-                    const totalAEstudar = restantes + atrasoEmAssuntos;
-                    const metaDiaria = diasRestantes > 0 ? Math.ceil(totalAEstudar / diasRestantes) : restantes;
-                    if (atrasoEmAssuntos > 0) {
-                        metaEl.innerHTML = `✅ Para bater sua meta de <strong>conclusão</strong> hoje, estude <strong>${metaDiaria} assunto(s)</strong>. <span class="alerta-atraso">(Você está ${atrasoEmAssuntos} assunto(s) atrasado(s) - meta ajustada para recuperação)</span>`;
-                    } else {
-                        metaEl.innerHTML = `✅ Para bater sua meta de <strong>conclusão</strong> hoje, estude <strong>${metaDiaria} assunto(s)</strong>.`;
-                    }
+                    const metaDiaria = diasRestantes > 0 ? Math.ceil(restantes / diasRestantes) : restantes;
+                    metaEl.innerHTML = `✅ Para bater sua meta de <strong>conclusão</strong> hoje, estude <strong>${metaDiaria} assunto(s)</strong>.`;
                 }
             }
 
@@ -1462,6 +1468,8 @@
                 modulos.forEach(modulo => {
                     const ultimaAtividade = ultimasAtividades[modulo.chave] || null;
                     const concluidos = contarPorTipo('Concluido', modulo.chave);
+                    const total = contarAssuntosModulo(modulo.chave);
+                    if (concluidos >= total && total > 0) return;
                     if (concluidos > 0 && ultimaAtividade) {
                         const dataUltima = new Date(ultimaAtividade);
                         dataUltima.setHours(0,0,0,0);
@@ -1860,7 +1868,7 @@
 
             function renderizarModulos() {
                 modulosGrid.innerHTML = '';
-                let ativos = 0, estagnados = 0, abandonados = 0, naoIniciados = 0;
+                let ativos = 0, estagnados = 0, abandonados = 0, naoIniciados = 0, concluidosTotal = 0;
                 const hoje = obterDataAtual();
                 modulos.forEach(modulo => {
                     const total = contarAssuntosModulo(modulo.chave);
@@ -1870,7 +1878,12 @@
                     const ultimaAtividade = ultimasAtividades[modulo.chave] || null;
                     let estado = 'nao-iniciado';
                     let alerta = '';
-                    if (concluidos > 0 || lidos > 0) {
+
+                    if (total > 0 && concluidos >= total) {
+                        estado = 'concluido';
+                        alerta = '✓ Concluído';
+                        concluidosTotal++;
+                    } else if (concluidos > 0 || lidos > 0) {
                         if (ultimaAtividade) {
                             const dataUltima = new Date(ultimaAtividade);
                             dataUltima.setHours(0,0,0,0);
@@ -1880,6 +1893,7 @@
                             else { estado = 'em-progresso'; ativos++; }
                         } else { estado = 'em-progresso'; ativos++; }
                     } else { naoIniciados++; alerta = 'Não iniciado'; }
+
                     const card = document.createElement('a');
                     card.className = `modulo-card ${estado}`;
                     card.href = `#modulo-${modulo.topicoId}`;
@@ -1888,7 +1902,7 @@
                         <div class="modulo-percentual">${percentual}%</div>
                         <div class="modulo-contagem">${concluidos}/${total} concluídos</div>
                         <div class="modulo-bar"><div class="modulo-bar-fill" style="width:${percentual}%;"></div></div>
-                        <div class="modulo-alerta ${estado === 'estagnado' ? 'amarelo' : ''}">${alerta ? '⚠️ ' + alerta : ''}</div>
+                        <div class="modulo-alerta ${estado === 'estagnado' ? 'amarelo' : ''} ${estado === 'concluido' ? 'dourado' : ''}">${alerta ? (estado === 'concluido' ? '🏆 ' : '⚠️ ') + alerta : ''}</div>
                     `;
                     card.addEventListener('click', function(e) {
                         e.preventDefault();
@@ -1909,6 +1923,7 @@
                     <span class="resumo-item"><span class="resumo-dot verde"></span> ${ativos} ativos</span>
                     <span class="resumo-item"><span class="resumo-dot amarelo"></span> ${estagnados + naoIniciados} atenção</span>
                     <span class="resumo-item"><span class="resumo-dot vermelho"></span> ${abandonados} abandonados</span>
+                    <span class="resumo-item"><span class="resumo-dot dourado"></span> ${concluidosTotal} concluídos</span>
                 `;
             }
 
@@ -1979,7 +1994,7 @@
                     classeLeitura = 'iniciar';
                     iconeLeitura = '🚀';
                 } else if (lidosAtual >= TOTAL_ASSUNTOS) { statusLeitura = 'Leitura completa!'; classeLeitura = 'conseguir'; iconeLeitura = '✅'; }
-                else if (diasPassados > metaLeituraDias) { statusLeitura = 'meta de leitura expirada'; classeLeitura = 'nao-conseguir'; iconeLeitura = '❌'; }
+                else if (diasPassados > metaLeituraDias) { statusLeitura = 'meta de leitura reajustada para a data final'; classeLeitura = 'melhorar'; iconeLeitura = '⚠️'; }
                 else if (ritmoAtualLeitura >= ritmoNecessarioLeitura * 0.9) { statusLeitura = 'vai conseguir'; classeLeitura = 'conseguir'; iconeLeitura = '✅'; }
                 else if (ritmoAtualLeitura >= ritmoNecessarioLeitura * 0.7) { statusLeitura = 'precisa melhorar o ritmo'; classeLeitura = 'melhorar'; iconeLeitura = '⚠️'; }
                 else { statusLeitura = 'não vai conseguir'; classeLeitura = 'nao-conseguir'; iconeLeitura = '❌'; }
