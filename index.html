@@ -178,6 +178,10 @@
         .saudacao-meta strong {
             color: var(--ms-blue);
         }
+        .saudacao-meta .alerta-atraso {
+            color: var(--ms-red);
+            font-weight: 600;
+        }
 
         .notificacoes-painel {
             position: fixed;
@@ -1136,9 +1140,9 @@
                 if (armazenamento.disponivel) {
                     try {
                         if (armazenamento.tipo === 'localStorage') {
-                            localStorage.setItem('checkaprovacao_v16', json);
+                            localStorage.setItem('checkaprovacao_v17', json);
                         } else {
-                            sessionStorage.setItem('checkaprovacao_v16', json);
+                            sessionStorage.setItem('checkaprovacao_v17', json);
                         }
                         esconderAvisoPersistencia();
                     } catch (e) {
@@ -1154,9 +1158,9 @@
                     let json = null;
                     if (armazenamento.disponivel) {
                         if (armazenamento.tipo === 'localStorage') {
-                            json = localStorage.getItem('checkaprovacao_v16');
+                            json = localStorage.getItem('checkaprovacao_v17');
                         } else {
-                            json = sessionStorage.getItem('checkaprovacao_v16');
+                            json = sessionStorage.getItem('checkaprovacao_v17');
                         }
                     }
                     if (json) {
@@ -1235,6 +1239,16 @@
                 return Math.max(0, Math.ceil((dataFim.getTime() - hoje.getTime()) / (1000*60*60*24)));
             }
 
+            function calcularAtrasoEmAssuntos() {
+                const diasTotais = calcularDiasTotais();
+                const diasPassados = calcularDiasPassados();
+                const concluidosAtual = contarPorTipo('Concluido');
+                if (!diasTotais || diasPassados <= 0) return 0;
+                const progressoEsperado = Math.min(1, diasPassados / diasTotais);
+                const esperados = Math.floor(TOTAL_ASSUNTOS * progressoEsperado);
+                return Math.max(0, esperados - concluidosAtual);
+            }
+
             function obterSaudacao() {
                 const hora = new Date().getHours();
                 if (hora >= 5 && hora < 12) return '☀️ Bom dia';
@@ -1260,6 +1274,7 @@
                 const diasRestantes = calcularDiasRestantes();
                 const lidosAtual = contarPorTipo('Lido');
                 const concluidosAtual = contarPorTipo('Concluido');
+                const atrasoEmAssuntos = calcularAtrasoEmAssuntos();
 
                 if (!diasTotais || !dataInicial || !dataFinal) {
                     metaEl.textContent = 'Configure as datas nas Configurações para ver sua meta diária.';
@@ -1280,12 +1295,23 @@
                     const metaLeituraDias = Math.ceil(diasTotais * 0.6);
                     const diasRestantesLeitura = Math.max(1, metaLeituraDias - diasPassados + 1);
                     const restantes = TOTAL_ASSUNTOS - lidosAtual;
-                    const metaDiaria = Math.ceil(restantes / diasRestantesLeitura);
-                    metaEl.innerHTML = `📚 Para bater sua meta de <strong>leitura</strong> hoje, estude <strong>${metaDiaria} assunto(s)</strong>.`;
+                    const atrasoLeitura = Math.max(0, Math.floor(TOTAL_ASSUNTOS * Math.min(1, diasPassados / metaLeituraDias)) - lidosAtual);
+                    const totalAEstudar = restantes + atrasoLeitura;
+                    const metaDiaria = Math.ceil(totalAEstudar / diasRestantesLeitura);
+                    if (atrasoLeitura > 0) {
+                        metaEl.innerHTML = `📚 Para bater sua meta de <strong>leitura</strong> hoje, estude <strong>${metaDiaria} assunto(s)</strong>. <span class="alerta-atraso">(Você está ${atrasoLeitura} assunto(s) atrasado(s) - meta ajustada para recuperação)</span>`;
+                    } else {
+                        metaEl.innerHTML = `📚 Para bater sua meta de <strong>leitura</strong> hoje, estude <strong>${metaDiaria} assunto(s)</strong>.`;
+                    }
                 } else {
                     const restantes = TOTAL_ASSUNTOS - concluidosAtual;
-                    const metaDiaria = diasRestantes > 0 ? Math.ceil(restantes / diasRestantes) : restantes;
-                    metaEl.innerHTML = `✅ Para bater sua meta de <strong>conclusão</strong> hoje, estude <strong>${metaDiaria} assunto(s)</strong>.`;
+                    const totalAEstudar = restantes + atrasoEmAssuntos;
+                    const metaDiaria = diasRestantes > 0 ? Math.ceil(totalAEstudar / diasRestantes) : restantes;
+                    if (atrasoEmAssuntos > 0) {
+                        metaEl.innerHTML = `✅ Para bater sua meta de <strong>conclusão</strong> hoje, estude <strong>${metaDiaria} assunto(s)</strong>. <span class="alerta-atraso">(Você está ${atrasoEmAssuntos} assunto(s) atrasado(s) - meta ajustada para recuperação)</span>`;
+                    } else {
+                        metaEl.innerHTML = `✅ Para bater sua meta de <strong>conclusão</strong> hoje, estude <strong>${metaDiaria} assunto(s)</strong>.`;
+                    }
                 }
             }
 
