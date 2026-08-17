@@ -348,31 +348,6 @@
             gap: 8px;
             flex-wrap: wrap;
         }
-        .dias-atraso-badge {
-            font-size: 0.7rem;
-            font-weight: 600;
-            padding: 3px 10px;
-            border-radius: 12px;
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-        }
-        .dias-atraso-badge.adiantado {
-            background: var(--ms-green-light);
-            color: #054b16;
-        }
-        .dias-atraso-badge.em-dia {
-            background: var(--ms-blue-light);
-            color: var(--ms-blue-dark);
-        }
-        .dias-atraso-badge.atrasado {
-            background: var(--ms-yellow-light);
-            color: #6a4b00;
-        }
-        .dias-atraso-badge.muito-atrasado {
-            background: var(--ms-red-light);
-            color: #a4262c;
-        }
 
         .barra-dupla-section {
             display: flex;
@@ -440,23 +415,28 @@
         .linha-realizado {
             background: #ff6b00;
         }
-        .linha-label {
-            position: absolute;
-            font-size: 0.65rem;
-            font-weight: 700;
-            white-space: nowrap;
-            pointer-events: none;
-        }
-        .linha-previsto-label {
-            top: -18px;
+
+        .legenda-barras {
+            display: flex;
+            gap: 16px;
+            font-size: 0.7rem;
             color: var(--ms-gray-700);
-            transform: translateX(-50%);
+            flex-wrap: wrap;
+            padding: 0 4px;
         }
-        .linha-realizado-label {
-            bottom: -18px;
-            color: #e65c00;
-            transform: translateX(-50%);
+        .legenda-barras .legenda-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
         }
+        .legenda-barras .legenda-linha {
+            width: 20px;
+            height: 4px;
+            border-radius: 2px;
+            display: inline-block;
+        }
+        .legenda-barras .legenda-linha.preview { background: var(--ms-gray-700); }
+        .legenda-barras .legenda-linha.real { background: #ff6b00; }
 
         .feedback-textual {
             display: grid;
@@ -1010,7 +990,6 @@
                 <div class="grafico-progresso">
                     <div class="grafico-labels">
                         <span id="statusDetalheTexto">Configure as datas</span>
-                        <span class="dias-atraso-badge em-dia" id="diasAtrasoBadge">✓ Em dia</span>
                     </div>
                     <div class="barra-dupla-section">
                         <div class="barra-item barra-leitura">
@@ -1018,12 +997,8 @@
                                 <div class="barra-item-fundo"></div>
                                 <div class="barra-item-preenchida" id="barraLeituraPreenchida" style="width:0%;"></div>
                                 <div class="barra-item-legenda" id="barraLeituraLegenda">Leitura: 0% (0/50)</div>
-                                <div class="linha-indicadora linha-previsto" id="linhaPrevistoLeitura" style="left:0%;">
-                                    <span class="linha-label linha-previsto-label" id="leituraPrevistoLabel">Previsto: 0%</span>
-                                </div>
-                                <div class="linha-indicadora linha-realizado" id="linhaRealizadoLeitura" style="left:0%;">
-                                    <span class="linha-label linha-realizado-label" id="leituraRealizadoLabel">Realizado: 0%</span>
-                                </div>
+                                <div class="linha-indicadora linha-previsto" id="linhaPrevistoLeitura" style="left:0%;"></div>
+                                <div class="linha-indicadora linha-realizado" id="linhaRealizadoLeitura" style="left:0%;"></div>
                             </div>
                         </div>
                         <div class="barra-item barra-conclusao">
@@ -1031,14 +1006,14 @@
                                 <div class="barra-item-fundo"></div>
                                 <div class="barra-item-preenchida" id="barraConclusaoPreenchida" style="width:0%;"></div>
                                 <div class="barra-item-legenda" id="barraConclusaoLegenda">Conclusão: 0% (0/50)</div>
-                                <div class="linha-indicadora linha-previsto" id="linhaPrevistoConclusao" style="left:0%;">
-                                    <span class="linha-label linha-previsto-label" id="conclusaoPrevistoLabel">Previsto: 0%</span>
-                                </div>
-                                <div class="linha-indicadora linha-realizado" id="linhaRealizadoConclusao" style="left:0%;">
-                                    <span class="linha-label linha-realizado-label" id="conclusaoRealizadoLabel">Realizado: 0%</span>
-                                </div>
+                                <div class="linha-indicadora linha-previsto" id="linhaPrevistoConclusao" style="left:0%;"></div>
+                                <div class="linha-indicadora linha-realizado" id="linhaRealizadoConclusao" style="left:0%;"></div>
                             </div>
                         </div>
+                    </div>
+                    <div class="legenda-barras">
+                        <span class="legenda-item"><span class="legenda-linha preview"></span> Previsto</span>
+                        <span class="legenda-item"><span class="legenda-linha real"></span> Realizado</span>
                     </div>
                     <div class="feedback-textual" id="feedbackTextual"></div>
                 </div>
@@ -1663,7 +1638,6 @@
             const textoDiasProva = document.getElementById('textoDiasProva');
             const modulosGrid = document.getElementById('modulosGrid');
             const modulosResumo = document.getElementById('modulosResumo');
-            const diasAtrasoBadge = document.getElementById('diasAtrasoBadge');
             const btnSino = document.getElementById('btnSino');
             const notificacoesPainel = document.getElementById('notificacoesPainel');
             const barraLeituraPreenchida = document.getElementById('barraLeituraPreenchida');
@@ -1674,10 +1648,6 @@
             const linhaRealizadoLeitura = document.getElementById('linhaRealizadoLeitura');
             const linhaPrevistoConclusao = document.getElementById('linhaPrevistoConclusao');
             const linhaRealizadoConclusao = document.getElementById('linhaRealizadoConclusao');
-            const leituraPrevistoLabel = document.getElementById('leituraPrevistoLabel');
-            const leituraRealizadoLabel = document.getElementById('leituraRealizadoLabel');
-            const conclusaoPrevistoLabel = document.getElementById('conclusaoPrevistoLabel');
-            const conclusaoRealizadoLabel = document.getElementById('conclusaoRealizadoLabel');
             const feedbackTextual = document.getElementById('feedbackTextual');
             const saudacaoPrincipal = document.getElementById('saudacaoPrincipal');
             const saudacaoMeta = document.getElementById('saudacaoMeta');
@@ -2046,11 +2016,6 @@
                     linhaRealizadoLeitura.style.left = `${pctLeitura}%`;
                     linhaPrevistoConclusao.style.left = '0%';
                     linhaRealizadoConclusao.style.left = `${pctConclusao}%`;
-                    leituraPrevistoLabel.textContent = 'Previsto: 0%';
-                    leituraRealizadoLabel.textContent = `Realizado: ${Math.round(pctLeitura)}%`;
-                    conclusaoPrevistoLabel.textContent = 'Previsto: 0%';
-                    conclusaoRealizadoLabel.textContent = `Realizado: ${Math.round(pctConclusao)}%`;
-                    atualizarDiasAtrasoBadge(0);
                     return;
                 }
                 const hoje = obterDataAtual();
@@ -2102,23 +2067,10 @@
                     }
                     detalhe = `Conclusão: ${concluidosAtual}/${TOTAL_ASSUNTOS} • Dia ${diasPassados} de ${diasTotais}`;
                 }
-                leituraPrevistoLabel.textContent = `Previsto: ${Math.round(parseFloat(linhaPrevistoLeitura.style.left))}%`;
-                leituraRealizadoLabel.textContent = `Realizado: ${Math.round(pctLeitura)}%`;
-                conclusaoPrevistoLabel.textContent = `Previsto: ${Math.round(parseFloat(linhaPrevistoConclusao.style.left))}%`;
-                conclusaoRealizadoLabel.textContent = `Realizado: ${Math.round(pctConclusao)}%`;
                 farol.className = `farol farol-${statusFarol}`;
                 farolIcon.textContent = statusFarol === 'vermelho' ? '🔴' : statusFarol === 'amarelo' ? '🟡' : statusFarol === 'azul' ? '🔵' : '🟢';
                 farolTexto.textContent = textoFarol;
                 statusDetalheTexto.textContent = detalhe;
-                atualizarDiasAtrasoBadge(diasAtraso);
-            }
-
-            function atualizarDiasAtrasoBadge(diasAtraso) {
-                const badge = document.getElementById('diasAtrasoBadge');
-                if (diasAtraso <= -10) { badge.className = 'dias-atraso-badge muito-atrasado'; badge.textContent = `🔴 ${Math.abs(diasAtraso)} dias atrasado`; }
-                else if (diasAtraso <= -1) { badge.className = 'dias-atraso-badge atrasado'; badge.textContent = `🟡 ${Math.abs(diasAtraso)} dias atrasado`; }
-                else if (diasAtraso >= 1) { badge.className = 'dias-atraso-badge adiantado'; badge.textContent = `🔵 ${diasAtraso} dias adiantado`; }
-                else { badge.className = 'dias-atraso-badge em-dia'; badge.textContent = '✓ Em dia'; }
             }
 
             function iniciar() {
