@@ -30,7 +30,338 @@
             --radius-md: 8px;
             --shadow-sm: 0 2px 4px rgba(0,0,0,0.06);
             --shadow-md: 0 4px 12px rgba(0,0,0,0.1);
+            --shadow-lg: 0 8px 24px rgba(0,0,0,0.18);
             --transition: 0.25s ease;
+        }
+
+        body.dark-mode {
+            --ms-blue: #4cc2ff;
+            --ms-blue-dark: #82c7ff;
+            --ms-blue-light: #1a3a5c;
+            --ms-green: #6ccb5f;
+            --ms-green-light: #1e3a2a;
+            --ms-yellow: #ffd54f;
+            --ms-yellow-light: #4a3f1a;
+            --ms-red: #ff6b6b;
+            --ms-red-light: #4a2020;
+            --ms-gold: #e6c35c;
+            --ms-gold-light: #4a3f1a;
+            --ms-gold-dark: #d4af37;
+            --ms-gray-100: #1a1a1a;
+            --ms-gray-200: #242424;
+            --ms-gray-300: #333333;
+            --ms-gray-400: #4a4a4a;
+            --ms-gray-500: #7a7a7a;
+            --ms-gray-700: #aaaaaa;
+            --ms-gray-900: #f0f0f0;
+            background-color: #111111;
+            color: #e0e0e0;
+        }
+
+        body.dark-mode .ms-header {
+            background: #1a3a5c;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+        }
+
+        body.dark-mode .ms-header::after {
+            background: linear-gradient(90deg, #4cc2ff, #82c7ff, #4cc2ff);
+        }
+
+        body.dark-mode .saudacao-container,
+        body.dark-mode .status-container,
+        body.dark-mode .modulo-card,
+        body.dark-mode .topic-section,
+        body.dark-mode .config-section,
+        body.dark-mode .notificacoes-painel {
+            background: #1e1e1e;
+            border-color: #333;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+
+        body.dark-mode .saudacao-principal,
+        body.dark-mode .modulo-nome,
+        body.dark-mode .modulos-titulo,
+        body.dark-mode .config-header h2,
+        body.dark-mode .topic-header,
+        body.dark-mode .subtopic-header {
+            color: #e0e0e0;
+        }
+
+        body.dark-mode .saudacao-meta,
+        body.dark-mode .modulo-contagem,
+        body.dark-mode .modulos-resumo,
+        body.dark-mode .config-field label,
+        body.dark-mode .config-info,
+        body.dark-mode .grafico-labels,
+        body.dark-mode .legenda-barras,
+        body.dark-mode .feedback-textual,
+        body.dark-mode .resumo-rodape,
+        body.dark-mode .notificacoes-header {
+            color: #aaa;
+        }
+
+        body.dark-mode .saudacao-meta strong,
+        body.dark-mode .config-info strong {
+            color: #4cc2ff;
+        }
+
+        body.dark-mode .barra-item-fundo {
+            background: #333;
+        }
+
+        body.dark-mode .barra-item-legenda {
+            color: #e0e0e0;
+            text-shadow: 0 0 4px rgba(0,0,0,0.8);
+        }
+
+        body.dark-mode .feedback-item {
+            background: #2a2a2a;
+            border: 1px solid #3a3a3a;
+        }
+
+        body.dark-mode .dias-prova {
+            background: #1a1a1a;
+            border-color: #333;
+        }
+
+        body.dark-mode .dias-prova .numero-dias {
+            color: #4cc2ff;
+        }
+
+        body.dark-mode .dias-prova .texto-dias {
+            color: #aaa;
+        }
+
+        body.dark-mode .modulo-card.nao-iniciado {
+            background: #2a2a1a;
+            border-color: #6b5a00;
+        }
+
+        body.dark-mode .modulo-card.em-progresso {
+            background: #1a2a1a;
+            border-color: #2d6b2d;
+        }
+
+        body.dark-mode .modulo-card.estagnado {
+            background: #2a2a1a;
+            border-color: #6b5a00;
+        }
+
+        body.dark-mode .modulo-card.abandonado {
+            background: #2a1a1a;
+            border-color: #6b2d2d;
+        }
+
+        body.dark-mode .modulo-card.concluido {
+            background: #2a251a;
+            border-color: #6b5e00;
+        }
+
+        body.dark-mode .modulo-card .modulo-percentual {
+            color: #82c7ff;
+        }
+        body.dark-mode .modulo-card.em-progresso .modulo-percentual,
+        body.dark-mode .modulo-card.nao-iniciado .modulo-percentual {
+            color: #6ccb5f;
+        }
+        body.dark-mode .modulo-card.estagnado .modulo-percentual {
+            color: #ffd54f;
+        }
+        body.dark-mode .modulo-card.abandonado .modulo-percentual {
+            color: #ff6b6b;
+        }
+        body.dark-mode .modulo-card.concluido .modulo-percentual {
+            color: #e6c35c;
+        }
+
+        body.dark-mode .modulo-card .modulo-bar {
+            background: #333;
+        }
+
+        body.dark-mode .modulo-card .modulo-alerta {
+            color: #ff6b6b;
+        }
+        body.dark-mode .modulo-card .modulo-alerta.amarelo {
+            color: #ffd54f;
+        }
+        body.dark-mode .modulo-card .modulo-alerta.dourado {
+            color: #e6c35c;
+        }
+
+        body.dark-mode .topic-header {
+            background: #1a3a5c;
+            color: #fff;
+        }
+
+        body.dark-mode .topic-header:hover {
+            background: #0f2a44;
+        }
+
+        body.dark-mode .subtopic-header {
+            background: #1a3a5c;
+            color: #82c7ff;
+            border-left-color: #4cc2ff;
+        }
+
+        body.dark-mode th {
+            background: #2a2a2a;
+            color: #aaa;
+            border-bottom-color: #444;
+        }
+
+        body.dark-mode td {
+            border-bottom-color: #333;
+            color: #e0e0e0;
+        }
+
+        body.dark-mode tr:hover td {
+            background: #2a2a2a;
+        }
+
+        body.dark-mode .btn-rodape,
+        body.dark-mode .btn-voltar {
+            background: #2a2a2a;
+            color: #e0e0e0;
+            border-color: #444;
+        }
+
+        body.dark-mode .btn-rodape:hover,
+        body.dark-mode .btn-voltar:hover {
+            background: #333;
+        }
+
+        body.dark-mode .btn-ms {
+            background: #4cc2ff;
+            color: #111;
+        }
+
+        body.dark-mode .btn-ms:hover {
+            background: #82c7ff;
+        }
+
+        body.dark-mode .btn-ms.danger {
+            background: #ff6b6b;
+            color: #111;
+        }
+
+        body.dark-mode .btn-ms.danger:hover {
+            background: #ff9999;
+        }
+
+        body.dark-mode .config-field input[type="date"],
+        body.dark-mode .config-field input[type="text"] {
+            background: #2a2a2a;
+            border-color: #444;
+            color: #e0e0e0;
+        }
+
+        body.dark-mode .config-info {
+            background: #2a2a2a;
+            color: #aaa;
+        }
+
+        body.dark-mode .aviso-persistencia {
+            background: #3a2a1a;
+            color: #ffd54f;
+            border-color: #6b5a00;
+        }
+
+        body.dark-mode .aviso-persistencia .fechar-aviso {
+            color: #ffd54f;
+        }
+
+        body.dark-mode .notificacao-item {
+            border-bottom-color: #333;
+        }
+
+        body.dark-mode .notificacao-item:hover {
+            background: #2a2a2a;
+        }
+
+        body.dark-mode .notificacoes-header {
+            background: #1a1a1a;
+            border-bottom-color: #333;
+        }
+
+        body.dark-mode .linha-previsto {
+            background: #aaa;
+        }
+
+        body.dark-mode .linha-realizado {
+            background: #ff8c42;
+        }
+
+        body.dark-mode .legenda-barras .legenda-linha.preview { background: #aaa; }
+        body.dark-mode .legenda-barras .legenda-linha.real { background: #ff8c42; }
+
+        body.dark-mode .farol-verde { background: #1e3a2a; color: #6ccb5f; }
+        body.dark-mode .farol-verde .farol-icon { color: #6ccb5f; }
+        body.dark-mode .farol-amarelo { background: #4a3f1a; color: #ffd54f; }
+        body.dark-mode .farol-amarelo .farol-icon { color: #ffd54f; }
+        body.dark-mode .farol-vermelho { background: #4a2020; color: #ff6b6b; }
+        body.dark-mode .farol-vermelho .farol-icon { color: #ff6b6b; }
+        body.dark-mode .farol-azul { background: #1a3a5c; color: #82c7ff; }
+        body.dark-mode .farol-azul .farol-icon { color: #4cc2ff; }
+
+        body.dark-mode .modal-anotacao-content {
+            background: #1e1e1e;
+            border-color: #333;
+            color: #e0e0e0;
+        }
+
+        body.dark-mode .modal-anotacao-content textarea {
+            background: #2a2a2a;
+            border-color: #444;
+            color: #e0e0e0;
+        }
+
+        body.dark-mode .modal-anotacao-header {
+            border-bottom-color: #333;
+            background: #1a1a1a;
+        }
+
+        body.dark-mode .btn-fechar-modal {
+            color: #aaa;
+        }
+
+        body.dark-mode .btn-fechar-modal:hover {
+            background: #333;
+        }
+
+        body.dark-mode .grafico-progresso {
+            background: transparent;
+        }
+
+        body.dark-mode .feedback-textual {
+            background: #1a1a1a;
+        }
+
+        body.dark-mode .modulo-card .modulo-nome {
+            color: #e0e0e0;
+        }
+
+        body.dark-mode .modulo-card .modulo-contagem {
+            color: #aaa;
+        }
+
+        body.dark-mode .sino-btn {
+            background: rgba(255,255,255,0.15);
+        }
+
+        body.dark-mode .sino-btn:hover {
+            background: rgba(255,255,255,0.25);
+        }
+
+        body.dark-mode .dias-prova .numero-dias.verde { color: #6ccb5f; }
+        body.dark-mode .dias-prova .numero-dias.amarelo { color: #ffd54f; }
+        body.dark-mode .dias-prova .numero-dias.vermelho { color: #ff6b6b; }
+
+        body.dark-mode .checkbox-cell input[type="checkbox"] {
+            accent-color: #4cc2ff;
+        }
+
+        body.dark-mode .checkbox-cell input[type="checkbox"].concluido-check:checked {
+            accent-color: #6ccb5f;
         }
 
         * {
@@ -47,6 +378,7 @@
             min-height: 100vh;
             -webkit-tap-highlight-color: transparent;
             overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
 
         .app-shell {
@@ -78,6 +410,7 @@
             box-shadow: var(--shadow-md);
             position: relative;
             overflow: hidden;
+            transition: background 0.3s ease, box-shadow 0.3s ease;
         }
         .ms-header::after {
             content: '';
@@ -168,6 +501,7 @@
             display: flex;
             flex-direction: column;
             gap: 4px;
+            transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
         }
         .saudacao-principal {
             font-size: 1.1rem;
@@ -200,6 +534,7 @@
             overflow: hidden;
             max-height: 450px;
             border: 1px solid var(--ms-gray-300);
+            transition: background 0.3s ease, border-color 0.3s ease;
         }
         .notificacoes-painel.visivel {
             display: block;
@@ -275,6 +610,7 @@
             display: none;
             align-items: center;
             gap: 8px;
+            transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
         }
         .aviso-persistencia.visivel { display: flex; }
         .aviso-persistencia .fechar-aviso {
@@ -296,6 +632,7 @@
             border: 1px solid var(--ms-gray-300);
             overflow: hidden;
             min-height: 120px;
+            transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
         }
         .farol {
             width: 10%;
@@ -715,7 +1052,7 @@
         table {
             width: 100%;
             border-collapse: collapse;
-            min-width: 440px;
+            min-width: 480px;
         }
         th {
             background: var(--ms-gray-100);
@@ -733,6 +1070,10 @@
             min-width: 180px;
             padding-left: 14px;
         }
+        th.anotacao-col {
+            width: 45px;
+            min-width: 45px;
+        }
         td {
             padding: 9px 6px;
             border-bottom: 1px solid var(--ms-gray-200);
@@ -743,6 +1084,9 @@
         td.assunto-col {
             text-align: left;
             padding-left: 14px;
+        }
+        td.anotacao-col {
+            text-align: center;
         }
         tr:hover td { background: var(--ms-gray-100); }
         .checkbox-cell { text-align: center; min-width: 55px; }
@@ -760,6 +1104,117 @@
         }
         .checkbox-cell input[type="checkbox"].concluido-check:checked {
             accent-color: var(--ms-green);
+        }
+
+        .btn-anotacao {
+            background: none;
+            border: none;
+            font-size: 1.1rem;
+            cursor: pointer;
+            padding: 4px 6px;
+            border-radius: var(--radius-sm);
+            transition: var(--transition);
+        }
+        .btn-anotacao:hover {
+            background: var(--ms-gray-200);
+            transform: scale(1.15);
+        }
+        .btn-anotacao.tem-anotacao {
+            color: var(--ms-blue);
+            font-weight: 700;
+        }
+
+        .modal-anotacao-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 200;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .modal-anotacao-overlay.visivel {
+            display: flex;
+            animation: fadeInNotif 0.2s ease;
+        }
+        .modal-anotacao-content {
+            background: #fff;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-lg);
+            width: 100%;
+            max-width: 500px;
+            max-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            border: 1px solid var(--ms-gray-300);
+        }
+        .modal-anotacao-header {
+            padding: 14px 18px;
+            border-bottom: 1px solid var(--ms-gray-300);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--ms-gray-100);
+        }
+        .modal-anotacao-header h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--ms-gray-900);
+        }
+        .btn-fechar-modal {
+            background: none;
+            border: none;
+            font-size: 1.4rem;
+            cursor: pointer;
+            color: var(--ms-gray-700);
+            padding: 4px 8px;
+            border-radius: var(--radius-sm);
+            transition: var(--transition);
+            line-height: 1;
+        }
+        .btn-fechar-modal:hover {
+            background: var(--ms-gray-200);
+        }
+        .modal-anotacao-body {
+            padding: 14px 18px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            flex: 1;
+            overflow-y: auto;
+        }
+        .modal-anotacao-body label {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--ms-gray-700);
+        }
+        .modal-anotacao-body textarea {
+            width: 100%;
+            min-height: 150px;
+            padding: 12px;
+            border: 1px solid var(--ms-gray-400);
+            border-radius: var(--radius-sm);
+            font-family: var(--ms-font);
+            font-size: 0.9rem;
+            resize: vertical;
+            transition: var(--transition);
+        }
+        .modal-anotacao-body textarea:focus {
+            outline: none;
+            border-color: var(--ms-blue);
+            box-shadow: 0 0 4px rgba(0,103,184,0.3);
+        }
+        .modal-anotacao-rodape {
+            padding: 12px 18px;
+            border-top: 1px solid var(--ms-gray-300);
+            display: flex;
+            justify-content: flex-end;
+            gap: 8px;
         }
 
         .rodape {
@@ -906,6 +1361,37 @@
             cursor: pointer;
         }
 
+        .modo-escuro-section {
+            border-top: 1px solid var(--ms-gray-300);
+            margin-top: 16px;
+            padding-top: 16px;
+        }
+        .modo-escuro-section h3 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--ms-blue);
+            margin-bottom: 8px;
+        }
+        .modo-escuro-toggle {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--ms-gray-700);
+        }
+        .modo-escuro-toggle input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--ms-blue);
+            cursor: pointer;
+        }
+        .modo-escuro-descricao {
+            font-size: 0.75rem;
+            color: var(--ms-gray-500);
+            margin-top: 6px;
+        }
+
         @media (max-width: 600px) {
             .app-shell { padding: 6px; }
             .ms-header { padding: 14px 12px; }
@@ -942,6 +1428,9 @@
             .config-field input[type="date"],
             .config-field input[type="text"] { width: 100%; min-width: auto; }
             .btn-ms { justify-content: center; }
+            th.anotacao-col { width: 35px; min-width: 35px; }
+            .btn-anotacao { font-size: 0.9rem; padding: 2px 4px; }
+            .modal-anotacao-content { max-width: 95vw; }
         }
     </style>
 </head>
@@ -1076,9 +1565,34 @@
                         <input type="date" id="dataSimulada" disabled>
                     </div>
                 </div>
+                <div class="modo-escuro-section">
+                    <h3>🎨 Aparência</h3>
+                    <div class="modo-escuro-toggle">
+                        <input type="checkbox" id="modoEscuroToggle">
+                        <label for="modoEscuroToggle">🌙 Ativar modo escuro</label>
+                    </div>
+                    <div class="modo-escuro-descricao">Reduz o brilho da tela para estudar confortavelmente à noite.</div>
+                </div>
                 <div style="margin-top:14px;text-align:center;">
                     <button class="btn-ms danger" id="btnResetar">🗑️ Resetar Progresso</button>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-anotacao-overlay" id="modalAnotacaoOverlay">
+        <div class="modal-anotacao-content">
+            <div class="modal-anotacao-header">
+                <h3 id="modalAnotacaoTitulo">📝 Anotação</h3>
+                <button class="btn-fechar-modal" id="btnFecharModalAnotacao">×</button>
+            </div>
+            <div class="modal-anotacao-body">
+                <label id="modalAnotacaoAssunto">Assunto:</label>
+                <textarea id="modalAnotacaoTextarea" placeholder="Digite suas anotações sobre este assunto..."></textarea>
+            </div>
+            <div class="modal-anotacao-rodape">
+                <button class="btn-ms" id="btnSalvarAnotacao">💾 Salvar Anotação</button>
+                <button class="btn-ms danger" id="btnExcluirAnotacao">🗑️ Excluir</button>
             </div>
         </div>
     </div>
@@ -1111,6 +1625,9 @@
             let relatorioSemanalEnviado = null;
             let alertasContagemEnviados = [];
             let nomeUsuario = '';
+            let anotacoes = {};
+            let chaveAnotacaoAtual = null;
+            let modoEscuroAtivo = false;
 
             function salvarDados() {
                 const dados = {
@@ -1127,7 +1644,9 @@
                     dataFinal: dataFinal,
                     dataSimulada: dataSimulada,
                     usarDataSistema: usarDataSistema,
-                    telaAtual: telaAtual
+                    telaAtual: telaAtual,
+                    anotacoes: anotacoes,
+                    modoEscuroAtivo: modoEscuroAtivo
                 };
                 const json = JSON.stringify(dados);
                 if (armazenamento.disponivel) {
@@ -1172,16 +1691,29 @@
                         dataSimulada = parsed.dataSimulada || '';
                         usarDataSistema = parsed.usarDataSistema !== undefined ? parsed.usarDataSistema : true;
                         telaAtual = parsed.telaAtual || 'principal';
+                        anotacoes = parsed.anotacoes || {};
+                        modoEscuroAtivo = parsed.modoEscuroAtivo || false;
                         if (nomeUsuario) nomeUsuarioInput.value = nomeUsuario;
                         if (dataInicial) dataInicialInput.value = dataInicial;
                         if (dataFinal) dataFinalInput.value = dataFinal;
                         if (dataSimulada) dataSimuladaInput.value = dataSimulada;
                         usarDataSistemaCheckbox.checked = usarDataSistema;
+                        modoEscuroToggle.checked = modoEscuroAtivo;
+                        aplicarModoEscuro();
                         atualizarEstadoDataSimulada();
                         return true;
                     }
                 } catch (e) {}
                 return false;
+            }
+
+            function aplicarModoEscuro() {
+                if (modoEscuroAtivo) {
+                    document.body.classList.add('dark-mode');
+                } else {
+                    document.body.classList.remove('dark-mode');
+                }
+                if (modoEscuroToggle) modoEscuroToggle.checked = modoEscuroAtivo;
             }
 
             function mostrarAvisoPersistencia() {
@@ -1625,6 +2157,7 @@
             const dataFinalInput = document.getElementById('dataFinal');
             const dataSimuladaInput = document.getElementById('dataSimulada');
             const usarDataSistemaCheckbox = document.getElementById('usarDataSistema');
+            const modoEscuroToggle = document.getElementById('modoEscuroToggle');
             const diasTotaisEl = document.getElementById('diasTotais');
             const diasMetaLidoEl = document.getElementById('diasMetaLido');
             const diaProvaEl = document.getElementById('diaProva');
@@ -1651,6 +2184,13 @@
             const feedbackTextual = document.getElementById('feedbackTextual');
             const saudacaoPrincipal = document.getElementById('saudacaoPrincipal');
             const saudacaoMeta = document.getElementById('saudacaoMeta');
+            const modalAnotacaoOverlay = document.getElementById('modalAnotacaoOverlay');
+            const modalAnotacaoTitulo = document.getElementById('modalAnotacaoTitulo');
+            const modalAnotacaoAssunto = document.getElementById('modalAnotacaoAssunto');
+            const modalAnotacaoTextarea = document.getElementById('modalAnotacaoTextarea');
+            const btnFecharModalAnotacao = document.getElementById('btnFecharModalAnotacao');
+            const btnSalvarAnotacao = document.getElementById('btnSalvarAnotacao');
+            const btnExcluirAnotacao = document.getElementById('btnExcluirAnotacao');
 
             function atualizarEstadoDataSimulada() {
                 if (usarDataSistema) { dataSimuladaInput.disabled = true; dataSimuladaInput.value = ''; } else { dataSimuladaInput.disabled = false; }
@@ -1671,8 +2211,56 @@
                 atualizarGraficoStatus();
             });
 
+            modoEscuroToggle.addEventListener('change', function() {
+                modoEscuroAtivo = this.checked;
+                aplicarModoEscuro();
+                salvarDados();
+            });
+
             btnSino.addEventListener('click', function(e) { e.stopPropagation(); notificacoesPainel.classList.toggle('visivel'); });
             document.addEventListener('click', function(e) { if (!notificacoesPainel.contains(e.target) && e.target !== btnSino) { notificacoesPainel.classList.remove('visivel'); } });
+
+            function abrirModalAnotacao(chave, assuntoTexto) {
+                chaveAnotacaoAtual = chave;
+                modalAnotacaoTitulo.textContent = '📝 Anotação';
+                modalAnotacaoAssunto.textContent = 'Assunto: ' + assuntoTexto;
+                modalAnotacaoTextarea.value = anotacoes[chave] || '';
+                modalAnotacaoOverlay.classList.add('visivel');
+                setTimeout(() => modalAnotacaoTextarea.focus(), 100);
+            }
+
+            function fecharModalAnotacao() {
+                modalAnotacaoOverlay.classList.remove('visivel');
+                chaveAnotacaoAtual = null;
+            }
+
+            btnFecharModalAnotacao.addEventListener('click', fecharModalAnotacao);
+            modalAnotacaoOverlay.addEventListener('click', function(e) {
+                if (e.target === modalAnotacaoOverlay) fecharModalAnotacao();
+            });
+
+            btnSalvarAnotacao.addEventListener('click', function() {
+                if (chaveAnotacaoAtual) {
+                    const texto = modalAnotacaoTextarea.value.trim();
+                    if (texto) {
+                        anotacoes[chaveAnotacaoAtual] = texto;
+                    } else {
+                        delete anotacoes[chaveAnotacaoAtual];
+                    }
+                    salvarDados();
+                    renderizarTopicos();
+                    fecharModalAnotacao();
+                }
+            });
+
+            btnExcluirAnotacao.addEventListener('click', function() {
+                if (chaveAnotacaoAtual && anotacoes[chaveAnotacaoAtual]) {
+                    delete anotacoes[chaveAnotacaoAtual];
+                    salvarDados();
+                    renderizarTopicos();
+                    fecharModalAnotacao();
+                }
+            });
 
             function mostrarTela(nomeTela) {
                 telaAtual = nomeTela;
@@ -1699,7 +2287,7 @@
                 mostrarTela('principal');
             });
             btnResetar.addEventListener('click', () => {
-                if (confirm('Tem certeza que deseja apagar TODOS os checkboxes e progresso?')) {
+                if (confirm('Tem certeza que deseja apagar TODOS os checkboxes, anotações e progresso?')) {
                     estadoCheckboxes = {};
                     ultimasAtividades = {};
                     notificacoes = [];
@@ -1708,6 +2296,7 @@
                     modulosConcluidosNotificados = [];
                     relatorioSemanalEnviado = null;
                     alertasContagemEnviados = [];
+                    anotacoes = {};
                     renderizarTopicos();
                     renderizarModulos();
                     renderizarNotificacoes();
@@ -1752,7 +2341,7 @@
                         const table = document.createElement('table');
                         const thead = document.createElement('thead');
                         const trHead = document.createElement('tr');
-                        trHead.innerHTML = `<th class="assunto-col">Assunto</th><th>Lido</th><th>Revisado</th><th>Exercitado</th><th>Concluído</th>`;
+                        trHead.innerHTML = `<th class="assunto-col">Assunto</th><th>Lido</th><th>Revisado</th><th>Exercitado</th><th>Concluído</th><th class="anotacao-col">📝</th>`;
                         thead.appendChild(trHead);
                         table.appendChild(thead);
                         const tbody = document.createElement('tbody');
@@ -1812,6 +2401,23 @@
                                 tdCheck.appendChild(input);
                                 tr.appendChild(tdCheck);
                             });
+                            const tdAnotacao = document.createElement('td');
+                            tdAnotacao.className = 'anotacao-col';
+                            const btnAnotacao = document.createElement('button');
+                            btnAnotacao.className = 'btn-anotacao';
+                            const chaveAnotacao = `${chaveBase}-anotacao`;
+                            btnAnotacao.dataset.chaveAnotacao = chaveAnotacao;
+                            btnAnotacao.dataset.assuntoTexto = assunto;
+                            btnAnotacao.textContent = anotacoes[chaveAnotacao] ? '📝' : '📝';
+                            if (anotacoes[chaveAnotacao]) {
+                                btnAnotacao.classList.add('tem-anotacao');
+                                btnAnotacao.textContent = '📝✓';
+                            }
+                            btnAnotacao.addEventListener('click', function() {
+                                abrirModalAnotacao(this.dataset.chaveAnotacao, this.dataset.assuntoTexto);
+                            });
+                            tdAnotacao.appendChild(btnAnotacao);
+                            tr.appendChild(tdAnotacao);
                             tbody.appendChild(tr);
                         });
                         table.appendChild(tbody);
@@ -2075,6 +2681,7 @@
 
             function iniciar() {
                 carregarDados();
+                aplicarModoEscuro();
                 renderizarTopicos();
                 renderizarModulos();
                 renderizarNotificacoes();
@@ -2090,6 +2697,7 @@
                 if (dataFinal) dataFinalInput.value = dataFinal;
                 if (dataSimulada) dataSimuladaInput.value = dataSimulada;
                 usarDataSistemaCheckbox.checked = usarDataSistema;
+                modoEscuroToggle.checked = modoEscuroAtivo;
                 atualizarEstadoDataSimulada();
                 if (telaAtual === 'config') mostrarTela('config');
                 else mostrarTela('principal');
