@@ -72,7 +72,9 @@
         body.dark-mode .modulo-card,
         body.dark-mode .topic-section,
         body.dark-mode .config-section,
-        body.dark-mode .notificacoes-painel {
+        body.dark-mode .notificacoes-painel,
+        body.dark-mode .dashboard-section,
+        body.dark-mode .menu-lateral {
             background: #1e1e1e;
             border-color: #333;
             box-shadow: 0 4px 12px rgba(0,0,0,0.3);
@@ -83,7 +85,9 @@
         body.dark-mode .modulos-titulo,
         body.dark-mode .config-header h2,
         body.dark-mode .topic-header,
-        body.dark-mode .subtopic-header {
+        body.dark-mode .subtopic-header,
+        body.dark-mode .dashboard-titulo,
+        body.dark-mode .menu-item {
             color: #e0e0e0;
         }
 
@@ -96,7 +100,8 @@
         body.dark-mode .legenda-barras,
         body.dark-mode .feedback-textual,
         body.dark-mode .resumo-rodape,
-        body.dark-mode .notificacoes-header {
+        body.dark-mode .notificacoes-header,
+        body.dark-mode .dashboard-subtitulo {
             color: #aaa;
         }
 
@@ -266,10 +271,6 @@
             border-color: #6b5a00;
         }
 
-        body.dark-mode .aviso-persistencia .fechar-aviso {
-            color: #ffd54f;
-        }
-
         body.dark-mode .notificacao-item {
             border-bottom-color: #333;
         }
@@ -364,6 +365,112 @@
             accent-color: #6ccb5f;
         }
 
+        body.dark-mode .cronometro-container {
+            background: #2a2a2a;
+            border-color: #444;
+        }
+
+        body.dark-mode .cronometro-display {
+            color: #4cc2ff;
+        }
+
+        body.dark-mode .btn-cronometro {
+            background: #333;
+            color: #e0e0e0;
+            border-color: #555;
+        }
+
+        body.dark-mode .btn-cronometro:hover {
+            background: #444;
+        }
+
+        body.dark-mode .btn-cronometro.rodando {
+            background: #1a3a2a;
+            border-color: #2d6b2d;
+        }
+
+        body.dark-mode .btn-cronometro.pausado {
+            background: #4a3f1a;
+            border-color: #6b5a00;
+        }
+
+        body.dark-mode .grafico-barra-track {
+            background: #333;
+        }
+
+        body.dark-mode .grafico-barra-fill {
+            background: linear-gradient(90deg, #4cc2ff, #82c7ff);
+        }
+
+        body.dark-mode .grafico-dia-label {
+            color: #aaa;
+        }
+
+        body.dark-mode .dashboard-metrica {
+            background: #2a2a2a;
+            border-color: #444;
+        }
+
+        body.dark-mode .dashboard-metrica-valor {
+            color: #4cc2ff;
+        }
+
+        body.dark-mode .dashboard-metrica-label {
+            color: #aaa;
+        }
+
+        body.dark-mode .menu-lateral {
+            background: #1e1e1e;
+            border-color: #333;
+        }
+
+        body.dark-mode .menu-item {
+            border-bottom-color: #333;
+        }
+
+        body.dark-mode .menu-item:hover {
+            background: #2a2a2a;
+        }
+
+        body.dark-mode .menu-item.ativo {
+            background: #1a3a5c;
+            border-left-color: #4cc2ff;
+        }
+
+        body.dark-mode .grafico-colunas-container {
+            background: #2a2a2a;
+            border-color: #444;
+        }
+
+        body.dark-mode .grafico-coluna-liquida {
+            background: linear-gradient(180deg, #6ccb5f, #4caf50);
+        }
+
+        body.dark-mode .grafico-coluna-pausa {
+            background: #555;
+        }
+
+        body.dark-mode .grafico-coluna-label {
+            color: #aaa;
+        }
+
+        body.dark-mode .legenda-dashboard {
+            background: #2a2a2a;
+            border-color: #444;
+        }
+
+        body.dark-mode .legenda-dashboard-item {
+            color: #aaa;
+        }
+
+        body.dark-mode .legenda-dot-liquido {
+            background: #6ccb5f;
+        }
+
+        body.dark-mode .legenda-dot-pausa {
+            background: #555;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -428,14 +535,122 @@
             align-items: center;
             gap: 8px;
             flex-wrap: wrap;
+            padding-left: 50px;
         }
         .ms-header .subtitle {
             font-size: 0.85rem;
             opacity: 0.9;
             margin-top: 4px;
             font-weight: 400;
+            padding-left: 50px;
         }
         .header-icon { font-size: 1.7rem; }
+
+        .btn-menu {
+            position: absolute;
+            top: 16px;
+            left: 16px;
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: #fff;
+            font-size: 1.4rem;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 6px;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            z-index: 60;
+        }
+        .btn-menu:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        .menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 80;
+            display: none;
+        }
+        .menu-overlay.visivel {
+            display: block;
+        }
+
+        .menu-lateral {
+            position: fixed;
+            top: 0;
+            left: -300px;
+            width: 280px;
+            max-width: 85vw;
+            height: 100vh;
+            background: #fff;
+            box-shadow: var(--shadow-lg);
+            z-index: 90;
+            transition: left 0.3s ease;
+            overflow-y: auto;
+            border-right: 1px solid var(--ms-gray-300);
+        }
+        .menu-lateral.visivel {
+            left: 0;
+        }
+        .menu-lateral-header {
+            padding: 20px 16px;
+            border-bottom: 1px solid var(--ms-gray-300);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--ms-blue);
+            color: #fff;
+        }
+        .menu-lateral-header h3 {
+            font-size: 1rem;
+            font-weight: 600;
+        }
+        .btn-fechar-menu {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 1.4rem;
+            cursor: pointer;
+            padding: 4px 8px;
+            border-radius: var(--radius-sm);
+        }
+        .btn-fechar-menu:hover {
+            background: rgba(255,255,255,0.2);
+        }
+        .menu-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 16px;
+            border-bottom: 1px solid var(--ms-gray-200);
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            color: inherit;
+        }
+        .menu-item:hover {
+            background: var(--ms-gray-100);
+        }
+        .menu-item.ativo {
+            background: var(--ms-blue-light);
+            border-left: 4px solid var(--ms-blue);
+            font-weight: 600;
+        }
+        .menu-item .menu-icone {
+            font-size: 1.2rem;
+        }
+        .menu-item .menu-texto {
+            flex: 1;
+            font-size: 0.9rem;
+        }
 
         .header-right {
             position: absolute;
@@ -610,7 +825,6 @@
             display: none;
             align-items: center;
             gap: 8px;
-            transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
         }
         .aviso-persistencia.visivel { display: flex; }
         .aviso-persistencia .fechar-aviso {
@@ -1124,6 +1338,62 @@
             font-weight: 700;
         }
 
+        .cronometro-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            padding: 10px 14px;
+            background: var(--ms-gray-100);
+            border-radius: var(--radius-sm);
+            margin-bottom: 8px;
+            border: 1px solid var(--ms-gray-300);
+        }
+        .cronometro-display {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--ms-blue);
+            font-variant-numeric: tabular-nums;
+            min-width: 110px;
+            letter-spacing: 1px;
+        }
+        .cronometro-modulo-label {
+            font-size: 0.75rem;
+            color: var(--ms-gray-700);
+            font-weight: 600;
+            margin-left: auto;
+        }
+        .btn-cronometro {
+            background: var(--ms-gray-200);
+            border: 1px solid var(--ms-gray-400);
+            color: var(--ms-gray-900);
+            padding: 8px 14px;
+            border-radius: var(--radius-sm);
+            font-family: var(--ms-font);
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            white-space: nowrap;
+        }
+        .btn-cronometro:hover {
+            background: var(--ms-gray-300);
+        }
+        .btn-cronometro.rodando {
+            background: var(--ms-green-light);
+            border-color: var(--ms-green);
+            color: #054b16;
+        }
+        .btn-cronometro.pausado {
+            background: var(--ms-yellow-light);
+            border-color: var(--ms-yellow);
+            color: #6a4b00;
+        }
+        .btn-cronometro:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
         .modal-anotacao-overlay {
             position: fixed;
             top: 0;
@@ -1215,6 +1485,187 @@
             display: flex;
             justify-content: flex-end;
             gap: 8px;
+        }
+
+        .dashboard-section {
+            background: #fff;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-sm);
+            padding: 16px;
+            margin-bottom: 14px;
+            border: 1px solid var(--ms-gray-300);
+        }
+        .dashboard-titulo {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--ms-gray-900);
+            margin-bottom: 4px;
+        }
+        .dashboard-subtitulo {
+            font-size: 0.8rem;
+            color: var(--ms-gray-700);
+            margin-bottom: 14px;
+        }
+        .dashboard-metricas {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+        .dashboard-metrica {
+            background: var(--ms-gray-100);
+            border-radius: var(--radius-sm);
+            padding: 12px;
+            text-align: center;
+            border: 1px solid var(--ms-gray-300);
+        }
+        .dashboard-metrica-valor {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--ms-blue);
+            line-height: 1.2;
+        }
+        .dashboard-metrica-label {
+            font-size: 0.7rem;
+            color: var(--ms-gray-700);
+            text-transform: uppercase;
+            font-weight: 600;
+            margin-top: 4px;
+        }
+
+        .grafico-semanal-titulo {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--ms-gray-700);
+            margin-bottom: 10px;
+        }
+
+        .grafico-colunas-container {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 8px;
+            padding: 15px 10px 5px 10px;
+            background: var(--ms-gray-100);
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--ms-gray-300);
+            min-height: 200px;
+            overflow-x: auto;
+        }
+        .grafico-coluna-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            flex: 1;
+            min-width: 50px;
+            max-width: 70px;
+        }
+        .grafico-coluna-valor {
+            font-size: 0.65rem;
+            font-weight: 600;
+            color: var(--ms-gray-700);
+            white-space: nowrap;
+        }
+        .grafico-coluna-stack {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            max-width: 40px;
+        }
+        .grafico-coluna-liquida {
+            width: 100%;
+            background: linear-gradient(180deg, #6ccb5f, #4caf50);
+            border-radius: 4px 4px 0 0;
+            min-height: 4px;
+            transition: height 0.5s ease;
+        }
+        .grafico-coluna-pausa {
+            width: 100%;
+            background: #c8c6c4;
+            min-height: 4px;
+            transition: height 0.5s ease;
+        }
+        .grafico-coluna-label {
+            font-size: 0.65rem;
+            font-weight: 700;
+            color: var(--ms-gray-700);
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        .legenda-dashboard {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+            padding: 8px 12px;
+            background: var(--ms-gray-100);
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--ms-gray-300);
+            font-size: 0.7rem;
+        }
+        .legenda-dashboard-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: var(--ms-gray-700);
+            font-weight: 600;
+        }
+        .legenda-dot-liquido {
+            width: 14px;
+            height: 14px;
+            background: #4caf50;
+            border-radius: 3px;
+        }
+        .legenda-dot-pausa {
+            width: 14px;
+            height: 14px;
+            background: #c8c6c4;
+            border-radius: 3px;
+        }
+
+        .grafico-barra-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 6px;
+        }
+        .grafico-dia-label {
+            font-size: 0.7rem;
+            color: var(--ms-gray-700);
+            min-width: 160px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            white-space: nowrap;
+        }
+        .grafico-dia-label .modulo-icone {
+            font-size: 1rem;
+        }
+        .grafico-barra-track {
+            flex: 1;
+            height: 20px;
+            background: var(--ms-gray-200);
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+        .grafico-barra-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #c8e6ff, #4cc2ff);
+            border-radius: 10px;
+            transition: width 0.5s ease;
+            min-width: 2px;
+        }
+        .grafico-barra-valor {
+            font-size: 0.7rem;
+            color: var(--ms-gray-700);
+            min-width: 60px;
+            font-weight: 600;
+            text-align: right;
         }
 
         .rodape {
@@ -1392,10 +1843,53 @@
             margin-top: 6px;
         }
 
+        .simulacao-section {
+            border-top: 1px solid var(--ms-gray-300);
+            margin-top: 16px;
+            padding-top: 16px;
+        }
+        .simulacao-section h3 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--ms-blue);
+            margin-bottom: 8px;
+        }
+        .simulacao-botoes {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .btn-simulacao {
+            background: var(--ms-gray-200);
+            border: 1px solid var(--ms-gray-400);
+            color: var(--ms-gray-900);
+            padding: 8px 14px;
+            border-radius: var(--radius-sm);
+            font-family: var(--ms-font);
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .btn-simulacao:hover {
+            background: var(--ms-gray-300);
+        }
+        .btn-simulacao.zerar {
+            background: var(--ms-red-light);
+            border-color: var(--ms-red);
+            color: #a4262c;
+        }
+        .btn-simulacao.zerar:hover {
+            background: var(--ms-red);
+            color: #fff;
+        }
+
         @media (max-width: 600px) {
             .app-shell { padding: 6px; }
             .ms-header { padding: 14px 12px; }
-            .ms-header h1 { font-size: 1.1rem; }
+            .ms-header h1 { font-size: 1.1rem; padding-left: 42px; }
+            .ms-header .subtitle { padding-left: 42px; font-size: 0.75rem; }
+            .btn-menu { top: 12px; left: 10px; width: 34px; height: 34px; font-size: 1.2rem; }
             .header-right { top: 10px; right: 10px; }
             .data-atual { display: none; }
             .sino-btn { width: 34px; height: 34px; font-size: 1.2rem; }
@@ -1431,6 +1925,14 @@
             th.anotacao-col { width: 35px; min-width: 35px; }
             .btn-anotacao { font-size: 0.9rem; padding: 2px 4px; }
             .modal-anotacao-content { max-width: 95vw; }
+            .cronometro-container { flex-wrap: wrap; gap: 6px; }
+            .cronometro-display { font-size: 1.2rem; min-width: 90px; }
+            .cronometro-modulo-label { margin-left: 0; width: 100%; }
+            .dashboard-metricas { grid-template-columns: repeat(2, 1fr); }
+            .grafico-colunas-container { gap: 6px; padding: 10px 6px 5px 6px; }
+            .grafico-coluna-wrapper { min-width: 40px; max-width: 50px; }
+            .grafico-coluna-stack { max-width: 30px; }
+            .grafico-dia-label { min-width: 120px; font-size: 0.65rem; }
         }
     </style>
 </head>
@@ -1443,6 +1945,7 @@
             </div>
 
             <header class="ms-header">
+                <button class="btn-menu" id="btnMenu" title="Menu">☰</button>
                 <h1>
                     <span class="header-icon">📋</span> 
                     CheckAprovação
@@ -1457,6 +1960,26 @@
                     </button>
                 </div>
             </header>
+
+            <div class="menu-overlay" id="menuOverlay"></div>
+            <div class="menu-lateral" id="menuLateral">
+                <div class="menu-lateral-header">
+                    <h3>📋 Menu</h3>
+                    <button class="btn-fechar-menu" id="btnFecharMenu">×</button>
+                </div>
+                <a class="menu-item ativo" data-tela="principal" id="menuInicio">
+                    <span class="menu-icone">📋</span>
+                    <span class="menu-texto">Início</span>
+                </a>
+                <a class="menu-item" data-tela="dashboard" id="menuDashboard">
+                    <span class="menu-icone">📊</span>
+                    <span class="menu-texto">Dashboard</span>
+                </a>
+                <a class="menu-item" data-tela="config" id="menuConfig">
+                    <span class="menu-icone">⚙️</span>
+                    <span class="menu-texto">Configurações</span>
+                </a>
+            </div>
 
             <div class="saudacao-container" id="saudacaoContainer">
                 <div class="saudacao-principal" id="saudacaoPrincipal">Bem-vindo!</div>
@@ -1528,6 +2051,30 @@
             </div>
         </div>
 
+        <div id="telaDashboard" class="tela">
+            <div class="dashboard-section">
+                <div class="dashboard-titulo">📊 Dashboard de Performance</div>
+                <div class="dashboard-subtitulo">Acompanhe seu tempo de estudo e métricas de produtividade</div>
+                <div class="dashboard-metricas" id="dashboardMetricas"></div>
+                <div class="grafico-semanal">
+                    <div class="grafico-semanal-titulo">📅 Horas Líquidas de Estudo - Últimos 7 dias</div>
+                    <div id="graficoSemanal"></div>
+                </div>
+                <div class="legenda-dashboard">
+                    <span class="legenda-dashboard-item"><span class="legenda-dot-liquido"></span> Horas Líquidas (tempo real de estudo)</span>
+                    <span class="legenda-dashboard-item"><span class="legenda-dot-pausa"></span> Tempo de Pausa (café, banheiro, etc.)</span>
+                </div>
+            </div>
+            <div class="dashboard-section">
+                <div class="dashboard-titulo">📚 Tempo por Módulo (Total)</div>
+                <div class="dashboard-subtitulo">Distribuição de horas por disciplina</div>
+                <div id="tempoPorModulo"></div>
+            </div>
+            <div class="rodape">
+                <button class="btn-rodape" id="btnVoltarDashboard">← Voltar ao Início</button>
+            </div>
+        </div>
+
         <div id="telaConfig" class="tela">
             <div class="config-section">
                 <div class="config-header">
@@ -1564,6 +2111,16 @@
                         <label for="dataSimulada">Data simulada</label>
                         <input type="date" id="dataSimulada" disabled>
                     </div>
+                </div>
+                <div class="simulacao-section">
+                    <h3>🧪 Simulação de Uso (para testes)</h3>
+                    <div class="simulacao-botoes">
+                        <button class="btn-simulacao" id="btnSimularBaixo">📊 Baixo</button>
+                        <button class="btn-simulacao" id="btnSimularMedio">📊 Médio</button>
+                        <button class="btn-simulacao" id="btnSimularAlto">📊 Alto</button>
+                        <button class="btn-simulacao zerar" id="btnZerarSimulacao">🧹 Zerar Simulação</button>
+                    </div>
+                    <div style="font-size:0.7rem;color:var(--ms-gray-500);margin-top:6px;">Gera dados fictícios de estudo para visualizar o dashboard e testar o sistema.</div>
                 </div>
                 <div class="modo-escuro-section">
                     <h3>🎨 Aparência</h3>
@@ -1628,6 +2185,15 @@
             let anotacoes = {};
             let chaveAnotacaoAtual = null;
             let modoEscuroAtivo = false;
+            let tempoEstudo = {};
+            let cronometroAtivo = false;
+            let cronometroPausado = false;
+            let cronometroModulo = null;
+            let cronometroInicio = null;
+            let cronometroTempoAcumulado = 0;
+            let cronometroPausaAcumulada = 0;
+            let cronometroPausaInicio = null;
+            let cronometroInterval = null;
 
             function salvarDados() {
                 const dados = {
@@ -1646,7 +2212,15 @@
                     usarDataSistema: usarDataSistema,
                     telaAtual: telaAtual,
                     anotacoes: anotacoes,
-                    modoEscuroAtivo: modoEscuroAtivo
+                    modoEscuroAtivo: modoEscuroAtivo,
+                    tempoEstudo: tempoEstudo,
+                    cronometroAtivo: cronometroAtivo,
+                    cronometroPausado: cronometroPausado,
+                    cronometroModulo: cronometroModulo,
+                    cronometroInicio: cronometroInicio,
+                    cronometroTempoAcumulado: cronometroTempoAcumulado,
+                    cronometroPausaAcumulada: cronometroPausaAcumulada,
+                    cronometroPausaInicio: cronometroPausaInicio
                 };
                 const json = JSON.stringify(dados);
                 if (armazenamento.disponivel) {
@@ -1693,6 +2267,14 @@
                         telaAtual = parsed.telaAtual || 'principal';
                         anotacoes = parsed.anotacoes || {};
                         modoEscuroAtivo = parsed.modoEscuroAtivo || false;
+                        tempoEstudo = parsed.tempoEstudo || {};
+                        cronometroAtivo = parsed.cronometroAtivo || false;
+                        cronometroPausado = parsed.cronometroPausado || false;
+                        cronometroModulo = parsed.cronometroModulo || null;
+                        cronometroInicio = parsed.cronometroInicio || null;
+                        cronometroTempoAcumulado = parsed.cronometroTempoAcumulado || 0;
+                        cronometroPausaAcumulada = parsed.cronometroPausaAcumulada || 0;
+                        cronometroPausaInicio = parsed.cronometroPausaInicio || null;
                         if (nomeUsuario) nomeUsuarioInput.value = nomeUsuario;
                         if (dataInicial) dataInicialInput.value = dataInicial;
                         if (dataFinal) dataFinalInput.value = dataFinal;
@@ -1701,6 +2283,9 @@
                         modoEscuroToggle.checked = modoEscuroAtivo;
                         aplicarModoEscuro();
                         atualizarEstadoDataSimulada();
+                        if (cronometroAtivo && !cronometroPausado) {
+                            retomarCronometro();
+                        }
                         return true;
                     }
                 } catch (e) {}
@@ -1783,42 +2368,34 @@
                 const nome = nomeUsuario ? nomeUsuario : '';
                 const saudacao = obterSaudacao();
                 saudacaoEl.textContent = nome ? `${saudacao}, ${nome}!` : `${saudacao}!`;
-
                 const diasTotais = calcularDiasTotais();
                 const diasPassados = calcularDiasPassados();
                 const diasRestantes = calcularDiasRestantes();
                 const lidosAtual = contarPorTipo('Lido');
                 const concluidosAtual = contarPorTipo('Concluido');
-
                 if (!diasTotais || !dataInicial || !dataFinal) {
                     metaEl.textContent = 'Configure as datas nas Configurações para ver sua meta diária.';
                     return;
                 }
-
                 if (diasPassados <= 0) {
                     metaEl.textContent = 'O plano ainda não começou. Aguarde a data inicial.';
                     return;
                 }
-
                 if (concluidosAtual >= TOTAL_ASSUNTOS) {
                     metaEl.textContent = '🎉 Você concluiu todo o conteúdo! Hora de revisar!';
                     return;
                 }
-
                 const metaLeituraDias = Math.ceil(diasTotais * 0.6);
-
                 if (lidosAtual < TOTAL_ASSUNTOS) {
                     const restantes = TOTAL_ASSUNTOS - lidosAtual;
                     let diasRestantesLeitura;
                     let textoReajuste = '';
-
                     if (diasPassados <= metaLeituraDias) {
                         diasRestantesLeitura = Math.max(1, metaLeituraDias - diasPassados + 1);
                     } else {
                         diasRestantesLeitura = Math.max(1, diasTotais - diasPassados + 1);
                         textoReajuste = ' <span class="alerta-reajuste">(Meta de leitura reajustada para a data final)</span>';
                     }
-
                     const metaDiaria = Math.ceil(restantes / diasRestantesLeitura);
                     metaEl.innerHTML = `📚 Para bater sua meta de <strong>leitura</strong> hoje, estude <strong>${metaDiaria} assunto(s)</strong>.${textoReajuste}`;
                 } else {
@@ -2147,9 +2724,11 @@
             let telaAtual = 'principal';
 
             const telaPrincipal = document.getElementById('telaPrincipal');
+            const telaDashboard = document.getElementById('telaDashboard');
             const telaConfig = document.getElementById('telaConfig');
             const btnAbrirConfig = document.getElementById('btnAbrirConfig');
             const btnVoltarPrincipal = document.getElementById('btnVoltarPrincipal');
+            const btnVoltarDashboard = document.getElementById('btnVoltarDashboard');
             const btnAtualizar = document.getElementById('btnAtualizar');
             const btnResetar = document.getElementById('btnResetar');
             const nomeUsuarioInput = document.getElementById('nomeUsuario');
@@ -2191,6 +2770,20 @@
             const btnFecharModalAnotacao = document.getElementById('btnFecharModalAnotacao');
             const btnSalvarAnotacao = document.getElementById('btnSalvarAnotacao');
             const btnExcluirAnotacao = document.getElementById('btnExcluirAnotacao');
+            const btnMenu = document.getElementById('btnMenu');
+            const btnFecharMenu = document.getElementById('btnFecharMenu');
+            const menuLateral = document.getElementById('menuLateral');
+            const menuOverlay = document.getElementById('menuOverlay');
+            const menuInicio = document.getElementById('menuInicio');
+            const menuDashboard = document.getElementById('menuDashboard');
+            const menuConfig = document.getElementById('menuConfig');
+            const dashboardMetricas = document.getElementById('dashboardMetricas');
+            const graficoSemanal = document.getElementById('graficoSemanal');
+            const tempoPorModulo = document.getElementById('tempoPorModulo');
+            const btnSimularBaixo = document.getElementById('btnSimularBaixo');
+            const btnSimularMedio = document.getElementById('btnSimularMedio');
+            const btnSimularAlto = document.getElementById('btnSimularAlto');
+            const btnZerarSimulacao = document.getElementById('btnZerarSimulacao');
 
             function atualizarEstadoDataSimulada() {
                 if (usarDataSistema) { dataSimuladaInput.disabled = true; dataSimuladaInput.value = ''; } else { dataSimuladaInput.disabled = false; }
@@ -2219,6 +2812,21 @@
 
             btnSino.addEventListener('click', function(e) { e.stopPropagation(); notificacoesPainel.classList.toggle('visivel'); });
             document.addEventListener('click', function(e) { if (!notificacoesPainel.contains(e.target) && e.target !== btnSino) { notificacoesPainel.classList.remove('visivel'); } });
+
+            function abrirMenu() {
+                menuLateral.classList.add('visivel');
+                menuOverlay.classList.add('visivel');
+            }
+            function fecharMenu() {
+                menuLateral.classList.remove('visivel');
+                menuOverlay.classList.remove('visivel');
+            }
+            btnMenu.addEventListener('click', abrirMenu);
+            btnFecharMenu.addEventListener('click', fecharMenu);
+            menuOverlay.addEventListener('click', fecharMenu);
+            menuInicio.addEventListener('click', function(e) { e.preventDefault(); fecharMenu(); mostrarTela('principal'); });
+            menuDashboard.addEventListener('click', function(e) { e.preventDefault(); fecharMenu(); mostrarTela('dashboard'); });
+            menuConfig.addEventListener('click', function(e) { e.preventDefault(); fecharMenu(); mostrarTela('config'); });
 
             function abrirModalAnotacao(chave, assuntoTexto) {
                 chaveAnotacaoAtual = chave;
@@ -2264,12 +2872,26 @@
 
             function mostrarTela(nomeTela) {
                 telaAtual = nomeTela;
-                if (nomeTela === 'principal') { telaConfig.classList.remove('ativa'); telaPrincipal.classList.add('ativa'); } else { telaPrincipal.classList.remove('ativa'); telaConfig.classList.add('ativa'); }
+                telaPrincipal.classList.remove('ativa');
+                telaDashboard.classList.remove('ativa');
+                telaConfig.classList.remove('ativa');
+                if (nomeTela === 'principal') {
+                    telaPrincipal.classList.add('ativa');
+                } else if (nomeTela === 'dashboard') {
+                    telaDashboard.classList.add('ativa');
+                    renderizarDashboard();
+                } else {
+                    telaConfig.classList.add('ativa');
+                }
+                menuInicio.classList.toggle('ativo', nomeTela === 'principal');
+                menuDashboard.classList.toggle('ativo', nomeTela === 'dashboard');
+                menuConfig.classList.toggle('ativo', nomeTela === 'config');
                 salvarDados();
             }
 
             btnAbrirConfig.addEventListener('click', () => mostrarTela('config'));
             btnVoltarPrincipal.addEventListener('click', () => mostrarTela('principal'));
+            btnVoltarDashboard.addEventListener('click', () => mostrarTela('principal'));
             btnAtualizar.addEventListener('click', () => {
                 nomeUsuario = nomeUsuarioInput.value.trim();
                 dataInicial = dataInicialInput.value;
@@ -2287,7 +2909,7 @@
                 mostrarTela('principal');
             });
             btnResetar.addEventListener('click', () => {
-                if (confirm('Tem certeza que deseja apagar TODOS os checkboxes, anotações e progresso?')) {
+                if (confirm('Tem certeza que deseja apagar TODOS os checkboxes, anotações, tempo de estudo e progresso?')) {
                     estadoCheckboxes = {};
                     ultimasAtividades = {};
                     notificacoes = [];
@@ -2297,6 +2919,15 @@
                     relatorioSemanalEnviado = null;
                     alertasContagemEnviados = [];
                     anotacoes = {};
+                    tempoEstudo = {};
+                    cronometroAtivo = false;
+                    cronometroPausado = false;
+                    cronometroModulo = null;
+                    cronometroInicio = null;
+                    cronometroTempoAcumulado = 0;
+                    cronometroPausaAcumulada = 0;
+                    cronometroPausaInicio = null;
+                    if (cronometroInterval) clearInterval(cronometroInterval);
                     renderizarTopicos();
                     renderizarModulos();
                     renderizarNotificacoes();
@@ -2305,6 +2936,193 @@
                 }
             });
             document.getElementById('fecharAviso').addEventListener('click', esconderAvisoPersistencia);
+
+            function formatarTempo(segundosTotais) {
+                const horas = Math.floor(segundosTotais / 3600);
+                const minutos = Math.floor((segundosTotais % 3600) / 60);
+                const segundos = Math.floor(segundosTotais % 60);
+                return String(horas).padStart(2, '0') + ':' + String(minutos).padStart(2, '0') + ':' + String(segundos).padStart(2, '0');
+            }
+
+            function formatarTempoMinutos(minutosTotais) {
+                const horas = Math.floor(minutosTotais / 60);
+                const minutos = Math.round(minutosTotais % 60);
+                if (horas > 0) {
+                    return horas + 'h ' + minutos + 'min';
+                }
+                return minutos + 'min';
+            }
+
+            function formatarTempoColuna(minutosTotais) {
+                const horas = Math.floor(minutosTotais / 60);
+                const minutos = Math.round(minutosTotais % 60);
+                if (horas > 0 && minutos > 0) return horas + 'h' + minutos;
+                if (horas > 0) return horas + 'h';
+                return minutos + 'min';
+            }
+
+            function iniciarCronometro(moduloChave) {
+                if (cronometroAtivo && cronometroModulo !== moduloChave) {
+                    pararCronometro(true);
+                }
+                if (!cronometroAtivo) {
+                    cronometroAtivo = true;
+                    cronometroPausado = false;
+                    cronometroModulo = moduloChave;
+                    cronometroInicio = Date.now();
+                    cronometroTempoAcumulado = 0;
+                    cronometroPausaAcumulada = 0;
+                    cronometroPausaInicio = null;
+                    cronometroInterval = setInterval(atualizarCronometroDisplay, 1000);
+                } else if (cronometroAtivo && cronometroPausado && cronometroModulo === moduloChave) {
+                    cronometroPausado = false;
+                    if (cronometroPausaInicio) {
+                        cronometroPausaAcumulada += (Date.now() - cronometroPausaInicio) / 1000;
+                        cronometroPausaInicio = null;
+                    }
+                    cronometroInicio = Date.now();
+                    cronometroInterval = setInterval(atualizarCronometroDisplay, 1000);
+                }
+                salvarDados();
+                atualizarCronometroBotoes();
+                atualizarCronometroDisplay();
+            }
+
+            function pausarCronometro() {
+                if (cronometroAtivo && !cronometroPausado) {
+                    cronometroPausado = true;
+                    cronometroTempoAcumulado += (Date.now() - cronometroInicio) / 1000;
+                    cronometroInicio = null;
+                    cronometroPausaInicio = Date.now();
+                    if (cronometroInterval) {
+                        clearInterval(cronometroInterval);
+                        cronometroInterval = null;
+                    }
+                    salvarDados();
+                    atualizarCronometroBotoes();
+                    atualizarCronometroDisplay();
+                }
+            }
+
+            function pararCronometro(semRegistro) {
+                if (cronometroAtivo) {
+                    if (!cronometroPausado && cronometroInicio) {
+                        cronometroTempoAcumulado += (Date.now() - cronometroInicio) / 1000;
+                    }
+                    if (cronometroPausaInicio) {
+                        cronometroPausaAcumulada += (Date.now() - cronometroPausaInicio) / 1000;
+                        cronometroPausaInicio = null;
+                    }
+                    const minutosLiquidos = Math.floor(cronometroTempoAcumulado / 60);
+                    const minutosPausa = Math.floor(cronometroPausaAcumulada / 60);
+                    if (minutosLiquidos > 0 && cronometroModulo && !semRegistro) {
+                        const hoje = obterDataAtual();
+                        const hojeStr = hoje.toISOString().split('T')[0];
+                        if (!tempoEstudo[hojeStr]) {
+                            tempoEstudo[hojeStr] = { totalMinutos: 0, totalPausa: 0, modulos: {} };
+                        }
+                        if (!tempoEstudo[hojeStr].modulos[cronometroModulo]) {
+                            tempoEstudo[hojeStr].modulos[cronometroModulo] = { totalMinutos: 0, totalPausa: 0, sessoes: [] };
+                        }
+                        tempoEstudo[hojeStr].modulos[cronometroModulo].totalMinutos += minutosLiquidos;
+                        tempoEstudo[hojeStr].modulos[cronometroModulo].totalPausa = (tempoEstudo[hojeStr].modulos[cronometroModulo].totalPausa || 0) + minutosPausa;
+                        tempoEstudo[hojeStr].modulos[cronometroModulo].sessoes.push({
+                            minutos: minutosLiquidos,
+                            pausa: minutosPausa,
+                            data: hojeStr,
+                            horaInicio: new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })
+                        });
+                        tempoEstudo[hojeStr].totalMinutos = (tempoEstudo[hojeStr].totalMinutos || 0) + minutosLiquidos;
+                        tempoEstudo[hojeStr].totalPausa = (tempoEstudo[hojeStr].totalPausa || 0) + minutosPausa;
+                        ultimasAtividades[cronometroModulo] = obterDataAtual().getTime();
+                        atualizarStreak();
+                        gerarNotificacoes();
+                        renderizarNotificacoes();
+                    }
+                    cronometroAtivo = false;
+                    cronometroPausado = false;
+                    cronometroModulo = null;
+                    cronometroInicio = null;
+                    cronometroTempoAcumulado = 0;
+                    cronometroPausaAcumulada = 0;
+                    cronometroPausaInicio = null;
+                    if (cronometroInterval) {
+                        clearInterval(cronometroInterval);
+                        cronometroInterval = null;
+                    }
+                    salvarDados();
+                    renderizarTopicos();
+                }
+            }
+
+            function retomarCronometro() {
+                if (cronometroAtivo && !cronometroPausado && cronometroInicio) {
+                    const agora = Date.now();
+                    cronometroTempoAcumulado += (agora - cronometroInicio) / 1000;
+                    cronometroInicio = agora;
+                    cronometroInterval = setInterval(atualizarCronometroDisplay, 1000);
+                }
+            }
+
+            function atualizarCronometroDisplay() {
+                if (!cronometroAtivo) return;
+                let tempoTotal = cronometroTempoAcumulado;
+                if (!cronometroPausado && cronometroInicio) {
+                    tempoTotal += (Date.now() - cronometroInicio) / 1000;
+                }
+                const displays = document.querySelectorAll(`.cronometro-display[data-modulo="${cronometroModulo}"]`);
+                displays.forEach(el => {
+                    el.textContent = '⏱️ ' + formatarTempo(tempoTotal);
+                });
+                const containers = document.querySelectorAll(`.cronometro-container[data-modulo="${cronometroModulo}"]`);
+                containers.forEach(container => {
+                    const label = container.querySelector('.cronometro-modulo-label');
+                    if (label) {
+                        label.textContent = cronometroPausado ? '(pausado)' : '(estudando...)';
+                    }
+                });
+            }
+
+            function atualizarCronometroBotoes() {
+                document.querySelectorAll('.cronometro-container').forEach(container => {
+                    const moduloChave = container.dataset.modulo;
+                    const btnIniciar = container.querySelector('.btn-iniciar');
+                    const btnPausar = container.querySelector('.btn-pausar');
+                    const btnParar = container.querySelector('.btn-parar');
+                    const display = container.querySelector('.cronometro-display');
+                    const label = container.querySelector('.cronometro-modulo-label');
+                    if (!btnIniciar || !btnPausar || !btnParar || !display) return;
+                    const esteAtivo = cronometroAtivo && cronometroModulo === moduloChave;
+                    const outroAtivo = cronometroAtivo && cronometroModulo !== moduloChave;
+                    if (esteAtivo) {
+                        display.textContent = '⏱️ ' + formatarTempo(cronometroTempoAcumulado);
+                        label.textContent = cronometroPausado ? '(pausado)' : '(estudando...)';
+                        btnIniciar.textContent = cronometroPausado ? '▶ Continuar' : '▶ Rodando';
+                        btnIniciar.className = 'btn-cronometro btn-iniciar ' + (cronometroPausado ? 'pausado' : 'rodando');
+                        btnIniciar.disabled = !cronometroPausado;
+                        btnPausar.style.display = cronometroPausado ? 'none' : 'inline-flex';
+                        btnPausar.disabled = false;
+                        btnParar.style.display = 'inline-flex';
+                        btnParar.disabled = false;
+                    } else if (outroAtivo) {
+                        display.textContent = '⏱️ 00:00:00';
+                        label.textContent = '(outro módulo ativo)';
+                        btnIniciar.textContent = '▶ Iniciar';
+                        btnIniciar.className = 'btn-cronometro btn-iniciar';
+                        btnIniciar.disabled = true;
+                        btnPausar.style.display = 'none';
+                        btnParar.style.display = 'none';
+                    } else {
+                        display.textContent = '⏱️ 00:00:00';
+                        label.textContent = '';
+                        btnIniciar.textContent = '▶ Iniciar';
+                        btnIniciar.className = 'btn-cronometro btn-iniciar';
+                        btnIniciar.disabled = false;
+                        btnPausar.style.display = 'none';
+                        btnParar.style.display = 'none';
+                    }
+                });
+            }
 
             function renderizarTopicos() {
                 conteudoPrincipal.innerHTML = '';
@@ -2336,6 +3154,29 @@
                             topicContent.appendChild(subtopicHeader);
                         }
                         const moduloChave = subtopico.modulo || topico.id;
+                        const cronometroContainer = document.createElement('div');
+                        cronometroContainer.className = 'cronometro-container';
+                        cronometroContainer.dataset.modulo = moduloChave;
+                        cronometroContainer.innerHTML = `
+                            <span class="cronometro-display" data-modulo="${moduloChave}">⏱️ 00:00:00</span>
+                            <span class="cronometro-modulo-label"></span>
+                            <button class="btn-cronometro btn-iniciar" data-modulo="${moduloChave}">▶ Iniciar</button>
+                            <button class="btn-cronometro btn-pausar" data-modulo="${moduloChave}" style="display:none;">⏸ Pausar</button>
+                            <button class="btn-cronometro btn-parar" data-modulo="${moduloChave}" style="display:none;">⏹ Parar</button>
+                        `;
+                        const btnIniciar = cronometroContainer.querySelector('.btn-iniciar');
+                        const btnPausar = cronometroContainer.querySelector('.btn-pausar');
+                        const btnParar = cronometroContainer.querySelector('.btn-parar');
+                        btnIniciar.addEventListener('click', function() {
+                            iniciarCronometro(this.dataset.modulo);
+                        });
+                        btnPausar.addEventListener('click', function() {
+                            pausarCronometro();
+                        });
+                        btnParar.addEventListener('click', function() {
+                            pararCronometro(false);
+                        });
+                        topicContent.appendChild(cronometroContainer);
                         const tableResponsive = document.createElement('div');
                         tableResponsive.className = 'table-responsive';
                         const table = document.createElement('table');
@@ -2408,10 +3249,9 @@
                             const chaveAnotacao = `${chaveBase}-anotacao`;
                             btnAnotacao.dataset.chaveAnotacao = chaveAnotacao;
                             btnAnotacao.dataset.assuntoTexto = assunto;
-                            btnAnotacao.textContent = anotacoes[chaveAnotacao] ? '📝' : '📝';
+                            btnAnotacao.textContent = anotacoes[chaveAnotacao] ? '📝✓' : '📝';
                             if (anotacoes[chaveAnotacao]) {
                                 btnAnotacao.classList.add('tem-anotacao');
-                                btnAnotacao.textContent = '📝✓';
                             }
                             btnAnotacao.addEventListener('click', function() {
                                 abrirModalAnotacao(this.dataset.chaveAnotacao, this.dataset.assuntoTexto);
@@ -2427,6 +3267,7 @@
                     topicSection.appendChild(topicContent);
                     conteudoPrincipal.appendChild(topicSection);
                 });
+                atualizarCronometroBotoes();
             }
 
             function contarPorTipo(tipo, chaveModulo) {
@@ -2454,7 +3295,6 @@
                     const ultimaAtividade = ultimasAtividades[modulo.chave] || null;
                     let estado = 'nao-iniciado';
                     let alerta = '';
-
                     if (total > 0 && concluidos >= total) {
                         estado = 'concluido';
                         alerta = '✓ Concluído';
@@ -2469,7 +3309,6 @@
                             else { estado = 'em-progresso'; ativos++; }
                         } else { estado = 'em-progresso'; ativos++; }
                     } else { naoIniciados++; alerta = 'Não iniciado'; }
-
                     const card = document.createElement('a');
                     card.className = `modulo-card ${estado}`;
                     card.href = `#modulo-${modulo.topicoId}`;
@@ -2551,7 +3390,6 @@
                 }
                 const hoje = obterDataAtual();
                 const dataIni = new Date(dataInicial + 'T00:00:00');
-                const dataFim = new Date(dataFinal + 'T00:00:00');
                 const diasPassados = calcularDiasPassados();
                 const diasRestantes = calcularDiasRestantes();
                 const metaLeituraDias = Math.ceil(diasTotais * 0.6);
@@ -2560,7 +3398,6 @@
                 const dataMetaLeituraStr = dataMetaLeitura.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' });
                 const lidosAtual = contarPorTipo('Lido');
                 const concluidosAtual = contarPorTipo('Concluido');
-                
                 const restantesLeitura = TOTAL_ASSUNTOS - lidosAtual;
                 const ritmoAtualLeitura = diasPassados > 0 ? lidosAtual / diasPassados : 0;
                 const ritmoNecessarioLeitura = metaLeituraDias > 0 && diasPassados <= metaLeituraDias ? restantesLeitura / Math.max(1, metaLeituraDias - diasPassados + 1) : 0;
@@ -2574,7 +3411,6 @@
                 else if (ritmoAtualLeitura >= ritmoNecessarioLeitura * 0.9) { statusLeitura = 'vai conseguir'; classeLeitura = 'conseguir'; iconeLeitura = '✅'; }
                 else if (ritmoAtualLeitura >= ritmoNecessarioLeitura * 0.7) { statusLeitura = 'precisa melhorar o ritmo'; classeLeitura = 'melhorar'; iconeLeitura = '⚠️'; }
                 else { statusLeitura = 'não vai conseguir'; classeLeitura = 'nao-conseguir'; iconeLeitura = '❌'; }
-                
                 const restantesConclusao = TOTAL_ASSUNTOS - concluidosAtual;
                 const ritmoAtualConclusao = diasPassados > 0 ? concluidosAtual / diasPassados : 0;
                 const ritmoNecessarioConclusao = diasRestantes > 0 ? restantesConclusao / diasRestantes : 0;
@@ -2588,7 +3424,6 @@
                 else if (ritmoAtualConclusao >= ritmoNecessarioConclusao * 0.9) { statusConclusao = 'vai conseguir'; classeConclusao = 'conseguir'; iconeConclusao = '✅'; }
                 else if (ritmoAtualConclusao >= ritmoNecessarioConclusao * 0.7) { statusConclusao = 'precisa melhorar o ritmo'; classeConclusao = 'melhorar'; iconeConclusao = '⚠️'; }
                 else { statusConclusao = 'não vai conseguir'; classeConclusao = 'nao-conseguir'; iconeConclusao = '❌'; }
-
                 feedbackTextual.innerHTML = `
                     <div class="feedback-item">
                         <span class="feedback-icone">📖</span>
@@ -2679,6 +3514,283 @@
                 statusDetalheTexto.textContent = detalhe;
             }
 
+            function simularUso(nivel) {
+                estadoCheckboxes = {};
+                ultimasAtividades = {};
+                notificacoes = [];
+                streakAtual = 0;
+                ultimoDiaEstudo = null;
+                modulosConcluidosNotificados = [];
+                relatorioSemanalEnviado = null;
+                alertasContagemEnviados = [];
+                anotacoes = {};
+                tempoEstudo = {};
+                let minPorDia, diasPorSemana, numModulos;
+                if (nivel === 'baixo') {
+                    minPorDia = [20, 40];
+                    diasPorSemana = 3;
+                    numModulos = 4;
+                    streakAtual = 2;
+                } else if (nivel === 'medio') {
+                    minPorDia = [60, 120];
+                    diasPorSemana = 5;
+                    numModulos = 6;
+                    streakAtual = 5;
+                } else {
+                    minPorDia = [180, 300];
+                    diasPorSemana = 7;
+                    numModulos = 7;
+                    streakAtual = 10;
+                }
+                const hoje = obterDataAtual();
+                const modulosAtivos = modulos.slice(0, numModulos);
+                for (let i = 13; i >= 0; i--) {
+                    const d = new Date(hoje);
+                    d.setDate(d.getDate() - i);
+                    const dStr = d.toISOString().split('T')[0];
+                    const diaSemana = d.getDay();
+                    const deveEstudar = diaSemana !== 0 && (diasPorSemana === 7 || Math.random() < diasPorSemana / 6);
+                    if (!deveEstudar) continue;
+                    const numSessoes = Math.random() < 0.3 ? 2 : 1;
+                    let totalDia = 0;
+                    let totalPausaDia = 0;
+                    const modulosDia = {};
+                    for (let s = 0; s < numSessoes; s++) {
+                        const modulo = modulosAtivos[Math.floor(Math.random() * modulosAtivos.length)];
+                        const minutosLiquidos = Math.floor(Math.random() * (minPorDia[1] - minPorDia[0] + 1)) + minPorDia[0];
+                        const minutosPausa = Math.floor(minutosLiquidos * (Math.random() * 0.15 + 0.1));
+                        if (!modulosDia[modulo.chave]) {
+                            modulosDia[modulo.chave] = { totalMinutos: 0, totalPausa: 0, sessoes: [] };
+                        }
+                        modulosDia[modulo.chave].totalMinutos += minutosLiquidos;
+                        modulosDia[modulo.chave].totalPausa += minutosPausa;
+                        modulosDia[modulo.chave].sessoes.push({
+                            minutos: minutosLiquidos,
+                            pausa: minutosPausa,
+                            data: dStr,
+                            horaInicio: ['08:00', '10:30', '14:00', '16:30', '19:00', '21:00'][Math.floor(Math.random() * 6)]
+                        });
+                        totalDia += minutosLiquidos;
+                        totalPausaDia += minutosPausa;
+                        ultimasAtividades[modulo.chave] = d.getTime();
+                        const totalAssuntosModulo = contarAssuntosModulo(modulo.chave);
+                        const assuntosParaMarcar = Math.max(1, Math.floor(totalAssuntosModulo * (Math.random() * 0.6 + 0.1)));
+                        for (let a = 0; a < assuntosParaMarcar; a++) {
+                            const chaveBase = `${modulo.chave}-geral-${a}`;
+                            if (Math.random() < 0.8) estadoCheckboxes[`${chaveBase}-Lido`] = true;
+                            if (Math.random() < 0.5) estadoCheckboxes[`${chaveBase}-Revisado`] = true;
+                            if (Math.random() < 0.3) estadoCheckboxes[`${chaveBase}-Exercitado`] = true;
+                            if (Math.random() < 0.15) {
+                                estadoCheckboxes[`${chaveBase}-Lido`] = true;
+                                estadoCheckboxes[`${chaveBase}-Revisado`] = true;
+                                estadoCheckboxes[`${chaveBase}-Exercitado`] = true;
+                                estadoCheckboxes[`${chaveBase}-Concluido`] = true;
+                            }
+                        }
+                    }
+                    tempoEstudo[dStr] = { totalMinutos: totalDia, totalPausa: totalPausaDia, modulos: modulosDia };
+                    ultimoDiaEstudo = dStr;
+                }
+                if (nivel === 'alto' && Math.random() < 0.5) {
+                    const primeiroModulo = modulosAtivos[0];
+                    const total = contarAssuntosModulo(primeiroModulo.chave);
+                    for (let a = 0; a < total; a++) {
+                        const chaveBase = `${primeiroModulo.chave}-geral-${a}`;
+                        estadoCheckboxes[`${chaveBase}-Lido`] = true;
+                        estadoCheckboxes[`${chaveBase}-Revisado`] = true;
+                        estadoCheckboxes[`${chaveBase}-Exercitado`] = true;
+                        estadoCheckboxes[`${chaveBase}-Concluido`] = true;
+                    }
+                    modulosConcluidosNotificados.push(primeiroModulo.chave);
+                }
+                const lidosTotal = contarPorTipo('Lido');
+                const concluidosTotal = contarPorTipo('Concluido');
+                if (lidosTotal > 0) {
+                    notificacoes.push({
+                        id: 'streak-3',
+                        texto: '🔥 Você estudou 3 dias seguidos! Continue assim!',
+                        icone: '🔥',
+                        visto: false,
+                        data: Date.now()
+                    });
+                }
+                if (concluidosTotal >= TOTAL_ASSUNTOS * 0.9) {
+                    notificacoes.push({
+                        id: `quase-la-${concluidosTotal}`,
+                        texto: `🎉 Quase lá! ${concluidosTotal}/${TOTAL_ASSUNTOS} concluídos!`,
+                        icone: '🎉',
+                        visto: false,
+                        data: Date.now()
+                    });
+                }
+                if (ultimoDiaEstudo) {
+                    const ultimaData = new Date(ultimoDiaEstudo + 'T00:00:00');
+                    const diffDias = Math.floor((hoje.getTime() - ultimaData.getTime()) / (1000*60*60*24));
+                    if (diffDias >= 3) {
+                        notificacoes.push({
+                            id: `inatividade-${diffDias}`,
+                            texto: `😴 Você não estuda há ${diffDias} dias. Que tal voltar hoje?`,
+                            icone: '😴',
+                            visto: false,
+                            data: Date.now()
+                        });
+                    }
+                }
+                salvarDados();
+                renderizarTopicos();
+                renderizarModulos();
+                renderizarNotificacoes();
+                atualizarGraficoStatus();
+                atualizarSaudacao();
+                atualizarConfigInfo();
+                mostrarTela('dashboard');
+            }
+
+            function zerarSimulacao() {
+                estadoCheckboxes = {};
+                ultimasAtividades = {};
+                notificacoes = [];
+                streakAtual = 0;
+                ultimoDiaEstudo = null;
+                modulosConcluidosNotificados = [];
+                relatorioSemanalEnviado = null;
+                alertasContagemEnviados = [];
+                anotacoes = {};
+                tempoEstudo = {};
+                cronometroAtivo = false;
+                cronometroPausado = false;
+                cronometroModulo = null;
+                cronometroInicio = null;
+                cronometroTempoAcumulado = 0;
+                cronometroPausaAcumulada = 0;
+                cronometroPausaInicio = null;
+                if (cronometroInterval) clearInterval(cronometroInterval);
+                salvarDados();
+                renderizarTopicos();
+                renderizarModulos();
+                renderizarNotificacoes();
+                atualizarGraficoStatus();
+                atualizarSaudacao();
+            }
+
+            btnSimularBaixo.addEventListener('click', () => simularUso('baixo'));
+            btnSimularMedio.addEventListener('click', () => simularUso('medio'));
+            btnSimularAlto.addEventListener('click', () => simularUso('alto'));
+            btnZerarSimulacao.addEventListener('click', zerarSimulacao);
+
+            function renderizarDashboard() {
+                const hoje = obterDataAtual();
+                const hojeStr = hoje.toISOString().split('T')[0];
+                const dias = [];
+                for (let i = 6; i >= 0; i--) {
+                    const d = new Date(hoje);
+                    d.setDate(d.getDate() - i);
+                    const dStr = d.toISOString().split('T')[0];
+                    const diaSemana = d.toLocaleDateString('pt-BR', { weekday: 'short' }).toUpperCase().replace('.', '');
+                    const diaMes = d.getDate();
+                    dias.push({ str: dStr, label: `${diaSemana} ${diaMes}` });
+                }
+                let totalHoje = 0;
+                let totalPausaHoje = 0;
+                let totalSemana = 0;
+                let totalPausaSemana = 0;
+                dias.forEach(d => {
+                    const dadosDia = tempoEstudo[d.str];
+                    if (dadosDia) {
+                        totalSemana += dadosDia.totalMinutos || 0;
+                        totalPausaSemana += dadosDia.totalPausa || 0;
+                        if (d.str === hojeStr) {
+                            totalHoje = dadosDia.totalMinutos || 0;
+                            totalPausaHoje = dadosDia.totalPausa || 0;
+                        }
+                    }
+                });
+                const totalGeral = Object.values(tempoEstudo).reduce((acc, dia) => acc + (dia.totalMinutos || 0), 0);
+                const totalPausaGeral = Object.values(tempoEstudo).reduce((acc, dia) => acc + (dia.totalPausa || 0), 0);
+                const diasEstudados = Object.keys(tempoEstudo).length;
+                const mediaMinutos = diasEstudados > 0 ? Math.round(totalGeral / diasEstudados) : 0;
+                dashboardMetricas.innerHTML = `
+                    <div class="dashboard-metrica">
+                        <div class="dashboard-metrica-valor">${formatarTempoMinutos(totalGeral)}</div>
+                        <div class="dashboard-metrica-label">Horas Líquidas Totais</div>
+                    </div>
+                    <div class="dashboard-metrica">
+                        <div class="dashboard-metrica-valor">${formatarTempoMinutos(totalHoje)}</div>
+                        <div class="dashboard-metrica-label">Líquido hoje</div>
+                    </div>
+                    <div class="dashboard-metrica">
+                        <div class="dashboard-metrica-valor">${formatarTempoMinutos(totalPausaGeral)}</div>
+                        <div class="dashboard-metrica-label">Tempo de Pausa Total</div>
+                    </div>
+                    <div class="dashboard-metrica">
+                        <div class="dashboard-metrica-valor">${formatarTempoMinutos(totalSemana)}</div>
+                        <div class="dashboard-metrica-label">Líquido (7 dias)</div>
+                    </div>
+                    <div class="dashboard-metrica">
+                        <div class="dashboard-metrica-valor">${diasEstudados}</div>
+                        <div class="dashboard-metrica-label">Dias estudados</div>
+                    </div>
+                    <div class="dashboard-metrica">
+                        <div class="dashboard-metrica-valor">🔥 ${streakAtual}</div>
+                        <div class="dashboard-metrica-label">Sequência de dias</div>
+                    </div>
+                `;
+                const maxMinutosTotais = Math.max(1, ...dias.map(d => {
+                    const dd = tempoEstudo[d.str];
+                    return dd ? (dd.totalMinutos || 0) + (dd.totalPausa || 0) : 0;
+                }));
+                let htmlColunas = '<div class="grafico-colunas-container">';
+                dias.forEach(d => {
+                    const dd = tempoEstudo[d.str];
+                    const minutosLiquidos = dd ? dd.totalMinutos || 0 : 0;
+                    const minutosPausa = dd ? dd.totalPausa || 0 : 0;
+                    const alturaLiquida = Math.max(4, Math.round((minutosLiquidos / maxMinutosTotais) * 110));
+                    const alturaPausa = Math.max(4, Math.round((minutosPausa / maxMinutosTotais) * 110));
+                    htmlColunas += `
+                        <div class="grafico-coluna-wrapper">
+                            <span class="grafico-coluna-valor">${formatarTempoColuna(minutosLiquidos)}</span>
+                            <div class="grafico-coluna-stack">
+                                <div class="grafico-coluna-liquida" style="height:${alturaLiquida}px;"></div>
+                                <div class="grafico-coluna-pausa" style="height:${alturaPausa}px;"></div>
+                            </div>
+                            <span class="grafico-coluna-label">${d.label}</span>
+                        </div>
+                    `;
+                });
+                htmlColunas += '</div>';
+                graficoSemanal.innerHTML = htmlColunas;
+                tempoPorModulo.innerHTML = '';
+                let temAlgumTempo = false;
+                const dadosModulos = modulos.map(modulo => {
+                    let totalMinutos = 0;
+                    for (const diaStr in tempoEstudo) {
+                        const dd = tempoEstudo[diaStr];
+                        if (dd.modulos && dd.modulos[modulo.chave]) {
+                            totalMinutos += dd.modulos[modulo.chave].totalMinutos || 0;
+                        }
+                    }
+                    return { ...modulo, totalMinutos };
+                });
+                dadosModulos.sort((a, b) => b.totalMinutos - a.totalMinutos);
+                dadosModulos.forEach(modulo => {
+                    if (modulo.totalMinutos > 0) temAlgumTempo = true;
+                    const pct = modulo.totalMinutos > 0 ? Math.round((modulo.totalMinutos / Math.max(1, totalGeral)) * 100) : 0;
+                    const barraItem = document.createElement('div');
+                    barraItem.className = 'grafico-barra-item';
+                    barraItem.innerHTML = `
+                        <span class="grafico-dia-label"><span class="modulo-icone">${modulo.icone}</span> ${modulo.nome}</span>
+                        <div class="grafico-barra-track">
+                            <div class="grafico-barra-fill" style="width:${pct}%;"></div>
+                        </div>
+                        <span class="grafico-barra-valor">${formatarTempoMinutos(modulo.totalMinutos)}</span>
+                    `;
+                    tempoPorModulo.appendChild(barraItem);
+                });
+                if (!temAlgumTempo) {
+                    tempoPorModulo.innerHTML = '<div style="color:var(--ms-gray-500);text-align:center;padding:20px;">Nenhum tempo registrado ainda. Use o cronômetro nos módulos ou simule uso nas Configurações!</div>';
+                }
+            }
+
             function iniciar() {
                 carregarDados();
                 aplicarModoEscuro();
@@ -2700,6 +3812,7 @@
                 modoEscuroToggle.checked = modoEscuroAtivo;
                 atualizarEstadoDataSimulada();
                 if (telaAtual === 'config') mostrarTela('config');
+                else if (telaAtual === 'dashboard') mostrarTela('dashboard');
                 else mostrarTela('principal');
                 if (!armazenamento.disponivel) mostrarAvisoPersistencia();
             }
