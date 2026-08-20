@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
-    <title>CheckAprovação | Guarda Municipal Florianópolis</title>
+    <title>CheckAprovação v0.36 | Guarda Municipal Florianópolis</title>
     <style>
         :root {
             --ms-blue: #0067b8;
@@ -136,6 +136,11 @@
 
         body.dark-mode .dias-prova .texto-dias {
             color: #aaa;
+        }
+
+        body.dark-mode .dias-prova .data-prova-texto {
+            color: #e0e0e0;
+            font-weight: 600;
         }
 
         body.dark-mode .modulo-card.nao-iniciado {
@@ -482,6 +487,31 @@
             color: #6ccb5f;
         }
 
+        body.dark-mode .anotacao-tabela {
+            background: #2a2a2a;
+            border-color: #444;
+        }
+
+        body.dark-mode .anotacao-tabela th {
+            background: #333;
+            color: #aaa;
+        }
+
+        body.dark-mode .anotacao-tabela td {
+            color: #e0e0e0;
+            border-bottom-color: #333;
+        }
+
+        body.dark-mode .btn-add-anotacao {
+            background: #1a3a5c;
+            color: #4cc2ff;
+            border-color: #4cc2ff;
+        }
+
+        body.dark-mode .btn-add-anotacao:hover {
+            background: #0f2a44;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -540,7 +570,7 @@
             background: linear-gradient(90deg, #4cc2ff, #82c7ff, #4cc2ff);
         }
         .ms-header h1 {
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             font-weight: 600;
             display: flex;
             align-items: center;
@@ -548,12 +578,33 @@
             flex-wrap: wrap;
             padding-left: 50px;
         }
+        .ms-header .versao-badge {
+            font-size: 0.65rem;
+            font-weight: 400;
+            background: rgba(255,255,255,0.25);
+            padding: 3px 8px;
+            border-radius: 12px;
+            letter-spacing: 0.5px;
+        }
         .ms-header .subtitle {
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             opacity: 0.9;
             margin-top: 4px;
             font-weight: 400;
             padding-left: 50px;
+        }
+        .ms-header .cargo-info {
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-top: 2px;
+            padding-left: 50px;
+            opacity: 0.95;
+            background: rgba(255,255,255,0.15);
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: var(--radius-sm);
+            margin-left: 50px;
+            margin-top: 6px;
         }
         .header-icon { font-size: 1.7rem; }
 
@@ -863,7 +914,7 @@
             margin-bottom: 14px;
             border: 1px solid var(--ms-gray-300);
             overflow: hidden;
-            min-height: 120px;
+            min-height: 140px;
             transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
         }
         .farol {
@@ -1051,17 +1102,30 @@
 
         .dias-prova {
             width: 15%;
-            min-width: 100px;
+            min-width: 110px;
             display: flex;
             align-items: center;
             justify-content: center;
             flex-direction: column;
             background: var(--ms-gray-100);
             border-left: 2px solid var(--ms-gray-300);
-            padding: 8px;
+            padding: 10px 8px;
+            gap: 2px;
+        }
+        .dias-prova .label-prova {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            font-weight: 700;
+            color: var(--ms-gray-700);
+            letter-spacing: 0.5px;
+        }
+        .dias-prova .data-prova-texto {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--ms-gray-900);
         }
         .dias-prova .numero-dias {
-            font-size: 2.5rem;
+            font-size: 2.2rem;
             font-weight: 700;
             line-height: 1;
             color: var(--ms-blue);
@@ -1070,12 +1134,11 @@
         .dias-prova .numero-dias.amarelo { color: #b8860b; }
         .dias-prova .numero-dias.vermelho { color: var(--ms-red); }
         .dias-prova .texto-dias {
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             text-transform: uppercase;
             font-weight: 600;
             color: var(--ms-gray-700);
             text-align: center;
-            margin-top: 4px;
         }
 
         .modulos-section {
@@ -1199,6 +1262,7 @@
             font-size: 0.7rem;
             color: var(--ms-gray-700);
             margin-bottom: 6px;
+            font-weight: 600;
         }
         .modulo-card .modulo-bar {
             height: 6px;
@@ -1434,7 +1498,7 @@
             border-radius: var(--radius-md);
             box-shadow: var(--shadow-lg);
             width: 100%;
-            max-width: 500px;
+            max-width: 550px;
             max-height: 80vh;
             display: flex;
             flex-direction: column;
@@ -1472,27 +1536,101 @@
             padding: 14px 18px;
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 10px;
             flex: 1;
             overflow-y: auto;
         }
-        .modal-anotacao-body label {
+        .modal-anotacao-assunto {
             font-size: 0.8rem;
             font-weight: 600;
             color: var(--ms-gray-700);
+            margin-bottom: 4px;
         }
-        .modal-anotacao-body textarea {
+        .anotacao-tabela {
             width: 100%;
-            min-height: 150px;
-            padding: 12px;
+            border-collapse: collapse;
+            background: var(--ms-gray-100);
+            border-radius: var(--radius-sm);
+            overflow: hidden;
+            border: 1px solid var(--ms-gray-300);
+        }
+        .anotacao-tabela th {
+            background: var(--ms-gray-200);
+            color: var(--ms-gray-700);
+            font-weight: 600;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+            padding: 8px 10px;
+            border-bottom: 1px solid var(--ms-gray-300);
+            text-align: left;
+        }
+        .anotacao-tabela td {
+            padding: 8px 10px;
+            border-bottom: 1px solid var(--ms-gray-200);
+            font-size: 0.8rem;
+            color: var(--ms-gray-900);
+            vertical-align: top;
+        }
+        .anotacao-tabela tr:last-child td {
+            border-bottom: none;
+        }
+        .anotacao-tabela .anotacao-data {
+            white-space: nowrap;
+            font-weight: 600;
+            color: var(--ms-blue);
+            width: 80px;
+        }
+        .anotacao-tabela .anotacao-texto {
+            word-break: break-word;
+        }
+        .anotacao-vazia {
+            text-align: center;
+            padding: 16px;
+            color: var(--ms-gray-500);
+            font-size: 0.8rem;
+        }
+        .btn-add-anotacao {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--ms-blue-light);
+            border: 1px dashed var(--ms-blue);
+            color: var(--ms-blue);
+            padding: 8px 14px;
+            border-radius: var(--radius-sm);
+            font-family: var(--ms-font);
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            align-self: flex-start;
+        }
+        .btn-add-anotacao:hover {
+            background: var(--ms-blue);
+            color: #fff;
+        }
+        .nova-anotacao-area {
+            display: none;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 8px;
+        }
+        .nova-anotacao-area.visivel {
+            display: flex;
+        }
+        .nova-anotacao-area textarea {
+            width: 100%;
+            min-height: 80px;
+            padding: 10px 12px;
             border: 1px solid var(--ms-gray-400);
             border-radius: var(--radius-sm);
             font-family: var(--ms-font);
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             resize: vertical;
             transition: var(--transition);
         }
-        .modal-anotacao-body textarea:focus {
+        .nova-anotacao-area textarea:focus {
             outline: none;
             border-color: var(--ms-blue);
             box-shadow: 0 0 4px rgba(0,103,184,0.3);
@@ -1937,6 +2075,7 @@
             .ms-header { padding: 14px 12px; }
             .ms-header h1 { font-size: 1.1rem; padding-left: 42px; }
             .ms-header .subtitle { padding-left: 42px; font-size: 0.75rem; }
+            .ms-header .cargo-info { margin-left: 42px; font-size: 0.75rem; }
             .btn-menu { top: 12px; left: 10px; width: 34px; height: 34px; font-size: 1.2rem; }
             .header-right { top: 10px; right: 10px; }
             .data-atual { display: none; }
@@ -1954,9 +2093,15 @@
                 width: 100%;
                 border-left: none;
                 border-top: 2px solid var(--ms-gray-300);
-                padding: 8px;
+                padding: 10px 8px;
+                flex-direction: row;
+                gap: 12px;
+                flex-wrap: wrap;
+                justify-content: center;
             }
-            .dias-prova .numero-dias { font-size: 2rem; }
+            .dias-prova .numero-dias { font-size: 1.8rem; }
+            .dias-prova .label-prova { font-size: 0.6rem; }
+            .dias-prova .data-prova-texto { font-size: 0.75rem; }
             .feedback-textual { grid-template-columns: 1fr; }
             .modulos-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
             .modulo-card { padding: 10px 8px; }
@@ -1998,9 +2143,10 @@
                 <h1>
                     <span class="header-icon">📋</span> 
                     CheckAprovação
-                    <span style="font-size:0.7rem;font-weight:400;background:rgba(255,255,255,0.2);padding:3px 10px;border-radius:16px;">Guarda Municipal</span>
+                    <span class="versao-badge">v0.36</span>
                 </h1>
-                <div class="subtitle">Concurso Florianópolis • 50 assuntos • Edital 2015 + LC 734/2022 e 788/2026</div>
+                <div class="subtitle">Concurso Florianópolis</div>
+                <div class="cargo-info">👔 Cargo: Guarda Municipal</div>
                 <div class="header-right">
                     <span class="data-atual" id="dataAtualHeader"></span>
                     <button class="sino-btn" id="btnSino" title="Notificações">
@@ -2080,6 +2226,8 @@
                     <div class="feedback-textual" id="feedbackTextual"></div>
                 </div>
                 <div class="dias-prova" id="diasProvaContainer">
+                    <div class="label-prova">Prova</div>
+                    <div class="data-prova-texto" id="dataProvaTexto">—</div>
                     <div class="numero-dias" id="numeroDiasProva">—</div>
                     <div class="texto-dias" id="textoDiasProva">dias até a prova</div>
                 </div>
@@ -2204,16 +2352,23 @@
     <div class="modal-anotacao-overlay" id="modalAnotacaoOverlay">
         <div class="modal-anotacao-content">
             <div class="modal-anotacao-header">
-                <h3 id="modalAnotacaoTitulo">📝 Anotação</h3>
+                <h3 id="modalAnotacaoTitulo">📝 Anotações</h3>
                 <button class="btn-fechar-modal" id="btnFecharModalAnotacao">×</button>
             </div>
             <div class="modal-anotacao-body">
-                <label id="modalAnotacaoAssunto">Assunto:</label>
-                <textarea id="modalAnotacaoTextarea" placeholder="Digite suas anotações sobre este assunto..."></textarea>
+                <div class="modal-anotacao-assunto" id="modalAnotacaoAssunto">Assunto:</div>
+                <div id="anotacaoTabelaContainer"></div>
+                <button class="btn-add-anotacao" id="btnAddAnotacao">+ Nova Anotação</button>
+                <div class="nova-anotacao-area" id="novaAnotacaoArea">
+                    <textarea id="novaAnotacaoTextarea" placeholder="Digite sua anotação..."></textarea>
+                    <div style="display:flex;gap:8px;">
+                        <button class="btn-ms" id="btnSalvarNovaAnotacao">💾 Salvar</button>
+                        <button class="btn-ms" id="btnCancelarNovaAnotacao" style="background:var(--ms-gray-200);color:var(--ms-gray-900);">Cancelar</button>
+                    </div>
+                </div>
             </div>
             <div class="modal-anotacao-rodape">
-                <button class="btn-ms" id="btnSalvarAnotacao">💾 Salvar Anotação</button>
-                <button class="btn-ms danger" id="btnExcluirAnotacao">🗑️ Excluir</button>
+                <button class="btn-ms danger" id="btnExcluirAnotacao">🗑️ Excluir Todas</button>
             </div>
         </div>
     </div>
@@ -2956,6 +3111,7 @@
             const statusDetalheTexto = document.getElementById('statusDetalheTexto');
             const numeroDiasProva = document.getElementById('numeroDiasProva');
             const textoDiasProva = document.getElementById('textoDiasProva');
+            const dataProvaTexto = document.getElementById('dataProvaTexto');
             const modulosGrid = document.getElementById('modulosGrid');
             const modulosResumo = document.getElementById('modulosResumo');
             const btnSino = document.getElementById('btnSino');
@@ -2979,6 +3135,12 @@
             const btnFecharModalAnotacao = document.getElementById('btnFecharModalAnotacao');
             const btnSalvarAnotacao = document.getElementById('btnSalvarAnotacao');
             const btnExcluirAnotacao = document.getElementById('btnExcluirAnotacao');
+            const btnAddAnotacao = document.getElementById('btnAddAnotacao');
+            const btnSalvarNovaAnotacao = document.getElementById('btnSalvarNovaAnotacao');
+            const btnCancelarNovaAnotacao = document.getElementById('btnCancelarNovaAnotacao');
+            const novaAnotacaoArea = document.getElementById('novaAnotacaoArea');
+            const novaAnotacaoTextarea = document.getElementById('novaAnotacaoTextarea');
+            const anotacaoTabelaContainer = document.getElementById('anotacaoTabelaContainer');
             const btnMenu = document.getElementById('btnMenu');
             const btnFecharMenu = document.getElementById('btnFecharMenu');
             const menuLateral = document.getElementById('menuLateral');
@@ -3040,11 +3202,26 @@
 
             function abrirModalAnotacao(chave, assuntoTexto) {
                 chaveAnotacaoAtual = chave;
-                modalAnotacaoTitulo.textContent = '📝 Anotação';
+                modalAnotacaoTitulo.textContent = '📝 Anotações';
                 modalAnotacaoAssunto.textContent = 'Assunto: ' + assuntoTexto;
-                modalAnotacaoTextarea.value = anotacoes[chave] || '';
+                novaAnotacaoArea.classList.remove('visivel');
+                novaAnotacaoTextarea.value = '';
+                renderizarAnotacoes();
                 modalAnotacaoOverlay.classList.add('visivel');
-                setTimeout(() => modalAnotacaoTextarea.focus(), 100);
+            }
+
+            function renderizarAnotacoes() {
+                const anotacoesDoAssunto = anotacoes[chaveAnotacaoAtual] || [];
+                if (anotacoesDoAssunto.length === 0) {
+                    anotacaoTabelaContainer.innerHTML = '<div class="anotacao-vazia">Nenhuma anotação ainda. Clique em "+ Nova Anotação" para começar.</div>';
+                    return;
+                }
+                let html = '<table class="anotacao-tabela"><thead><tr><th>Data</th><th>Anotação</th></tr></thead><tbody>';
+                anotacoesDoAssunto.forEach(anot => {
+                    html += `<tr><td class="anotacao-data">${anot.data}</td><td class="anotacao-texto">${anot.texto.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</td></tr>`;
+                });
+                html += '</tbody></table>';
+                anotacaoTabelaContainer.innerHTML = html;
             }
 
             function fecharModalAnotacao() {
@@ -3057,26 +3234,41 @@
                 if (e.target === modalAnotacaoOverlay) fecharModalAnotacao();
             });
 
-            btnSalvarAnotacao.addEventListener('click', function() {
-                if (chaveAnotacaoAtual) {
-                    const texto = modalAnotacaoTextarea.value.trim();
-                    if (texto) {
-                        anotacoes[chaveAnotacaoAtual] = texto;
-                    } else {
-                        delete anotacoes[chaveAnotacaoAtual];
+            btnAddAnotacao.addEventListener('click', function() {
+                novaAnotacaoArea.classList.add('visivel');
+                novaAnotacaoTextarea.focus();
+            });
+
+            btnCancelarNovaAnotacao.addEventListener('click', function() {
+                novaAnotacaoArea.classList.remove('visivel');
+                novaAnotacaoTextarea.value = '';
+            });
+
+            btnSalvarNovaAnotacao.addEventListener('click', function() {
+                const texto = novaAnotacaoTextarea.value.trim();
+                if (texto && chaveAnotacaoAtual) {
+                    const hoje = obterDataAtual();
+                    const dataFormatada = hoje.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: '2-digit' });
+                    if (!anotacoes[chaveAnotacaoAtual]) {
+                        anotacoes[chaveAnotacaoAtual] = [];
                     }
+                    anotacoes[chaveAnotacaoAtual].unshift({ data: dataFormatada, texto: texto });
                     salvarDados();
+                    novaAnotacaoArea.classList.remove('visivel');
+                    novaAnotacaoTextarea.value = '';
+                    renderizarAnotacoes();
                     renderizarTopicos();
-                    fecharModalAnotacao();
                 }
             });
 
             btnExcluirAnotacao.addEventListener('click', function() {
-                if (chaveAnotacaoAtual && anotacoes[chaveAnotacaoAtual]) {
-                    delete anotacoes[chaveAnotacaoAtual];
-                    salvarDados();
-                    renderizarTopicos();
-                    fecharModalAnotacao();
+                if (chaveAnotacaoAtual && anotacoes[chaveAnotacaoAtual] && anotacoes[chaveAnotacaoAtual].length > 0) {
+                    if (confirm('Excluir TODAS as anotações deste assunto?')) {
+                        delete anotacoes[chaveAnotacaoAtual];
+                        salvarDados();
+                        renderizarAnotacoes();
+                        renderizarTopicos();
+                    }
                 }
             });
 
@@ -3470,8 +3662,9 @@
                             const chaveAnotacao = `${chaveBase}-anotacao`;
                             btnAnotacao.dataset.chaveAnotacao = chaveAnotacao;
                             btnAnotacao.dataset.assuntoTexto = assunto;
-                            btnAnotacao.textContent = anotacoes[chaveAnotacao] ? '📝✓' : '📝';
-                            if (anotacoes[chaveAnotacao]) {
+                            const anotacoesDoAssunto = anotacoes[chaveAnotacao] || [];
+                            btnAnotacao.textContent = anotacoesDoAssunto.length > 0 ? '📝✓' : '📝';
+                            if (anotacoesDoAssunto.length > 0) {
                                 btnAnotacao.classList.add('tem-anotacao');
                             }
                             btnAnotacao.addEventListener('click', function() {
@@ -3512,6 +3705,7 @@
                     const total = contarAssuntosModulo(modulo.chave);
                     const concluidos = contarPorTipo('Concluido', modulo.chave);
                     const lidos = contarPorTipo('Lido', modulo.chave);
+                    const restantes = total - concluidos;
                     const percentual = total > 0 ? Math.round((concluidos / total) * 100) : 0;
                     const ultimaAtividade = ultimasAtividades[modulo.chave] || null;
                     let estado = 'nao-iniciado';
@@ -3530,7 +3724,7 @@
                             else { estado = 'em-progresso'; ativos++; }
                         } else { estado = 'em-progresso'; ativos++; }
                     } else { naoIniciados++; alerta = 'Não iniciado'; }
-                    return { ...modulo, total, concluidos, lidos, percentual, estado, alerta };
+                    return { ...modulo, total, concluidos, restantes, percentual, estado, alerta };
                 });
                 dadosModulos.sort((a, b) => {
                     if (a.estado === 'concluido' && b.estado !== 'concluido') return -1;
@@ -3538,13 +3732,15 @@
                     return b.percentual - a.percentual;
                 });
                 dadosModulos.forEach(modulo => {
+                    const restantesStr = String(modulo.restantes).padStart(2, '0');
+                    const totalStr = String(modulo.total).padStart(2, '0');
                     const card = document.createElement('a');
                     card.className = `modulo-card ${modulo.estado}`;
                     card.href = `#modulo-${modulo.topicoId}`;
                     card.innerHTML = `
                         <div class="modulo-nome"><span class="modulo-icon">${modulo.icone}</span> ${modulo.nome}</div>
                         <div class="modulo-percentual">${modulo.percentual}%</div>
-                        <div class="modulo-contagem">${modulo.concluidos}/${modulo.total} concluídos</div>
+                        <div class="modulo-contagem">${restantesStr}/${totalStr} restantes</div>
                         <div class="modulo-bar"><div class="modulo-bar-fill" style="width:${modulo.percentual}%;"></div></div>
                         <div class="modulo-alerta ${modulo.estado === 'estagnado' ? 'amarelo' : ''} ${modulo.estado === 'concluido' ? 'dourado' : ''}">${modulo.alerta ? (modulo.estado === 'concluido' ? '🏆 ' : '⚠️ ') + modulo.alerta : ''}</div>
                     `;
@@ -3601,10 +3797,16 @@
             function atualizarDiasProva() {
                 const dias = calcularDiasAteProva();
                 const el = numeroDiasProva;
+                const dataProva = obterDataProva();
+                if (dataProva) {
+                    dataProvaTexto.textContent = dataProva.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' });
+                } else {
+                    dataProvaTexto.textContent = '—';
+                }
                 if (dias === null || isNaN(dias)) { el.textContent = '—'; textoDiasProva.textContent = 'defina a data'; el.className = 'numero-dias'; }
                 else if (dias < 0) { el.textContent = '✓'; textoDiasProva.textContent = 'prova realizada'; el.className = 'numero-dias verde'; }
                 else if (dias === 0) { el.textContent = 'HOJE'; textoDiasProva.textContent = 'dia da prova'; el.className = 'numero-dias vermelho'; }
-                else { el.textContent = dias; textoDiasProva.textContent = dias === 1 ? 'dia até a prova' : 'dias até a prova'; el.className = dias > 30 ? 'numero-dias verde' : dias >= 10 ? 'numero-dias amarelo' : 'numero-dias vermelho'; }
+                else { el.textContent = dias; textoDiasProva.textContent = 'dias até a prova'; el.className = dias > 30 ? 'numero-dias verde' : dias >= 10 ? 'numero-dias amarelo' : 'numero-dias vermelho'; }
             }
 
             function atualizarFeedbackTextual() {
