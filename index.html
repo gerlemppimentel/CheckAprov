@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
-    <title>CheckAprovação v0.55 | Guarda Municipal Florianópolis</title>
+    <title>CheckAprovação v0.52 | Guarda Municipal Florianópolis</title>
     <meta name="theme-color" content="#0067b8">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📋</text></svg>">
     <style>
@@ -226,7 +226,7 @@
             transition: background-color 0.3s ease, color 0.3s ease;
         }
 
-        .app-shell { max-width: 1400px; margin: 0 auto; padding: 12px; position: relative; min-height: 100vh; }
+        .app-shell { max-width: 1100px; margin: 0 auto; padding: 12px; position: relative; min-height: 100vh; }
         .tela { display: none; }
         .tela.ativa { display: block; animation: fadeInTela 0.35s ease; }
         @keyframes fadeInTela { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
@@ -298,169 +298,6 @@
         body.dark-mode .btn-fechar-saudacao:hover { background: #333; color: #e0e0e0; }
         body.dark-mode .btn-reabrir-saudacao { background: #2a2a2a; color: #e0e0e0; border-color: #444; }
         body.dark-mode .btn-reabrir-saudacao:hover { background: #333; }
-
-        /* ============ LAYOUT PC (≥768px) ============ */
-        @media (min-width: 768px) {
-            .pc-layout-main {
-                display: grid;
-                grid-template-columns: 320px 1fr;
-                gap: 12px;
-                align-items: start;
-            }
-            .pc-modulos-col {
-                min-width: 0;
-            }
-            .pc-conteudo-col {
-                min-width: 0;
-            }
-            .pc-modulos-grid {
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-                gap: 10px;
-            }
-            .pc-modulos-grid .modulo-card {
-                min-width: 0;
-            }
-            .pc-conteudo-titulo {
-                font-size: 0.8rem;
-                font-weight: 700;
-                text-transform: uppercase;
-                letter-spacing: 0.5px;
-                margin-bottom: 8px;
-                padding: 6px 10px;
-                border-radius: var(--radius-sm);
-                display: inline-block;
-                background: var(--ms-gray-200);
-                color: var(--ms-gray-700);
-            }
-            body.dark-mode .pc-conteudo-titulo { background: #2a2a2a; color: #aaa; }
-            .pc-grid-direita {
-                display: flex;
-                flex-direction: column;
-                gap: 12px;
-            }
-            .pc-grid-duas-colunas {
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-                gap: 12px;
-            }
-        }
-
-        /* ============ DASHBOARD QUADRANTES ============ */
-        .dashboard-grid-4 {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 12px;
-        }
-        @media (min-width: 481px) {
-            .dashboard-grid-4 {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
-        @media (min-width: 992px) {
-            .dashboard-grid-4 {
-                grid-template-columns: 1fr 1fr 1fr 1fr;
-            }
-        }
-        .dashboard-quadrante {
-            background: #fff;
-            border-radius: var(--radius-md);
-            box-shadow: var(--shadow-sm);
-            padding: 14px;
-            border: 1px solid var(--ms-gray-300);
-            min-width: 0;
-        }
-        body.dark-mode .dashboard-quadrante { background: #1e1e1e; border-color: #333; }
-        .dashboard-quadrante-titulo {
-            font-size: 0.75rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 10px;
-            padding: 4px 8px;
-            border-radius: var(--radius-sm);
-            display: inline-block;
-        }
-        .dashboard-quadrante-titulo.q1 { background: var(--ms-blue-light); color: var(--ms-blue); }
-        .dashboard-quadrante-titulo.q2 { background: var(--ms-green-light); color: var(--ms-green); }
-        .dashboard-quadrante-titulo.q3 { background: var(--ms-yellow-light); color: #6a4b00; }
-        .dashboard-quadrante-titulo.q4 { background: var(--ms-red-light); color: #a4262c; }
-        .dashboard-item {
-            font-size: 0.75rem;
-            margin-bottom: 6px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            flex-wrap: wrap;
-        }
-        .dashboard-item-label {
-            color: var(--ms-gray-700);
-            font-weight: 600;
-            min-width: 80px;
-        }
-        body.dark-mode .dashboard-item-label { color: #aaa; }
-        .dashboard-item-valor {
-            color: var(--ms-gray-900);
-            font-weight: 700;
-        }
-        body.dark-mode .dashboard-item-valor { color: #e0e0e0; }
-        .dashboard-mini-barra {
-            height: 6px;
-            background: var(--ms-gray-200);
-            border-radius: 10px;
-            overflow: hidden;
-            flex: 1;
-            min-width: 40px;
-        }
-        .dashboard-mini-barra-fill {
-            height: 100%;
-            border-radius: 10px;
-            background: var(--ms-blue);
-            transition: width 0.5s ease;
-        }
-        .dashboard-mini-barra-fill.verde { background: var(--ms-green); }
-        .dashboard-mini-barra-fill.amarelo { background: var(--ms-yellow); }
-        .dashboard-mini-barra-fill.vermelho { background: var(--ms-red); }
-        .dashboard-mini-barra-fill.dourado { background: var(--ms-gold); }
-        .dashboard-frequencia {
-            display: flex;
-            gap: 4px;
-            margin-top: 6px;
-        }
-        .dashboard-frequencia-dia {
-            width: 22px;
-            height: 22px;
-            border-radius: 50%;
-            background: var(--ms-gray-200);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.6rem;
-            font-weight: 700;
-            color: var(--ms-gray-700);
-        }
-        .dashboard-frequencia-dia.ativo {
-            background: var(--ms-green);
-            color: #fff;
-        }
-        body.dark-mode .dashboard-frequencia-dia { background: #333; color: #aaa; }
-        body.dark-mode .dashboard-frequencia-dia.ativo { background: #2d6b2d; color: #fff; }
-        .dashboard-alerta-item {
-            font-size: 0.7rem;
-            padding: 6px 8px;
-            border-radius: var(--radius-sm);
-            margin-bottom: 4px;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            flex-wrap: wrap;
-        }
-        .dashboard-alerta-item.vermelho { background: var(--ms-red-light); color: #a4262c; }
-        .dashboard-alerta-item.amarelo { background: var(--ms-yellow-light); color: #6a4b00; }
-        .dashboard-alerta-item.azul { background: var(--ms-blue-light); color: var(--ms-blue-dark); }
-        body.dark-mode .dashboard-alerta-item.vermelho { background: #4a2020; color: #ff6b6b; }
-        body.dark-mode .dashboard-alerta-item.amarelo { background: #4a3f1a; color: #ffd54f; }
-        body.dark-mode .dashboard-alerta-item.azul { background: #1a3a5c; color: #82c7ff; }
     </style>
 </head>
 <body>
@@ -819,7 +656,7 @@
                 <h1>
                     <span class="header-icon">📋</span> 
                     CheckAprovação
-                    <span class="versao-badge">v0.55</span>
+                    <span class="versao-badge">v0.52</span>
                 </h1>
                 <div class="subtitle">Concurso Guarda Municipal Florianópolis</div>
                 <div class="cargo-info">👔 Cargo: Guarda Municipal</div>
@@ -864,85 +701,77 @@
                 <div class="saudacao-principal" id="saudacaoPrincipal">Bem-vindo!</div>
                 <div class="frase-motivacional" id="fraseMotivacional">"Carregando..."</div>
             </div>
-            <!-- Layout principal: Módulos na esquerda, tudo o resto à direita -->
-            <div class="pc-layout-main">
-                <div class="pc-modulos-col">
-                    <div class="secao-titulo modulos">📊 SEU PROGRESSO POR MÓDULO</div>
-                    <div class="modulos-section">
-                        <div class="modulos-header">
-                            <div class="modulos-resumo" id="modulosResumo"></div>
+            <div class="secao-titulo progresso">📈 SEU PROGRESSO</div>
+            <div class="status-container">
+                <div class="farol farol-verde" id="farol">
+                    <span class="farol-icon" id="farolIcon">🟢</span>
+                    <span id="farolTexto">Em dia</span>
+                </div>
+                <div class="grafico-progresso">
+                    <div class="grafico-labels">
+                        <span id="statusDetalheTexto">Configure as datas</span>
+                    </div>
+                    <div class="barra-dupla-section">
+                        <div class="barra-item barra-leitura">
+                            <div class="barra-item-container">
+                                <div class="barra-item-fundo"></div>
+                                <div class="barra-item-preenchida" id="barraLeituraPreenchida" style="width:0%;"></div>
+                                <div class="barra-item-legenda" id="barraLeituraLegenda">Leitura: 0% (0/50)</div>
+                                <div class="linha-indicadora linha-previsto" id="linhaPrevistoLeitura" style="left:0%;"></div>
+                                <div class="linha-indicadora linha-realizado" id="linhaRealizadoLeitura" style="left:0%;"></div>
+                            </div>
                         </div>
-                        <div class="pc-modulos-grid" id="modulosGrid"></div>
+                        <div class="barra-item barra-conclusao">
+                            <div class="barra-item-container">
+                                <div class="barra-item-fundo"></div>
+                                <div class="barra-item-preenchida" id="barraConclusaoPreenchida" style="width:0%;"></div>
+                                <div class="barra-item-legenda" id="barraConclusaoLegenda">Conclusão: 0% (0/50)</div>
+                                <div class="linha-indicadora linha-previsto" id="linhaPrevistoConclusao" style="left:0%;"></div>
+                                <div class="linha-indicadora linha-realizado" id="linhaRealizadoConclusao" style="left:0%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="legenda-barras">
+                        <span class="legenda-item"><span class="legenda-linha preview"></span> Previsto</span>
+                        <span class="legenda-item"><span class="legenda-linha real"></span> Realizado</span>
                     </div>
                 </div>
-                <div class="pc-conteudo-col">
-                    <div class="pc-grid-direita">
-                        <div class="secao-titulo progresso">📈 SEU PROGRESSO</div>
-                        <div class="status-container">
-                            <div class="farol farol-verde" id="farol">
-                                <span class="farol-icon" id="farolIcon">🟢</span>
-                                <span id="farolTexto">Em dia</span>
-                            </div>
-                            <div class="grafico-progresso">
-                                <div class="grafico-labels">
-                                    <span id="statusDetalheTexto">Configure as datas</span>
-                                </div>
-                                <div class="barra-dupla-section">
-                                    <div class="barra-item barra-leitura">
-                                        <div class="barra-item-container">
-                                            <div class="barra-item-fundo"></div>
-                                            <div class="barra-item-preenchida" id="barraLeituraPreenchida" style="width:0%;"></div>
-                                            <div class="barra-item-legenda" id="barraLeituraLegenda">Leitura: 0% (0/50)</div>
-                                            <div class="linha-indicadora linha-previsto" id="linhaPrevistoLeitura" style="left:0%;"></div>
-                                            <div class="linha-indicadora linha-realizado" id="linhaRealizadoLeitura" style="left:0%;"></div>
-                                        </div>
-                                    </div>
-                                    <div class="barra-item barra-conclusao">
-                                        <div class="barra-item-container">
-                                            <div class="barra-item-fundo"></div>
-                                            <div class="barra-item-preenchida" id="barraConclusaoPreenchida" style="width:0%;"></div>
-                                            <div class="barra-item-legenda" id="barraConclusaoLegenda">Conclusão: 0% (0/50)</div>
-                                            <div class="linha-indicadora linha-previsto" id="linhaPrevistoConclusao" style="left:0%;"></div>
-                                            <div class="linha-indicadora linha-realizado" id="linhaRealizadoConclusao" style="left:0%;"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="legenda-barras">
-                                    <span class="legenda-item"><span class="legenda-linha preview"></span> Previsto</span>
-                                    <span class="legenda-item"><span class="legenda-linha real"></span> Realizado</span>
-                                </div>
-                            </div>
-                            <div class="dias-prova" id="diasProvaContainer">
-                                <div class="label-prova">Prova</div>
-                                <div class="data-prova-texto" id="dataProvaTexto">—</div>
-                                <div class="numero-dias" id="numeroDiasProva">—</div>
-                                <div class="texto-dias" id="textoDiasProva">dias até a prova</div>
-                            </div>
-                        </div>
-
-                        <div class="pc-grid-duas-colunas">
-                            <div>
-                                <div class="secao-titulo planejamento">🎯 SEU PLANEJAMENTO</div>
-                                <div class="recomendacao-section" id="recomendacaoSection">
-                                    <div class="recomendacao-subtitulo">Recomendamos que você estude hoje:</div>
-                                    <div id="recomendacaoConteudo"></div>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="secao-titulo revisao">🔄 SUA REVISÃO ESPAÇADA</div>
-                                <div class="revisao-espacada-section" id="revisaoEspacadaSection">
-                                    <div id="revisaoEspacadaConteudo"></div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div>
-                            <div class="pc-conteudo-titulo">📚 SEU CONTEÚDO</div>
-                            <div id="conteudoPrincipal"></div>
-                        </div>
-                    </div>
+                <div class="dias-prova" id="diasProvaContainer">
+                    <div class="label-prova">Prova</div>
+                    <div class="data-prova-texto" id="dataProvaTexto">—</div>
+                    <div class="numero-dias" id="numeroDiasProva">—</div>
+                    <div class="texto-dias" id="textoDiasProva">dias até a prova</div>
                 </div>
             </div>
+
+            <div class="secao-titulo planejamento">🎯 SEU PLANEJAMENTO</div>
+            <div class="recomendacao-section" id="recomendacaoSection">
+                <div class="recomendacao-subtitulo">Recomendamos que você estude hoje:</div>
+                <div id="recomendacaoConteudo"></div>
+            </div>
+
+            <div class="secao-titulo revisao">🔄 SUA REVISÃO ESPAÇADA</div>
+            <div class="revisao-espacada-section" id="revisaoEspacadaSection">
+                <div id="revisaoEspacadaConteudo"></div>
+            </div>
+
+            <div class="notificacoes-painel" id="notificacoesPainel">
+                <div class="notificacoes-header">
+                    <span>🔔 Notificações</span>
+                    <span id="notifContador" style="font-size:0.75rem;color:var(--ms-gray-500);"></span>
+                </div>
+                <div class="notificacoes-lista" id="notificacoesLista"></div>
+            </div>
+
+            <div class="secao-titulo modulos">📊 SEU PROGRESSO POR MÓDULO</div>
+            <div class="modulos-section">
+                <div class="modulos-header">
+                    <div class="modulos-resumo" id="modulosResumo"></div>
+                </div>
+                <div class="modulos-grid" id="modulosGrid"></div>
+            </div>
+
+            <div id="conteudoPrincipal"></div>
         </div>
 
         <div id="telaDashboard" class="tela">
@@ -950,27 +779,26 @@
                 <button class="btn-voltar" id="btnVoltarDashboardTopo">← Voltar</button>
                 <h2 style="font-size:1rem;font-weight:600;color:var(--ms-blue);">📊 Dashboard</h2>
             </div>
-            <div class="dashboard-grid-4" id="dashboardGrid4">
-                <!-- Quadrante 1: Tempo de Estudo -->
-                <div class="dashboard-quadrante">
-                    <div class="dashboard-quadrante-titulo q1">① Tempo de Estudo</div>
-                    <div id="dashboardTempoEstudo"></div>
+            <div class="dashboard-section">
+                <div class="dashboard-titulo">📊 Dashboard de Performance</div>
+                <div class="dashboard-subtitulo">Acompanhe seu tempo de estudo e métricas de produtividade</div>
+                <div class="dashboard-metricas" id="dashboardMetricas"></div>
+                <div class="grafico-semanal">
+                    <div class="grafico-semanal-titulo">📅 Horas Líquidas de Estudo - Últimos 7 dias</div>
+                    <div id="graficoSemanal"></div>
                 </div>
-                <!-- Quadrante 2: Cobertura do Edital -->
-                <div class="dashboard-quadrante">
-                    <div class="dashboard-quadrante-titulo q2">② Cobertura do Edital</div>
-                    <div id="dashboardCobertura"></div>
+                <div class="legenda-dashboard">
+                    <span class="legenda-dashboard-item"><span class="legenda-dot-liquido"></span> Horas Líquidas</span>
+                    <span class="legenda-dashboard-item"><span class="legenda-dot-pausa"></span> Tempo de Pausa</span>
                 </div>
-                <!-- Quadrante 3: Engajamento -->
-                <div class="dashboard-quadrante">
-                    <div class="dashboard-quadrante-titulo q3">③ Engajamento</div>
-                    <div id="dashboardEngajamento"></div>
-                </div>
-                <!-- Quadrante 4: Recomendações -->
-                <div class="dashboard-quadrante">
-                    <div class="dashboard-quadrante-titulo q4">④ Recomendações</div>
-                    <div id="dashboardRecomendacoes"></div>
-                </div>
+            </div>
+            <div class="dashboard-section">
+                <div class="dashboard-titulo">📚 Progresso por Módulo (% de conclusão)</div>
+                <div id="progressoPorModulo"></div>
+            </div>
+            <div class="dashboard-section">
+                <div class="dashboard-titulo">⏱️ Tempo por Módulo (Total)</div>
+                <div id="tempoPorModulo"></div>
             </div>
             <div class="rodape">
                 <button class="btn-rodape" id="btnVoltarDashboard">← Voltar ao Início</button>
@@ -1395,11 +1223,12 @@
                 const dataAlvo = new Date(hoje);
                 dataAlvo.setDate(dataAlvo.getDate() + intervalo);
                 
+                // Verificação: não agendar revisão após a data final (prova)
                 if (dataFinal) {
                     const dataFim = new Date(dataFinal + 'T00:00:00');
-                    dataFim.setDate(dataFim.getDate() + 1);
+                    dataFim.setDate(dataFim.getDate() + 1); // dia da prova
                     if (dataAlvo > dataFim) {
-                        return;
+                        return; // Não agenda revisão após a prova
                     }
                 }
                 
@@ -1697,10 +1526,6 @@
             const saudacaoContainer = document.getElementById('saudacaoContainer');
             const btnFecharSaudacao = document.getElementById('btnFecharSaudacao');
             const btnReabrirSaudacao = document.getElementById('btnReabrirSaudacao');
-            const dashboardTempoEstudo = document.getElementById('dashboardTempoEstudo');
-            const dashboardCobertura = document.getElementById('dashboardCobertura');
-            const dashboardEngajamento = document.getElementById('dashboardEngajamento');
-            const dashboardRecomendacoes = document.getElementById('dashboardRecomendacoes');
             const modalAnotacaoOverlay = document.getElementById('modalAnotacaoOverlay');
             const modalAnotacaoTitulo = document.getElementById('modalAnotacaoTitulo');
             const modalAnotacaoAssunto = document.getElementById('modalAnotacaoAssunto');
@@ -1720,6 +1545,10 @@
             const menuDashboard = document.getElementById('menuDashboard');
             const menuRevisoes = document.getElementById('menuRevisoes');
             const menuConfig = document.getElementById('menuConfig');
+            const dashboardMetricas = document.getElementById('dashboardMetricas');
+            const graficoSemanal = document.getElementById('graficoSemanal');
+            const tempoPorModulo = document.getElementById('tempoPorModulo');
+            const progressoPorModulo = document.getElementById('progressoPorModulo');
             const btnSimularBaixo = document.getElementById('btnSimularBaixo');
             const btnSimularMedio = document.getElementById('btnSimularMedio');
             const btnSimularAlto = document.getElementById('btnSimularAlto');
@@ -1728,6 +1557,7 @@
                 if (usarDataSistema) { dataSimuladaInput.disabled = true; dataSimuladaInput.value = ''; } else { dataSimuladaInput.disabled = false; }
             }
 
+            // Eventos da caixa de saudação
             btnFecharSaudacao.addEventListener('click', function() {
                 saudacaoFechada = true;
                 aplicarEstadoSaudacao();
@@ -1919,6 +1749,7 @@
                 }
             });
 
+            // Reset Geral - volta ao estado de novo
             btnResetGeral.addEventListener('click', function() {
                 if (confirm('⚠️ ATENÇÃO!\n\nTem certeza que deseja apagar TODOS os dados e voltar ao estado inicial?\n\nEsta ação não pode ser desfeita. Serão apagados:\n- Nome do usuário\n- Datas inicial e final\n- Data simulada\n- Modo escuro\n- Progresso de leitura\n- Anotações\n- Tempo de estudo\n- Notificações\n- Revisões espaçadas\n- Estado da caixa de saudação')) {
                     estadoCheckboxes = {};
@@ -2183,18 +2014,7 @@
             }
             function renderizarTopicos() {
                 conteudoPrincipal.innerHTML = '';
-                
-                const moduloRecomendado = modulos.find(function(m) { return m.chave === ultimoModuloRecomendado; });
-                let topicosOrdenados = [...estruturaTopicos];
-                
-                if (moduloRecomendado) {
-                    const topicoRecomendado = estruturaTopicos.find(function(t) { return t.id === moduloRecomendado.topicoId; });
-                    if (topicoRecomendado) {
-                        topicosOrdenados = [topicoRecomendado].concat(estruturaTopicos.filter(function(t) { return t.id !== moduloRecomendado.topicoId; }));
-                    }
-                }
-                
-                topicosOrdenados.forEach(function(topico, index) {
+                estruturaTopicos.forEach(function(topico) {
                     const topicSection = document.createElement('div');
                     topicSection.className = 'topic-section';
                     topicSection.id = 'modulo-' + topico.id;
@@ -2214,12 +2034,6 @@
                     const topicContent = document.createElement('div');
                     topicContent.className = 'topic-content';
                     topicContent.style.display = 'none';
-                    
-                    if (index === 0 && moduloRecomendado) {
-                        topicHeader.classList.remove('collapsed');
-                        topicContent.style.display = 'block';
-                    }
-                    
                     topico.subtopicos.forEach(function(subtopico) {
                         if (subtopico.titulo) {
                             const subtopicHeader = document.createElement('div');
@@ -2818,17 +2632,37 @@
                 const totalGeral = Object.values(tempoEstudo).reduce(function(acc, dia) { return acc + (dia.totalMinutos || 0); }, 0);
                 const totalPausaGeral = Object.values(tempoEstudo).reduce(function(acc, dia) { return acc + (dia.totalPausa || 0); }, 0);
                 const diasEstudados = Object.keys(tempoEstudo).length;
-                const lidosAtual = contarPorTipo('Lido');
-                const concluidosAtual = contarPorTipo('Concluido');
-                const naoLidas = notificacoes.filter(function(n) { return !n.visto; }).length;
-                const pendentes = obterRevisoesPendentes();
-
-                // Quadrante 1: Tempo de Estudo
-                let htmlQ1 = '<div class="dashboard-item"><span class="dashboard-item-label">Horas líquidas:</span><span class="dashboard-item-valor">' + formatarTempoMinutos(totalGeral) + '</span></div>';
-                htmlQ1 += '<div class="dashboard-item"><span class="dashboard-item-label">Pausas:</span><span class="dashboard-item-valor">' + formatarTempoMinutos(totalPausaGeral) + '</span></div>';
-                htmlQ1 += '<div class="dashboard-item"><span class="dashboard-item-label">Hoje:</span><span class="dashboard-item-valor">' + formatarTempoMinutos(totalHoje) + '</span></div>';
-                htmlQ1 += '<div style="margin-top:8px;font-weight:600;font-size:0.7rem;color:var(--ms-gray-700);">Tempo por módulo:</div>';
-                const dadosTempoQ1 = modulos.map(function(modulo) {
+                const mediaMinutos = diasEstudados > 0 ? Math.round(totalGeral / diasEstudados) : 0;
+                dashboardMetricas.innerHTML = '<div class="dashboard-metrica"><div class="dashboard-metrica-valor">' + formatarTempoMinutos(totalGeral) + '</div><div class="dashboard-metrica-label">Horas Líquidas Totais</div></div><div class="dashboard-metrica"><div class="dashboard-metrica-valor">' + formatarTempoMinutos(totalHoje) + '</div><div class="dashboard-metrica-label">Líquido hoje</div></div><div class="dashboard-metrica"><div class="dashboard-metrica-valor">' + formatarTempoMinutos(totalPausaGeral) + '</div><div class="dashboard-metrica-label">Tempo de Pausa Total</div></div><div class="dashboard-metrica"><div class="dashboard-metrica-valor">' + formatarTempoMinutos(totalSemana) + '</div><div class="dashboard-metrica-label">Líquido (7 dias)</div></div><div class="dashboard-metrica"><div class="dashboard-metrica-valor">' + diasEstudados + '</div><div class="dashboard-metrica-label">Dias estudados</div></div><div class="dashboard-metrica"><div class="dashboard-metrica-valor">🔥 ' + streakAtual + '</div><div class="dashboard-metrica-label">Sequência de dias</div></div>';
+                const maxMinutosTotais = Math.max(1, ...dias.map(function(d) { const dd = tempoEstudo[d.str]; return dd ? (dd.totalMinutos || 0) + (dd.totalPausa || 0) : 0; }));
+                let htmlColunas = '<div class="grafico-colunas-container">';
+                dias.forEach(function(d) {
+                    const dd = tempoEstudo[d.str];
+                    const minutosLiquidos = dd ? dd.totalMinutos || 0 : 0;
+                    const minutosPausa = dd ? dd.totalPausa || 0 : 0;
+                    const alturaLiquida = Math.max(4, Math.round((minutosLiquidos / maxMinutosTotais) * 110));
+                    const alturaPausa = Math.max(4, Math.round((minutosPausa / maxMinutosTotais) * 110));
+                    htmlColunas += '<div class="grafico-coluna-wrapper"><span class="grafico-coluna-valor">' + formatarTempoColuna(minutosLiquidos) + '</span><div class="grafico-coluna-stack"><div class="grafico-coluna-liquida" style="height:' + alturaLiquida + 'px;"></div><div class="grafico-coluna-pausa" style="height:' + alturaPausa + 'px;"></div></div><span class="grafico-coluna-label">' + d.label + '</span></div>';
+                });
+                htmlColunas += '</div>';
+                graficoSemanal.innerHTML = htmlColunas;
+                progressoPorModulo.innerHTML = '';
+                const dadosProgresso = modulos.map(function(modulo) {
+                    const total = contarAssuntosModulo(modulo.chave);
+                    const concluidos = contarPorTipo('Concluido', modulo.chave);
+                    const percentual = total > 0 ? Math.round((concluidos / total) * 100) : 0;
+                    return { ...modulo, total: total, concluidos: concluidos, percentual: percentual };
+                });
+                dadosProgresso.sort(function(a, b) { return b.percentual - a.percentual; });
+                dadosProgresso.forEach(function(modulo) {
+                    const barraItem = document.createElement('div');
+                    barraItem.className = 'grafico-barra-item';
+                    barraItem.innerHTML = '<span class="grafico-dia-label"><span class="modulo-icone">' + modulo.icone + '</span> ' + modulo.nome + '</span><div class="grafico-barra-track"><div class="grafico-barra-fill" style="width:' + modulo.percentual + '%;"></div></div><span class="grafico-barra-valor">' + modulo.percentual + '% (' + modulo.concluidos + '/' + modulo.total + ')</span>';
+                    progressoPorModulo.appendChild(barraItem);
+                });
+                tempoPorModulo.innerHTML = '';
+                let temAlgumTempo = false;
+                const dadosTempo = modulos.map(function(modulo) {
                     let totalMinutos = 0;
                     for (const diaStr in tempoEstudo) {
                         const dd = tempoEstudo[diaStr];
@@ -2838,95 +2672,18 @@
                     }
                     return { ...modulo, totalMinutos: totalMinutos };
                 });
-                dadosTempoQ1.sort(function(a, b) { return b.totalMinutos - a.totalMinutos; });
-                dadosTempoQ1.forEach(function(modulo) {
-                    if (modulo.totalMinutos > 0) {
-                        const pct = Math.round((modulo.totalMinutos / Math.max(1, totalGeral)) * 100);
-                        htmlQ1 += '<div class="dashboard-item"><span class="dashboard-item-label">' + modulo.icone + ' ' + modulo.nome.split(' ')[0] + ':</span><div class="dashboard-mini-barra"><div class="dashboard-mini-barra-fill" style="width:' + pct + '%;"></div></div><span class="dashboard-item-valor">' + formatarTempoMinutos(modulo.totalMinutos) + '</span></div>';
-                    }
+                dadosTempo.sort(function(a, b) { return b.totalMinutos - a.totalMinutos; });
+                dadosTempo.forEach(function(modulo) {
+                    if (modulo.totalMinutos > 0) temAlgumTempo = true;
+                    const pct = modulo.totalMinutos > 0 ? Math.round((modulo.totalMinutos / Math.max(1, totalGeral)) * 100) : 0;
+                    const barraItem = document.createElement('div');
+                    barraItem.className = 'grafico-barra-item';
+                    barraItem.innerHTML = '<span class="grafico-dia-label"><span class="modulo-icone">' + modulo.icone + '</span> ' + modulo.nome + '</span><div class="grafico-barra-track"><div class="grafico-barra-fill" style="width:' + pct + '%;"></div></div><span class="grafico-barra-valor">' + formatarTempoMinutos(modulo.totalMinutos) + '</span>';
+                    tempoPorModulo.appendChild(barraItem);
                 });
-                if (totalGeral === 0) htmlQ1 += '<div style="color:var(--ms-gray-500);font-size:0.7rem;">Nenhum tempo registrado.</div>';
-                dashboardTempoEstudo.innerHTML = htmlQ1;
-
-                // Quadrante 2: Cobertura do Edital
-                let htmlQ2 = '<div class="dashboard-item"><span class="dashboard-item-label">Lidos:</span><span class="dashboard-item-valor">' + lidosAtual + '/' + TOTAL_ASSUNTOS + '</span></div>';
-                htmlQ2 += '<div class="dashboard-item"><span class="dashboard-item-label">Concluídos:</span><span class="dashboard-item-valor">' + concluidosAtual + '/' + TOTAL_ASSUNTOS + '</span></div>';
-                htmlQ2 += '<div style="margin-top:8px;font-weight:600;font-size:0.7rem;color:var(--ms-gray-700);">% por módulo:</div>';
-                const dadosProgressoQ2 = modulos.map(function(modulo) {
-                    const total = contarAssuntosModulo(modulo.chave);
-                    const concluidos = contarPorTipo('Concluido', modulo.chave);
-                    const percentual = total > 0 ? Math.round((concluidos / total) * 100) : 0;
-                    return { ...modulo, total: total, concluidos: concluidos, percentual: percentual };
-                });
-                dadosProgressoQ2.forEach(function(modulo) {
-                    let classeBarra = '';
-                    if (modulo.percentual >= 100) classeBarra = 'dourado';
-                    else if (modulo.percentual >= 50) classeBarra = 'verde';
-                    else if (modulo.percentual >= 1) classeBarra = 'amarelo';
-                    htmlQ2 += '<div class="dashboard-item"><span class="dashboard-item-label">' + modulo.icone + ' ' + modulo.nome.split(' ')[0] + ':</span><div class="dashboard-mini-barra"><div class="dashboard-mini-barra-fill ' + classeBarra + '" style="width:' + modulo.percentual + '%;"></div></div><span class="dashboard-item-valor">' + modulo.percentual + '%</span></div>';
-                });
-                const farolTextoAtual = document.getElementById('farolTexto').textContent;
-                htmlQ2 += '<div class="dashboard-item"><span class="dashboard-item-label">Farol:</span><span class="dashboard-item-valor">' + farolTextoAtual + '</span></div>';
-                const diasTotaisCalc = calcularDiasTotais();
-                const metaDiaria = diasTotaisCalc ? Math.ceil(TOTAL_ASSUNTOS / diasTotaisCalc) : 0;
-                htmlQ2 += '<div class="dashboard-item"><span class="dashboard-item-label">Meta diária:</span><span class="dashboard-item-valor">~' + metaDiaria + ' assuntos</span></div>';
-                dashboardCobertura.innerHTML = htmlQ2;
-
-                // Quadrante 3: Engajamento
-                let htmlQ3 = '<div class="dashboard-item"><span class="dashboard-item-label">🔥 Sequência:</span><span class="dashboard-item-valor">' + streakAtual + ' dias</span></div>';
-                htmlQ3 += '<div class="dashboard-item"><span class="dashboard-item-label">📅 Dias estudados:</span><span class="dashboard-item-valor">' + diasEstudados + '</span></div>';
-                htmlQ3 += '<div style="margin-top:8px;font-weight:600;font-size:0.7rem;color:var(--ms-gray-700);">Frequência semanal:</div>';
-                htmlQ3 += '<div class="dashboard-frequencia">';
-                ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'].forEach(function(dia, idx) {
-                    const d = new Date(hoje);
-                    d.setDate(d.getDate() - (6 - idx));
-                    const dStr = d.toISOString().split('T')[0];
-                    const estudou = tempoEstudo[dStr] ? true : false;
-                    htmlQ3 += '<div class="dashboard-frequencia-dia ' + (estudou ? 'ativo' : '') + '">' + dia + '</div>';
-                });
-                htmlQ3 += '</div>';
-                htmlQ3 += '<div class="dashboard-item" style="margin-top:8px;"><span class="dashboard-item-label">🔔 Notificações:</span><span class="dashboard-item-valor">' + naoLidas + ' não lidas</span></div>';
-                dashboardEngajamento.innerHTML = htmlQ3;
-
-                // Quadrante 4: Recomendações
-                let htmlQ4 = '';
-                const moduloRecomendado = modulos.find(function(m) { return m.chave === ultimoModuloRecomendado; });
-                if (moduloRecomendado) {
-                    htmlQ4 += '<div class="dashboard-alerta-item azul">📖 Próximo: ' + moduloRecomendado.icone + ' ' + moduloRecomendado.nome + '</div>';
+                if (!temAlgumTempo) {
+                    tempoPorModulo.innerHTML = '<div style="color:var(--ms-gray-500);text-align:center;padding:20px;">Nenhum tempo registrado ainda.</div>';
                 }
-                const modulosAtrasados = modulos.filter(function(m) {
-                    const ultima = ultimasAtividades[m.chave];
-                    if (!ultima) return false;
-                    const dataUltima = new Date(ultima);
-                    dataUltima.setHours(0,0,0,0);
-                    const diffDias = Math.floor((hoje.getTime() - dataUltima.getTime()) / (1000*60*60*24));
-                    return diffDias >= 4 && contarPorTipo('Concluido', m.chave) < contarAssuntosModulo(m.chave);
-                });
-                modulosAtrasados.forEach(function(m) {
-                    const ultima = ultimasAtividades[m.chave];
-                    const dataUltima = new Date(ultima);
-                    dataUltima.setHours(0,0,0,0);
-                    const diffDias = Math.floor((hoje.getTime() - dataUltima.getTime()) / (1000*60*60*24));
-                    htmlQ4 += '<div class="dashboard-alerta-item amarelo">⚠️ ' + m.icone + ' ' + m.nome.split(' ')[0] + ': ' + diffDias + ' dias sem estudar</div>';
-                });
-                if (pendentes.length > 0) {
-                    htmlQ4 += '<div class="dashboard-alerta-item azul">🔄 ' + pendentes.length + ' revisões pendentes</div>';
-                }
-                const abandonados = modulos.filter(function(m) {
-                    const ultima = ultimasAtividades[m.chave];
-                    if (!ultima) return false;
-                    const dataUltima = new Date(ultima);
-                    dataUltima.setHours(0,0,0,0);
-                    const diffDias = Math.floor((hoje.getTime() - dataUltima.getTime()) / (1000*60*60*24));
-                    return diffDias >= 10 && contarPorTipo('Concluido', m.chave) < contarAssuntosModulo(m.chave);
-                });
-                abandonados.forEach(function(m) {
-                    htmlQ4 += '<div class="dashboard-alerta-item vermelho">🚨 ' + m.icone + ' ' + m.nome.split(' ')[0] + ': abandonado!</div>';
-                });
-                if (!moduloRecomendado && modulosAtrasados.length === 0 && pendentes.length === 0 && abandonados.length === 0) {
-                    htmlQ4 = '<div style="color:var(--ms-gray-500);font-size:0.7rem;">Tudo em dia! 🎉</div>';
-                }
-                dashboardRecomendacoes.innerHTML = htmlQ4;
             }
 
             function iniciar() {
