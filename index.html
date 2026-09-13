@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
-    <title>CheckAprovação v0.52 | Guarda Municipal Florianópolis</title>
+    <title>CheckAprovação v0.54b | Guarda Municipal Florianópolis</title>
     <meta name="theme-color" content="#0067b8">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📋</text></svg>">
     <style>
@@ -100,7 +100,6 @@
         body.dark-mode .config-info strong { color: #4cc2ff; }
         body.dark-mode .barra-item-fundo { background: #333; }
         body.dark-mode .barra-item-legenda { color: #e0e0e0; text-shadow: 0 0 4px rgba(0,0,0,0.8); }
-        body.dark-mode .feedback-item { background: #2a2a2a; border: 1px solid #3a3a3a; }
         body.dark-mode .dias-prova { background: #1a1a1a; border-color: #333; }
         body.dark-mode .dias-prova .numero-dias { color: #4cc2ff; }
         body.dark-mode .dias-prova .texto-dias { color: #aaa; }
@@ -158,7 +157,6 @@
         body.dark-mode .modal-anotacao-header { border-bottom-color: #333; background: #1a1a1a; }
         body.dark-mode .btn-fechar-modal { color: #aaa; }
         body.dark-mode .btn-fechar-modal:hover { background: #333; }
-        body.dark-mode .feedback-textual { background: #1a1a1a; }
         body.dark-mode .modulo-card .modulo-nome { color: #e0e0e0; }
         body.dark-mode .modulo-card .modulo-contagem { color: #aaa; }
         body.dark-mode .sino-btn { background: rgba(255,255,255,0.15); }
@@ -212,6 +210,25 @@
         body.dark-mode .btn-revisao.descartar { background: #4a2020; border-color: #6b2d2d; color: #ff6b6b; }
         body.dark-mode .data-saudacao { color: #4cc2ff; }
         body.dark-mode .saudacao-principal { color: #e0e0e0; }
+        body.dark-mode .dashboard-quadrante { background: #1e1e1e; border-color: #333; }
+        body.dark-mode .dashboard-quadrante-titulo.q1 { background: #1a3a5c; color: #4cc2ff; }
+        body.dark-mode .dashboard-quadrante-titulo.q2 { background: #1e3a2a; color: #6ccb5f; }
+        body.dark-mode .dashboard-quadrante-titulo.q3 { background: #4a3f1a; color: #ffd54f; }
+        body.dark-mode .dashboard-quadrante-titulo.q4 { background: #4a2020; color: #ff6b6b; }
+        body.dark-mode .dashboard-item-label { color: #aaa; }
+        body.dark-mode .dashboard-item-valor { color: #e0e0e0; }
+        body.dark-mode .dashboard-mini-barra { background: #333; }
+        body.dark-mode .dashboard-frequencia-dia { background: #333; color: #aaa; }
+        body.dark-mode .dashboard-frequencia-dia.ativo { background: #2d6b2d; color: #fff; }
+        body.dark-mode .dashboard-alerta-item.vermelho { background: #4a2020; color: #ff6b6b; }
+        body.dark-mode .dashboard-alerta-item.amarelo { background: #4a3f1a; color: #ffd54f; }
+        body.dark-mode .dashboard-alerta-item.azul { background: #1a3a5c; color: #82c7ff; }
+        body.dark-mode .calendario-dia-estudado { background: rgba(16, 124, 16, 0.2); color: #6ccb5f; }
+        body.dark-mode .calendario-dia-nao-estudado { background: rgba(209, 52, 56, 0.15); color: #ff6b6b; }
+        body.dark-mode .calendario-dia-atual { border-color: #4cc2ff; }
+        body.dark-mode .calendario-titulo-mes { color: #4cc2ff; }
+        body.dark-mode .calendario-header-dia { color: #aaa; }
+        body.dark-mode .calendario-dia-futuro { color: #555; }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -226,10 +243,19 @@
             transition: background-color 0.3s ease, color 0.3s ease;
         }
 
-        .app-shell { max-width: 1100px; margin: 0 auto; padding: 12px; position: relative; min-height: 100vh; }
+        .app-shell { max-width: 1400px; margin: 0 auto; padding: 12px; position: relative; min-height: 100vh; }
         .tela { display: none; }
         .tela.ativa { display: block; animation: fadeInTela 0.35s ease; }
         @keyframes fadeInTela { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        #telaDashboard.ativa {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            padding: 8px;
+            box-sizing: border-box;
+            overflow: hidden;
+        }
 
         .secao-titulo {
             font-size: 0.8rem;
@@ -298,6 +324,242 @@
         body.dark-mode .btn-fechar-saudacao:hover { background: #333; color: #e0e0e0; }
         body.dark-mode .btn-reabrir-saudacao { background: #2a2a2a; color: #e0e0e0; border-color: #444; }
         body.dark-mode .btn-reabrir-saudacao:hover { background: #333; }
+
+        .dashboard-header-mini {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+            flex-shrink: 0;
+        }
+        .dashboard-header-mini .btn-voltar {
+            padding: 6px 14px;
+            font-size: 0.8rem;
+        }
+        .dashboard-header-mini h2 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--ms-blue);
+            margin: 0;
+        }
+
+        .dashboard-grid-3x2 {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+            flex: 1;
+            min-height: 0;
+            overflow-y: auto;
+        }
+
+        @media (min-width: 768px) {
+            .dashboard-grid-3x2 {
+                grid-template-columns: 1fr 1fr 1fr;
+                grid-template-rows: 1fr 1fr;
+                overflow: hidden;
+            }
+        }
+
+        .dashboard-quadrante {
+            background: #fff;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-sm);
+            padding: 12px;
+            border: 1px solid var(--ms-gray-300);
+            min-width: 0;
+            min-height: 0;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .dashboard-quadrante-titulo {
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+            padding: 3px 8px;
+            border-radius: var(--radius-sm);
+            display: inline-block;
+            align-self: flex-start;
+            flex-shrink: 0;
+        }
+        .dashboard-quadrante-titulo.q1 { background: var(--ms-blue-light); color: var(--ms-blue); }
+        .dashboard-quadrante-titulo.q2 { background: var(--ms-green-light); color: var(--ms-green); }
+        .dashboard-quadrante-titulo.q3 { background: var(--ms-yellow-light); color: #6a4b00; }
+        .dashboard-quadrante-titulo.q4 { background: var(--ms-red-light); color: #a4262c; }
+        .dashboard-quadrante-conteudo {
+            flex: 1;
+            min-height: 0;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .dashboard-tempo-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr 1fr;
+            gap: 6px;
+            flex: 1;
+            min-height: 0;
+        }
+        .dashboard-tempo-item {
+            background: var(--ms-gray-100);
+            border-radius: var(--radius-sm);
+            padding: 6px 4px;
+            text-align: center;
+            border: 1px solid var(--ms-gray-300);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-height: 0;
+        }
+        body.dark-mode .dashboard-tempo-item { background: #2a2a2a; border-color: #444; }
+        .dashboard-tempo-item-label {
+            font-size: 0.55rem;
+            text-transform: uppercase;
+            font-weight: 700;
+            color: var(--ms-gray-700);
+            margin-bottom: 2px;
+            letter-spacing: 0.3px;
+        }
+        body.dark-mode .dashboard-tempo-item-label { color: #aaa; }
+        .dashboard-tempo-item-valor {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--ms-blue);
+            line-height: 1.1;
+        }
+        body.dark-mode .dashboard-tempo-item-valor { color: #4cc2ff; }
+
+        .calendario-container {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            flex: 1;
+            min-height: 0;
+        }
+        .calendario-titulo-mes {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--ms-blue);
+            text-align: center;
+            padding: 2px;
+            text-transform: capitalize;
+        }
+        .calendario-header-semana {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 2px;
+        }
+        .calendario-header-dia {
+            font-size: 0.55rem;
+            font-weight: 700;
+            color: var(--ms-gray-700);
+            text-align: center;
+            padding: 2px 1px;
+            text-transform: uppercase;
+        }
+        .calendario-dias {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 2px;
+            flex: 1;
+            min-height: 0;
+        }
+        .calendario-dia {
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.55rem;
+            font-weight: 600;
+            border: 1px solid transparent;
+            min-height: 18px;
+            padding: 1px;
+        }
+        .calendario-dia-vazio {
+            background: transparent;
+        }
+        .calendario-dia-estudado {
+            background: rgba(16, 124, 16, 0.15);
+            color: #054b16;
+            font-weight: 700;
+        }
+        .calendario-dia-nao-estudado {
+            background: rgba(209, 52, 56, 0.1);
+            color: #a4262c;
+        }
+        .calendario-dia-futuro {
+            background: transparent;
+            color: var(--ms-gray-400);
+        }
+        body.dark-mode .calendario-dia-futuro { color: #555; }
+        .calendario-dia-atual {
+            border: 2px solid var(--ms-blue);
+        }
+
+        .cobertura-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 5px;
+            font-size: 0.68rem;
+        }
+        .cobertura-label {
+            color: var(--ms-gray-700);
+            font-weight: 600;
+            min-width: 70px;
+            display: flex;
+            align-items: center;
+            gap: 3px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        body.dark-mode .cobertura-label { color: #aaa; }
+        .cobertura-barra {
+            flex: 1;
+            height: 14px;
+            background: var(--ms-gray-200);
+            border-radius: 7px;
+            overflow: hidden;
+        }
+        body.dark-mode .cobertura-barra { background: #333; }
+        .cobertura-barra-fill {
+            height: 100%;
+            border-radius: 7px;
+            background: linear-gradient(90deg, #c8e6ff, #4cc2ff);
+            transition: width 0.5s ease;
+            min-width: 2px;
+        }
+        .cobertura-barra-fill.verde { background: linear-gradient(90deg, #b8e6b8, #4caf50); }
+        .cobertura-barra-fill.amarelo { background: linear-gradient(90deg, #ffe69c, #ffc107); }
+        .cobertura-barra-fill.vermelho { background: linear-gradient(90deg, #ffb8b8, #e53935); }
+        .cobertura-barra-fill.dourado { background: linear-gradient(90deg, #ffe9a8, #d4af37); }
+        .cobertura-percentual {
+            font-size: 0.65rem;
+            font-weight: 700;
+            color: var(--ms-gray-900);
+            min-width: 32px;
+            text-align: right;
+        }
+        body.dark-mode .cobertura-percentual { color: #e0e0e0; }
+
+        .dashboard-alerta-item {
+            font-size: 0.65rem;
+            padding: 5px 7px;
+            border-radius: var(--radius-sm);
+            margin-bottom: 3px;
+            display: flex;
+            align-items: center;
+            gap: 3px;
+            flex-wrap: wrap;
+        }
+        .dashboard-alerta-item.vermelho { background: var(--ms-red-light); color: #a4262c; }
+        .dashboard-alerta-item.amarelo { background: var(--ms-yellow-light); color: #6a4b00; }
+        .dashboard-alerta-item.azul { background: var(--ms-blue-light); color: var(--ms-blue-dark); }
     </style>
 </head>
 <body>
@@ -535,31 +797,17 @@
         .toast-celebracao.visivel { transform: translateX(-50%) translateY(0); opacity: 1; }
         .toast-celebracao .toast-icone { font-size: 1.5rem; }
 
-        .dashboard-section { background: #fff; border-radius: var(--radius-md); box-shadow: var(--shadow-sm); padding: 16px; margin-bottom: 14px; border: 1px solid var(--ms-gray-300); }
-        .dashboard-titulo { font-size: 1.1rem; font-weight: 600; color: var(--ms-gray-900); margin-bottom: 4px; }
-        .dashboard-subtitulo { font-size: 0.8rem; color: var(--ms-gray-700); margin-bottom: 14px; }
-        .dashboard-metricas { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; margin-bottom: 16px; }
-        .dashboard-metrica { background: var(--ms-gray-100); border-radius: var(--radius-sm); padding: 12px; text-align: center; border: 1px solid var(--ms-gray-300); }
-        .dashboard-metrica-valor { font-size: 1.5rem; font-weight: 700; color: var(--ms-blue); line-height: 1.2; }
-        .dashboard-metrica-label { font-size: 0.7rem; color: var(--ms-gray-700); text-transform: uppercase; font-weight: 600; margin-top: 4px; }
-        .grafico-semanal-titulo { font-size: 0.85rem; font-weight: 600; color: var(--ms-gray-700); margin-bottom: 10px; }
-        .grafico-colunas-container { display: flex; align-items: flex-end; justify-content: space-between; gap: 8px; padding: 15px 10px 5px 10px; background: var(--ms-gray-100); border-radius: var(--radius-sm); border: 1px solid var(--ms-gray-300); min-height: 200px; overflow-x: auto; }
-        .grafico-coluna-wrapper { display: flex; flex-direction: column; align-items: center; gap: 4px; flex: 1; min-width: 50px; max-width: 70px; }
-        .grafico-coluna-valor { font-size: 0.65rem; font-weight: 600; color: var(--ms-gray-700); white-space: nowrap; }
-        .grafico-coluna-stack { display: flex; flex-direction: column; align-items: center; width: 100%; max-width: 40px; }
-        .grafico-coluna-liquida { width: 100%; background: linear-gradient(180deg, #6ccb5f, #4caf50); border-radius: 4px 4px 0 0; min-height: 4px; transition: height 0.5s ease; }
-        .grafico-coluna-pausa { width: 100%; background: #c8c6c4; min-height: 4px; transition: height 0.5s ease; }
-        .grafico-coluna-label { font-size: 0.65rem; font-weight: 700; color: var(--ms-gray-700); text-transform: uppercase; white-space: nowrap; }
-        .legenda-dashboard { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 10px; padding: 8px 12px; background: var(--ms-gray-100); border-radius: var(--radius-sm); border: 1px solid var(--ms-gray-300); font-size: 0.7rem; }
-        .legenda-dashboard-item { display: flex; align-items: center; gap: 5px; color: var(--ms-gray-700); font-weight: 600; }
-        .legenda-dot-liquido { width: 14px; height: 14px; background: #4caf50; border-radius: 3px; }
-        .legenda-dot-pausa { width: 14px; height: 14px; background: #c8c6c4; border-radius: 3px; }
-        .grafico-barra-item { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
-        .grafico-dia-label { font-size: 0.7rem; color: var(--ms-gray-700); min-width: 160px; font-weight: 600; display: flex; align-items: center; gap: 6px; white-space: nowrap; }
-        .grafico-dia-label .modulo-icone { font-size: 1rem; }
-        .grafico-barra-track { flex: 1; height: 20px; background: var(--ms-gray-200); border-radius: 10px; overflow: hidden; position: relative; }
-        .grafico-barra-fill { height: 100%; background: linear-gradient(90deg, #c8e6ff, #4cc2ff); border-radius: 10px; transition: width 0.5s ease; min-width: 2px; }
-        .grafico-barra-valor { font-size: 0.7rem; color: var(--ms-gray-700); min-width: 60px; font-weight: 600; text-align: right; }
+        .grafico-colunas-container { display: flex; align-items: flex-end; justify-content: space-between; gap: 4px; padding: 6px 4px 2px 4px; background: var(--ms-gray-100); border-radius: var(--radius-sm); border: 1px solid var(--ms-gray-300); min-height: 120px; overflow: hidden; flex: 1; }
+        .grafico-coluna-wrapper { display: flex; flex-direction: column; align-items: center; gap: 2px; flex: 1; min-width: 0; }
+        .grafico-coluna-valor { font-size: 0.55rem; font-weight: 600; color: var(--ms-gray-700); white-space: nowrap; }
+        .grafico-coluna-stack { display: flex; flex-direction: column; align-items: center; width: 100%; max-width: 28px; }
+        .grafico-coluna-liquida { width: 100%; background: linear-gradient(180deg, #6ccb5f, #4caf50); border-radius: 3px 3px 0 0; min-height: 3px; transition: height 0.5s ease; }
+        .grafico-coluna-pausa { width: 100%; background: #c8c6c4; min-height: 3px; transition: height 0.5s ease; }
+        .grafico-coluna-label { font-size: 0.5rem; font-weight: 700; color: var(--ms-gray-700); text-transform: uppercase; white-space: nowrap; }
+        .legenda-dashboard { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 4px; padding: 4px 8px; background: var(--ms-gray-100); border-radius: var(--radius-sm); border: 1px solid var(--ms-gray-300); font-size: 0.6rem; flex-shrink: 0; }
+        .legenda-dashboard-item { display: flex; align-items: center; gap: 4px; color: var(--ms-gray-700); font-weight: 600; }
+        .legenda-dot-liquido { width: 10px; height: 10px; background: #4caf50; border-radius: 2px; }
+        .legenda-dot-pausa { width: 10px; height: 10px; background: #c8c6c4; border-radius: 2px; }
 
         .rodape { display: flex; justify-content: center; align-items: center; gap: 12px; padding: 14px 0 8px; flex-wrap: wrap; }
         .btn-rodape { background: var(--ms-gray-200); color: var(--ms-gray-900); border: 1px solid var(--ms-gray-400); padding: 10px 18px; border-radius: var(--radius-sm); font-family: var(--ms-font); font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: var(--transition); display: inline-flex; align-items: center; gap: 6px; box-shadow: var(--shadow-sm); }
@@ -601,6 +849,12 @@
 
         @media (max-width: 600px) {
             .app-shell { padding: 6px; }
+            #telaDashboard.ativa { height: auto; overflow: visible; padding: 6px; }
+            .dashboard-grid-3x2 { overflow: visible; flex: none; }
+            .dashboard-quadrante { overflow: visible; }
+            .dashboard-quadrante-conteudo { overflow: visible; }
+            .dashboard-tempo-grid { grid-template-rows: auto; }
+            .calendario-dias { flex: none; }
             .ms-header { padding: 14px 12px; }
             .ms-header h1 { font-size: 1.1rem; padding-left: 42px; }
             .ms-header .subtitle { padding-left: 42px; font-size: 0.7rem; }
@@ -613,7 +867,6 @@
             .farol .farol-icon { font-size: 1.3rem; margin-bottom: 0; }
             .dias-prova { width: 100%; border-left: none; border-top: 2px solid var(--ms-gray-300); padding: 10px 8px; flex-direction: row; gap: 12px; flex-wrap: wrap; justify-content: center; }
             .dias-prova .numero-dias { font-size: 1.8rem; }
-            .feedback-textual { grid-template-columns: 1fr; }
             .modulos-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
             .modulo-card { padding: 10px 8px; }
             .modulo-card .modulo-percentual { font-size: 1.2rem; }
@@ -631,15 +884,15 @@
             .cronometro-container { flex-wrap: wrap; gap: 6px; }
             .cronometro-display { font-size: 1.1rem; min-width: 85px; }
             .cronometro-modulo-label { margin-left: 0; width: 100%; }
-            .dashboard-metricas { grid-template-columns: repeat(2, 1fr); }
-            .grafico-colunas-container { gap: 6px; padding: 10px 6px 5px 6px; }
-            .grafico-coluna-wrapper { min-width: 40px; max-width: 50px; }
-            .grafico-coluna-stack { max-width: 30px; }
-            .grafico-dia-label { min-width: 120px; font-size: 0.65rem; }
+            .grafico-colunas-container { gap: 4px; padding: 8px 4px 3px 4px; }
+            .grafico-coluna-wrapper { min-width: 28px; max-width: 42px; }
+            .grafico-coluna-stack { max-width: 24px; }
             .toast-celebracao { padding: 10px 16px; font-size: 0.8rem; }
             .recomendacao-item { flex-wrap: wrap; }
             .revisao-item { flex-wrap: wrap; }
             .data-saudacao { font-size: 0.75rem; }
+            .calendario-dia { font-size: 0.55rem; min-height: 18px; }
+            .calendario-header-dia { font-size: 0.5rem; padding: 2px 1px; }
         }
     </style>
 </head>
@@ -656,7 +909,7 @@
                 <h1>
                     <span class="header-icon">📋</span> 
                     CheckAprovação
-                    <span class="versao-badge">v0.52</span>
+                    <span class="versao-badge">v0.54b</span>
                 </h1>
                 <div class="subtitle">Concurso Guarda Municipal Florianópolis</div>
                 <div class="cargo-info">👔 Cargo: Guarda Municipal</div>
@@ -701,6 +954,7 @@
                 <div class="saudacao-principal" id="saudacaoPrincipal">Bem-vindo!</div>
                 <div class="frase-motivacional" id="fraseMotivacional">"Carregando..."</div>
             </div>
+
             <div class="secao-titulo progresso">📈 SEU PROGRESSO</div>
             <div class="status-container">
                 <div class="farol farol-verde" id="farol">
@@ -775,33 +1029,53 @@
         </div>
 
         <div id="telaDashboard" class="tela">
-            <div class="config-header">
+            <div class="dashboard-header-mini">
                 <button class="btn-voltar" id="btnVoltarDashboardTopo">← Voltar</button>
-                <h2 style="font-size:1rem;font-weight:600;color:var(--ms-blue);">📊 Dashboard</h2>
+                <h2>📊 Dashboard</h2>
             </div>
-            <div class="dashboard-section">
-                <div class="dashboard-titulo">📊 Dashboard de Performance</div>
-                <div class="dashboard-subtitulo">Acompanhe seu tempo de estudo e métricas de produtividade</div>
-                <div class="dashboard-metricas" id="dashboardMetricas"></div>
-                <div class="grafico-semanal">
-                    <div class="grafico-semanal-titulo">📅 Horas Líquidas de Estudo - Últimos 7 dias</div>
-                    <div id="graficoSemanal"></div>
+
+            <div class="dashboard-grid-3x2">
+                <div class="dashboard-quadrante">
+                    <div class="dashboard-quadrante-titulo q1">📊 Horas Líquidas</div>
+                    <div class="dashboard-quadrante-conteudo">
+                        <div id="dashboardHorasLiquidas" style="display:flex;flex-direction:column;flex:1;min-height:0;"></div>
+                    </div>
                 </div>
-                <div class="legenda-dashboard">
-                    <span class="legenda-dashboard-item"><span class="legenda-dot-liquido"></span> Horas Líquidas</span>
-                    <span class="legenda-dashboard-item"><span class="legenda-dot-pausa"></span> Tempo de Pausa</span>
+
+                <div class="dashboard-quadrante">
+                    <div class="dashboard-quadrante-titulo q2">⏱️ Tempo de Estudo</div>
+                    <div class="dashboard-quadrante-conteudo">
+                        <div id="dashboardTempoEstudo" style="display:flex;flex-direction:column;flex:1;min-height:0;"></div>
+                    </div>
                 </div>
-            </div>
-            <div class="dashboard-section">
-                <div class="dashboard-titulo">📚 Progresso por Módulo (% de conclusão)</div>
-                <div id="progressoPorModulo"></div>
-            </div>
-            <div class="dashboard-section">
-                <div class="dashboard-titulo">⏱️ Tempo por Módulo (Total)</div>
-                <div id="tempoPorModulo"></div>
-            </div>
-            <div class="rodape">
-                <button class="btn-rodape" id="btnVoltarDashboard">← Voltar ao Início</button>
+
+                <div class="dashboard-quadrante">
+                    <div class="dashboard-quadrante-titulo q1">📚 Cobertura do Edital</div>
+                    <div class="dashboard-quadrante-conteudo">
+                        <div id="dashboardCobertura" style="overflow-y:auto;"></div>
+                    </div>
+                </div>
+
+                <div class="dashboard-quadrante">
+                    <div class="dashboard-quadrante-titulo q3">🎯 Engajamento</div>
+                    <div class="dashboard-quadrante-conteudo">
+                        <div id="dashboardEngajamento" style="display:flex;flex-direction:column;flex:1;min-height:0;"></div>
+                    </div>
+                </div>
+
+                <div class="dashboard-quadrante">
+                    <div class="dashboard-quadrante-titulo q2">⏱️ Tempo por Módulo</div>
+                    <div class="dashboard-quadrante-conteudo">
+                        <div id="dashboardTempoPorModulo" style="overflow-y:auto;"></div>
+                    </div>
+                </div>
+
+                <div class="dashboard-quadrante">
+                    <div class="dashboard-quadrante-titulo q4">🎯 Recomendações</div>
+                    <div class="dashboard-quadrante-conteudo">
+                        <div id="dashboardRecomendacoes" style="overflow-y:auto;"></div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -923,7 +1197,6 @@
                 "A disciplina é a ponte entre metas e conquistas.","Cada página lida é um passo rumo à aprovação.","O esforço de hoje é a vitória de amanhã.","Persistência: o segredo dos aprovados.","Estudar é plantar conhecimento para colher conquistas.","Você está mais perto do que ontem.","A constância vence o talento quando o talento não se esforça.","Não é sobre ser o melhor, é sobre ser melhor que ontem.","O sucesso é a soma de pequenos esforços repetidos diariamente.","Quem estuda vence a si mesmo antes de vencer a prova.","Aprovação é consequência de preparação diária.","Seu futuro é construído pelas horas que você dedica hoje.","Foco, disciplina e consistência: a tríade do aprovado.","O edital é o mapa, o estudo é a jornada.","Não desista no primeiro obstáculo. A prova é uma maratona.","Cada assunto concluído é uma batalha vencida.","A diferença entre sonho e meta é o plano de ação.","Estude como se a prova fosse amanhã. Prepare-se como se fosse para sempre.","A motivação te faz começar. O hábito te faz continuar.","Você não precisa ser perfeito, precisa ser constante.","O conhecimento é a única riqueza que ninguém pode roubar.","Sua dedicação de hoje será sua aprovação de amanhã.","Aprovação não é sorte, é preparação que encontrou oportunidade.","Quem estuda com método, vence com mérito.","O sacrifício de agora é a liberdade de amanhã.","Não pare até se orgulhar de si mesmo.","A jornada é longa, mas cada passo conta.","Estudar é um investimento com retorno garantido.","O único concorrente que você precisa vencer é você mesmo.","Acredite no processo. Os resultados virão.","Sua força de vontade é maior que qualquer dificuldade.","Quem estuda no escuro, brilha na prova.","O hábito de estudar é mais poderoso que a motivação passageira.","Você está construindo seu próprio futuro, tijolo por tijolo.","A dor do estudo é temporária. A glória da aprovação é para sempre.","Não é sobre quantas horas você estuda, é sobre a qualidade.","Cada dia de estudo é uma semente plantada.","O impossível é apenas uma opinião.","Sua dedicação silenciosa gritará na aprovação.","Estudar é a única competição onde todos podem vencer.","Não espere por inspiração. Crie o hábito e a inspiração virá.","O sucesso é aluguel. Pague todo dia com estudo.","Você está a um passo de transformar seu esforço em conquista.","A rotina de estudos é o caminho para a liberdade financeira.","Persistir é vencer. Desistir é voltar ao ponto de partida.","O concurso não é sorte. É preparação + oportunidade.","Sua mente é seu maior patrimônio. Invista nela todos os dias.","O amanhã pertence a quem se prepara hoje.","A diferença entre o sonho e a realidade é a ação diária.","Você tem 50 assuntos. Cada um vencido é uma vitória."
             ];
 
-            // ============ VARIÁVEIS DECLARADAS ANTES DAS FUNÇÕES ============
             let notificacoes = [];
             let streakAtual = 0;
             let ultimoDiaEstudo = null;
@@ -958,7 +1231,6 @@
             let usarDataSistema = true;
             let telaAtual = 'principal';
             let saudacaoFechada = false;
-            // ============ FIM DAS VARIÁVEIS ============
 
             function salvarDados() {
                 const dados = {
@@ -1223,12 +1495,11 @@
                 const dataAlvo = new Date(hoje);
                 dataAlvo.setDate(dataAlvo.getDate() + intervalo);
                 
-                // Verificação: não agendar revisão após a data final (prova)
                 if (dataFinal) {
                     const dataFim = new Date(dataFinal + 'T00:00:00');
-                    dataFim.setDate(dataFim.getDate() + 1); // dia da prova
+                    dataFim.setDate(dataFim.getDate() + 1);
                     if (dataAlvo > dataFim) {
-                        return; // Não agenda revisão após a prova
+                        return;
                     }
                 }
                 
@@ -1499,7 +1770,6 @@
             const diasTotaisEl = document.getElementById('diasTotais');
             const diasMetaLidoEl = document.getElementById('diasMetaLido');
             const diaProvaEl = document.getElementById('diaProva');
-            const resumoRodape = document.getElementById('resumoRodape');
             const conteudoPrincipal = document.getElementById('conteudoPrincipal');
             const farol = document.getElementById('farol');
             const farolIcon = document.getElementById('farolIcon');
@@ -1526,6 +1796,12 @@
             const saudacaoContainer = document.getElementById('saudacaoContainer');
             const btnFecharSaudacao = document.getElementById('btnFecharSaudacao');
             const btnReabrirSaudacao = document.getElementById('btnReabrirSaudacao');
+            const dashboardHorasLiquidas = document.getElementById('dashboardHorasLiquidas');
+            const dashboardEngajamento = document.getElementById('dashboardEngajamento');
+            const dashboardTempoEstudo = document.getElementById('dashboardTempoEstudo');
+            const dashboardTempoPorModulo = document.getElementById('dashboardTempoPorModulo');
+            const dashboardCobertura = document.getElementById('dashboardCobertura');
+            const dashboardRecomendacoes = document.getElementById('dashboardRecomendacoes');
             const modalAnotacaoOverlay = document.getElementById('modalAnotacaoOverlay');
             const modalAnotacaoTitulo = document.getElementById('modalAnotacaoTitulo');
             const modalAnotacaoAssunto = document.getElementById('modalAnotacaoAssunto');
@@ -1545,10 +1821,6 @@
             const menuDashboard = document.getElementById('menuDashboard');
             const menuRevisoes = document.getElementById('menuRevisoes');
             const menuConfig = document.getElementById('menuConfig');
-            const dashboardMetricas = document.getElementById('dashboardMetricas');
-            const graficoSemanal = document.getElementById('graficoSemanal');
-            const tempoPorModulo = document.getElementById('tempoPorModulo');
-            const progressoPorModulo = document.getElementById('progressoPorModulo');
             const btnSimularBaixo = document.getElementById('btnSimularBaixo');
             const btnSimularMedio = document.getElementById('btnSimularMedio');
             const btnSimularAlto = document.getElementById('btnSimularAlto');
@@ -1557,7 +1829,6 @@
                 if (usarDataSistema) { dataSimuladaInput.disabled = true; dataSimuladaInput.value = ''; } else { dataSimuladaInput.disabled = false; }
             }
 
-            // Eventos da caixa de saudação
             btnFecharSaudacao.addEventListener('click', function() {
                 saudacaoFechada = true;
                 aplicarEstadoSaudacao();
@@ -1693,8 +1964,8 @@
             }
 
             btnVoltarPrincipal.addEventListener('click', function() { mostrarTela('principal'); });
-            btnVoltarDashboard.addEventListener('click', function() { mostrarTela('principal'); });
-            btnVoltarDashboardTopo.addEventListener('click', function() { mostrarTela('principal'); });
+            if (btnVoltarDashboard) btnVoltarDashboard.addEventListener('click', function() { mostrarTela('principal'); });
+            if (btnVoltarDashboardTopo) btnVoltarDashboardTopo.addEventListener('click', function() { mostrarTela('principal'); });
             btnVoltarRevisoes.addEventListener('click', function() { mostrarTela('principal'); });
             btnVoltarRevisoesRodape.addEventListener('click', function() { mostrarTela('principal'); });
             btnAtualizar.addEventListener('click', function() {
@@ -1708,7 +1979,6 @@
                 salvarDados();
                 atualizarConfigInfo();
                 atualizarGraficoStatus();
-                atualizarResumoRodape();
                 atualizarSaudacao();
                 mostrarTela('principal');
             });
@@ -1749,7 +2019,6 @@
                 }
             });
 
-            // Reset Geral - volta ao estado de novo
             btnResetGeral.addEventListener('click', function() {
                 if (confirm('⚠️ ATENÇÃO!\n\nTem certeza que deseja apagar TODOS os dados e voltar ao estado inicial?\n\nEsta ação não pode ser desfeita. Serão apagados:\n- Nome do usuário\n- Datas inicial e final\n- Data simulada\n- Modo escuro\n- Progresso de leitura\n- Anotações\n- Tempo de estudo\n- Notificações\n- Revisões espaçadas\n- Estado da caixa de saudação')) {
                     estadoCheckboxes = {};
@@ -1800,7 +2069,6 @@
                     renderizarRevisaoEspacada();
                     atualizarConfigInfo();
                     atualizarGraficoStatus();
-                    atualizarResumoRodape();
                     atualizarSaudacao();
                     mostrarTela('principal');
                 }
@@ -2288,11 +2556,6 @@
                 }
             }
 
-            function atualizarResumoRodape() {
-                const dias = calcularDiasTotais();
-                resumoRodape.textContent = dias && dias > 0 ? 'Período: ' + dataInicial + ' a ' + dataFinal + ' • ' + dias + ' dias' : 'Configure as datas nas Configurações';
-            }
-
             function calcularDiasAteProva() {
                 const dataProva = obterDataProva();
                 if (!dataProva) return null;
@@ -2479,6 +2742,182 @@
                     });
                 });
             }
+
+            function renderizarDashboard() {
+                const hoje = obterDataAtual();
+                const hojeStr = hoje.toISOString().split('T')[0];
+                const dias = [];
+                for (let i = 6; i >= 0; i--) {
+                    const d = new Date(hoje);
+                    d.setDate(d.getDate() - i);
+                    const dStr = d.toISOString().split('T')[0];
+                    const diaSemana = d.toLocaleDateString('pt-BR', { weekday: 'short' }).toUpperCase().replace('.', '');
+                    dias.push({ str: dStr, label: diaSemana });
+                }
+
+                let totalHoje = 0;
+                dias.forEach(function(d) {
+                    const dd = tempoEstudo[d.str];
+                    if (dd && d.str === hojeStr) totalHoje = dd.totalMinutos || 0;
+                });
+                const maxMinutosTotais = Math.max(1, ...dias.map(function(d) {
+                    const dd = tempoEstudo[d.str];
+                    return dd ? (dd.totalMinutos || 0) + (dd.totalPausa || 0) : 0;
+                }));
+                let htmlHoras = '<div class="grafico-colunas-container">';
+                dias.forEach(function(d) {
+                    const dd = tempoEstudo[d.str];
+                    const minutosLiquidos = dd ? dd.totalMinutos || 0 : 0;
+                    const minutosPausa = dd ? dd.totalPausa || 0 : 0;
+                    const alturaLiquida = Math.max(3, Math.round((minutosLiquidos / maxMinutosTotais) * 100));
+                    const alturaPausa = Math.max(3, Math.round((minutosPausa / maxMinutosTotais) * 100));
+                    htmlHoras += '<div class="grafico-coluna-wrapper"><span class="grafico-coluna-valor">' + formatarTempoColuna(minutosLiquidos) + '</span><div class="grafico-coluna-stack"><div class="grafico-coluna-liquida" style="height:' + alturaLiquida + 'px;"></div><div class="grafico-coluna-pausa" style="height:' + alturaPausa + 'px;"></div></div><span class="grafico-coluna-label">' + d.label + '</span></div>';
+                });
+                htmlHoras += '</div>';
+                htmlHoras += '<div class="legenda-dashboard"><span class="legenda-dashboard-item"><span class="legenda-dot-liquido"></span> Líquido</span><span class="legenda-dashboard-item"><span class="legenda-dot-pausa"></span> Pausa</span></div>';
+                dashboardHorasLiquidas.innerHTML = htmlHoras;
+
+                const totalGeral = Object.values(tempoEstudo).reduce(function(acc, dia) { return acc + (dia.totalMinutos || 0); }, 0);
+                const totalPausaGeral = Object.values(tempoEstudo).reduce(function(acc, dia) { return acc + (dia.totalPausa || 0); }, 0);
+                const diasEstudados = Object.keys(tempoEstudo).length;
+                let totalSemana = 0;
+                dias.forEach(function(d) {
+                    const dd = tempoEstudo[d.str];
+                    if (dd) totalSemana += dd.totalMinutos || 0;
+                });
+                let htmlTempo = '<div class="dashboard-tempo-grid">';
+                htmlTempo += '<div class="dashboard-tempo-item"><div class="dashboard-tempo-item-label">🔥 Sequência</div><div class="dashboard-tempo-item-valor">' + streakAtual + ' dias</div></div>';
+                htmlTempo += '<div class="dashboard-tempo-item"><div class="dashboard-tempo-item-label">📅 Dias estudados</div><div class="dashboard-tempo-item-valor">' + diasEstudados + '</div></div>';
+                htmlTempo += '<div class="dashboard-tempo-item"><div class="dashboard-tempo-item-label">⏸ Pausa total</div><div class="dashboard-tempo-item-valor">' + formatarTempoMinutos(totalPausaGeral) + '</div></div>';
+                htmlTempo += '<div class="dashboard-tempo-item"><div class="dashboard-tempo-item-label">⏱ Líquido total</div><div class="dashboard-tempo-item-valor">' + formatarTempoMinutos(totalGeral) + '</div></div>';
+                htmlTempo += '<div class="dashboard-tempo-item"><div class="dashboard-tempo-item-label">📅 Líquido hoje</div><div class="dashboard-tempo-item-valor">' + formatarTempoMinutos(totalHoje) + '</div></div>';
+                htmlTempo += '<div class="dashboard-tempo-item"><div class="dashboard-tempo-item-label">📅 Líquido 7 dias</div><div class="dashboard-tempo-item-valor">' + formatarTempoMinutos(totalSemana) + '</div></div>';
+                htmlTempo += '</div>';
+                dashboardTempoEstudo.innerHTML = htmlTempo;
+
+                let htmlCob = '';
+                const dadosCob = modulos.map(function(modulo) {
+                    const total = contarAssuntosModulo(modulo.chave);
+                    const lidos = contarPorTipo('Lido', modulo.chave);
+                    const concluidos = contarPorTipo('Concluido', modulo.chave);
+                    const percentualLeitura = total > 0 ? Math.round((lidos / total) * 100) : 0;
+                    return { ...modulo, total: total, lidos: lidos, concluidos: concluidos, percentual: percentualLeitura };
+                });
+                dadosCob.forEach(function(modulo) {
+                    let classeBarra = '';
+                    if (modulo.percentual >= 100) classeBarra = 'dourado';
+                    else if (modulo.percentual >= 50) classeBarra = 'verde';
+                    else if (modulo.percentual >= 1) classeBarra = 'amarelo';
+                    else classeBarra = 'vermelho';
+                    htmlCob += '<div class="cobertura-item"><span class="cobertura-label">' + modulo.icone + ' ' + modulo.nome.split(' ')[0] + '</span><div class="cobertura-barra"><div class="cobertura-barra-fill ' + classeBarra + '" style="width:' + modulo.percentual + '%;"></div></div><span class="cobertura-percentual">' + modulo.percentual + '%</span></div>';
+                });
+                dashboardCobertura.innerHTML = htmlCob;
+
+                const anoAtual = hoje.getFullYear();
+                const mesAtual = hoje.getMonth();
+                const nomeMes = hoje.toLocaleDateString('pt-BR', { month: 'long' });
+                const primeiroDiaMes = new Date(anoAtual, mesAtual, 1);
+                const ultimoDiaMes = new Date(anoAtual, mesAtual + 1, 0).getDate();
+                const diaSemanaInicio = primeiroDiaMes.getDay();
+
+                let htmlCal = '<div class="calendario-container">';
+                htmlCal += '<div class="calendario-titulo-mes">' + nomeMes + ' ' + anoAtual + '</div>';
+                htmlCal += '<div class="calendario-header-semana">';
+                ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'].forEach(function(d) {
+                    htmlCal += '<div class="calendario-header-dia">' + d + '</div>';
+                });
+                htmlCal += '</div>';
+                htmlCal += '<div class="calendario-dias">';
+                for (let i = 0; i < diaSemanaInicio; i++) {
+                    htmlCal += '<div class="calendario-dia calendario-dia-vazio"></div>';
+                }
+                for (let dia = 1; dia <= ultimoDiaMes; dia++) {
+                    const d = new Date(anoAtual, mesAtual, dia);
+                    const dStr = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+                    const temEstudo = tempoEstudo[dStr] && (tempoEstudo[dStr].totalMinutos > 0);
+                    const ehFuturo = d > hoje;
+                    const ehHoje = dStr === hojeStr;
+                    let classes = 'calendario-dia';
+                    if (ehHoje) classes += ' calendario-dia-atual';
+                    if (ehFuturo) {
+                        classes += ' calendario-dia-futuro';
+                        htmlCal += '<div class="' + classes + '">' + dia + '</div>';
+                    } else if (temEstudo) {
+                        classes += ' calendario-dia-estudado';
+                        htmlCal += '<div class="' + classes + '">✅' + dia + '</div>';
+                    } else {
+                        classes += ' calendario-dia-nao-estudado';
+                        htmlCal += '<div class="' + classes + '">❌' + dia + '</div>';
+                    }
+                }
+                htmlCal += '</div></div>';
+                dashboardEngajamento.innerHTML = htmlCal;
+
+                let htmlTempoMod = '';
+                const dadosTempoMod = modulos.map(function(modulo) {
+                    let totalMinutos = 0;
+                    for (const diaStr in tempoEstudo) {
+                        const dd = tempoEstudo[diaStr];
+                        if (dd.modulos && dd.modulos[modulo.chave]) {
+                            totalMinutos += dd.modulos[modulo.chave].totalMinutos || 0;
+                        }
+                    }
+                    return { ...modulo, totalMinutos: totalMinutos };
+                });
+                dadosTempoMod.sort(function(a, b) { return b.totalMinutos - a.totalMinutos; });
+                const maxMinutosMod = Math.max(1, ...dadosTempoMod.map(function(m) { return m.totalMinutos; }));
+                dadosTempoMod.forEach(function(modulo) {
+                    const pct = Math.round((modulo.totalMinutos / maxMinutosMod) * 100);
+                    const corClasse = modulo.totalMinutos > 0 ? 'verde' : 'vermelho';
+                    htmlTempoMod += '<div class="cobertura-item"><span class="cobertura-label">' + modulo.icone + ' ' + modulo.nome.split(' ')[0] + '</span><div class="cobertura-barra"><div class="cobertura-barra-fill ' + corClasse + '" style="width:' + pct + '%;"></div></div><span class="cobertura-percentual">' + formatarTempoMinutos(modulo.totalMinutos) + '</span></div>';
+                });
+                dashboardTempoPorModulo.innerHTML = htmlTempoMod;
+
+                let htmlRec = '';
+                const moduloRecomendado = modulos.find(function(m) { return m.chave === ultimoModuloRecomendado; });
+                if (moduloRecomendado) {
+                    const lidos = contarPorTipo('Lido', moduloRecomendado.chave);
+                    const total = contarAssuntosModulo(moduloRecomendado.chave);
+                    const pendentesModulo = total - lidos;
+                    htmlRec += '<div class="dashboard-alerta-item azul">📖 Próximo: ' + moduloRecomendado.icone + ' ' + moduloRecomendado.nome + ' (' + pendentesModulo + ' pendentes)</div>';
+                } else {
+                    htmlRec += '<div class="dashboard-alerta-item azul">🎉 Todos os módulos concluídos!</div>';
+                }
+                const modulosAtrasados = modulos.filter(function(m) {
+                    const ultima = ultimasAtividades[m.chave];
+                    if (!ultima) return false;
+                    const dataUltima = new Date(ultima);
+                    dataUltima.setHours(0,0,0,0);
+                    const diffDias = Math.floor((hoje.getTime() - dataUltima.getTime()) / (1000*60*60*24));
+                    return diffDias >= 4 && contarPorTipo('Concluido', m.chave) < contarAssuntosModulo(m.chave);
+                });
+                modulosAtrasados.forEach(function(m) {
+                    const ultima = ultimasAtividades[m.chave];
+                    const dataUltima = new Date(ultima);
+                    dataUltima.setHours(0,0,0,0);
+                    const diffDias = Math.floor((hoje.getTime() - dataUltima.getTime()) / (1000*60*60*24));
+                    htmlRec += '<div class="dashboard-alerta-item amarelo">⚠️ ' + m.icone + ' ' + m.nome.split(' ')[0] + ': ' + diffDias + ' dias sem estudar</div>';
+                });
+                const pendentes = obterRevisoesPendentes();
+                if (pendentes.length > 0) {
+                    htmlRec += '<div class="dashboard-alerta-item azul">🔄 ' + pendentes.length + ' revisões pendentes</div>';
+                }
+                const abandonados = modulos.filter(function(m) {
+                    const ultima = ultimasAtividades[m.chave];
+                    if (!ultima) return false;
+                    const dataUltima = new Date(ultima);
+                    dataUltima.setHours(0,0,0,0);
+                    const diffDias = Math.floor((hoje.getTime() - dataUltima.getTime()) / (1000*60*60*24));
+                    return diffDias >= 10 && contarPorTipo('Concluido', m.chave) < contarAssuntosModulo(m.chave);
+                });
+                abandonados.forEach(function(m) {
+                    htmlRec += '<div class="dashboard-alerta-item vermelho">🚨 ' + m.icone + ' ' + m.nome.split(' ')[0] + ': abandonado!</div>';
+                });
+                if (modulosAtrasados.length === 0 && pendentes.length === 0 && abandonados.length === 0 && moduloRecomendado) {
+                    htmlRec += '<div style="color:var(--ms-gray-500);font-size:0.65rem;margin-top:4px;">Tudo em ordem! 🎉</div>';
+                }
+                dashboardRecomendacoes.innerHTML = htmlRec;
+            }
             function simularUso(nivel) {
                 estadoCheckboxes = {};
                 ultimasAtividades = {};
@@ -2608,84 +3047,6 @@
             btnSimularAlto.addEventListener('click', function() { simularUso('alto'); });
             btnZerarSimulacao.addEventListener('click', zerarSimulacao);
 
-            function renderizarDashboard() {
-                const hoje = obterDataAtual();
-                const hojeStr = hoje.toISOString().split('T')[0];
-                const dias = [];
-                for (let i = 6; i >= 0; i--) {
-                    const d = new Date(hoje);
-                    d.setDate(d.getDate() - i);
-                    const dStr = d.toISOString().split('T')[0];
-                    const diaSemana = d.toLocaleDateString('pt-BR', { weekday: 'short' }).toUpperCase().replace('.', '');
-                    const diaMes = d.getDate();
-                    dias.push({ str: dStr, label: diaSemana + ' ' + diaMes });
-                }
-                let totalHoje = 0;
-                let totalSemana = 0;
-                dias.forEach(function(d) {
-                    const dadosDia = tempoEstudo[d.str];
-                    if (dadosDia) {
-                        totalSemana += dadosDia.totalMinutos || 0;
-                        if (d.str === hojeStr) totalHoje = dadosDia.totalMinutos || 0;
-                    }
-                });
-                const totalGeral = Object.values(tempoEstudo).reduce(function(acc, dia) { return acc + (dia.totalMinutos || 0); }, 0);
-                const totalPausaGeral = Object.values(tempoEstudo).reduce(function(acc, dia) { return acc + (dia.totalPausa || 0); }, 0);
-                const diasEstudados = Object.keys(tempoEstudo).length;
-                const mediaMinutos = diasEstudados > 0 ? Math.round(totalGeral / diasEstudados) : 0;
-                dashboardMetricas.innerHTML = '<div class="dashboard-metrica"><div class="dashboard-metrica-valor">' + formatarTempoMinutos(totalGeral) + '</div><div class="dashboard-metrica-label">Horas Líquidas Totais</div></div><div class="dashboard-metrica"><div class="dashboard-metrica-valor">' + formatarTempoMinutos(totalHoje) + '</div><div class="dashboard-metrica-label">Líquido hoje</div></div><div class="dashboard-metrica"><div class="dashboard-metrica-valor">' + formatarTempoMinutos(totalPausaGeral) + '</div><div class="dashboard-metrica-label">Tempo de Pausa Total</div></div><div class="dashboard-metrica"><div class="dashboard-metrica-valor">' + formatarTempoMinutos(totalSemana) + '</div><div class="dashboard-metrica-label">Líquido (7 dias)</div></div><div class="dashboard-metrica"><div class="dashboard-metrica-valor">' + diasEstudados + '</div><div class="dashboard-metrica-label">Dias estudados</div></div><div class="dashboard-metrica"><div class="dashboard-metrica-valor">🔥 ' + streakAtual + '</div><div class="dashboard-metrica-label">Sequência de dias</div></div>';
-                const maxMinutosTotais = Math.max(1, ...dias.map(function(d) { const dd = tempoEstudo[d.str]; return dd ? (dd.totalMinutos || 0) + (dd.totalPausa || 0) : 0; }));
-                let htmlColunas = '<div class="grafico-colunas-container">';
-                dias.forEach(function(d) {
-                    const dd = tempoEstudo[d.str];
-                    const minutosLiquidos = dd ? dd.totalMinutos || 0 : 0;
-                    const minutosPausa = dd ? dd.totalPausa || 0 : 0;
-                    const alturaLiquida = Math.max(4, Math.round((minutosLiquidos / maxMinutosTotais) * 110));
-                    const alturaPausa = Math.max(4, Math.round((minutosPausa / maxMinutosTotais) * 110));
-                    htmlColunas += '<div class="grafico-coluna-wrapper"><span class="grafico-coluna-valor">' + formatarTempoColuna(minutosLiquidos) + '</span><div class="grafico-coluna-stack"><div class="grafico-coluna-liquida" style="height:' + alturaLiquida + 'px;"></div><div class="grafico-coluna-pausa" style="height:' + alturaPausa + 'px;"></div></div><span class="grafico-coluna-label">' + d.label + '</span></div>';
-                });
-                htmlColunas += '</div>';
-                graficoSemanal.innerHTML = htmlColunas;
-                progressoPorModulo.innerHTML = '';
-                const dadosProgresso = modulos.map(function(modulo) {
-                    const total = contarAssuntosModulo(modulo.chave);
-                    const concluidos = contarPorTipo('Concluido', modulo.chave);
-                    const percentual = total > 0 ? Math.round((concluidos / total) * 100) : 0;
-                    return { ...modulo, total: total, concluidos: concluidos, percentual: percentual };
-                });
-                dadosProgresso.sort(function(a, b) { return b.percentual - a.percentual; });
-                dadosProgresso.forEach(function(modulo) {
-                    const barraItem = document.createElement('div');
-                    barraItem.className = 'grafico-barra-item';
-                    barraItem.innerHTML = '<span class="grafico-dia-label"><span class="modulo-icone">' + modulo.icone + '</span> ' + modulo.nome + '</span><div class="grafico-barra-track"><div class="grafico-barra-fill" style="width:' + modulo.percentual + '%;"></div></div><span class="grafico-barra-valor">' + modulo.percentual + '% (' + modulo.concluidos + '/' + modulo.total + ')</span>';
-                    progressoPorModulo.appendChild(barraItem);
-                });
-                tempoPorModulo.innerHTML = '';
-                let temAlgumTempo = false;
-                const dadosTempo = modulos.map(function(modulo) {
-                    let totalMinutos = 0;
-                    for (const diaStr in tempoEstudo) {
-                        const dd = tempoEstudo[diaStr];
-                        if (dd.modulos && dd.modulos[modulo.chave]) {
-                            totalMinutos += dd.modulos[modulo.chave].totalMinutos || 0;
-                        }
-                    }
-                    return { ...modulo, totalMinutos: totalMinutos };
-                });
-                dadosTempo.sort(function(a, b) { return b.totalMinutos - a.totalMinutos; });
-                dadosTempo.forEach(function(modulo) {
-                    if (modulo.totalMinutos > 0) temAlgumTempo = true;
-                    const pct = modulo.totalMinutos > 0 ? Math.round((modulo.totalMinutos / Math.max(1, totalGeral)) * 100) : 0;
-                    const barraItem = document.createElement('div');
-                    barraItem.className = 'grafico-barra-item';
-                    barraItem.innerHTML = '<span class="grafico-dia-label"><span class="modulo-icone">' + modulo.icone + '</span> ' + modulo.nome + '</span><div class="grafico-barra-track"><div class="grafico-barra-fill" style="width:' + pct + '%;"></div></div><span class="grafico-barra-valor">' + formatarTempoMinutos(modulo.totalMinutos) + '</span>';
-                    tempoPorModulo.appendChild(barraItem);
-                });
-                if (!temAlgumTempo) {
-                    tempoPorModulo.innerHTML = '<div style="color:var(--ms-gray-500);text-align:center;padding:20px;">Nenhum tempo registrado ainda.</div>';
-                }
-            }
-
             function iniciar() {
                 carregarDados();
                 aplicarModoEscuro();
@@ -2707,7 +3068,6 @@
                 renderizarRevisaoEspacada();
                 atualizarConfigInfo();
                 atualizarGraficoStatus();
-                atualizarResumoRodape();
                 if (telaAtual === 'config') mostrarTela('config');
                 else if (telaAtual === 'dashboard') mostrarTela('dashboard');
                 else if (telaAtual === 'revisoes') mostrarTela('revisoes');
