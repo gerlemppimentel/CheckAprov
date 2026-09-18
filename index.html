@@ -320,8 +320,7 @@
         }
 
         /* ============ SEU PROGRESSO — 4 CARDS ============ */
-        .progresso-grid { display: grid; grid-template-columns: 1fr; gap: 10px; margin-bottom: 16px; }
-        @media (min-width: 481px) { .progresso-grid { grid-template-columns: 1fr 1fr; } }
+        .progresso-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
         @media (min-width: 768px) { .progresso-grid { grid-template-columns: 1fr 1fr 1fr 1fr; } }
 
         .progresso-card {
@@ -405,10 +404,25 @@
             .prova-dias-numero { font-size: 2.1rem; }
         }
 
+        @media (max-width: 360px) {
+            .progresso-card { min-height: 120px; padding: 8px; }
+            .progresso-card-label { font-size: 0.58rem; margin-bottom: 6px; }
+            .pizza-container { width: 72px; height: 72px; }
+            .pizza-centro { font-size: 0.9rem; }
+            .pizza-centro-percentual { font-size: 0.58rem; }
+            .pizza-info { font-size: 0.62rem; }
+            .farol-icon-grande { font-size: 1.7rem; }
+            .farol-texto { font-size: 0.78rem; }
+            .farol-status-detalhe { font-size: 0.58rem; }
+            .prova-data { font-size: 0.85rem; }
+            .prova-dias-numero { font-size: 1.8rem; }
+            .prova-dias-texto { font-size: 0.58rem; }
+        }
+
         /* ============ LAYOUT PRINCIPAL 30/70 ============ */
         .layout-principal { display: grid; grid-template-columns: 1fr; gap: 12px; margin-bottom: 14px; }
         @media (min-width: 768px) {
-            .layout-principal { grid-template-columns: 30% 1fr; gap: 12px; }
+            .layout-principal { grid-template-columns: 30% 1fr; gap: 12px; align-items: start; }
             .coluna-esquerda { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
             .coluna-direita { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
         }
@@ -466,9 +480,8 @@
         .revisao-espacada-conteudo { font-size: 0.8rem; color: var(--ms-gray-700); padding: 10px 12px; background: var(--surface-alt); border-radius: var(--radius-md); text-align: center; line-height: 1.4; }
         body.dark-mode .revisao-espacada-conteudo { background: #2a2a2a; color: #aaa; }
 
-        /* =========
-
         /* ============ PROGRESSO POR MÓDULO ============ */
+        .modulos-topo { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 10px; }
         .modulos-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
         @media (min-width: 600px) { .modulos-grid { grid-template-columns: repeat(3, 1fr); } }
         @media (min-width: 992px) { .modulos-grid { grid-template-columns: repeat(4, 1fr); } }
@@ -520,7 +533,6 @@
         .modulo-card .modulo-alerta.amarelo { color: var(--ms-yellow-dark); }
         .modulo-card .modulo-alerta.dourado { color: var(--ms-gold-dark); }
 
-        .modulos-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; flex-wrap: wrap; gap: 8px; }
         .modulos-resumo { font-size: 0.72rem; color: var(--ms-gray-700); display: flex; gap: 12px; flex-wrap: wrap; }
         body.dark-mode .modulos-resumo { color: #aaa; }
         .resumo-item { display: flex; align-items: center; gap: 4px; }
@@ -530,9 +542,8 @@
         .resumo-dot.vermelho { background: var(--ms-red); }
         .resumo-dot.dourado { background: var(--ms-gold); }
 
-        /* ============ CHECKLIST (30/70 ALINHADO À DIREITA) ============ */
-        .checklist-wrapper { display: grid; grid-template-columns: 1fr; gap: 12px; }
-        @media (min-width: 768px) { .checklist-wrapper { grid-template-columns: 30% 1fr; gap: 12px; } }
+        /* ============ CHECKLIST ============ */
+        .checklist-bloco { margin-top: 12px; }
 
         .topic-section { background: var(--surface); border-radius: var(--radius-lg); box-shadow: var(--shadow-2); margin-bottom: 10px; overflow: hidden; border: 1px solid var(--border); transition: background var(--dur-slow) var(--ease-standard), border-color var(--dur-slow) var(--ease-standard); }
         .topic-header { background: var(--ms-blue); color: #fff; padding: 13px 16px; font-weight: 600; font-size: 0.9rem; display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none; transition: background var(--dur-fast) var(--ease-standard); }
@@ -872,6 +883,7 @@
             .revisao-item { flex-wrap: wrap; }
             .cobertura-label { min-width: 90px; }
             .modal-anotacao-content { max-width: 95vw; }
+            .modulos-topo { gap: 8px; }
         }
     </style>
 </head>
@@ -914,10 +926,17 @@
 
             <button class="btn-reabrir-saudacao" id="btnReabrirSaudacao">👋 Mostrar saudação</button>
 
-            <!-- ============ SEU PROGRESSO (4 CARDS) ============ -->
+            <!-- ============ SEU PROGRESSO (4 CARDS - NOVA ORDEM) ============ -->
             <div class="secao-titulo progresso">📈 SEU PROGRESSO</div>
 
             <div class="progresso-grid">
+                <div class="progresso-card card-prova">
+                    <div class="prova-label">📅 Prova</div>
+                    <div class="prova-data" id="dataProvaTexto">—</div>
+                    <div class="prova-dias-numero" id="numeroDiasProva">—</div>
+                    <div class="prova-dias-texto" id="textoDiasProva">defina a data</div>
+                </div>
+
                 <div class="progresso-card card-farol farol-verde" id="cardFarol">
                     <div class="progresso-card-label">Status</div>
                     <span class="farol-icon-grande" id="farolIcon">🟢</span>
@@ -966,16 +985,9 @@
                     </div>
                     <div class="pizza-info" id="pizzaConcluidoInfo">50 assuntos restantes</div>
                 </div>
-
-                <div class="progresso-card card-prova">
-                    <div class="prova-label">📅 Prova</div>
-                    <div class="prova-data" id="dataProvaTexto">—</div>
-                    <div class="prova-dias-numero" id="numeroDiasProva">—</div>
-                    <div class="prova-dias-texto" id="textoDiasProva">defina a data</div>
-                </div>
             </div>
 
-            <!-- ============ LAYOUT 30/70: PLANEJAMENTO + REVISÃO + MÓDULOS ============ -->
+            <!-- ============ LAYOUT 30/70: PLANEJAMENTO + REVISÃO + MÓDULOS + CHECKLIST ============ -->
             <div class="layout-principal">
                 <div class="coluna-esquerda">
                     <div>
@@ -996,21 +1008,17 @@
 
                 <div class="coluna-direita">
                     <div>
-                        <div class="secao-titulo modulos">📊 SEU PROGRESSO POR MÓDULO</div>
-                        <div class="modulos-header">
+                        <div class="modulos-topo">
+                            <div class="secao-titulo modulos">📊 SEU PROGRESSO POR MÓDULO</div>
                             <div class="modulos-resumo" id="modulosResumo"></div>
                         </div>
                         <div class="modulos-grid" id="modulosGrid"></div>
                     </div>
-                </div>
-            </div>
 
-            <!-- ============ CHECKLIST (ALINHADO À DIREITA 70%) ============ -->
-            <div class="checklist-wrapper">
-                <div class="checklist-coluna-esquerda-vazia"></div>
-                <div>
-                    <div class="secao-titulo checklist">📚 SEU CHECKLIST</div>
-                    <div id="conteudoPrincipal"></div>
+                    <div class="checklist-bloco">
+                        <div class="secao-titulo checklist">📚 SEU CHECKLIST</div>
+                        <div id="conteudoPrincipal"></div>
+                    </div>
                 </div>
             </div>
 
@@ -2931,10 +2939,7 @@
                 renderizarRevisaoEspacada();
                 atualizarConfigInfo();
                 atualizarGraficoStatus();
-                if (telaAtual === 'config') mostrarTela('config');
-                else if (telaAtual === 'dashboard') mostrarTela('dashboard');
-                else if (telaAtual === 'revisoes') mostrarTela('revisoes');
-                else mostrarTela('principal');
+                mostrarTela('principal');
                 atualizarSaudacao();
                 if (!armazenamento.disponivel) mostrarAvisoPersistencia();
             }
