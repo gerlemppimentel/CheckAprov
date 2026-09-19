@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
-    <title>CheckAprovação v0.57 | Guarda Municipal Florianópolis</title>
+    <title>CheckAprovação v0.58 | Guarda Municipal Florianópolis</title>
     <meta name="theme-color" content="#0067b8">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📋</text></svg>">
     <style>
@@ -70,6 +70,16 @@
             --sp-4: 16px;
             --sp-5: 20px;
             --sp-6: 24px;
+            --cor-whatsapp: #25d366;
+            --cor-whatsapp-dark: #128c7e;
+            --cor-telegram: #229ed9;
+            --cor-telegram-dark: #1b7fb0;
+            --cor-email: #d44638;
+            --cor-email-dark: #b13529;
+            --cor-sms: #6e4cbd;
+            --cor-sms-dark: #573a96;
+            --cor-instagram: #e1306c;
+            --cor-instagram-dark: #b8235a;
         }
 
         /* ============ DARK MODE ============ */
@@ -173,7 +183,7 @@
         /* ============ UTILITÁRIOS ============ */
         .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
 
-        /* ============ TOPO UNIFICADO (CABEÇALHO + SAUDAÇÃO) ============ */
+        /* ============ TOPO UNIFICADO ============ */
         .topo-unificado {
             background: var(--surface);
             border-radius: var(--radius-lg);
@@ -188,7 +198,6 @@
         }
         .topo-unificado::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, #4cc2ff, #82c7ff, #4cc2ff); z-index: 2; }
 
-        /* ============ TOPO — LADO ESQUERDO (CABEÇALHO) ============ */
         .topo-header { background: var(--ms-blue); color: #fff; padding: 14px 16px; position: relative; display: flex; flex-direction: column; gap: 4px; transition: background var(--dur-slow) var(--ease-standard); }
         body.dark-mode .topo-header { background: #1a3a5c; }
         .topo-header-linha-1 { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
@@ -255,7 +264,6 @@
         .topo-header-linha-2 { font-size: 0.72rem; opacity: 0.9; padding-left: 46px; line-height: 1.3; }
         .topo-header-linha-3 { font-size: 0.7rem; font-weight: 600; background: rgba(255,255,255,0.15); display: inline-block; padding: 3px 9px; border-radius: var(--radius-sm); margin-left: 46px; margin-top: 2px; align-self: flex-start; }
 
-        /* ============ TOPO — LADO DIREITO (SAUDAÇÃO) ============ */
         .topo-saudacao { padding: 14px 16px; position: relative; display: flex; flex-direction: column; gap: 2px; background: var(--ms-blue-light); transition: background var(--dur-slow) var(--ease-standard); }
         body.dark-mode .topo-saudacao { background: #1a3a5c; }
         .topo-saudacao-data { font-size: 0.75rem; font-weight: 600; color: var(--ms-blue); text-transform: capitalize; padding-right: 24px; }
@@ -282,7 +290,6 @@
         body.dark-mode .topo-saudacao-btn-fechar { color: #aaa; }
         body.dark-mode .topo-saudacao-btn-fechar:hover { background: #333; color: #e0e0e0; }
 
-        /* ============ BOTÃO REABRIR SAUDAÇÃO ============ */
         .btn-reabrir-saudacao {
             background: var(--surface);
             border: 1px solid var(--border-strong);
@@ -304,7 +311,6 @@
         body.dark-mode .btn-reabrir-saudacao { background: #2a2a2a; color: #e0e0e0; border-color: #444; }
         body.dark-mode .btn-reabrir-saudacao:hover { background: #333; }
 
-        /* ============ TOPO RESPONSIVO ============ */
         @media (min-width: 768px) {
             .topo-unificado { grid-template-columns: 1fr 1.2fr; }
             .topo-header { border-right: 1px solid var(--border); }
@@ -322,6 +328,7 @@
         /* ============ SEU PROGRESSO — 4 CARDS ============ */
         .progresso-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
         @media (min-width: 768px) { .progresso-grid { grid-template-columns: 1fr 1fr 1fr 1fr; } }
+        @media (min-width: 900px) { .progresso-grid { margin-bottom: 0; } }
 
         .progresso-card {
             background: var(--surface);
@@ -344,7 +351,6 @@
         .progresso-card-label { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; color: var(--ms-gray-700); margin-bottom: 8px; }
         body.dark-mode .progresso-card-label { color: #aaa; }
 
-        /* ============ CARD FAROL ============ */
         .card-farol { gap: 4px; }
         .farol-icon-grande { font-size: 2.4rem; line-height: 1; margin-bottom: 4px; animation: farolPulse 2s infinite ease-in-out; }
         .card-farol.farol-verde .farol-icon-grande { animation: none; }
@@ -366,7 +372,6 @@
         body.dark-mode .card-farol.farol-vermelho { background: linear-gradient(180deg, #4a2020 0%, var(--surface) 100%); }
         body.dark-mode .card-farol.farol-azul { background: linear-gradient(180deg, #1a3a5c 0%, var(--surface) 100%); }
 
-        /* ============ CARDS PIZZA ============ */
         .card-pizza { gap: 4px; }
         .pizza-container { width: 96px; height: 96px; position: relative; margin: 2px 0; }
         .pizza-svg { width: 100%; height: 100%; transform: rotate(-90deg); overflow: visible; }
@@ -382,7 +387,6 @@
         .pizza-info { font-size: 0.7rem; font-weight: 600; color: var(--ms-gray-700); margin-top: 4px; }
         body.dark-mode .pizza-info { color: #aaa; }
 
-        /* ============ CARD PROVA ============ */
         .card-prova { gap: 4px; }
         .prova-label { font-size: 0.65rem; text-transform: uppercase; font-weight: 700; color: var(--ms-gray-700); letter-spacing: 0.6px; }
         body.dark-mode .prova-label { color: #aaa; }
@@ -420,11 +424,36 @@
         }
 
         /* ============ LAYOUT PRINCIPAL 30/70 ============ */
-        .layout-principal { display: grid; grid-template-columns: 1fr; gap: 12px; margin-bottom: 14px; }
-        @media (min-width: 768px) {
-            .layout-principal { grid-template-columns: 30% 1fr; gap: 12px; align-items: start; }
-            .coluna-esquerda { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
-            .coluna-direita { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+        .layout-pc { display: flex; flex-direction: column; gap: 14px; }
+        .bloco-progresso { order: 1; }
+        .layout-principal { display: flex; flex-direction: column; gap: 14px; order: 2; }
+        .coluna-esquerda { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+        .coluna-direita { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+        .modulos-bloco { order: 1; }
+        .checklist-bloco { order: 2; margin-top: 0; }
+
+        @media (min-width: 900px) {
+            .layout-pc {
+                display: grid;
+                grid-template-columns: 30% 1fr;
+                grid-template-rows: auto 1fr;
+                grid-template-areas:
+                    "esquerda progresso"
+                    "esquerda principal";
+                gap: 14px;
+                align-items: start;
+            }
+            .coluna-esquerda {
+                grid-area: esquerda;
+                align-self: start;
+                position: sticky;
+                top: 12px;
+            }
+            .bloco-progresso { grid-area: progresso; order: 0; }
+            .layout-principal { grid-area: principal; display: block; order: 0; }
+            .coluna-direita { display: flex; flex-direction: column; gap: 12px; }
+            .modulos-bloco { order: 1; }
+            .checklist-bloco { order: 2; }
         }
 
         /* ============ CARD BASE ============ */
@@ -438,7 +467,6 @@
         }
         .card-base:hover { box-shadow: var(--shadow-4); }
 
-        /* ============ PLANEJAMENTO ============ */
         .planejamento-card { border-left: 4px solid var(--ms-blue); }
         .planejamento-subtitulo { font-size: 0.72rem; color: var(--ms-gray-600); margin-bottom: 10px; }
         body.dark-mode .planejamento-subtitulo { color: #aaa; }
@@ -475,7 +503,6 @@
         .recomendacao-link { color: var(--ms-blue); font-weight: 700; text-decoration: none; cursor: pointer; transition: color var(--dur-fast) var(--ease-standard); border-bottom: 1px dotted var(--ms-blue); }
         .recomendacao-link:hover { color: var(--ms-blue-dark); }
 
-        /* ============ REVISÃO ESPAÇADA ============ */
         .revisao-card { border-left: 4px solid var(--ms-green); }
         .revisao-espacada-conteudo { font-size: 0.8rem; color: var(--ms-gray-700); padding: 10px 12px; background: var(--surface-alt); border-radius: var(--radius-md); text-align: center; line-height: 1.4; }
         body.dark-mode .revisao-espacada-conteudo { background: #2a2a2a; color: #aaa; }
@@ -543,9 +570,29 @@
         .resumo-dot.dourado { background: var(--ms-gold); }
 
         /* ============ CHECKLIST ============ */
-        .checklist-bloco { margin-top: 12px; }
+        .topic-section {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-2);
+            margin-bottom: 10px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            transition: background var(--dur-slow) var(--ease-standard), border-color var(--dur-slow) var(--ease-standard), box-shadow var(--dur-normal) var(--ease-standard);
+            scroll-margin-top: 20px;
+        }
+        .topic-section.destaque { animation: destaqueTopico 1.6s var(--ease-decelerate); }
+        @keyframes destaqueTopico {
+            0%   { box-shadow: 0 0 0 0 rgba(0,103,184,0.5); }
+            50%  { box-shadow: 0 0 0 6px rgba(0,103,184,0.15); }
+            100% { box-shadow: var(--shadow-2); }
+        }
+        body.dark-mode .topic-section.destaque { animation: destaqueTopicoDark 1.6s var(--ease-decelerate); }
+        @keyframes destaqueTopicoDark {
+            0%   { box-shadow: 0 0 0 0 rgba(76,194,255,0.5); }
+            50%  { box-shadow: 0 0 0 6px rgba(76,194,255,0.15); }
+            100% { box-shadow: var(--shadow-2); }
+        }
 
-        .topic-section { background: var(--surface); border-radius: var(--radius-lg); box-shadow: var(--shadow-2); margin-bottom: 10px; overflow: hidden; border: 1px solid var(--border); transition: background var(--dur-slow) var(--ease-standard), border-color var(--dur-slow) var(--ease-standard); }
         .topic-header { background: var(--ms-blue); color: #fff; padding: 13px 16px; font-weight: 600; font-size: 0.9rem; display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none; transition: background var(--dur-fast) var(--ease-standard); }
         .topic-header:hover { background: var(--ms-blue-hover); }
         .topic-header .arrow { margin-left: auto; transition: transform var(--dur-normal) var(--ease-standard); font-size: 0.75rem; }
@@ -735,7 +782,7 @@
         body.dark-mode .calendario-dia-neutro { color: #555; }
         body.dark-mode .calendario-dia-atual { border-color: #4cc2ff; }
 
-        /* ============ COBERTURA / BARRAS HORIZONTAIS ============ */
+        /* ============ COBERTURA ============ */
         .cobertura-item { display: flex; align-items: center; gap: 6px; margin-bottom: 5px; font-size: 0.68rem; }
         .cobertura-label { color: var(--ms-gray-700); font-weight: 600; min-width: 110px; display: flex; align-items: center; gap: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         body.dark-mode .cobertura-label { color: #aaa; }
@@ -792,7 +839,7 @@
         body.dark-mode .btn-voltar:hover { background: #333; }
         .config-cards-grid { display: grid; grid-template-columns: 1fr; gap: 12px; margin-bottom: 16px; }
         @media (min-width: 600px) { .config-cards-grid { grid-template-columns: 1fr 1fr; } }
-        @media (min-width: 992px) { .config-cards-grid { grid-template-columns: 1fr 1fr 1fr 1fr; } }
+        @media (min-width: 992px) { .config-cards-grid { grid-template-columns: 1fr 1fr 1fr; } }
         .config-card { background: var(--surface); border-radius: var(--radius-lg); box-shadow: var(--shadow-2); padding: 16px; border: 1px solid var(--border); display: flex; flex-direction: column; gap: 12px; transition: box-shadow var(--dur-normal) var(--ease-standard), background var(--dur-slow) var(--ease-standard), border-color var(--dur-slow) var(--ease-standard); }
         .config-card:hover { box-shadow: var(--shadow-4); }
         .config-card-titulo { font-size: 0.82rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; padding: 6px 11px; border-radius: var(--radius-pill); display: inline-block; align-self: flex-start; }
@@ -800,15 +847,16 @@
         .config-card-titulo.c2 { background: var(--ms-green-light); color: var(--ms-green); }
         .config-card-titulo.c3 { background: var(--ms-yellow-light); color: var(--ms-yellow-dark); }
         .config-card-titulo.c4 { background: var(--ms-red-light); color: var(--ms-red-dark); }
+        .config-card-titulo.c5 { background: var(--ms-gold-light); color: var(--ms-gold-dark); }
         .config-card-corpo { display: flex; flex-direction: column; gap: 10px; flex: 1; }
         .config-card-rodape { display: flex; flex-direction: column; gap: 8px; margin-top: auto; }
         .config-card-descricao { font-size: 0.7rem; color: var(--ms-gray-500); line-height: 1.4; }
         .config-field { display: flex; flex-direction: column; gap: 4px; }
         .config-field label { font-size: 0.82rem; font-weight: 600; color: var(--ms-gray-700); }
         body.dark-mode .config-field label { color: #aaa; }
-        .config-field input[type="date"], .config-field input[type="text"] { padding: 9px 12px; border: 1px solid var(--border-strong); border-radius: var(--radius-md); font-family: var(--ms-font); font-size: 0.88rem; min-width: 150px; width: 100%; background: var(--surface); color: var(--ms-gray-900); transition: border-color var(--dur-fast) var(--ease-standard), box-shadow var(--dur-fast) var(--ease-standard); }
+        .config-field input[type="date"], .config-field input[type="text"], .config-field input[type="url"] { padding: 9px 12px; border: 1px solid var(--border-strong); border-radius: var(--radius-md); font-family: var(--ms-font); font-size: 0.88rem; min-width: 150px; width: 100%; background: var(--surface); color: var(--ms-gray-900); transition: border-color var(--dur-fast) var(--ease-standard), box-shadow var(--dur-fast) var(--ease-standard); }
         .config-field input:focus { outline: none; border-color: var(--ms-blue); box-shadow: 0 0 0 3px rgba(0,103,184,0.15); }
-        body.dark-mode .config-field input[type="date"], body.dark-mode .config-field input[type="text"] { background: #2a2a2a; border-color: #444; color: #e0e0e0; }
+        body.dark-mode .config-field input[type="date"], body.dark-mode .config-field input[type="text"], body.dark-mode .config-field input[type="url"] { background: #2a2a2a; border-color: #444; color: #e0e0e0; }
         .config-info { background: var(--surface-alt); padding: 12px 16px; border-radius: var(--radius-md); text-align: center; font-size: 0.82rem; display: flex; flex-direction: column; gap: 4px; border: 1px solid var(--border); }
         .config-info strong { color: var(--ms-blue); }
         body.dark-mode .config-info { background: #2a2a2a; }
@@ -856,6 +904,191 @@
         body.dark-mode .btn-rodape { background: #2a2a2a; color: #e0e0e0; border-color: #444; }
         body.dark-mode .btn-rodape:hover { background: #333; }
         .resumo-rodape { font-size: 0.7rem; color: var(--ms-gray-500); }
+
+        /* ============ BANNER COMPARTILHE ============ */
+        .banner-compartilhe {
+            position: relative;
+            background: linear-gradient(135deg, var(--ms-blue-light) 0%, var(--surface) 55%, var(--ms-green-light) 100%);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 22px 24px;
+            box-shadow: var(--shadow-2);
+            overflow: hidden;
+            transition: background var(--dur-slow) var(--ease-standard), box-shadow var(--dur-normal) var(--ease-standard);
+            margin-top: 24px;
+        }
+        .banner-compartilhe:hover { box-shadow: var(--shadow-8); }
+        .banner-compartilhe::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--cor-whatsapp), var(--cor-telegram), var(--cor-email), var(--cor-sms), var(--cor-instagram));
+            opacity: 0.85;
+        }
+        .banner-compartilhe.reduzido { display: none; }
+
+        .banner-header { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; padding-right: 32px; }
+        .banner-icone { font-size: 2.4rem; line-height: 1; flex-shrink: 0; animation: balancarPresente 3s ease-in-out infinite; }
+        @keyframes balancarPresente {
+            0%, 100% { transform: rotate(0deg) scale(1); }
+            25% { transform: rotate(-8deg) scale(1.05); }
+            75% { transform: rotate(8deg) scale(1.05); }
+        }
+        .banner-texto { flex: 1; min-width: 0; }
+        .banner-titulo { font-size: 1.05rem; font-weight: 700; color: var(--ms-gray-900); margin-bottom: 3px; line-height: 1.25; }
+        body.dark-mode .banner-titulo { color: #e0e0e0; }
+        .banner-subtitulo { font-size: 0.78rem; color: var(--ms-gray-700); line-height: 1.4; }
+        body.dark-mode .banner-subtitulo { color: #aaa; }
+
+        .banner-btn-fechar {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(255,255,255,0.7);
+            border: 1px solid var(--border);
+            font-size: 1rem;
+            cursor: pointer;
+            color: var(--ms-gray-700);
+            width: 28px;
+            height: 28px;
+            border-radius: var(--radius-pill);
+            line-height: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background var(--dur-fast) var(--ease-standard), color var(--dur-fast) var(--ease-standard);
+            z-index: 3;
+        }
+        .banner-btn-fechar:hover { background: var(--ms-gray-200); color: var(--ms-gray-900); }
+        body.dark-mode .banner-btn-fechar { background: rgba(42,42,42,0.9); color: #aaa; border-color: #444; }
+        body.dark-mode .banner-btn-fechar:hover { background: #333; color: #e0e0e0; }
+
+        .banner-botoes { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 14px; }
+        .btn-share {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 11px 12px;
+            border: none;
+            border-radius: var(--radius-md);
+            font-family: var(--ms-font);
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: #fff;
+            cursor: pointer;
+            text-decoration: none;
+            white-space: nowrap;
+            transition: background var(--dur-fast) var(--ease-standard), transform var(--dur-faster) var(--ease-standard), box-shadow var(--dur-fast) var(--ease-standard);
+            box-shadow: var(--shadow-2);
+            line-height: 1;
+        }
+        .btn-share:hover { box-shadow: var(--shadow-8); transform: translateY(-1px); }
+        .btn-share:active { transform: scale(0.97); }
+        .btn-share .share-svg { width: 18px; height: 18px; flex-shrink: 0; display: block; fill: currentColor; }
+
+        .btn-whats { background: var(--cor-whatsapp); }
+        .btn-whats:hover { background: var(--cor-whatsapp-dark); }
+        .btn-telegram { background: var(--cor-telegram); }
+        .btn-telegram:hover { background: var(--cor-telegram-dark); }
+        .btn-email { background: var(--cor-email); }
+        .btn-email:hover { background: var(--cor-email-dark); }
+        .btn-sms { background: var(--cor-sms); }
+        .btn-sms:hover { background: var(--cor-sms-dark); }
+        .btn-instagram { background: var(--cor-instagram); }
+        .btn-instagram:hover { background: var(--cor-instagram-dark); }
+
+        .banner-contador {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 9px 14px;
+            background: var(--surface);
+            border: 1px dashed var(--border);
+            border-radius: var(--radius-md);
+            font-size: 0.8rem;
+            color: var(--ms-gray-700);
+            text-align: center;
+            line-height: 1.3;
+        }
+        body.dark-mode .banner-contador { background: var(--surface-alt); }
+        .banner-contador .contador-numero { font-weight: 700; color: var(--ms-blue); font-size: 0.95rem; }
+        .banner-contador .contador-icone { font-size: 1rem; line-height: 1; }
+
+        /* Botão compacto (quando reduzido) */
+        .banner-compartilhe-compacto {
+            display: none;
+            margin-top: 24px;
+            justify-content: flex-end;
+        }
+        .banner-compartilhe-compacto.visivel { display: flex; }
+        .btn-compacto-share {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 22px;
+            border: none;
+            border-radius: var(--radius-md);
+            background: linear-gradient(135deg, var(--ms-blue) 0%, var(--ms-green) 100%);
+            color: #fff;
+            font-family: var(--ms-font);
+            font-size: 0.9rem;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: var(--shadow-4);
+            transition: box-shadow var(--dur-fast) var(--ease-standard), transform var(--dur-faster) var(--ease-standard);
+            line-height: 1;
+        }
+        .btn-compacto-share:hover { box-shadow: var(--shadow-8); transform: translateY(-1px); }
+        .btn-compacto-share:active { transform: scale(0.97); }
+        .btn-compacto-share .compacto-icone { font-size: 1.2rem; line-height: 1; }
+
+        @media (max-width: 900px) {
+            .banner-botoes { grid-template-columns: repeat(3, 1fr); }
+        }
+        @media (max-width: 600px) {
+            .banner-compartilhe { padding: 18px 16px; }
+            .banner-header { gap: 12px; margin-bottom: 14px; }
+            .banner-icone { font-size: 2rem; }
+            .banner-titulo { font-size: 1rem; }
+            .banner-subtitulo { font-size: 0.72rem; }
+            .banner-botoes { grid-template-columns: 1fr 1fr; gap: 8px; }
+            .btn-share { padding: 12px 8px; font-size: 0.75rem; gap: 6px; }
+            .btn-share .share-svg { width: 16px; height: 16px; }
+            .banner-contador { font-size: 0.75rem; padding: 8px 12px; }
+        }
+        @media (max-width: 360px) {
+            .banner-titulo { font-size: 0.92rem; }
+            .banner-subtitulo { font-size: 0.68rem; }
+            .btn-share { font-size: 0.7rem; padding: 11px 6px; }
+            .btn-share .share-svg { width: 15px; height: 15px; }
+            .banner-contador { font-size: 0.7rem; }
+        }
+
+        /* Toast feedback banner */
+        .toast-share {
+            position: fixed;
+            bottom: 90px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: var(--ms-gray-900);
+            color: #fff;
+            padding: 12px 20px;
+            border-radius: var(--radius-md);
+            font-size: 0.85rem;
+            font-weight: 600;
+            box-shadow: var(--shadow-8);
+            opacity: 0;
+            transition: transform var(--dur-slow) var(--ease-decelerate), opacity var(--dur-slow) var(--ease-standard);
+            pointer-events: none;
+            z-index: 9999;
+            max-width: 90vw;
+            text-align: center;
+        }
+        .toast-share.visivel { transform: translateX(-50%) translateY(0); opacity: 1; }
+        body.dark-mode .toast-share { background: #4cc2ff; color: #111; }
 
         /* ============ RESPONSIVO GERAL ============ */
         @media (max-width: 600px) {
@@ -905,7 +1138,7 @@
                         <div class="topo-header-titulo">
                             <span class="header-icon">📋</span>
                             <span>CheckAprovação</span>
-                            <span class="topo-header-versao">v0.57</span>
+                            <span class="topo-header-versao">v0.58</span>
                         </div>
                         <button class="topo-header-sino" id="btnSino" title="Notificações" aria-label="Notificações">
                             🔔
@@ -926,69 +1159,10 @@
 
             <button class="btn-reabrir-saudacao" id="btnReabrirSaudacao">👋 Mostrar saudação</button>
 
-            <!-- ============ SEU PROGRESSO (4 CARDS - NOVA ORDEM) ============ -->
-            <div class="secao-titulo progresso">📈 SEU PROGRESSO</div>
+            <!-- ============ ESTRUTURA BASE 30/70 (mobile empilhado / PC reorganizado) ============ -->
+            <div class="layout-pc">
 
-            <div class="progresso-grid">
-                <div class="progresso-card card-prova">
-                    <div class="prova-label">📅 Prova</div>
-                    <div class="prova-data" id="dataProvaTexto">—</div>
-                    <div class="prova-dias-numero" id="numeroDiasProva">—</div>
-                    <div class="prova-dias-texto" id="textoDiasProva">defina a data</div>
-                </div>
-
-                <div class="progresso-card card-farol farol-verde" id="cardFarol">
-                    <div class="progresso-card-label">Status</div>
-                    <span class="farol-icon-grande" id="farolIcon">🟢</span>
-                    <span class="farol-texto" id="farolTexto">Em dia</span>
-                    <span class="farol-status-detalhe" id="farolDetalhe">Configure as datas</span>
-                </div>
-
-                <div class="progresso-card card-pizza">
-                    <div class="progresso-card-label">📖 Lido</div>
-                    <div class="pizza-container">
-                        <svg class="pizza-svg" viewBox="0 0 120 120" aria-hidden="true">
-                            <defs>
-                                <linearGradient id="gradLido" x1="0%" y1="0%" x2="100%" y2="100%">
-                                    <stop offset="0%" stop-color="#4cc2ff"/>
-                                    <stop offset="100%" stop-color="#0067b8"/>
-                                </linearGradient>
-                            </defs>
-                            <circle class="pizza-bg" cx="60" cy="60" r="52"/>
-                            <circle class="pizza-fill pizza-fill-lido" cx="60" cy="60" r="52" stroke-dasharray="326.7" stroke-dashoffset="326.7" id="pizzaLido"/>
-                        </svg>
-                        <div class="pizza-centro">
-                            <div id="pizzaLidoPercentual">0%</div>
-                            <div class="pizza-centro-percentual" id="pizzaLidoContagem">0/50</div>
-                        </div>
-                    </div>
-                    <div class="pizza-info" id="pizzaLidoInfo">50 assuntos restantes</div>
-                </div>
-
-                <div class="progresso-card card-pizza">
-                    <div class="progresso-card-label">✅ Concluído</div>
-                    <div class="pizza-container">
-                        <svg class="pizza-svg" viewBox="0 0 120 120" aria-hidden="true">
-                            <defs>
-                                <linearGradient id="gradConcluido" x1="0%" y1="0%" x2="100%" y2="100%">
-                                    <stop offset="0%" stop-color="#6ccb5f"/>
-                                    <stop offset="100%" stop-color="#107c10"/>
-                                </linearGradient>
-                            </defs>
-                            <circle class="pizza-bg" cx="60" cy="60" r="52"/>
-                            <circle class="pizza-fill pizza-fill-concluido" cx="60" cy="60" r="52" stroke-dasharray="326.7" stroke-dashoffset="326.7" id="pizzaConcluido"/>
-                        </svg>
-                        <div class="pizza-centro">
-                            <div id="pizzaConcluidoPercentual">0%</div>
-                            <div class="pizza-centro-percentual" id="pizzaConcluidoContagem">0/50</div>
-                        </div>
-                    </div>
-                    <div class="pizza-info" id="pizzaConcluidoInfo">50 assuntos restantes</div>
-                </div>
-            </div>
-
-            <!-- ============ LAYOUT 30/70: PLANEJAMENTO + REVISÃO + MÓDULOS + CHECKLIST ============ -->
-            <div class="layout-principal">
+                <!-- ============ COLUNA ESQUERDA (30%) ============ -->
                 <div class="coluna-esquerda">
                     <div>
                         <div class="secao-titulo planejamento">🎯 SEU PLANEJAMENTO</div>
@@ -1006,20 +1180,151 @@
                     </div>
                 </div>
 
-                <div class="coluna-direita">
-                    <div>
-                        <div class="modulos-topo">
-                            <div class="secao-titulo modulos">📊 SEU PROGRESSO POR MÓDULO</div>
-                            <div class="modulos-resumo" id="modulosResumo"></div>
+                <!-- ============ BLOCO SEU PROGRESSO (4 CARDS) ============ -->
+                <div class="bloco-progresso">
+                    <div class="secao-titulo progresso">📈 SEU PROGRESSO</div>
+                    <div class="progresso-grid">
+                        <div class="progresso-card card-prova">
+                            <div class="prova-label">📅 Prova</div>
+                            <div class="prova-data" id="dataProvaTexto">—</div>
+                            <div class="prova-dias-numero" id="numeroDiasProva">—</div>
+                            <div class="prova-dias-texto" id="textoDiasProva">defina a data</div>
                         </div>
-                        <div class="modulos-grid" id="modulosGrid"></div>
-                    </div>
 
-                    <div class="checklist-bloco">
-                        <div class="secao-titulo checklist">📚 SEU CHECKLIST</div>
-                        <div id="conteudoPrincipal"></div>
+                        <div class="progresso-card card-farol farol-verde" id="cardFarol">
+                            <div class="progresso-card-label">Status</div>
+                            <span class="farol-icon-grande" id="farolIcon">🟢</span>
+                            <span class="farol-texto" id="farolTexto">Em dia</span>
+                            <span class="farol-status-detalhe" id="farolDetalhe">Configure as datas</span>
+                        </div>
+
+                        <div class="progresso-card card-pizza">
+                            <div class="progresso-card-label">📖 Lido</div>
+                            <div class="pizza-container">
+                                <svg class="pizza-svg" viewBox="0 0 120 120" aria-hidden="true">
+                                    <defs>
+                                        <linearGradient id="gradLido" x1="0%" y1="0%" x2="100%" y2="100%">
+                                            <stop offset="0%" stop-color="#4cc2ff"/>
+                                            <stop offset="100%" stop-color="#0067b8"/>
+                                        </linearGradient>
+                                    </defs>
+                                    <circle class="pizza-bg" cx="60" cy="60" r="52"/>
+                                    <circle class="pizza-fill pizza-fill-lido" cx="60" cy="60" r="52" stroke-dasharray="326.7" stroke-dashoffset="326.7" id="pizzaLido"/>
+                                </svg>
+                                <div class="pizza-centro">
+                                    <div id="pizzaLidoPercentual">0%</div>
+                                    <div class="pizza-centro-percentual" id="pizzaLidoContagem">0/50</div>
+                                </div>
+                            </div>
+                            <div class="pizza-info" id="pizzaLidoInfo">50 assuntos restantes</div>
+                        </div>
+
+                        <div class="progresso-card card-pizza">
+                            <div class="progresso-card-label">✅ Concluído</div>
+                            <div class="pizza-container">
+                                <svg class="pizza-svg" viewBox="0 0 120 120" aria-hidden="true">
+                                    <defs>
+                                        <linearGradient id="gradConcluido" x1="0%" y1="0%" x2="100%" y2="100%">
+                                            <stop offset="0%" stop-color="#6ccb5f"/>
+                                            <stop offset="100%" stop-color="#107c10"/>
+                                        </linearGradient>
+                                    </defs>
+                                    <circle class="pizza-bg" cx="60" cy="60" r="52"/>
+                                    <circle class="pizza-fill pizza-fill-concluido" cx="60" cy="60" r="52" stroke-dasharray="326.7" stroke-dashoffset="326.7" id="pizzaConcluido"/>
+                                </svg>
+                                <div class="pizza-centro">
+                                    <div id="pizzaConcluidoPercentual">0%</div>
+                                    <div class="pizza-centro-percentual" id="pizzaConcluidoContagem">0/50</div>
+                                </div>
+                            </div>
+                            <div class="pizza-info" id="pizzaConcluidoInfo">50 assuntos restantes</div>
+                        </div>
                     </div>
                 </div>
+
+                <!-- ============ BLOCO PRINCIPAL (coluna direita 70% no PC) ============ -->
+                <div class="layout-principal">
+                    <div class="coluna-direita">
+
+                        <div class="modulos-bloco">
+                            <div class="modulos-topo">
+                                <div class="secao-titulo modulos">📊 SEU PROGRESSO POR MÓDULO</div>
+                                <div class="modulos-resumo" id="modulosResumo"></div>
+                            </div>
+                            <div class="modulos-grid" id="modulosGrid"></div>
+                        </div>
+
+                        <div class="checklist-bloco">
+                            <div class="secao-titulo checklist">📚 SEU CHECKLIST</div>
+                            <div id="conteudoPrincipal"></div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- ============ BANNER COMPARTILHE (EXPANDIDO) ============ -->
+            <div class="banner-compartilhe" id="bannerCompartilhe">
+                <button class="banner-btn-fechar" id="btnFecharBanner" title="Fechar" aria-label="Fechar banner">×</button>
+
+                <div class="banner-header">
+                    <div class="banner-icone">🎁</div>
+                    <div class="banner-texto">
+                        <div class="banner-titulo">Dê o CheckAprovação de presente para um amigo!</div>
+                        <div class="banner-subtitulo">Compartilhe o app e ajude alguém a conquistar a aprovação.</div>
+                    </div>
+                </div>
+
+                <div class="banner-botoes">
+                    <a class="btn-share btn-whats" id="btnWhatsApp" href="#" target="_blank" rel="noopener noreferrer">
+                        <svg class="share-svg" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.693.625.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.688"/>
+                        </svg>
+                        <span class="share-texto">WhatsApp</span>
+                    </a>
+
+                    <a class="btn-share btn-telegram" id="btnTelegram" href="#" target="_blank" rel="noopener noreferrer">
+                        <svg class="share-svg" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M11.944 0A12 12 0 000 12a12 12 0 0012 12 12 12 0 0012-12A12 12 0 0012 0a12 12 0 00-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 01.171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+                        </svg>
+                        <span class="share-texto">Telegram</span>
+                    </a>
+
+                    <a class="btn-share btn-email" id="btnEmail" href="#">
+                        <svg class="share-svg" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M12 12.713l-11.985-9.713h23.97l-11.985 9.713zm0 2.574l-12-9.725v15.438h24v-15.438l-12 9.725z"/>
+                        </svg>
+                        <span class="share-texto">E-mail</span>
+                    </a>
+
+                    <a class="btn-share btn-sms" id="btnSMS" href="#">
+                        <svg class="share-svg" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM7 9h10v2H7V9zm6 5H7v-2h6v2zm4-6H7V6h10v2z"/>
+                        </svg>
+                        <span class="share-texto">SMS</span>
+                    </a>
+
+                    <a class="btn-share btn-instagram" id="btnInstagram" href="#">
+                        <svg class="share-svg" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+                        </svg>
+                        <span class="share-texto">Instagram</span>
+                    </a>
+                </div>
+
+                <div class="banner-contador">
+                    <span class="contador-icone">🎉</span>
+                    <span>Você já compartilhou <span class="contador-numero" id="contadorNumero">0</span> vez(es)!</span>
+                </div>
+            </div>
+
+            <!-- ============ BOTÃO COMPACTO (quando banner está reduzido) ============ -->
+            <div class="banner-compartilhe-compacto" id="bannerCompartilheCompacto">
+                <button class="btn-compacto-share" id="btnReabrirBanner">
+                    <span class="compacto-icone">🎁</span>
+                    <span>Compartilhe!</span>
+                </button>
             </div>
 
             <!-- ============ PAINEL DE NOTIFICAÇÕES ============ -->
@@ -1188,6 +1493,18 @@
                 </div>
 
                 <div class="config-card">
+                    <div class="config-card-titulo c5">🎁 Compartilhar</div>
+                    <div class="config-card-corpo">
+                        <div class="config-field">
+                            <label for="linkCompartilhar">Link do App</label>
+                            <input type="url" id="linkCompartilhar" placeholder="https://..." maxlength="300">
+                        </div>
+                        <div class="config-card-descricao">Link usado pelo banner "Compartilhe!" no rodapé da tela inicial.</div>
+                        <button class="btn-ms" id="btnSalvarLink">💾 Salvar Link</button>
+                    </div>
+                </div>
+
+                <div class="config-card">
                     <div class="config-card-titulo c4">🎨 Aparência e Ações</div>
                     <div class="config-card-corpo">
                         <div class="config-field-inline">
@@ -1212,6 +1529,9 @@
         <span class="toast-icone" id="toastIcone">✅</span>
         <span id="toastTexto">Assunto concluído!</span>
     </div>
+
+    <!-- ============ TOAST DE COMPARTILHAMENTO (copiar link) ============ -->
+    <div class="toast-share" id="toastShare" role="status" aria-live="polite">📋 Link copiado!</div>
 
     <!-- ============ MODAL DE ANOTAÇÕES ============ -->
     <div class="modal-anotacao-overlay" id="modalAnotacaoOverlay">
@@ -1289,6 +1609,13 @@
             let usarDataSistema = true;
             let telaAtual = 'principal';
             let saudacaoFechada = false;
+            let linkCompartilhar = 'https://gerlemppimentel.github.io/CheckAprov/';
+            let bannerReduzido = false;
+
+            /* ============ CONSTANTES ============ */
+            const LINK_COMPARTILHAR_PADRAO = 'https://gerlemppimentel.github.io/CheckAprov/';
+            const MENSAGEM_COMPARTILHAR = '🎁 Olha esse app que encontrei para quem está estudando para concursos: CheckAprovação! Ele ajuda a organizar o edital, acompanhar o progresso e agendar revisões. Dá uma olhada: ';
+            const CHAVE_CONTADOR_COMPARTILHAMENTOS = 'checkaprovacao_contador_compartilhamentos';
 
             /* ============ SALVAR DADOS ============ */
             function salvarDados() {
@@ -1322,7 +1649,9 @@
                     revisoes: revisoes,
                     ultimoModuloRecomendado: ultimoModuloRecomendado,
                     ultimaFraseMotivacional: ultimaFraseMotivacional,
-                    saudacaoFechada: saudacaoFechada
+                    saudacaoFechada: saudacaoFechada,
+                    linkCompartilhar: linkCompartilhar,
+                    bannerReduzido: bannerReduzido
                 };
                 const json = JSON.stringify(dados);
                 if (armazenamento.disponivel) {
@@ -1374,12 +1703,15 @@
                         ultimoModuloRecomendado = parsed.ultimoModuloRecomendado || '';
                         ultimaFraseMotivacional = parsed.ultimaFraseMotivacional || '';
                         saudacaoFechada = parsed.saudacaoFechada || false;
+                        linkCompartilhar = parsed.linkCompartilhar || LINK_COMPARTILHAR_PADRAO;
+                        bannerReduzido = parsed.bannerReduzido || false;
                         if (nomeUsuario) document.getElementById('nomeUsuario').value = nomeUsuario;
                         if (dataInicial) document.getElementById('dataInicial').value = dataInicial;
                         if (dataFinal) document.getElementById('dataFinal').value = dataFinal;
                         if (dataSimulada) document.getElementById('dataSimulada').value = dataSimulada;
                         document.getElementById('usarDataSistema').checked = usarDataSistema;
                         document.getElementById('modoEscuroToggle').checked = modoEscuroAtivo;
+                        document.getElementById('linkCompartilhar').value = linkCompartilhar;
                         if (modoEscuroAtivo) document.body.classList.add('dark-mode');
                         atualizarEstadoDataSimulada();
                         aplicarEstadoSaudacao();
@@ -1501,6 +1833,17 @@
                 toast.classList.add('visivel');
                 if (toastTimeout) clearTimeout(toastTimeout);
                 toastTimeout = setTimeout(function() { toast.classList.remove('visivel'); }, 2500);
+            }
+
+            /* ============ TOAST COMPARTILHAR ============ */
+            let toastShareTimeout = null;
+            function mostrarToastShare(texto) {
+                const toast = document.getElementById('toastShare');
+                if (!toast) return;
+                toast.textContent = texto;
+                toast.classList.add('visivel');
+                if (toastShareTimeout) clearTimeout(toastShareTimeout);
+                toastShareTimeout = setTimeout(function() { toast.classList.remove('visivel'); }, 2200);
             }
 
             /* ============ META DIÁRIA ============ */
@@ -1707,6 +2050,18 @@
             const btnSimularMedio = document.getElementById('btnSimularMedio');
             const btnSimularAlto = document.getElementById('btnSimularAlto');
             const btnZerarSimulacao = document.getElementById('btnZerarSimulacao');
+            const linkCompartilharInput = document.getElementById('linkCompartilhar');
+            const btnSalvarLink = document.getElementById('btnSalvarLink');
+            const bannerCompartilhe = document.getElementById('bannerCompartilhe');
+            const bannerCompartilheCompacto = document.getElementById('bannerCompartilheCompacto');
+            const btnFecharBanner = document.getElementById('btnFecharBanner');
+            const btnReabrirBanner = document.getElementById('btnReabrirBanner');
+            const btnWhatsApp = document.getElementById('btnWhatsApp');
+            const btnTelegram = document.getElementById('btnTelegram');
+            const btnEmail = document.getElementById('btnEmail');
+            const btnSMS = document.getElementById('btnSMS');
+            const btnInstagram = document.getElementById('btnInstagram');
+            const contadorNumero = document.getElementById('contadorNumero');
 
             /* ============ ESTADO DATA SIMULADA ============ */
             function atualizarEstadoDataSimulada() {
@@ -1714,17 +2069,85 @@
                 else { dataSimuladaInput.disabled = false; }
             }
 
-            /* ============ SCROLL PARA MÓDULO ============ */
+            /* ============ SCROLL PARA MÓDULO (CORRIGIDO + DESTAQUE) ============ */
             function scrollParaModulo(topicoId) {
                 const target = document.getElementById('modulo-' + topicoId);
-                if (target) {
+                if (!target) return;
+                const header = target.querySelector('.topic-header');
+                const content = target.querySelector('.topic-content');
+                if (header && content && content.style.display === 'none') {
+                    header.classList.remove('collapsed');
+                    content.style.display = 'block';
+                }
+                requestAnimationFrame(function() {
                     target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    const header = target.querySelector('.topic-header');
-                    const content = target.querySelector('.topic-content');
-                    if (header && content && content.style.display === 'none') {
-                        header.classList.remove('collapsed');
-                        content.style.display = 'block';
-                    }
+                });
+                target.classList.remove('destaque');
+                void target.offsetWidth;
+                target.classList.add('destaque');
+                setTimeout(function() { target.classList.remove('destaque'); }, 1800);
+            }
+
+            /* ============ BANNER COMPARTILHE ============ */
+            function obterContadorCompartilhamentos() {
+                try {
+                    const v = localStorage.getItem(CHAVE_CONTADOR_COMPARTILHAMENTOS);
+                    return v ? parseInt(v, 10) : 0;
+                } catch (e) { return 0; }
+            }
+
+            function incrementarContadorCompartilhamentos() {
+                const novo = obterContadorCompartilhamentos() + 1;
+                try { localStorage.setItem(CHAVE_CONTADOR_COMPARTILHAMENTOS, String(novo)); } catch (e) {}
+                if (contadorNumero) contadorNumero.textContent = novo;
+            }
+
+            function atualizarLinksCompartilhamento() {
+                const msg = MENSAGEM_COMPARTILHAR + linkCompartilhar;
+                if (btnWhatsApp) btnWhatsApp.href = 'https://wa.me/?text=' + encodeURIComponent(msg);
+                if (btnTelegram) btnTelegram.href = 'https://t.me/share/url?url=' + encodeURIComponent(linkCompartilhar) + '&text=' + encodeURIComponent(MENSAGEM_COMPARTILHAR);
+                if (btnEmail) {
+                    const assunto = encodeURIComponent('🎁 CheckAprovação — App para concurseiros');
+                    const corpo = encodeURIComponent(msg);
+                    btnEmail.href = 'mailto:?subject=' + assunto + '&body=' + corpo;
+                }
+                if (btnSMS) btnSMS.href = 'sms:?&body=' + encodeURIComponent(msg);
+            }
+
+            function copiarLinkComFallback() {
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(linkCompartilhar).then(function() {
+                        mostrarToastShare('📋 Link copiado! Cole no Instagram');
+                        incrementarContadorCompartilhamentos();
+                    }).catch(function() { copiarLinkComTextarea(); });
+                } else { copiarLinkComTextarea(); }
+            }
+
+            function copiarLinkComTextarea() {
+                const textarea = document.createElement('textarea');
+                textarea.value = linkCompartilhar;
+                textarea.style.position = 'fixed';
+                textarea.style.opacity = '0';
+                document.body.appendChild(textarea);
+                textarea.select();
+                try {
+                    document.execCommand('copy');
+                    mostrarToastShare('📋 Link copiado! Cole no Instagram');
+                    incrementarContadorCompartilhamentos();
+                } catch (e) {
+                    mostrarToastShare('⚠️ Não foi possível copiar');
+                }
+                document.body.removeChild(textarea);
+            }
+
+            function aplicarEstadoBanner() {
+                if (!bannerCompartilhe || !bannerCompartilheCompacto) return;
+                if (bannerReduzido) {
+                    bannerCompartilhe.classList.add('reduzido');
+                    bannerCompartilheCompacto.classList.add('visivel');
+                } else {
+                    bannerCompartilhe.classList.remove('reduzido');
+                    bannerCompartilheCompacto.classList.remove('visivel');
                 }
             }
 
@@ -2818,6 +3241,61 @@
                 mostrarTela('principal');
             });
 
+            /* ============ SALVAR LINK COMPARTILHAR ============ */
+            btnSalvarLink.addEventListener('click', function() {
+                const novoLink = linkCompartilharInput.value.trim();
+                if (!novoLink) {
+                    alert('Informe um link válido.');
+                    return;
+                }
+                if (!/^https?:\/\//i.test(novoLink)) {
+                    alert('O link deve começar com http:// ou https://');
+                    return;
+                }
+                linkCompartilhar = novoLink;
+                salvarDados();
+                atualizarLinksCompartilhamento();
+                mostrarToast('✅', 'Link salvo com sucesso!');
+            });
+
+            /* ============ BANNER COMPARTILHE EVENTOS ============ */
+            btnFecharBanner.addEventListener('click', function() {
+                bannerReduzido = true;
+                aplicarEstadoBanner();
+                salvarDados();
+            });
+
+            btnReabrirBanner.addEventListener('click', function() {
+                bannerReduzido = false;
+                aplicarEstadoBanner();
+                salvarDados();
+            });
+
+            ['btnWhatsApp', 'btnTelegram', 'btnEmail', 'btnSMS'].forEach(function(id) {
+                const btn = document.getElementById(id);
+                if (btn) btn.addEventListener('click', function() { incrementarContadorCompartilhamentos(); });
+            });
+
+            btnInstagram.addEventListener('click', function(e) {
+                e.preventDefault();
+                if (navigator.share) {
+                    navigator.share({
+                        title: 'CheckAprovação',
+                        text: MENSAGEM_COMPARTILHAR,
+                        url: linkCompartilhar
+                    }).then(function() {
+                        incrementarContadorCompartilhamentos();
+                    }).catch(function(err) {
+                        if (err && err.name !== 'AbortError') copiarLinkComFallback();
+                    });
+                    return;
+                }
+                copiarLinkComFallback();
+                setTimeout(function() {
+                    window.open('https://www.instagram.com/', '_blank', 'noopener,noreferrer');
+                }, 400);
+            });
+
             btnResetar.addEventListener('click', function() {
                 if (confirm('Tem certeza que deseja apagar TODOS os checkboxes, anotações, tempo de estudo e progresso?')) {
                     estadoCheckboxes = {};
@@ -2856,7 +3334,7 @@
             });
 
             btnResetGeral.addEventListener('click', function() {
-                if (confirm('⚠️ ATENÇÃO!\n\nTem certeza que deseja apagar TODOS os dados e voltar ao estado inicial?\n\nEsta ação não pode ser desfeita. Serão apagados:\n- Nome do usuário\n- Datas inicial e final\n- Data simulada\n- Modo escuro\n- Progresso de leitura\n- Anotações\n- Tempo de estudo\n- Notificações\n- Revisões espaçadas\n- Estado da caixa de saudação')) {
+                if (confirm('⚠️ ATENÇÃO!\n\nTem certeza que deseja apagar TODOS os dados e voltar ao estado inicial?\n\nEsta ação não pode ser desfeita. Serão apagados:\n- Nome do usuário\n- Datas inicial e final\n- Data simulada\n- Modo escuro\n- Progresso de leitura\n- Anotações\n- Tempo de estudo\n- Notificações\n- Revisões espaçadas\n- Estado da caixa de saudação\n- Link de compartilhamento\n- Estado do banner Compartilhe')) {
                     estadoCheckboxes = {};
                     ultimasAtividades = {};
                     notificacoes = [];
@@ -2886,6 +3364,8 @@
                     usarDataSistema = true;
                     modoEscuroAtivo = false;
                     saudacaoFechada = false;
+                    linkCompartilhar = LINK_COMPARTILHAR_PADRAO;
+                    bannerReduzido = false;
                     if (cronometroInterval) clearInterval(cronometroInterval);
                     nomeUsuarioInput.value = '';
                     dataInicialInput.value = '';
@@ -2893,9 +3373,12 @@
                     dataSimuladaInput.value = '';
                     usarDataSistemaCheckbox.checked = true;
                     modoEscuroToggle.checked = false;
+                    linkCompartilharInput.value = linkCompartilhar;
                     aplicarModoEscuro();
                     atualizarEstadoDataSimulada();
                     aplicarEstadoSaudacao();
+                    aplicarEstadoBanner();
+                    atualizarLinksCompartilhamento();
                     salvarDados();
                     renderizarTopicos();
                     renderizarModulos();
@@ -2927,6 +3410,10 @@
                 if (dataSimulada) dataSimuladaInput.value = dataSimulada;
                 usarDataSistemaCheckbox.checked = usarDataSistema;
                 modoEscuroToggle.checked = modoEscuroAtivo;
+                linkCompartilharInput.value = linkCompartilhar;
+                atualizarLinksCompartilhamento();
+                contadorNumero.textContent = obterContadorCompartilhamentos();
+                aplicarEstadoBanner();
                 atualizarEstadoDataSimulada();
                 aplicarEstadoSaudacao();
                 renderizarTopicos();
