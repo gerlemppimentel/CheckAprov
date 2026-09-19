@@ -3,9 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
-    <title>CheckAprovação v0.59 | Guarda Municipal Florianópolis</title>
+    <title>CheckAprovação v0.60 | Guarda Municipal Florianópolis</title>
     <meta name="theme-color" content="#0067b8">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📋</text></svg>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
     <style>
         /* ============ VARIÁVEIS (FLUENT 2) ============ */
         :root {
@@ -44,6 +47,7 @@
             --border-strong: #c8c6c4;
             --ms-font: 'Segoe UI', 'Segoe UI Web (West European)', -apple-system, BlinkMacSystemFont, Roboto, 'Helvetica Neue', sans-serif;
             --font-mono: 'Cascadia Code', 'Consolas', 'SF Mono', Menlo, monospace;
+            --font-digital: 'Orbitron', 'Cascadia Code', 'Consolas', monospace;
             --radius-xs: 2px;
             --radius-sm: 4px;
             --radius-md: 8px;
@@ -372,7 +376,6 @@
         body.dark-mode .card-farol.farol-vermelho { background: linear-gradient(180deg, #4a2020 0%, var(--surface) 100%); }
         body.dark-mode .card-farol.farol-azul { background: linear-gradient(180deg, #1a3a5c 0%, var(--surface) 100%); }
 
-        /* ============ CARD PIZZA (Proposta C) ============ */
         .card-pizza { gap: 4px; }
         .pizza-container { width: 120px; height: 120px; position: relative; margin: 2px 0; }
         .pizza-svg { width: 100%; height: 100%; overflow: visible; }
@@ -467,6 +470,7 @@
         .coluna-direita { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
         .modulos-bloco { order: 1; }
         .checklist-bloco { order: 2; margin-top: 0; }
+        .banner-bloco-esquerda { order: 3; }
 
         @media (min-width: 900px) {
             .layout-pc {
@@ -631,12 +635,34 @@
 
         .topic-header { background: var(--ms-blue); color: #fff; padding: 13px 16px; font-weight: 600; font-size: 0.9rem; display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none; transition: background var(--dur-fast) var(--ease-standard); }
         .topic-header:hover { background: var(--ms-blue-hover); }
-        .topic-header .arrow { margin-left: auto; transition: transform var(--dur-normal) var(--ease-standard); font-size: 0.75rem; }
+        .topic-header .topic-header-titulo { flex: 1; display: flex; align-items: center; gap: 8px; }
+        .topic-header .arrow { margin-left: 8px; transition: transform var(--dur-normal) var(--ease-standard); font-size: 0.75rem; }
         .topic-header.collapsed .arrow { transform: rotate(-90deg); }
         .subtopic-header { background: var(--ms-blue-light); color: var(--ms-blue-dark); font-weight: 600; padding: 10px 16px; font-size: 0.88rem; border-left: 4px solid var(--ms-blue); }
         body.dark-mode .subtopic-header { background: #1a3a5c; color: #82c7ff; border-left-color: #4cc2ff; }
         .topic-content { padding: 0; }
         .table-responsive { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+
+        /* ============ BOTÃO FOCO TOTAL ============ */
+        .btn-foco-total {
+            background: rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.4);
+            color: #fff;
+            padding: 5px 11px;
+            border-radius: var(--radius-md);
+            font-family: var(--ms-font);
+            font-size: 0.72rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background var(--dur-fast) var(--ease-standard), transform 100ms var(--ease-standard);
+            white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            flex-shrink: 0;
+        }
+        .btn-foco-total:hover { background: rgba(255,255,255,0.35); }
+        .btn-foco-total:active { transform: scale(0.96); }
 
         table { width: 100%; border-collapse: collapse; min-width: 600px; }
         th { background: var(--ms-gray-100); color: var(--ms-gray-700); font-weight: 600; font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.4px; padding: 8px 2px; border-bottom: 2px solid var(--ms-gray-300); text-align: center; }
@@ -680,6 +706,324 @@
         .btn-cronometro.pausado { background: var(--ms-yellow-light); border-color: var(--ms-yellow); color: var(--ms-yellow-dark); }
         body.dark-mode .btn-cronometro.pausado { background: #4a3f1a; color: #ffd54f; border-color: #6b5a00; }
         .btn-cronometro:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        /* ============ MODO FOCO TOTAL ============ */
+        .modo-foco {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: #0d0d0d;
+            z-index: 9000;
+            display: none;
+            flex-direction: column;
+            color: #e0e0e0;
+        }
+        .modo-foco.ativo { display: flex; }
+
+        .foco-barra {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 16px;
+            background: #050505;
+            border-bottom: 1px solid #222;
+            font-size: 0.78rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #aaa;
+            flex-shrink: 0;
+        }
+        .foco-barra-titulo { display: flex; align-items: center; gap: 8px; }
+        .foco-barra-fechar {
+            background: none;
+            border: 1px solid #333;
+            color: #aaa;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1rem;
+            line-height: 1;
+            transition: background var(--dur-fast) var(--ease-standard), color var(--dur-fast) var(--ease-standard);
+        }
+        .foco-barra-fechar:hover { background: #333; color: #fff; }
+
+        .foco-corpo {
+            flex: 1;
+            display: flex;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .foco-checklist {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            background: #0d0d0d;
+            min-width: 0;
+        }
+        .foco-checklist-inner { max-width: 900px; margin: 0 auto; }
+        .foco-modulo-titulo {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .foco-modulo-subtitulo {
+            font-size: 0.78rem;
+            color: #777;
+            margin-bottom: 24px;
+        }
+        .foco-lista {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .foco-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 14px;
+            background: #1a1a1a;
+            border-radius: var(--radius-md);
+            border: 1px solid #262626;
+            font-size: 0.9rem;
+            color: #ddd;
+            transition: background var(--dur-fast) var(--ease-standard), border-color var(--dur-fast) var(--ease-standard);
+        }
+        .foco-item:hover { background: #202020; border-color: #333; }
+        .foco-item span.assunto-texto { flex: 1; line-height: 1.35; }
+        .foco-item .foco-checks-grupo {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-shrink: 0;
+        }
+        .foco-item .foco-check-wrap {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3px;
+        }
+        .foco-item .foco-check-label {
+            font-size: 0.52rem;
+            color: #666;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+            white-space: nowrap;
+        }
+        .foco-item input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: #4cc2ff;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+        .foco-item input[type="checkbox"].lido-check:checked { accent-color: #6ccb5f; }
+        .foco-item input[type="checkbox"].exercitado-check:checked { accent-color: #d4af37; }
+        .foco-item input[type="checkbox"].concluido-check:checked { accent-color: #6ccb5f; }
+        .foco-item input[type="checkbox"].rev24h-check:checked { accent-color: #ff6b6b; }
+        .foco-item input[type="checkbox"].rev7d-check:checked { accent-color: #ffd54f; }
+        .foco-item input[type="checkbox"].rev15d-check:checked { accent-color: #4cc2ff; }
+
+        .foco-item.lido { border-color: #2d6b2d; }
+        .foco-item.exercitado { border-color: #6b5a00; }
+        .foco-item.concluido { background: #1a2a1a; border-color: #2d6b2d; }
+        .foco-item.rev24h { border-color: #6b2d2d; }
+        .foco-item.rev7d { border-color: #6b5a00; }
+        .foco-item.rev15d { border-color: #2d4a6b; }
+
+        .foco-relogio-painel {
+            width: 280px;
+            flex-shrink: 0;
+            background: #050505;
+            border-left: 1px solid #222;
+            padding: 24px 18px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            overflow: hidden;
+        }
+
+        .foco-relogio-display {
+            font-family: var(--font-digital);
+            font-size: 2.2rem;
+            font-weight: 700;
+            font-variant-numeric: tabular-nums;
+            font-feature-settings: "tnum";
+            line-height: 1.1;
+            color: #6ccb5f;
+            text-align: center;
+            letter-spacing: 0.02em;
+            padding: 18px 8px;
+            background: #0a0a0a;
+            border: 2px solid #1f1f1f;
+            border-radius: var(--radius-lg);
+            transition: color var(--dur-fast) var(--ease-standard), border-color var(--dur-fast) var(--ease-standard), text-shadow var(--dur-fast) var(--ease-standard);
+            text-shadow: 0 0 18px rgba(108,203,95,0.5);
+            white-space: nowrap;
+            overflow: hidden;
+        }
+        .foco-relogio-display.rodando {
+            color: #6ccb5f;
+            border-color: #2d6b2d;
+            text-shadow: 0 0 22px rgba(108,203,95,0.7);
+        }
+        .foco-relogio-display.pausado {
+            color: #ffd54f;
+            border-color: #6b5a00;
+            text-shadow: 0 0 22px rgba(255,213,79,0.7);
+        }
+        .foco-relogio-display.parado {
+            color: #666;
+            border-color: #222;
+            text-shadow: none;
+        }
+
+        .foco-relogio-label {
+            text-align: center;
+            font-size: 0.68rem;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            color: #666;
+            font-weight: 700;
+        }
+
+        .foco-relogio-botoes {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .foco-btn-principal {
+            background: #1e3a2a;
+            border: 1px solid #2d6b2d;
+            color: #6ccb5f;
+            padding: 16px;
+            border-radius: var(--radius-md);
+            font-family: var(--ms-font);
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background var(--dur-fast) var(--ease-standard), transform 100ms var(--ease-standard);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .foco-btn-principal:hover { background: #244a34; }
+        .foco-btn-principal:active { transform: scale(0.97); }
+        .foco-btn-principal.pausado {
+            background: #4a3f1a;
+            border-color: #6b5a00;
+            color: #ffd54f;
+        }
+        .foco-btn-principal.pausado:hover { background: #5a4a20; }
+
+        .foco-btn-secundario {
+            background: transparent;
+            border: 1px solid #333;
+            color: #aaa;
+            padding: 12px;
+            border-radius: var(--radius-md);
+            font-family: var(--ms-font);
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background var(--dur-fast) var(--ease-standard), color var(--dur-fast) var(--ease-standard);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+        .foco-btn-secundario:hover { background: #1a1a1a; color: #fff; }
+
+        .foco-info-extra {
+            margin-top: auto;
+            text-align: center;
+            font-size: 0.68rem;
+            color: #555;
+            line-height: 1.5;
+        }
+
+        @media (max-width: 899px) {
+            .foco-corpo {
+                flex-direction: column;
+                overflow: hidden;
+            }
+            .foco-relogio-painel {
+                width: 100%;
+                order: -1;
+                border-left: none;
+                border-bottom: 1px solid #222;
+                padding: 14px 16px;
+                flex-direction: row;
+                flex-wrap: wrap;
+                align-items: center;
+                gap: 12px;
+                flex-shrink: 0;
+            }
+            .foco-relogio-display {
+                font-size: 1.9rem;
+                padding: 10px 12px;
+                flex: 1;
+                min-width: 140px;
+                letter-spacing: 0.02em;
+            }
+            .foco-relogio-label { display: none; }
+            .foco-relogio-botoes {
+                flex-direction: row;
+                gap: 8px;
+                flex-shrink: 0;
+            }
+            .foco-btn-principal {
+                padding: 12px 18px;
+                font-size: 0.9rem;
+            }
+            .foco-btn-secundario {
+                padding: 12px 14px;
+                font-size: 0.75rem;
+            }
+            .foco-info-extra { display: none; }
+            .foco-checklist { padding: 14px; }
+            .foco-modulo-titulo { font-size: 1.15rem; }
+            .foco-item { padding: 10px 12px; font-size: 0.82rem; gap: 8px; flex-wrap: wrap; }
+            .foco-item span.assunto-texto { flex-basis: 100%; order: -1; margin-bottom: 4px; }
+            .foco-item .foco-checks-grupo { width: 100%; justify-content: space-between; gap: 4px; }
+            .foco-item .foco-check-label { font-size: 0.5rem; }
+        }
+
+        @media (max-width: 480px) {
+            .foco-relogio-display {
+                font-size: 1.5rem;
+                padding: 8px 10px;
+                min-width: 120px;
+            }
+            .foco-btn-principal {
+                padding: 10px 14px;
+                font-size: 0.82rem;
+            }
+            .foco-btn-secundario {
+                padding: 10px 10px;
+                font-size: 0.7rem;
+            }
+            .foco-item input[type="checkbox"] { width: 16px; height: 16px; }
+        }
+
+        @media (max-width: 360px) {
+            .foco-relogio-display {
+                font-size: 1.2rem;
+                padding: 8px 6px;
+                min-width: 100px;
+            }
+            .foco-item input[type="checkbox"] { width: 15px; height: 15px; }
+            .foco-item .foco-check-label { font-size: 0.45rem; }
+        }
 
         /* ============ MODAL ANOTAÇÕES ============ */
         .modal-anotacao-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 200; display: none; align-items: center; justify-content: center; padding: 20px; backdrop-filter: blur(3px); }
@@ -946,17 +1290,15 @@
         .resumo-rodape { font-size: 0.7rem; color: var(--ms-gray-500); }
 
         /* ============ BANNER COMPARTILHE ============ */
-        .banner-compartilhe-wrap { display: flex; justify-content: center; }
         .banner-compartilhe {
             position: relative;
             background: linear-gradient(135deg, var(--ms-blue-light) 0%, var(--surface) 55%, var(--ms-green-light) 100%);
             border: 1px solid var(--border);
             border-radius: var(--radius-lg);
-            padding: 22px 24px;
+            padding: 16px 16px;
             box-shadow: var(--shadow-2);
             overflow: hidden;
             transition: background var(--dur-slow) var(--ease-standard), box-shadow var(--dur-normal) var(--ease-standard);
-            margin-top: 24px;
             width: 100%;
         }
         .banner-compartilhe:hover { box-shadow: var(--shadow-8); }
@@ -970,35 +1312,30 @@
         }
         .banner-compartilhe.reduzido { display: none; }
 
-        /* No PC: banner com 50% da largura, centralizado */
-        @media (min-width: 900px) {
-            .banner-compartilhe { max-width: 50%; }
-        }
-
-        .banner-header { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; padding-right: 32px; }
-        .banner-icone { font-size: 2.4rem; line-height: 1; flex-shrink: 0; animation: balancarPresente 3s ease-in-out infinite; }
+        .banner-header { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 12px; padding-right: 26px; }
+        .banner-icone { font-size: 1.6rem; line-height: 1; flex-shrink: 0; animation: balancarPresente 3s ease-in-out infinite; }
         @keyframes balancarPresente {
             0%, 100% { transform: rotate(0deg) scale(1); }
             25% { transform: rotate(-8deg) scale(1.05); }
             75% { transform: rotate(8deg) scale(1.05); }
         }
         .banner-texto { flex: 1; min-width: 0; }
-        .banner-titulo { font-size: 1.05rem; font-weight: 700; color: var(--ms-gray-900); margin-bottom: 3px; line-height: 1.25; }
+        .banner-titulo { font-size: 0.82rem; font-weight: 700; color: var(--ms-gray-900); margin-bottom: 3px; line-height: 1.3; }
         body.dark-mode .banner-titulo { color: #e0e0e0; }
-        .banner-subtitulo { font-size: 0.78rem; color: var(--ms-gray-700); line-height: 1.4; }
+        .banner-subtitulo { font-size: 0.68rem; color: var(--ms-gray-700); line-height: 1.35; }
         body.dark-mode .banner-subtitulo { color: #aaa; }
 
         .banner-btn-fechar {
             position: absolute;
-            top: 10px;
-            right: 10px;
+            top: 8px;
+            right: 8px;
             background: rgba(255,255,255,0.7);
             border: 1px solid var(--border);
-            font-size: 1rem;
+            font-size: 0.95rem;
             cursor: pointer;
             color: var(--ms-gray-700);
-            width: 28px;
-            height: 28px;
+            width: 24px;
+            height: 24px;
             border-radius: var(--radius-pill);
             line-height: 1;
             display: flex;
@@ -1011,17 +1348,17 @@
         body.dark-mode .banner-btn-fechar { background: rgba(42,42,42,0.9); color: #aaa; border-color: #444; }
         body.dark-mode .banner-btn-fechar:hover { background: #333; color: #e0e0e0; }
 
-        .banner-botoes { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 14px; }
+        .banner-botoes { display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px; margin-bottom: 10px; }
         .btn-share {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
-            padding: 11px 12px;
+            gap: 6px;
+            padding: 9px 8px;
             border: none;
             border-radius: var(--radius-md);
             font-family: var(--ms-font);
-            font-size: 0.82rem;
+            font-size: 0.72rem;
             font-weight: 700;
             color: #fff;
             cursor: pointer;
@@ -1033,7 +1370,7 @@
         }
         .btn-share:hover { box-shadow: var(--shadow-8); transform: translateY(-1px); }
         .btn-share:active { transform: scale(0.97); }
-        .btn-share .share-svg { width: 18px; height: 18px; flex-shrink: 0; display: block; fill: currentColor; }
+        .btn-share .share-svg { width: 15px; height: 15px; flex-shrink: 0; display: block; fill: currentColor; }
 
         .btn-whats { background: var(--cor-whatsapp); }
         .btn-whats:hover { background: var(--cor-whatsapp-dark); }
@@ -1050,23 +1387,23 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
-            padding: 9px 14px;
+            gap: 6px;
+            padding: 7px 10px;
             background: var(--surface);
             border: 1px dashed var(--border);
             border-radius: var(--radius-md);
-            font-size: 0.8rem;
+            font-size: 0.7rem;
             color: var(--ms-gray-700);
             text-align: center;
             line-height: 1.3;
         }
         body.dark-mode .banner-contador { background: var(--surface-alt); }
-        .banner-contador .contador-numero { font-weight: 700; color: var(--ms-blue); font-size: 0.95rem; }
-        .banner-contador .contador-icone { font-size: 1rem; line-height: 1; }
+        .banner-contador .contador-numero { font-weight: 700; color: var(--ms-blue); font-size: 0.85rem; }
+        .banner-contador .contador-icone { font-size: 0.9rem; line-height: 1; }
 
         .banner-compartilhe-compacto {
             display: none;
-            margin-top: 24px;
+            margin-top: 0;
             justify-content: center;
         }
         .banner-compartilhe-compacto.visivel { display: flex; }
@@ -1074,44 +1411,24 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            padding: 12px 22px;
+            padding: 12px 18px;
             border: none;
             border-radius: var(--radius-md);
             background: linear-gradient(135deg, var(--ms-blue) 0%, var(--ms-green) 100%);
             color: #fff;
             font-family: var(--ms-font);
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             font-weight: 700;
             cursor: pointer;
             box-shadow: var(--shadow-4);
             transition: box-shadow var(--dur-fast) var(--ease-standard), transform var(--dur-faster) var(--ease-standard);
             line-height: 1;
+            width: 100%;
+            justify-content: center;
         }
         .btn-compacto-share:hover { box-shadow: var(--shadow-8); transform: translateY(-1px); }
         .btn-compacto-share:active { transform: scale(0.97); }
-        .btn-compacto-share .compacto-icone { font-size: 1.2rem; line-height: 1; }
-
-        @media (max-width: 900px) {
-            .banner-botoes { grid-template-columns: repeat(3, 1fr); }
-        }
-        @media (max-width: 600px) {
-            .banner-compartilhe { padding: 18px 16px; }
-            .banner-header { gap: 12px; margin-bottom: 14px; }
-            .banner-icone { font-size: 2rem; }
-            .banner-titulo { font-size: 1rem; }
-            .banner-subtitulo { font-size: 0.72rem; }
-            .banner-botoes { grid-template-columns: 1fr 1fr; gap: 8px; }
-            .btn-share { padding: 12px 8px; font-size: 0.75rem; gap: 6px; }
-            .btn-share .share-svg { width: 16px; height: 16px; }
-            .banner-contador { font-size: 0.75rem; padding: 8px 12px; }
-        }
-        @media (max-width: 360px) {
-            .banner-titulo { font-size: 0.92rem; }
-            .banner-subtitulo { font-size: 0.68rem; }
-            .btn-share { font-size: 0.7rem; padding: 11px 6px; }
-            .btn-share .share-svg { width: 15px; height: 15px; }
-            .banner-contador { font-size: 0.7rem; }
-        }
+        .btn-compacto-share .compacto-icone { font-size: 1.1rem; line-height: 1; }
 
         .toast-share {
             position: fixed;
@@ -1183,7 +1500,7 @@
                         <div class="topo-header-titulo">
                             <span class="header-icon">📋</span>
                             <span>CheckAprovação</span>
-                            <span class="topo-header-versao">v0.59</span>
+                            <span class="topo-header-versao">v0.60</span>
                         </div>
                         <button class="topo-header-sino" id="btnSino" title="Notificações" aria-label="Notificações">
                             🔔
@@ -1221,6 +1538,71 @@
                         <div class="secao-titulo revisao">🔄 SUA REVISÃO ESPAÇADA</div>
                         <div class="card-base revisao-card" id="revisaoEspacadaSection">
                             <div id="revisaoEspacadaConteudo"></div>
+                        </div>
+                    </div>
+
+                    <!-- BANNER COMPARTILHE (dentro da coluna esquerda) -->
+                    <div class="banner-bloco-esquerda">
+                        <div class="banner-compartilhe" id="bannerCompartilhe">
+                            <button class="banner-btn-fechar" id="btnFecharBanner" title="Fechar" aria-label="Fechar banner">×</button>
+
+                            <div class="banner-header">
+                                <div class="banner-icone">🎁</div>
+                                <div class="banner-texto">
+                                    <div class="banner-titulo">Dê o CheckAprovação de presente para um amigo!</div>
+                                    <div class="banner-subtitulo">Compartilhe o app e ajude alguém a conquistar a aprovação.</div>
+                                </div>
+                            </div>
+
+                            <div class="banner-botoes">
+                                <a class="btn-share btn-whats" id="btnWhatsApp" href="#" target="_blank" rel="noopener noreferrer">
+                                    <svg class="share-svg" viewBox="0 0 24 24" aria-hidden="true">
+                                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.693.625.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.688"/>
+                                    </svg>
+                                    <span class="share-texto">WhatsApp</span>
+                                </a>
+
+                                <a class="btn-share btn-telegram" id="btnTelegram" href="#" target="_blank" rel="noopener noreferrer">
+                                    <svg class="share-svg" viewBox="0 0 24 24" aria-hidden="true">
+                                        <path d="M11.944 0A12 12 0 000 12a12 12 0 0012 12 12 12 0 0012-12A12 12 0 0012 0a12 12 0 00-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 01.171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+                                    </svg>
+                                    <span class="share-texto">Telegram</span>
+                                </a>
+
+                                <a class="btn-share btn-email" id="btnEmail" href="#">
+                                    <svg class="share-svg" viewBox="0 0 24 24" aria-hidden="true">
+                                        <path d="M12 12.713l-11.985-9.713h23.97l-11.985 9.713zm0 2.574l-12-9.725v15.438h24v-15.438l-12 9.725z"/>
+                                    </svg>
+                                    <span class="share-texto">E-mail</span>
+                                </a>
+
+                                <a class="btn-share btn-sms" id="btnSMS" href="#">
+                                    <svg class="share-svg" viewBox="0 0 24 24" aria-hidden="true">
+                                        <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM7 9h10v2H7V9zm6 5H7v-2h6v2zm4-6H7V6h10v2z"/>
+                                    </svg>
+                                    <span class="share-texto">SMS</span>
+                                </a>
+
+                                <a class="btn-share btn-instagram" id="btnInstagram" href="#">
+                                    <svg class="share-svg" viewBox="0 0 24 24" aria-hidden="true">
+                                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+                                    </svg>
+                                    <span class="share-texto">Instagram</span>
+                                </a>
+                            </div>
+
+                            <div class="banner-contador">
+                                <span class="contador-icone">🎉</span>
+                                <span>Já compartilhou <span class="contador-numero" id="contadorNumero">0</span> vez(es)!</span>
+                            </div>
+                        </div>
+
+                        <!-- BOTÃO COMPACTO (quando banner reduzido) -->
+                        <div class="banner-compartilhe-compacto" id="bannerCompartilheCompacto">
+                            <button class="btn-compacto-share" id="btnReabrirBanner">
+                                <span class="compacto-icone">🎁</span>
+                                <span>Compartilhe!</span>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -1326,71 +1708,6 @@
 
             </div>
 
-            <!-- ============ BANNER COMPARTILHE (EXPANDIDO) ============ -->
-            <div class="banner-compartilhe-wrap">
-                <div class="banner-compartilhe" id="bannerCompartilhe">
-                    <button class="banner-btn-fechar" id="btnFecharBanner" title="Fechar" aria-label="Fechar banner">×</button>
-
-                    <div class="banner-header">
-                        <div class="banner-icone">🎁</div>
-                        <div class="banner-texto">
-                            <div class="banner-titulo">Dê o CheckAprovação de presente para um amigo!</div>
-                            <div class="banner-subtitulo">Compartilhe o app e ajude alguém a conquistar a aprovação.</div>
-                        </div>
-                    </div>
-
-                    <div class="banner-botoes">
-                        <a class="btn-share btn-whats" id="btnWhatsApp" href="#" target="_blank" rel="noopener noreferrer">
-                            <svg class="share-svg" viewBox="0 0 24 24" aria-hidden="true">
-                                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.693.625.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.688"/>
-                            </svg>
-                            <span class="share-texto">WhatsApp</span>
-                        </a>
-
-                        <a class="btn-share btn-telegram" id="btnTelegram" href="#" target="_blank" rel="noopener noreferrer">
-                            <svg class="share-svg" viewBox="0 0 24 24" aria-hidden="true">
-                                <path d="M11.944 0A12 12 0 000 12a12 12 0 0012 12 12 12 0 0012-12A12 12 0 0012 0a12 12 0 00-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 01.171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
-                            </svg>
-                            <span class="share-texto">Telegram</span>
-                        </a>
-
-                        <a class="btn-share btn-email" id="btnEmail" href="#">
-                            <svg class="share-svg" viewBox="0 0 24 24" aria-hidden="true">
-                                <path d="M12 12.713l-11.985-9.713h23.97l-11.985 9.713zm0 2.574l-12-9.725v15.438h24v-15.438l-12 9.725z"/>
-                            </svg>
-                            <span class="share-texto">E-mail</span>
-                        </a>
-
-                        <a class="btn-share btn-sms" id="btnSMS" href="#">
-                            <svg class="share-svg" viewBox="0 0 24 24" aria-hidden="true">
-                                <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM7 9h10v2H7V9zm6 5H7v-2h6v2zm4-6H7V6h10v2z"/>
-                            </svg>
-                            <span class="share-texto">SMS</span>
-                        </a>
-
-                        <a class="btn-share btn-instagram" id="btnInstagram" href="#">
-                            <svg class="share-svg" viewBox="0 0 24 24" aria-hidden="true">
-                                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
-                            </svg>
-                            <span class="share-texto">Instagram</span>
-                        </a>
-                    </div>
-
-                    <div class="banner-contador">
-                        <span class="contador-icone">🎉</span>
-                        <span>Você já compartilhou <span class="contador-numero" id="contadorNumero">0</span> vez(es)!</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ============ BOTÃO COMPACTO ============ -->
-            <div class="banner-compartilhe-compacto" id="bannerCompartilheCompacto">
-                <button class="btn-compacto-share" id="btnReabrirBanner">
-                    <span class="compacto-icone">🎁</span>
-                    <span>Compartilhe!</span>
-                </button>
-            </div>
-
             <!-- ============ PAINEL DE NOTIFICAÇÕES ============ -->
             <div class="notificacoes-painel" id="notificacoesPainel">
                 <div class="notificacoes-header">
@@ -1402,30 +1719,48 @@
 
         </div>
         <!-- /telaPrincipal -->
-        <!-- ============ MENU LATERAL ============ -->
-        <div class="menu-overlay" id="menuOverlay"></div>
-        <div class="menu-lateral" id="menuLateral">
-            <div class="menu-lateral-header">
-                <h3>📋 Menu</h3>
-                <button class="btn-fechar-menu" id="btnFecharMenu" aria-label="Fechar menu">×</button>
+
+        <!-- ============ MODO FOCO TOTAL (OVERLAY) ============ -->
+        <div class="modo-foco" id="modoFoco">
+            <div class="foco-barra">
+                <div class="foco-barra-titulo">
+                    <span>⏱️</span>
+                    <span>Modo Foco Total</span>
+                </div>
+                <button class="foco-barra-fechar" id="btnSairTopo" title="Sair" aria-label="Sair do modo foco">×</button>
             </div>
-            <a class="menu-item ativo" data-tela="principal" id="menuInicio">
-                <span class="menu-icone">📋</span>
-                <span class="menu-texto">Início</span>
-            </a>
-            <a class="menu-item" data-tela="dashboard" id="menuDashboard">
-                <span class="menu-icone">📊</span>
-                <span class="menu-texto">Dashboard</span>
-            </a>
-            <a class="menu-item" data-tela="revisoes" id="menuRevisoes">
-                <span class="menu-icone">🔄</span>
-                <span class="menu-texto">Revisão Espaçada (Pendências)</span>
-                <span class="menu-badge" id="revisoesBadge" style="display:none;">0</span>
-            </a>
-            <a class="menu-item" data-tela="config" id="menuConfig">
-                <span class="menu-icone">⚙️</span>
-                <span class="menu-texto">Configurações</span>
-            </a>
+
+            <div class="foco-corpo">
+                <div class="foco-checklist" id="focoChecklist">
+                    <div class="foco-checklist-inner">
+                        <div class="foco-modulo-titulo" id="focoModuloTitulo">📚 Módulo</div>
+                        <div class="foco-modulo-subtitulo">Concentre-se. O relógio está sempre visível à direita.</div>
+                        <ul class="foco-lista" id="focoLista"></ul>
+                    </div>
+                </div>
+
+                <div class="foco-relogio-painel">
+                    <div class="foco-relogio-label">Tempo de Foco</div>
+                    <div class="foco-relogio-display parado" id="focoRelogioDisplay">00:00:00</div>
+                    <div class="foco-relogio-botoes">
+                        <button class="foco-btn-principal" id="btnFocoIniciar">
+                            <span id="focoIniciarIcone">▶</span>
+                            <span id="focoIniciarTexto">Iniciar</span>
+                        </button>
+                        <button class="foco-btn-secundario" id="btnFocoParar" style="display:none;">
+                            <span>⏹</span>
+                            <span>Parar</span>
+                        </button>
+                        <button class="foco-btn-secundario" id="btnFocoSair">
+                            <span>🚪</span>
+                            <span>Sair do Modo Foco</span>
+                        </button>
+                    </div>
+                    <div class="foco-info-extra">
+                        Role o checklist à vontade —<br>o relógio não se move.
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- ============ TELA DASHBOARD ============ -->
@@ -1511,7 +1846,7 @@
                             <label for="nomeUsuario">Seu nome</label>
                             <input type="text" id="nomeUsuario" placeholder="Ex: João" maxlength="30">
                         </div>
-                        <div class="config-card-descricao">Personalize o app com seu nome. Ele aparecerá na saudação.</div>
+                        <div class="config-card-descricao">Personalize o app com seu nome. Ele aparecerá na saudação (salvo automaticamente).</div>
                     </div>
                 </div>
 
@@ -1588,7 +1923,7 @@
                             <label for="linkCompartilhar">Link do App</label>
                             <input type="url" id="linkCompartilhar" placeholder="https://..." maxlength="300">
                         </div>
-                        <div class="config-card-descricao">Link usado pelo banner "Compartilhe!" no rodapé da tela inicial.</div>
+                        <div class="config-card-descricao">Link usado pelo banner "Compartilhe!" na tela inicial.</div>
                         <button class="btn-ms" id="btnSalvarLink">💾 Salvar Link</button>
                     </div>
                 </div>
@@ -1646,6 +1981,32 @@
             </div>
         </div>
     </div>
+
+    <!-- ============ MENU LATERAL ============ -->
+    <div class="menu-overlay" id="menuOverlay"></div>
+    <div class="menu-lateral" id="menuLateral">
+        <div class="menu-lateral-header">
+            <h3>📋 Menu</h3>
+            <button class="btn-fechar-menu" id="btnFecharMenu" aria-label="Fechar menu">×</button>
+        </div>
+        <a class="menu-item ativo" data-tela="principal" id="menuInicio">
+            <span class="menu-icone">📋</span>
+            <span class="menu-texto">Início</span>
+        </a>
+        <a class="menu-item" data-tela="dashboard" id="menuDashboard">
+            <span class="menu-icone">📊</span>
+            <span class="menu-texto">Dashboard</span>
+        </a>
+        <a class="menu-item" data-tela="revisoes" id="menuRevisoes">
+            <span class="menu-icone">🔄</span>
+            <span class="menu-texto">Revisão Espaçada (Pendências)</span>
+            <span class="menu-badge" id="revisoesBadge" style="display:none;">0</span>
+        </a>
+        <a class="menu-item" data-tela="config" id="menuConfig">
+            <span class="menu-icone">⚙️</span>
+            <span class="menu-texto">Configurações</span>
+        </a>
+    </div>
     <script>
         (function() {
             /* ============ ARMAZENAMENTO ============ */
@@ -1702,6 +2063,16 @@
             let bannerReduzido = false;
             let concurso = 'Guarda Municipal de Florianópolis';
             let cargo = 'Guarda Municipal';
+
+            /* ============ ESTADO MODO FOCO ============ */
+            let focoModuloAtual = null;
+            let focoModuloTitulo = '';
+            let focoAtivo = false;
+            let focoRodando = false;
+            let focoPausado = false;
+            let focoInicio = null;
+            let focoTempoAcumulado = 0;
+            let focoInterval = null;
 
             /* ============ CONSTANTES ============ */
             const LINK_COMPARTILHAR_PADRAO = 'https://gerlemppimentel.github.io/CheckAprov/';
@@ -2217,6 +2588,18 @@
             const btnInstagram = document.getElementById('btnInstagram');
             const contadorNumero = document.getElementById('contadorNumero');
 
+            /* Referências modo foco */
+            const modoFoco = document.getElementById('modoFoco');
+            const focoModuloTituloEl = document.getElementById('focoModuloTitulo');
+            const focoLista = document.getElementById('focoLista');
+            const focoRelogioDisplay = document.getElementById('focoRelogioDisplay');
+            const btnFocoIniciar = document.getElementById('btnFocoIniciar');
+            const focoIniciarIcone = document.getElementById('focoIniciarIcone');
+            const focoIniciarTexto = document.getElementById('focoIniciarTexto');
+            const btnFocoParar = document.getElementById('btnFocoParar');
+            const btnFocoSair = document.getElementById('btnFocoSair');
+            const btnSairTopo = document.getElementById('btnSairTopo');
+
             /* ============ ESTADO DATA SIMULADA ============ */
             function atualizarEstadoDataSimulada() {
                 if (usarDataSistema) { dataSimuladaInput.disabled = true; dataSimuladaInput.value = ''; }
@@ -2559,11 +2942,9 @@
                 const status = calcularStatusDiff(real, prev);
                 const offset = CIRCUNFERENCIA_PIZZA * (1 - pctReal / 100);
 
-                // Preenche arco realizado
                 elementos.fill.setAttribute('stroke-dashoffset', offset);
                 elementos.fill.setAttribute('class', 'pizza-fill ' + elementos.fillClass + ' status-' + status);
 
-                // Posiciona ponteiro de previsto
                 const anguloPrev = (pctPrev / 100) * 360 - 90;
                 const rad = (anguloPrev * Math.PI) / 180;
                 const cxIn = 60 + RAIO_PONTEIRO_INTERNO * Math.cos(rad);
@@ -2575,7 +2956,6 @@
                 elementos.prev.setAttribute('x2', cxOut);
                 elementos.prev.setAttribute('y2', cyOut);
 
-                // Posiciona bolinha de realizado
                 const anguloReal = (pctReal / 100) * 360 - 90;
                 const radR = (anguloReal * Math.PI) / 180;
                 const cxR = 60 + RAIO_PIZZA * Math.cos(radR);
@@ -2584,16 +2964,13 @@
                 elementos.real.setAttribute('cy', cyR);
                 elementos.real.setAttribute('class', 'pizza-ponteiro-realizado ' + (real >= prev ? 'ok' : 'atras'));
 
-                // Centro
                 elementos.percentual.textContent = Math.round(pctReal) + '%';
                 elementos.contagem.textContent = real + '/' + TOTAL_ASSUNTOS;
 
-                // Badge
                 const badge = obterBadge(real, prev);
                 elementos.badge.textContent = badge.texto;
                 elementos.badge.className = 'pizza-centro-badge ' + badge.classe;
 
-                // Info abaixo
                 elementos.info.innerHTML = 'Real <strong>' + real + '</strong> · Prev <strong>' + prev + '</strong>';
             }
 
@@ -2603,7 +2980,6 @@
                 const lidosAtual = contarPorTipo('Lido');
                 const concluidosAtual = contarPorTipo('Concluido');
 
-                // Pizzas
                 const metaLeituraAteHoje = calcularMetaLeituraAteHoje();
                 const metaConclusaoAteHoje = calcularMetaConclusaoAteHoje();
 
@@ -2631,7 +3007,6 @@
 
                 atualizarDiasProva();
 
-                // Farol: baseado na META DE LEITURA
                 if (!diasTotais || diasTotais <= 0 || !dataInicial || !dataFinal) {
                     cardFarol.className = 'progresso-card card-farol farol-verde';
                     farolIcon.textContent = '🟢';
@@ -2809,7 +3184,6 @@
                 htmlTempo += '</div>';
                 dashboardTempoEstudo.innerHTML = htmlTempo;
 
-                // Cobertura do Edital — ORDENADA POR CONCLUSÃO (maior → menor)
                 let htmlCob = '';
                 const dadosCob = modulos.map(function(modulo) {
                     const total = contarAssuntosModulo(modulo.chave);
@@ -2926,7 +3300,7 @@
                 dashboardRecomendacoes.innerHTML = htmlRec;
             }
 
-            /* ============ CRONÔMETRO ============ */
+            /* ============ CRONÔMETRO NORMAL ============ */
             function iniciarCronometro(moduloChave) {
                 if (cronometroAtivo && cronometroModulo !== moduloChave) pararCronometro(true);
                 if (!cronometroAtivo) {
@@ -3085,10 +3459,16 @@
                     topicSection.className = 'topic-section';
                     topicSection.id = 'modulo-' + topico.id;
                     topicSection.dataset.topic = topico.id;
+
+                    const primeiroModulo = topico.subtopicos[0].modulo || topico.id;
                     const topicHeader = document.createElement('div');
                     topicHeader.className = 'topic-header collapsed';
-                    topicHeader.innerHTML = '<span>' + topico.titulo + '</span><span class="arrow">▼</span>';
-                    topicHeader.addEventListener('click', function() {
+                    topicHeader.innerHTML = '<div class="topic-header-titulo"><span>' + topico.titulo + '</span></div>' +
+                        '<button class="btn-foco-total" data-modulo="' + primeiroModulo + '" data-titulo="' + topico.titulo + '"><span>🎯</span><span>Foco Total</span></button>' +
+                        '<span class="arrow">▼</span>';
+
+                    topicHeader.addEventListener('click', function(e) {
+                        if (e.target.closest('.btn-foco-total')) return;
                         const content = this.nextElementSibling;
                         if (content) {
                             const isHidden = content.style.display === 'none';
@@ -3097,6 +3477,7 @@
                         }
                     });
                     topicSection.appendChild(topicHeader);
+
                     const topicContent = document.createElement('div');
                     topicContent.className = 'topic-content';
                     topicContent.style.display = 'none';
@@ -3245,6 +3626,15 @@
                     topicSection.appendChild(topicContent);
                     conteudoPrincipal.appendChild(topicSection);
                 });
+
+                /* Bind dos botões Foco Total */
+                document.querySelectorAll('.btn-foco-total').forEach(function(btn) {
+                    btn.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        abrirModoFoco(this.dataset.modulo, this.dataset.titulo);
+                    });
+                });
+
                 atualizarCronometroBotoes();
             }
 
@@ -3394,6 +3784,13 @@
             document.getElementById('btnFecharSaudacao').addEventListener('click', function() { saudacaoFechada = true; aplicarEstadoSaudacao(); salvarDados(); });
             document.getElementById('btnReabrirSaudacao').addEventListener('click', function() { saudacaoFechada = false; aplicarEstadoSaudacao(); salvarDados(); });
 
+            /* Salvar nome automaticamente */
+            nomeUsuarioInput.addEventListener('input', function() {
+                nomeUsuario = this.value.trim();
+                salvarDados();
+                atualizarSaudacao();
+            });
+
             usarDataSistemaCheckbox.addEventListener('change', function() {
                 usarDataSistema = this.checked;
                 atualizarEstadoDataSimulada();
@@ -3472,7 +3869,6 @@
             btnVoltarRevisoesRodape.addEventListener('click', function() { mostrarTela('principal'); });
 
             btnAtualizar.addEventListener('click', function() {
-                nomeUsuario = nomeUsuarioInput.value.trim();
                 dataInicial = dataInicialInput.value;
                 dataFinal = dataFinalInput.value;
                 if (dataInicial && dataFinal && new Date(dataFinal) < new Date(dataInicial)) { alert('Data Final deve ser após a Data Inicial.'); return; }
@@ -3495,24 +3891,16 @@
                 mostrarToast('✅', 'Concurso e cargo atualizados!');
             });
 
-            /* ============ SALVAR LINK COMPARTILHAR ============ */
             btnSalvarLink.addEventListener('click', function() {
                 const novoLink = linkCompartilharInput.value.trim();
-                if (!novoLink) {
-                    alert('Informe um link válido.');
-                    return;
-                }
-                if (!/^https?:\/\//i.test(novoLink)) {
-                    alert('O link deve começar com http:// ou https://');
-                    return;
-                }
+                if (!novoLink) { alert('Informe um link válido.'); return; }
+                if (!/^https?:\/\//i.test(novoLink)) { alert('O link deve começar com http:// ou https://'); return; }
                 linkCompartilhar = novoLink;
                 salvarDados();
                 atualizarLinksCompartilhamento();
                 mostrarToast('✅', 'Link salvo com sucesso!');
             });
 
-            /* ============ BANNER COMPARTILHE EVENTOS ============ */
             btnFecharBanner.addEventListener('click', function() {
                 bannerReduzido = true;
                 aplicarEstadoBanner();
@@ -3695,6 +4083,336 @@
 
             if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', iniciar);
             else iniciar();
+            /* ============ MODO FOCO TOTAL ============ */
+            function abrirModoFoco(moduloChave, moduloTitulo) {
+                focoModuloAtual = moduloChave;
+                focoModuloTitulo = moduloTitulo;
+                focoAtivo = true;
+
+                focoModuloTituloEl.textContent = moduloTitulo;
+
+                focoLista.innerHTML = '';
+                const listaAssuntos = assuntos[moduloChave] || [];
+                listaAssuntos.forEach(function(assunto, idx) {
+                    const chaveBase = moduloChave + '-geral-' + idx;
+                    const li = document.createElement('li');
+                    li.className = 'foco-item';
+
+                    /* 6 checkboxes: Lido, Exercitado, Concluído, Rev24h, Rev7d, Rev15d */
+                    li.innerHTML =
+                        '<input type="checkbox" class="lido-check" ' + (estadoCheckboxes[chaveBase + '-Lido'] ? 'checked' : '') + '>' +
+                        '<span class="assunto-texto">' + assunto + '</span>' +
+                        '<div class="foco-checks-grupo">' +
+                            '<div class="foco-check-wrap">' +
+                                '<span class="foco-check-label">Exer.</span>' +
+                                '<input type="checkbox" class="exercitado-check" ' + (estadoCheckboxes[chaveBase + '-Exercitado'] ? 'checked' : '') + '>' +
+                            '</div>' +
+                            '<div class="foco-check-wrap">' +
+                                '<span class="foco-check-label">Conc.</span>' +
+                                '<input type="checkbox" class="concluido-check" ' + (estadoCheckboxes[chaveBase + '-Concluido'] ? 'checked' : '') + '>' +
+                            '</div>' +
+                            '<div class="foco-check-wrap">' +
+                                '<span class="foco-check-label">24h</span>' +
+                                '<input type="checkbox" class="rev24h-check" ' + (estadoCheckboxes[chaveBase + '-Rev24h'] ? 'checked' : '') + '>' +
+                            '</div>' +
+                            '<div class="foco-check-wrap">' +
+                                '<span class="foco-check-label">7d</span>' +
+                                '<input type="checkbox" class="rev7d-check" ' + (estadoCheckboxes[chaveBase + '-Rev7d'] ? 'checked' : '') + '>' +
+                            '</div>' +
+                            '<div class="foco-check-wrap">' +
+                                '<span class="foco-check-label">15d</span>' +
+                                '<input type="checkbox" class="rev15d-check" ' + (estadoCheckboxes[chaveBase + '-Rev15d'] ? 'checked' : '') + '>' +
+                            '</div>' +
+                        '</div>';
+
+                    /* Aplica classes iniciais */
+                    if (estadoCheckboxes[chaveBase + '-Lido']) li.classList.add('lido');
+                    if (estadoCheckboxes[chaveBase + '-Exercitado']) li.classList.add('exercitado');
+                    if (estadoCheckboxes[chaveBase + '-Concluido']) li.classList.add('concluido');
+                    if (estadoCheckboxes[chaveBase + '-Rev24h']) li.classList.add('rev24h');
+                    if (estadoCheckboxes[chaveBase + '-Rev7d']) li.classList.add('rev7d');
+                    if (estadoCheckboxes[chaveBase + '-Rev15d']) li.classList.add('rev15d');
+
+                    /* ============ LIDO ============ */
+                    li.querySelector('.lido-check').addEventListener('change', function() {
+                        estadoCheckboxes[chaveBase + '-Lido'] = this.checked;
+                        if (this.checked) {
+                            li.classList.add('lido');
+                            ultimasAtividades[moduloChave] = obterDataAtual().getTime();
+                            agendarRevisao(chaveBase, 1);
+                            mostrarToast('📖', 'Leitura registrada! Revisão de 24h agendada.');
+                        } else {
+                            li.classList.remove('lido');
+                        }
+                        salvarDados();
+                        renderizarModulos();
+                        renderizarRevisoesPendentes();
+                        renderizarRecomendacao();
+                        renderizarRevisaoEspacada();
+                        atualizarGraficoStatus();
+                    });
+
+                    /* ============ EXERCITADO ============ */
+                    li.querySelector('.exercitado-check').addEventListener('change', function() {
+                        const lidoKey = chaveBase + '-Lido';
+                        if (this.checked && !estadoCheckboxes[lidoKey]) {
+                            this.checked = false;
+                            mostrarToast('⚠️', 'Registre a Leitura antes de marcar Exercitado.');
+                            return;
+                        }
+                        estadoCheckboxes[chaveBase + '-Exercitado'] = this.checked;
+                        if (this.checked) {
+                            li.classList.add('exercitado');
+                            mostrarToast('📝', 'Exercício registrado! Continue assim.');
+                        } else {
+                            li.classList.remove('exercitado');
+                        }
+                        salvarDados();
+                        renderizarModulos();
+                    });
+
+                    /* ============ CONCLUÍDO ============ */
+                    li.querySelector('.concluido-check').addEventListener('change', function() {
+                        if (this.checked) {
+                            estadoCheckboxes[chaveBase + '-Lido'] = true;
+                            estadoCheckboxes[chaveBase + '-Exercitado'] = true;
+                            estadoCheckboxes[chaveBase + '-Concluido'] = true;
+                            li.querySelector('.lido-check').checked = true;
+                            li.querySelector('.exercitado-check').checked = true;
+                            li.classList.add('lido', 'exercitado', 'concluido');
+                            ultimasAtividades[moduloChave] = obterDataAtual().getTime();
+                            registrarConclusaoHoje();
+                            mostrarToast('✅', 'Assunto concluído! +1 para sua meta!');
+                        } else {
+                            estadoCheckboxes[chaveBase + '-Concluido'] = false;
+                            li.classList.remove('concluido');
+                            const hojeStr = obterDataAtual().toISOString().split('T')[0];
+                            if (conclusoesPorDia[hojeStr] && conclusoesPorDia[hojeStr] > 0) conclusoesPorDia[hojeStr]--;
+                        }
+                        gerarNotificacoes();
+                        salvarDados();
+                        renderizarModulos();
+                        renderizarNotificacoes();
+                        atualizarGraficoStatus();
+                        atualizarSaudacao();
+                        verificarMetaDiaria();
+                    });
+
+                    /* ============ REV 24h ============ */
+                    li.querySelector('.rev24h-check').addEventListener('change', function() {
+                        const lidoKey = chaveBase + '-Lido';
+                        if (this.checked && !estadoCheckboxes[lidoKey]) {
+                            this.checked = false;
+                            mostrarToast('⚠️', 'Registre a Leitura antes de registrar a Revisão.');
+                            return;
+                        }
+                        estadoCheckboxes[chaveBase + '-Rev24h'] = this.checked;
+                        if (this.checked) {
+                            li.classList.add('rev24h');
+                            if (revisoes[chaveBase]) revisoes[chaveBase].forEach(function(rev) { if (rev.tipo === '24h') rev.baixada = true; });
+                            agendarRevisao(chaveBase, 7);
+                            mostrarToast('🔄', 'Revisão 24h feita! Revisão de 7 dias agendada.');
+                        } else {
+                            li.classList.remove('rev24h');
+                        }
+                        salvarDados();
+                        renderizarModulos();
+                        renderizarRevisoesPendentes();
+                        renderizarRevisaoEspacada();
+                    });
+
+                    /* ============ REV 7d ============ */
+                    li.querySelector('.rev7d-check').addEventListener('change', function() {
+                        const lidoKey = chaveBase + '-Lido';
+                        if (this.checked && !estadoCheckboxes[lidoKey]) {
+                            this.checked = false;
+                            mostrarToast('⚠️', 'Registre a Leitura antes de registrar a Revisão.');
+                            return;
+                        }
+                        estadoCheckboxes[chaveBase + '-Rev7d'] = this.checked;
+                        if (this.checked) {
+                            li.classList.add('rev7d');
+                            if (revisoes[chaveBase]) revisoes[chaveBase].forEach(function(rev) { if (rev.tipo === '7d') rev.baixada = true; });
+                            agendarRevisao(chaveBase, 15);
+                            mostrarToast('🔄', 'Revisão 7d feita! Revisão de 15 dias agendada.');
+                        } else {
+                            li.classList.remove('rev7d');
+                        }
+                        salvarDados();
+                        renderizarModulos();
+                        renderizarRevisoesPendentes();
+                        renderizarRevisaoEspacada();
+                    });
+
+                    /* ============ REV 15d ============ */
+                    li.querySelector('.rev15d-check').addEventListener('change', function() {
+                        const lidoKey = chaveBase + '-Lido';
+                        if (this.checked && !estadoCheckboxes[lidoKey]) {
+                            this.checked = false;
+                            mostrarToast('⚠️', 'Registre a Leitura antes de registrar a Revisão.');
+                            return;
+                        }
+                        estadoCheckboxes[chaveBase + '-Rev15d'] = this.checked;
+                        if (this.checked) {
+                            li.classList.add('rev15d');
+                            if (revisoes[chaveBase]) revisoes[chaveBase].forEach(function(rev) { if (rev.tipo === '15d') rev.baixada = true; });
+                            mostrarToast('🏆', 'Ciclo de revisão espaçada completo!');
+                        } else {
+                            li.classList.remove('rev15d');
+                        }
+                        salvarDados();
+                        renderizarModulos();
+                        renderizarRevisoesPendentes();
+                        renderizarRevisaoEspacada();
+                    });
+
+                    focoLista.appendChild(li);
+                });
+
+                /* ============ SINCRONIZA O CRONÔMETRO ============ */
+                if (cronometroAtivo && cronometroModulo === moduloChave) {
+                    /* Já está rodando neste módulo — sincroniza */
+                    focoRodando = true;
+                    focoPausado = cronometroPausado;
+                    if (!cronometroPausado && cronometroInicio) {
+                        focoInicio = cronometroInicio;
+                        focoTempoAcumulado = cronometroTempoAcumulado;
+                    } else {
+                        focoInicio = null;
+                        focoTempoAcumulado = cronometroTempoAcumulado;
+                    }
+                } else {
+                    /* Novo foco — para qualquer outro e inicia */
+                    if (cronometroAtivo && cronometroModulo !== moduloChave) {
+                        pararCronometro(true);
+                    }
+                    cronometroAtivo = true;
+                    cronometroPausado = false;
+                    cronometroModulo = moduloChave;
+                    cronometroInicio = Date.now();
+                    cronometroTempoAcumulado = 0;
+                    cronometroPausaAcumulada = 0;
+                    cronometroPausaInicio = null;
+                    if (cronometroInterval) clearInterval(cronometroInterval);
+                    cronometroInterval = setInterval(atualizarCronometroDisplay, 1000);
+                    focoRodando = true;
+                    focoPausado = false;
+                    focoInicio = cronometroInicio;
+                    focoTempoAcumulado = 0;
+                }
+                if (focoInterval) clearInterval(focoInterval);
+                focoInterval = setInterval(atualizarFocoDisplay, 1000);
+
+                modoFoco.classList.add('ativo');
+                document.body.style.overflow = 'hidden';
+
+                atualizarFocoBotao();
+                atualizarFocoDisplay();
+                salvarDados();
+            }
+
+            /* ============ SAIR DO MODO FOCO (para e registra) ============ */
+            function sairModoFoco() {
+                if (cronometroAtivo) {
+                    pararCronometro(false);
+                }
+                if (focoInterval) { clearInterval(focoInterval); focoInterval = null; }
+                focoAtivo = false;
+                focoRodando = false;
+                focoPausado = false;
+                focoInicio = null;
+                focoTempoAcumulado = 0;
+                modoFoco.classList.remove('ativo');
+                document.body.style.overflow = '';
+                atualizarGraficoStatus();
+                renderizarModulos();
+                renderizarTopicos();
+            }
+
+            /* ============ DISPLAY DO RELÓGIO NO FOCO ============ */
+            function obterTempoFocoTotal() {
+                let t = focoTempoAcumulado;
+                if (focoRodando && !focoPausado && focoInicio) {
+                    t += (Date.now() - focoInicio) / 1000;
+                } else if (cronometroAtivo && !cronometroPausado && cronometroInicio) {
+                    t = cronometroTempoAcumulado + (Date.now() - cronometroInicio) / 1000;
+                } else if (cronometroAtivo && cronometroPausado) {
+                    t = cronometroTempoAcumulado;
+                }
+                return t;
+            }
+
+            function atualizarFocoDisplay() {
+                if (!focoRelogioDisplay) return;
+                focoRelogioDisplay.textContent = formatarTempo(obterTempoFocoTotal());
+                focoRelogioDisplay.classList.remove('rodando', 'pausado', 'parado');
+                if (cronometroAtivo && !cronometroPausado) focoRelogioDisplay.classList.add('rodando');
+                else if (cronometroAtivo && cronometroPausado) focoRelogioDisplay.classList.add('pausado');
+                else focoRelogioDisplay.classList.add('parado');
+            }
+
+            function atualizarFocoBotao() {
+                if (!btnFocoIniciar) return;
+                if (!cronometroAtivo) {
+                    btnFocoIniciar.classList.remove('pausado');
+                    focoIniciarIcone.textContent = '▶';
+                    focoIniciarTexto.textContent = 'Iniciar';
+                    btnFocoParar.style.display = 'none';
+                } else if (cronometroPausado) {
+                    btnFocoIniciar.classList.add('pausado');
+                    focoIniciarIcone.textContent = '▶';
+                    focoIniciarTexto.textContent = 'Continuar';
+                    btnFocoParar.style.display = 'flex';
+                } else {
+                    btnFocoIniciar.classList.remove('pausado');
+                    focoIniciarIcone.textContent = '⏸';
+                    focoIniciarTexto.textContent = 'Pausar';
+                    btnFocoParar.style.display = 'flex';
+                }
+            }
+
+            function iniciarFoco() {
+                if (!cronometroAtivo) {
+                    iniciarCronometro(focoModuloAtual);
+                    focoRodando = true;
+                    focoPausado = false;
+                    focoInicio = cronometroInicio;
+                    focoTempoAcumulado = 0;
+                } else if (cronometroPausado) {
+                    iniciarCronometro(focoModuloAtual);
+                    focoRodando = true;
+                    focoPausado = false;
+                    focoInicio = cronometroInicio;
+                } else {
+                    pausarCronometro();
+                    focoPausado = true;
+                    focoInicio = null;
+                    focoTempoAcumulado = cronometroTempoAcumulado;
+                }
+                atualizarFocoBotao();
+                atualizarFocoDisplay();
+                atualizarCronometroBotoes();
+            }
+
+            function pararFocoClick() {
+                pararCronometro(false);
+                focoRodando = false;
+                focoPausado = false;
+                focoInicio = null;
+                focoTempoAcumulado = 0;
+                atualizarFocoBotao();
+                atualizarFocoDisplay();
+            }
+
+            /* ============ EVENT LISTENERS DO MODO FOCO ============ */
+            btnFocoIniciar.addEventListener('click', iniciarFoco);
+            btnFocoParar.addEventListener('click', pararFocoClick);
+            btnFocoSair.addEventListener('click', sairModoFoco);
+            btnSairTopo.addEventListener('click', sairModoFoco);
+
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && focoAtivo) sairModoFoco();
+            });
         })();
     </script>
 </body>
