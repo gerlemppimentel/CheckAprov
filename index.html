@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
-    <title>CheckAprovação v0.58 | Guarda Municipal Florianópolis</title>
+    <title>CheckAprovação v0.59 | Guarda Municipal Florianópolis</title>
     <meta name="theme-color" content="#0067b8">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📋</text></svg>">
     <style>
@@ -372,20 +372,55 @@
         body.dark-mode .card-farol.farol-vermelho { background: linear-gradient(180deg, #4a2020 0%, var(--surface) 100%); }
         body.dark-mode .card-farol.farol-azul { background: linear-gradient(180deg, #1a3a5c 0%, var(--surface) 100%); }
 
+        /* ============ CARD PIZZA (Proposta C) ============ */
         .card-pizza { gap: 4px; }
-        .pizza-container { width: 96px; height: 96px; position: relative; margin: 2px 0; }
-        .pizza-svg { width: 100%; height: 100%; transform: rotate(-90deg); overflow: visible; }
+        .pizza-container { width: 120px; height: 120px; position: relative; margin: 2px 0; }
+        .pizza-svg { width: 100%; height: 100%; overflow: visible; }
         .pizza-svg .pizza-bg { fill: none; stroke: var(--ms-gray-300); stroke-width: 14; }
         body.dark-mode .pizza-svg .pizza-bg { stroke: #333; }
         .pizza-svg .pizza-fill { fill: none; stroke-width: 14; stroke-linecap: round; transition: stroke-dashoffset 0.6s var(--ease-decelerate); }
-        .pizza-svg .pizza-fill-lido { stroke: url(#gradLido); }
-        .pizza-svg .pizza-fill-concluido { stroke: url(#gradConcluido); }
-        .pizza-centro { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 1.15rem; font-weight: 700; color: var(--ms-gray-900); line-height: 1; text-align: center; }
-        body.dark-mode .pizza-centro { color: #e0e0e0; }
-        .pizza-centro-percentual { font-size: 0.65rem; color: var(--ms-gray-700); font-weight: 600; margin-top: 2px; }
-        body.dark-mode .pizza-centro-percentual { color: #aaa; }
-        .pizza-info { font-size: 0.7rem; font-weight: 600; color: var(--ms-gray-700); margin-top: 4px; }
+        .pizza-svg .pizza-fill.status-azul { stroke: url(#gradStatusAzul); }
+        .pizza-svg .pizza-fill.status-verde { stroke: url(#gradStatusVerde); }
+        .pizza-svg .pizza-fill.status-amarelo { stroke: url(#gradStatusAmarelo); }
+        .pizza-svg .pizza-fill.status-vermelho { stroke: url(#gradStatusVermelho); }
+        .pizza-svg .pizza-ponteiro-previsto { stroke: var(--ms-gray-900); stroke-width: 3.5; stroke-linecap: round; opacity: 0.85; }
+        body.dark-mode .pizza-svg .pizza-ponteiro-previsto { stroke: #e0e0e0; }
+        .pizza-svg .pizza-ponteiro-realizado { stroke: var(--surface); stroke-width: 1.5; }
+        .pizza-svg .pizza-ponteiro-realizado.ok { fill: #4caf50; }
+        .pizza-svg .pizza-ponteiro-realizado.atras { fill: #e53935; }
+
+        .pizza-centro-info {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            line-height: 1.1;
+            pointer-events: none;
+            width: 100%;
+        }
+        .pizza-centro-pct { font-size: 1.15rem; font-weight: 800; font-variant-numeric: tabular-nums; }
+        .pizza-centro-pct.lido { color: var(--ms-blue); }
+        .pizza-centro-pct.concluido { color: var(--ms-green); }
+        .pizza-centro-contagem { font-size: 0.62rem; color: var(--ms-gray-700); font-weight: 600; margin-top: 1px; }
+        body.dark-mode .pizza-centro-contagem { color: #aaa; }
+        .pizza-centro-badge {
+            font-size: 0.58rem;
+            font-weight: 800;
+            padding: 1px 6px;
+            border-radius: var(--radius-pill);
+            margin-top: 2px;
+            display: inline-block;
+            line-height: 1.4;
+        }
+        .pizza-centro-badge.azul { background: var(--ms-blue-light); color: var(--ms-blue); }
+        .pizza-centro-badge.verde { background: var(--ms-green-light); color: var(--ms-green); }
+        .pizza-centro-badge.amarelo { background: var(--ms-yellow-light); color: var(--ms-yellow-dark); }
+        .pizza-centro-badge.vermelho { background: var(--ms-red-light); color: var(--ms-red); }
+
+        .pizza-info { font-size: 0.68rem; font-weight: 600; color: var(--ms-gray-700); margin-top: 4px; line-height: 1.3; }
         body.dark-mode .pizza-info { color: #aaa; }
+        .pizza-info strong { color: var(--ms-gray-900); }
+        body.dark-mode .pizza-info strong { color: #e0e0e0; }
 
         .card-prova { gap: 4px; }
         .prova-label { font-size: 0.65rem; text-transform: uppercase; font-weight: 700; color: var(--ms-gray-700); letter-spacing: 0.6px; }
@@ -401,8 +436,8 @@
 
         @media (max-width: 480px) {
             .progresso-card { min-height: 128px; padding: 10px; }
-            .pizza-container { width: 84px; height: 84px; }
-            .pizza-centro { font-size: 1rem; }
+            .pizza-container { width: 104px; height: 104px; }
+            .pizza-centro-pct { font-size: 1rem; }
             .farol-icon-grande { font-size: 2rem; }
             .farol-texto { font-size: 0.85rem; }
             .prova-dias-numero { font-size: 2.1rem; }
@@ -411,10 +446,11 @@
         @media (max-width: 360px) {
             .progresso-card { min-height: 120px; padding: 8px; }
             .progresso-card-label { font-size: 0.58rem; margin-bottom: 6px; }
-            .pizza-container { width: 72px; height: 72px; }
-            .pizza-centro { font-size: 0.9rem; }
-            .pizza-centro-percentual { font-size: 0.58rem; }
-            .pizza-info { font-size: 0.62rem; }
+            .pizza-container { width: 88px; height: 88px; }
+            .pizza-centro-pct { font-size: 0.9rem; }
+            .pizza-centro-contagem { font-size: 0.55rem; }
+            .pizza-centro-badge { font-size: 0.5rem; padding: 1px 4px; }
+            .pizza-info { font-size: 0.6rem; }
             .farol-icon-grande { font-size: 1.7rem; }
             .farol-texto { font-size: 0.78rem; }
             .farol-status-detalhe { font-size: 0.58rem; }
@@ -861,6 +897,10 @@
         .config-info strong { color: var(--ms-blue); }
         body.dark-mode .config-info { background: #2a2a2a; }
         body.dark-mode .config-info strong { color: #4cc2ff; }
+        .config-info-linha { display: flex; justify-content: space-between; align-items: center; gap: 8px; font-size: 0.78rem; }
+        .config-info-linha strong { font-weight: 700; }
+        .config-info-linha .meta-diaria { font-size: 0.7rem; color: var(--ms-gray-600); font-weight: 500; }
+        body.dark-mode .config-info-linha .meta-diaria { color: #aaa; }
         .config-field-inline { display: flex; align-items: center; gap: 8px; font-size: 0.85rem; font-weight: 600; color: var(--ms-gray-700); }
         body.dark-mode .config-field-inline { color: #aaa; }
         .config-field-inline input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--ms-blue); cursor: pointer; flex-shrink: 0; }
@@ -906,6 +946,7 @@
         .resumo-rodape { font-size: 0.7rem; color: var(--ms-gray-500); }
 
         /* ============ BANNER COMPARTILHE ============ */
+        .banner-compartilhe-wrap { display: flex; justify-content: center; }
         .banner-compartilhe {
             position: relative;
             background: linear-gradient(135deg, var(--ms-blue-light) 0%, var(--surface) 55%, var(--ms-green-light) 100%);
@@ -916,6 +957,7 @@
             overflow: hidden;
             transition: background var(--dur-slow) var(--ease-standard), box-shadow var(--dur-normal) var(--ease-standard);
             margin-top: 24px;
+            width: 100%;
         }
         .banner-compartilhe:hover { box-shadow: var(--shadow-8); }
         .banner-compartilhe::before {
@@ -927,6 +969,11 @@
             opacity: 0.85;
         }
         .banner-compartilhe.reduzido { display: none; }
+
+        /* No PC: banner com 50% da largura, centralizado */
+        @media (min-width: 900px) {
+            .banner-compartilhe { max-width: 50%; }
+        }
 
         .banner-header { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; padding-right: 32px; }
         .banner-icone { font-size: 2.4rem; line-height: 1; flex-shrink: 0; animation: balancarPresente 3s ease-in-out infinite; }
@@ -1017,11 +1064,10 @@
         .banner-contador .contador-numero { font-weight: 700; color: var(--ms-blue); font-size: 0.95rem; }
         .banner-contador .contador-icone { font-size: 1rem; line-height: 1; }
 
-        /* Botão compacto (quando reduzido) */
         .banner-compartilhe-compacto {
             display: none;
             margin-top: 24px;
-            justify-content: flex-end;
+            justify-content: center;
         }
         .banner-compartilhe-compacto.visivel { display: flex; }
         .btn-compacto-share {
@@ -1067,7 +1113,6 @@
             .banner-contador { font-size: 0.7rem; }
         }
 
-        /* Toast feedback banner */
         .toast-share {
             position: fixed;
             bottom: 90px;
@@ -1138,15 +1183,15 @@
                         <div class="topo-header-titulo">
                             <span class="header-icon">📋</span>
                             <span>CheckAprovação</span>
-                            <span class="topo-header-versao">v0.58</span>
+                            <span class="topo-header-versao">v0.59</span>
                         </div>
                         <button class="topo-header-sino" id="btnSino" title="Notificações" aria-label="Notificações">
                             🔔
                             <span class="topo-header-sino-badge" id="sinoBadge" style="display:none;">0</span>
                         </button>
                     </div>
-                    <div class="topo-header-linha-2">Concurso Guarda Municipal Florianópolis</div>
-                    <div class="topo-header-linha-3">👔 Cargo: Guarda Municipal</div>
+                    <div class="topo-header-linha-2" id="headerConcurso">Concurso Guarda Municipal de Florianópolis</div>
+                    <div class="topo-header-linha-3" id="headerCargo">👔 Cargo: Guarda Municipal</div>
                 </div>
 
                 <div class="topo-saudacao" id="saudacaoContainer">
@@ -1159,7 +1204,7 @@
 
             <button class="btn-reabrir-saudacao" id="btnReabrirSaudacao">👋 Mostrar saudação</button>
 
-            <!-- ============ ESTRUTURA BASE 30/70 (mobile empilhado / PC reorganizado) ============ -->
+            <!-- ============ ESTRUTURA BASE 30/70 ============ -->
             <div class="layout-pc">
 
                 <!-- ============ COLUNA ESQUERDA (30%) ============ -->
@@ -1184,6 +1229,7 @@
                 <div class="bloco-progresso">
                     <div class="secao-titulo progresso">📈 SEU PROGRESSO</div>
                     <div class="progresso-grid">
+
                         <div class="progresso-card card-prova">
                             <div class="prova-label">📅 Prova</div>
                             <div class="prova-data" id="dataProvaTexto">—</div>
@@ -1203,46 +1249,62 @@
                             <div class="pizza-container">
                                 <svg class="pizza-svg" viewBox="0 0 120 120" aria-hidden="true">
                                     <defs>
-                                        <linearGradient id="gradLido" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <linearGradient id="gradStatusAzul" x1="0%" y1="0%" x2="100%" y2="100%">
                                             <stop offset="0%" stop-color="#4cc2ff"/>
                                             <stop offset="100%" stop-color="#0067b8"/>
                                         </linearGradient>
+                                        <linearGradient id="gradStatusVerde" x1="0%" y1="0%" x2="100%" y2="100%">
+                                            <stop offset="0%" stop-color="#b8e6b8"/>
+                                            <stop offset="100%" stop-color="#107c10"/>
+                                        </linearGradient>
+                                        <linearGradient id="gradStatusAmarelo" x1="0%" y1="0%" x2="100%" y2="100%">
+                                            <stop offset="0%" stop-color="#ffe69c"/>
+                                            <stop offset="100%" stop-color="#b8860b"/>
+                                        </linearGradient>
+                                        <linearGradient id="gradStatusVermelho" x1="0%" y1="0%" x2="100%" y2="100%">
+                                            <stop offset="0%" stop-color="#ffb8b8"/>
+                                            <stop offset="100%" stop-color="#d13438"/>
+                                        </linearGradient>
                                     </defs>
                                     <circle class="pizza-bg" cx="60" cy="60" r="52"/>
-                                    <circle class="pizza-fill pizza-fill-lido" cx="60" cy="60" r="52" stroke-dasharray="326.7" stroke-dashoffset="326.7" id="pizzaLido"/>
+                                    <circle class="pizza-fill pizza-fill-lido status-verde" cx="60" cy="60" r="52"
+                                            stroke-dasharray="326.7" stroke-dashoffset="326.7"
+                                            id="pizzaLidoFill" transform="rotate(-90 60 60)"/>
+                                    <line class="pizza-ponteiro-previsto" id="pizzaLidoPrev" x1="0" y1="0" x2="0" y2="0"/>
+                                    <circle class="pizza-ponteiro-realizado atras" id="pizzaLidoReal" cx="60" cy="60" r="4.5"/>
                                 </svg>
-                                <div class="pizza-centro">
-                                    <div id="pizzaLidoPercentual">0%</div>
-                                    <div class="pizza-centro-percentual" id="pizzaLidoContagem">0/50</div>
+                                <div class="pizza-centro-info">
+                                    <div class="pizza-centro-pct lido" id="pizzaLidoPercentual">0%</div>
+                                    <div class="pizza-centro-contagem" id="pizzaLidoContagem">0/50</div>
+                                    <div class="pizza-centro-badge verde" id="pizzaLidoBadge">= em dia</div>
                                 </div>
                             </div>
-                            <div class="pizza-info" id="pizzaLidoInfo">50 assuntos restantes</div>
+                            <div class="pizza-info" id="pizzaLidoInfo">Real <strong>0</strong> · Prev <strong>0</strong></div>
                         </div>
 
                         <div class="progresso-card card-pizza">
                             <div class="progresso-card-label">✅ Concluído</div>
                             <div class="pizza-container">
                                 <svg class="pizza-svg" viewBox="0 0 120 120" aria-hidden="true">
-                                    <defs>
-                                        <linearGradient id="gradConcluido" x1="0%" y1="0%" x2="100%" y2="100%">
-                                            <stop offset="0%" stop-color="#6ccb5f"/>
-                                            <stop offset="100%" stop-color="#107c10"/>
-                                        </linearGradient>
-                                    </defs>
                                     <circle class="pizza-bg" cx="60" cy="60" r="52"/>
-                                    <circle class="pizza-fill pizza-fill-concluido" cx="60" cy="60" r="52" stroke-dasharray="326.7" stroke-dashoffset="326.7" id="pizzaConcluido"/>
+                                    <circle class="pizza-fill pizza-fill-concluido status-verde" cx="60" cy="60" r="52"
+                                            stroke-dasharray="326.7" stroke-dashoffset="326.7"
+                                            id="pizzaConcluidoFill" transform="rotate(-90 60 60)"/>
+                                    <line class="pizza-ponteiro-previsto" id="pizzaConcluidoPrev" x1="0" y1="0" x2="0" y2="0"/>
+                                    <circle class="pizza-ponteiro-realizado atras" id="pizzaConcluidoReal" cx="60" cy="60" r="4.5"/>
                                 </svg>
-                                <div class="pizza-centro">
-                                    <div id="pizzaConcluidoPercentual">0%</div>
-                                    <div class="pizza-centro-percentual" id="pizzaConcluidoContagem">0/50</div>
+                                <div class="pizza-centro-info">
+                                    <div class="pizza-centro-pct concluido" id="pizzaConcluidoPercentual">0%</div>
+                                    <div class="pizza-centro-contagem" id="pizzaConcluidoContagem">0/50</div>
+                                    <div class="pizza-centro-badge verde" id="pizzaConcluidoBadge">= em dia</div>
                                 </div>
                             </div>
-                            <div class="pizza-info" id="pizzaConcluidoInfo">50 assuntos restantes</div>
+                            <div class="pizza-info" id="pizzaConcluidoInfo">Real <strong>0</strong> · Prev <strong>0</strong></div>
                         </div>
                     </div>
                 </div>
 
-                <!-- ============ BLOCO PRINCIPAL (coluna direita 70% no PC) ============ -->
+                <!-- ============ BLOCO PRINCIPAL (coluna direita 70%) ============ -->
                 <div class="layout-principal">
                     <div class="coluna-direita">
 
@@ -1265,61 +1327,63 @@
             </div>
 
             <!-- ============ BANNER COMPARTILHE (EXPANDIDO) ============ -->
-            <div class="banner-compartilhe" id="bannerCompartilhe">
-                <button class="banner-btn-fechar" id="btnFecharBanner" title="Fechar" aria-label="Fechar banner">×</button>
+            <div class="banner-compartilhe-wrap">
+                <div class="banner-compartilhe" id="bannerCompartilhe">
+                    <button class="banner-btn-fechar" id="btnFecharBanner" title="Fechar" aria-label="Fechar banner">×</button>
 
-                <div class="banner-header">
-                    <div class="banner-icone">🎁</div>
-                    <div class="banner-texto">
-                        <div class="banner-titulo">Dê o CheckAprovação de presente para um amigo!</div>
-                        <div class="banner-subtitulo">Compartilhe o app e ajude alguém a conquistar a aprovação.</div>
+                    <div class="banner-header">
+                        <div class="banner-icone">🎁</div>
+                        <div class="banner-texto">
+                            <div class="banner-titulo">Dê o CheckAprovação de presente para um amigo!</div>
+                            <div class="banner-subtitulo">Compartilhe o app e ajude alguém a conquistar a aprovação.</div>
+                        </div>
                     </div>
-                </div>
 
-                <div class="banner-botoes">
-                    <a class="btn-share btn-whats" id="btnWhatsApp" href="#" target="_blank" rel="noopener noreferrer">
-                        <svg class="share-svg" viewBox="0 0 24 24" aria-hidden="true">
-                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.693.625.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.688"/>
-                        </svg>
-                        <span class="share-texto">WhatsApp</span>
-                    </a>
+                    <div class="banner-botoes">
+                        <a class="btn-share btn-whats" id="btnWhatsApp" href="#" target="_blank" rel="noopener noreferrer">
+                            <svg class="share-svg" viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.693.625.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.688"/>
+                            </svg>
+                            <span class="share-texto">WhatsApp</span>
+                        </a>
 
-                    <a class="btn-share btn-telegram" id="btnTelegram" href="#" target="_blank" rel="noopener noreferrer">
-                        <svg class="share-svg" viewBox="0 0 24 24" aria-hidden="true">
-                            <path d="M11.944 0A12 12 0 000 12a12 12 0 0012 12 12 12 0 0012-12A12 12 0 0012 0a12 12 0 00-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 01.171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
-                        </svg>
-                        <span class="share-texto">Telegram</span>
-                    </a>
+                        <a class="btn-share btn-telegram" id="btnTelegram" href="#" target="_blank" rel="noopener noreferrer">
+                            <svg class="share-svg" viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M11.944 0A12 12 0 000 12a12 12 0 0012 12 12 12 0 0012-12A12 12 0 0012 0a12 12 0 00-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 01.171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+                            </svg>
+                            <span class="share-texto">Telegram</span>
+                        </a>
 
-                    <a class="btn-share btn-email" id="btnEmail" href="#">
-                        <svg class="share-svg" viewBox="0 0 24 24" aria-hidden="true">
-                            <path d="M12 12.713l-11.985-9.713h23.97l-11.985 9.713zm0 2.574l-12-9.725v15.438h24v-15.438l-12 9.725z"/>
-                        </svg>
-                        <span class="share-texto">E-mail</span>
-                    </a>
+                        <a class="btn-share btn-email" id="btnEmail" href="#">
+                            <svg class="share-svg" viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M12 12.713l-11.985-9.713h23.97l-11.985 9.713zm0 2.574l-12-9.725v15.438h24v-15.438l-12 9.725z"/>
+                            </svg>
+                            <span class="share-texto">E-mail</span>
+                        </a>
 
-                    <a class="btn-share btn-sms" id="btnSMS" href="#">
-                        <svg class="share-svg" viewBox="0 0 24 24" aria-hidden="true">
-                            <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM7 9h10v2H7V9zm6 5H7v-2h6v2zm4-6H7V6h10v2z"/>
-                        </svg>
-                        <span class="share-texto">SMS</span>
-                    </a>
+                        <a class="btn-share btn-sms" id="btnSMS" href="#">
+                            <svg class="share-svg" viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM7 9h10v2H7V9zm6 5H7v-2h6v2zm4-6H7V6h10v2z"/>
+                            </svg>
+                            <span class="share-texto">SMS</span>
+                        </a>
 
-                    <a class="btn-share btn-instagram" id="btnInstagram" href="#">
-                        <svg class="share-svg" viewBox="0 0 24 24" aria-hidden="true">
-                            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
-                        </svg>
-                        <span class="share-texto">Instagram</span>
-                    </a>
-                </div>
+                        <a class="btn-share btn-instagram" id="btnInstagram" href="#">
+                            <svg class="share-svg" viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+                            </svg>
+                            <span class="share-texto">Instagram</span>
+                        </a>
+                    </div>
 
-                <div class="banner-contador">
-                    <span class="contador-icone">🎉</span>
-                    <span>Você já compartilhou <span class="contador-numero" id="contadorNumero">0</span> vez(es)!</span>
+                    <div class="banner-contador">
+                        <span class="contador-icone">🎉</span>
+                        <span>Você já compartilhou <span class="contador-numero" id="contadorNumero">0</span> vez(es)!</span>
+                    </div>
                 </div>
             </div>
 
-            <!-- ============ BOTÃO COMPACTO (quando banner está reduzido) ============ -->
+            <!-- ============ BOTÃO COMPACTO ============ -->
             <div class="banner-compartilhe-compacto" id="bannerCompartilheCompacto">
                 <button class="btn-compacto-share" id="btnReabrirBanner">
                     <span class="compacto-icone">🎁</span>
@@ -1452,6 +1516,22 @@
                 </div>
 
                 <div class="config-card">
+                    <div class="config-card-titulo c2">🎓 Concurso e Cargo</div>
+                    <div class="config-card-corpo">
+                        <div class="config-field">
+                            <label for="concursoInput">Concurso</label>
+                            <input type="text" id="concursoInput" placeholder="Ex: Guarda Municipal de Florianópolis" maxlength="80">
+                        </div>
+                        <div class="config-field">
+                            <label for="cargoInput">Cargo</label>
+                            <input type="text" id="cargoInput" placeholder="Ex: Guarda Municipal" maxlength="60">
+                        </div>
+                        <button class="btn-ms" id="btnAtualizarConcurso">🔄 Atualizar</button>
+                        <div class="config-card-descricao">Reflete no cabeçalho da tela inicial.</div>
+                    </div>
+                </div>
+
+                <div class="config-card">
                     <div class="config-card-titulo c2">📅 Período de Estudo</div>
                     <div class="config-card-corpo">
                         <div class="config-field">
@@ -1463,9 +1543,18 @@
                             <input type="date" id="dataFinal">
                         </div>
                         <div class="config-info">
-                            <div>Dias totais: <strong id="diasTotais">—</strong></div>
-                            <div>Meta "Lido" (60%): <strong id="diasMetaLido">—</strong></div>
-                            <div>📅 Prova: <strong id="diaProva">—</strong></div>
+                            <div class="config-info-linha">
+                                <span>📖 Leitura (100%)</span>
+                                <span><strong id="infoDiasLeitura">—</strong> <span class="meta-diaria" id="infoMetaLeitura"></span></span>
+                            </div>
+                            <div class="config-info-linha">
+                                <span>✅ Conclusão (100%)</span>
+                                <span><strong id="infoDiasConclusao">—</strong> <span class="meta-diaria" id="infoMetaConclusao"></span></span>
+                            </div>
+                            <div class="config-info-linha">
+                                <span>📅 Prova</span>
+                                <strong id="diaProva">—</strong>
+                            </div>
                         </div>
                         <button class="btn-ms" id="btnAtualizar">🔄 Atualizar Plano</button>
                     </div>
@@ -1530,7 +1619,7 @@
         <span id="toastTexto">Assunto concluído!</span>
     </div>
 
-    <!-- ============ TOAST DE COMPARTILHAMENTO (copiar link) ============ -->
+    <!-- ============ TOAST DE COMPARTILHAMENTO ============ -->
     <div class="toast-share" id="toastShare" role="status" aria-live="polite">📋 Link copiado!</div>
 
     <!-- ============ MODAL DE ANOTAÇÕES ============ -->
@@ -1611,11 +1700,16 @@
             let saudacaoFechada = false;
             let linkCompartilhar = 'https://gerlemppimentel.github.io/CheckAprov/';
             let bannerReduzido = false;
+            let concurso = 'Guarda Municipal de Florianópolis';
+            let cargo = 'Guarda Municipal';
 
             /* ============ CONSTANTES ============ */
             const LINK_COMPARTILHAR_PADRAO = 'https://gerlemppimentel.github.io/CheckAprov/';
             const MENSAGEM_COMPARTILHAR = '🎁 Olha esse app que encontrei para quem está estudando para concursos: CheckAprovação! Ele ajuda a organizar o edital, acompanhar o progresso e agendar revisões. Dá uma olhada: ';
             const CHAVE_CONTADOR_COMPARTILHAMENTOS = 'checkaprovacao_contador_compartilhamentos';
+            const DEFAULT_CONCURSO = 'Guarda Municipal de Florianópolis';
+            const DEFAULT_CARGO = 'Guarda Municipal';
+            const PERCENTUAL_TEMPO_LEITURA = 0.6;
 
             /* ============ SALVAR DADOS ============ */
             function salvarDados() {
@@ -1651,7 +1745,9 @@
                     ultimaFraseMotivacional: ultimaFraseMotivacional,
                     saudacaoFechada: saudacaoFechada,
                     linkCompartilhar: linkCompartilhar,
-                    bannerReduzido: bannerReduzido
+                    bannerReduzido: bannerReduzido,
+                    concurso: concurso,
+                    cargo: cargo
                 };
                 const json = JSON.stringify(dados);
                 if (armazenamento.disponivel) {
@@ -1705,6 +1801,8 @@
                         saudacaoFechada = parsed.saudacaoFechada || false;
                         linkCompartilhar = parsed.linkCompartilhar || LINK_COMPARTILHAR_PADRAO;
                         bannerReduzido = parsed.bannerReduzido || false;
+                        concurso = parsed.concurso || DEFAULT_CONCURSO;
+                        cargo = parsed.cargo || DEFAULT_CARGO;
                         if (nomeUsuario) document.getElementById('nomeUsuario').value = nomeUsuario;
                         if (dataInicial) document.getElementById('dataInicial').value = dataInicial;
                         if (dataFinal) document.getElementById('dataFinal').value = dataFinal;
@@ -1712,6 +1810,8 @@
                         document.getElementById('usarDataSistema').checked = usarDataSistema;
                         document.getElementById('modoEscuroToggle').checked = modoEscuroAtivo;
                         document.getElementById('linkCompartilhar').value = linkCompartilhar;
+                        document.getElementById('concursoInput').value = concurso;
+                        document.getElementById('cargoInput').value = cargo;
                         if (modoEscuroAtivo) document.body.classList.add('dark-mode');
                         atualizarEstadoDataSimulada();
                         aplicarEstadoSaudacao();
@@ -1733,6 +1833,14 @@
             function aplicarModoEscuro() {
                 if (modoEscuroAtivo) document.body.classList.add('dark-mode');
                 else document.body.classList.remove('dark-mode');
+            }
+
+            /* ============ HEADER DINÂMICO ============ */
+            function atualizarHeaderConcurso() {
+                const linha2 = document.getElementById('headerConcurso');
+                const linha3 = document.getElementById('headerCargo');
+                if (linha2) linha2.textContent = 'Concurso ' + (concurso || DEFAULT_CONCURSO);
+                if (linha3) linha3.textContent = '👔 Cargo: ' + (cargo || DEFAULT_CARGO);
             }
 
             /* ============ AVISO PERSISTÊNCIA ============ */
@@ -1763,6 +1871,12 @@
                 return null;
             }
 
+            function calcularDiasLeitura() {
+                const diasTotais = calcularDiasTotais();
+                if (!diasTotais || diasTotais <= 0) return null;
+                return Math.ceil(diasTotais * PERCENTUAL_TEMPO_LEITURA);
+            }
+
             function calcularDiasPassados() {
                 if (!dataInicial) return 0;
                 const hoje = obterDataAtual();
@@ -1784,6 +1898,33 @@
                 if (!dataProva) return null;
                 const hoje = obterDataAtual();
                 return Math.ceil((dataProva.getTime() - hoje.getTime()) / (1000*60*60*24));
+            }
+
+            /* ============ METAS DIÁRIAS ============ */
+            function calcularMetaLeituraDiaria() {
+                const diasLeitura = calcularDiasLeitura();
+                if (!diasLeitura || diasLeitura <= 0) return 0;
+                return Math.ceil(TOTAL_ASSUNTOS / diasLeitura);
+            }
+
+            function calcularMetaConclusaoDiaria() {
+                const diasTotais = calcularDiasTotais();
+                if (!diasTotais || diasTotais <= 0) return 0;
+                return Math.ceil(TOTAL_ASSUNTOS / diasTotais);
+            }
+
+            function calcularMetaLeituraAteHoje() {
+                const meta = calcularMetaLeituraDiaria();
+                if (!meta) return 0;
+                const diasPassados = calcularDiasPassados();
+                return Math.min(TOTAL_ASSUNTOS, Math.ceil(meta * diasPassados));
+            }
+
+            function calcularMetaConclusaoAteHoje() {
+                const meta = calcularMetaConclusaoDiaria();
+                if (!meta) return 0;
+                const diasPassados = calcularDiasPassados();
+                return Math.min(TOTAL_ASSUNTOS, Math.ceil(meta * diasPassados));
             }
 
             /* ============ SAUDAÇÃO TEXTO ============ */
@@ -1979,6 +2120,8 @@
 
             const TOTAL_ASSUNTOS = Object.values(assuntos).reduce(function(acc, arr) { return acc + arr.length; }, 0);
             const CIRCUNFERENCIA_PIZZA = 326.7;
+            const RAIO_PIZZA = 52;
+            const RAIO_PONTEIRO_INTERNO = 44;
 
             /* ============ REFERÊNCIAS DOM ============ */
             const telaPrincipal = document.getElementById('telaPrincipal');
@@ -1990,16 +2133,21 @@
             const btnVoltarRevisoes = document.getElementById('btnVoltarRevisoes');
             const btnVoltarRevisoesRodape = document.getElementById('btnVoltarRevisoesRodape');
             const btnAtualizar = document.getElementById('btnAtualizar');
+            const btnAtualizarConcurso = document.getElementById('btnAtualizarConcurso');
             const btnResetar = document.getElementById('btnResetar');
             const btnResetGeral = document.getElementById('btnResetGeral');
             const nomeUsuarioInput = document.getElementById('nomeUsuario');
+            const concursoInput = document.getElementById('concursoInput');
+            const cargoInput = document.getElementById('cargoInput');
             const dataInicialInput = document.getElementById('dataInicial');
             const dataFinalInput = document.getElementById('dataFinal');
             const dataSimuladaInput = document.getElementById('dataSimulada');
             const usarDataSistemaCheckbox = document.getElementById('usarDataSistema');
             const modoEscuroToggle = document.getElementById('modoEscuroToggle');
-            const diasTotaisEl = document.getElementById('diasTotais');
-            const diasMetaLidoEl = document.getElementById('diasMetaLido');
+            const infoDiasLeituraEl = document.getElementById('infoDiasLeitura');
+            const infoDiasConclusaoEl = document.getElementById('infoDiasConclusao');
+            const infoMetaLeituraEl = document.getElementById('infoMetaLeitura');
+            const infoMetaConclusaoEl = document.getElementById('infoMetaConclusao');
             const diaProvaEl = document.getElementById('diaProva');
             const conteudoPrincipal = document.getElementById('conteudoPrincipal');
             const numeroDiasProva = document.getElementById('numeroDiasProva');
@@ -2013,13 +2161,19 @@
             const farolIcon = document.getElementById('farolIcon');
             const farolTexto = document.getElementById('farolTexto');
             const farolDetalhe = document.getElementById('farolDetalhe');
-            const pizzaLido = document.getElementById('pizzaLido');
+            const pizzaLidoFill = document.getElementById('pizzaLidoFill');
+            const pizzaLidoPrev = document.getElementById('pizzaLidoPrev');
+            const pizzaLidoReal = document.getElementById('pizzaLidoReal');
             const pizzaLidoPercentual = document.getElementById('pizzaLidoPercentual');
             const pizzaLidoContagem = document.getElementById('pizzaLidoContagem');
+            const pizzaLidoBadge = document.getElementById('pizzaLidoBadge');
             const pizzaLidoInfo = document.getElementById('pizzaLidoInfo');
-            const pizzaConcluido = document.getElementById('pizzaConcluido');
+            const pizzaConcluidoFill = document.getElementById('pizzaConcluidoFill');
+            const pizzaConcluidoPrev = document.getElementById('pizzaConcluidoPrev');
+            const pizzaConcluidoReal = document.getElementById('pizzaConcluidoReal');
             const pizzaConcluidoPercentual = document.getElementById('pizzaConcluidoPercentual');
             const pizzaConcluidoContagem = document.getElementById('pizzaConcluidoContagem');
+            const pizzaConcluidoBadge = document.getElementById('pizzaConcluidoBadge');
             const pizzaConcluidoInfo = document.getElementById('pizzaConcluidoInfo');
             const dashboardHorasLiquidas = document.getElementById('dashboardHorasLiquidas');
             const dashboardEngajamento = document.getElementById('dashboardEngajamento');
@@ -2069,7 +2223,7 @@
                 else { dataSimuladaInput.disabled = false; }
             }
 
-            /* ============ SCROLL PARA MÓDULO (CORRIGIDO + DESTAQUE) ============ */
+            /* ============ SCROLL PARA MÓDULO ============ */
             function scrollParaModulo(topicoId) {
                 const target = document.getElementById('modulo-' + topicoId);
                 if (!target) return;
@@ -2348,16 +2502,23 @@
 
             /* ============ CONFIG INFO ============ */
             function atualizarConfigInfo() {
-                const dias = calcularDiasTotais();
-                if (dias && dias > 0) {
-                    diasTotaisEl.textContent = dias;
-                    diasMetaLidoEl.textContent = Math.ceil(dias * 0.6);
+                const diasTotais = calcularDiasTotais();
+                const diasLeitura = calcularDiasLeitura();
+                if (diasTotais && diasTotais > 0) {
+                    const metaLeitura = calcularMetaLeituraDiaria();
+                    const metaConclusao = calcularMetaConclusaoDiaria();
+                    infoDiasLeituraEl.textContent = diasLeitura + ' dias';
+                    infoMetaLeituraEl.textContent = '(' + metaLeitura + '/dia)';
+                    infoDiasConclusaoEl.textContent = diasTotais + ' dias';
+                    infoMetaConclusaoEl.textContent = '(' + metaConclusao + '/dia)';
                     const dataProva = obterDataProva();
                     if (dataProva) diaProvaEl.textContent = dataProva.toLocaleDateString('pt-BR');
                     else diaProvaEl.textContent = '—';
                 } else {
-                    diasTotaisEl.textContent = '—';
-                    diasMetaLidoEl.textContent = '—';
+                    infoDiasLeituraEl.textContent = '—';
+                    infoMetaLeituraEl.textContent = '';
+                    infoDiasConclusaoEl.textContent = '—';
+                    infoMetaConclusaoEl.textContent = '';
                     diaProvaEl.textContent = '—';
                 }
             }
@@ -2375,28 +2536,102 @@
                 else { el.textContent = dias; textoDiasProva.textContent = 'dias até a prova'; el.className = dias > 30 ? 'prova-dias-numero verde' : dias >= 10 ? 'prova-dias-numero amarelo' : 'prova-dias-numero vermelho'; }
             }
 
+            /* ============ HELPERS DE PIZZA (PROPOSTA C) ============ */
+            function calcularStatusDiff(real, prev) {
+                const diff = real - prev;
+                if (diff >= 3) return 'azul';
+                if (diff >= 0) return 'verde';
+                if (diff >= -3) return 'amarelo';
+                return 'vermelho';
+            }
+
+            function obterBadge(real, prev) {
+                const diff = real - prev;
+                const classe = calcularStatusDiff(real, prev);
+                if (diff > 0) return { classe: classe, texto: '▲ +' + diff };
+                if (diff < 0) return { classe: classe, texto: '▼ ' + diff };
+                return { classe: 'verde', texto: '= em dia' };
+            }
+
+            function atualizarPizza(elementos, real, prev) {
+                const pctReal = (real / TOTAL_ASSUNTOS) * 100;
+                const pctPrev = (prev / TOTAL_ASSUNTOS) * 100;
+                const status = calcularStatusDiff(real, prev);
+                const offset = CIRCUNFERENCIA_PIZZA * (1 - pctReal / 100);
+
+                // Preenche arco realizado
+                elementos.fill.setAttribute('stroke-dashoffset', offset);
+                elementos.fill.setAttribute('class', 'pizza-fill ' + elementos.fillClass + ' status-' + status);
+
+                // Posiciona ponteiro de previsto
+                const anguloPrev = (pctPrev / 100) * 360 - 90;
+                const rad = (anguloPrev * Math.PI) / 180;
+                const cxIn = 60 + RAIO_PONTEIRO_INTERNO * Math.cos(rad);
+                const cyIn = 60 + RAIO_PONTEIRO_INTERNO * Math.sin(rad);
+                const cxOut = 60 + (RAIO_PIZZA + 8) * Math.cos(rad);
+                const cyOut = 60 + (RAIO_PIZZA + 8) * Math.sin(rad);
+                elementos.prev.setAttribute('x1', cxIn);
+                elementos.prev.setAttribute('y1', cyIn);
+                elementos.prev.setAttribute('x2', cxOut);
+                elementos.prev.setAttribute('y2', cyOut);
+
+                // Posiciona bolinha de realizado
+                const anguloReal = (pctReal / 100) * 360 - 90;
+                const radR = (anguloReal * Math.PI) / 180;
+                const cxR = 60 + RAIO_PIZZA * Math.cos(radR);
+                const cyR = 60 + RAIO_PIZZA * Math.sin(radR);
+                elementos.real.setAttribute('cx', cxR);
+                elementos.real.setAttribute('cy', cyR);
+                elementos.real.setAttribute('class', 'pizza-ponteiro-realizado ' + (real >= prev ? 'ok' : 'atras'));
+
+                // Centro
+                elementos.percentual.textContent = Math.round(pctReal) + '%';
+                elementos.contagem.textContent = real + '/' + TOTAL_ASSUNTOS;
+
+                // Badge
+                const badge = obterBadge(real, prev);
+                elementos.badge.textContent = badge.texto;
+                elementos.badge.className = 'pizza-centro-badge ' + badge.classe;
+
+                // Info abaixo
+                elementos.info.innerHTML = 'Real <strong>' + real + '</strong> · Prev <strong>' + prev + '</strong>';
+            }
+
             /* ============ GRÁFICO DE STATUS (FAROL + PIZZAS) ============ */
             function atualizarGraficoStatus() {
                 const diasTotais = calcularDiasTotais();
                 const lidosAtual = contarPorTipo('Lido');
                 const concluidosAtual = contarPorTipo('Concluido');
-                const pctLeitura = TOTAL_ASSUNTOS > 0 ? (lidosAtual / TOTAL_ASSUNTOS) * 100 : 0;
-                const pctConclusao = TOTAL_ASSUNTOS > 0 ? (concluidosAtual / TOTAL_ASSUNTOS) * 100 : 0;
 
-                const offsetLido = CIRCUNFERENCIA_PIZZA * (1 - pctLeitura / 100);
-                pizzaLido.style.strokeDashoffset = offsetLido;
-                pizzaLidoPercentual.textContent = Math.round(pctLeitura) + '%';
-                pizzaLidoContagem.textContent = lidosAtual + '/' + TOTAL_ASSUNTOS;
-                pizzaLidoInfo.textContent = (TOTAL_ASSUNTOS - lidosAtual) + ' assuntos restantes';
+                // Pizzas
+                const metaLeituraAteHoje = calcularMetaLeituraAteHoje();
+                const metaConclusaoAteHoje = calcularMetaConclusaoAteHoje();
 
-                const offsetConcluido = CIRCUNFERENCIA_PIZZA * (1 - pctConclusao / 100);
-                pizzaConcluido.style.strokeDashoffset = offsetConcluido;
-                pizzaConcluidoPercentual.textContent = Math.round(pctConclusao) + '%';
-                pizzaConcluidoContagem.textContent = concluidosAtual + '/' + TOTAL_ASSUNTOS;
-                pizzaConcluidoInfo.textContent = (TOTAL_ASSUNTOS - concluidosAtual) + ' assuntos restantes';
+                atualizarPizza({
+                    fill: pizzaLidoFill,
+                    fillClass: 'pizza-fill-lido',
+                    prev: pizzaLidoPrev,
+                    real: pizzaLidoReal,
+                    percentual: pizzaLidoPercentual,
+                    contagem: pizzaLidoContagem,
+                    badge: pizzaLidoBadge,
+                    info: pizzaLidoInfo
+                }, lidosAtual, metaLeituraAteHoje);
+
+                atualizarPizza({
+                    fill: pizzaConcluidoFill,
+                    fillClass: 'pizza-fill-concluido',
+                    prev: pizzaConcluidoPrev,
+                    real: pizzaConcluidoReal,
+                    percentual: pizzaConcluidoPercentual,
+                    contagem: pizzaConcluidoContagem,
+                    badge: pizzaConcluidoBadge,
+                    info: pizzaConcluidoInfo
+                }, concluidosAtual, metaConclusaoAteHoje);
 
                 atualizarDiasProva();
 
+                // Farol: baseado na META DE LEITURA
                 if (!diasTotais || diasTotais <= 0 || !dataInicial || !dataFinal) {
                     cardFarol.className = 'progresso-card card-farol farol-verde';
                     farolIcon.textContent = '🟢';
@@ -2409,25 +2644,30 @@
                 const dataIni = new Date(dataInicial + 'T00:00:00');
                 const dataFim = new Date(dataFinal + 'T00:00:00');
                 const diasPassados = calcularDiasPassados();
+                const metaLeituraDiaria = calcularMetaLeituraDiaria();
                 let statusFarol = 'verde';
                 let textoFarol = 'Em dia';
-                let detalhe = '';
+                let detalhe = 'Leitura: ' + lidosAtual + '/' + metaLeituraAteHoje + ' até hoje • Meta: ' + metaLeituraDiaria + '/dia';
 
                 if (hoje < dataIni) {
                     textoFarol = 'Aguardando';
                     detalhe = 'Início em ' + dataInicial.split('-').reverse().join('/');
-                } else if (hoje > dataFim) {
+                    cardFarol.className = 'progresso-card card-farol farol-azul';
+                    farolIcon.textContent = '🔵';
+                    farolTexto.textContent = textoFarol;
+                    farolDetalhe.textContent = detalhe;
+                    return;
+                }
+
+                if (hoje > dataFim) {
                     if (concluidosAtual >= TOTAL_ASSUNTOS) { statusFarol = 'azul'; textoFarol = 'Concluído'; detalhe = 'Todos os assuntos concluídos!'; }
                     else { statusFarol = 'vermelho'; textoFarol = 'Prazo encerrado'; detalhe = 'Faltam ' + (TOTAL_ASSUNTOS - concluidosAtual) + ' conclusões.'; }
                 } else {
-                    const progressoConclusaoEsperado = diasTotais > 0 ? Math.min(1, diasPassados / diasTotais) : 0;
-                    const esperadosConclusao = Math.floor(TOTAL_ASSUNTOS * progressoConclusaoEsperado);
-                    let diff = concluidosAtual - esperadosConclusao;
-                    diff = Math.max(-50, Math.min(50, diff));
-                    if (diff <= -10) { statusFarol = 'vermelho'; textoFarol = 'Atrasado ' + Math.abs(diff) + ' assuntos'; }
-                    else if (diff <= -1) { statusFarol = 'amarelo'; textoFarol = 'Atrasado ' + Math.abs(diff) + ' assuntos'; }
-                    else if (diff >= 1) { statusFarol = 'azul'; textoFarol = 'Adiantado ' + diff + ' assuntos'; }
-                    detalhe = 'Conclusão: ' + concluidosAtual + '/' + TOTAL_ASSUNTOS + ' • Dia ' + diasPassados + ' de ' + diasTotais;
+                    const diffLeitura = lidosAtual - metaLeituraAteHoje;
+                    if (diffLeitura >= 3) { statusFarol = 'azul'; textoFarol = 'Adiantado ' + diffLeitura + ' assuntos'; }
+                    else if (diffLeitura >= 0) { statusFarol = 'verde'; textoFarol = 'Em dia'; }
+                    else if (diffLeitura >= -3) { statusFarol = 'amarelo'; textoFarol = 'Atrasado ' + Math.abs(diffLeitura) + ' assuntos'; }
+                    else { statusFarol = 'vermelho'; textoFarol = 'Muito atrasado ' + Math.abs(diffLeitura) + ' assuntos'; }
                 }
 
                 cardFarol.className = 'progresso-card card-farol farol-' + statusFarol;
@@ -2569,14 +2809,15 @@
                 htmlTempo += '</div>';
                 dashboardTempoEstudo.innerHTML = htmlTempo;
 
+                // Cobertura do Edital — ORDENADA POR CONCLUSÃO (maior → menor)
                 let htmlCob = '';
                 const dadosCob = modulos.map(function(modulo) {
                     const total = contarAssuntosModulo(modulo.chave);
-                    const lidos = contarPorTipo('Lido', modulo.chave);
                     const concluidos = contarPorTipo('Concluido', modulo.chave);
-                    const percentualLeitura = total > 0 ? Math.round((lidos / total) * 100) : 0;
-                    return { ...modulo, total: total, lidos: lidos, concluidos: concluidos, percentual: percentualLeitura };
+                    const percentualConclusao = total > 0 ? Math.round((concluidos / total) * 100) : 0;
+                    return { ...modulo, total: total, concluidos: concluidos, percentual: percentualConclusao };
                 });
+                dadosCob.sort(function(a, b) { return b.percentual - a.percentual; });
                 dadosCob.forEach(function(modulo) {
                     let classeBarra = '';
                     if (modulo.percentual >= 100) classeBarra = 'dourado';
@@ -2920,6 +3161,7 @@
                                         renderizarRevisoesPendentes();
                                         renderizarRecomendacao();
                                         renderizarRevisaoEspacada();
+                                        atualizarGraficoStatus();
                                     });
                                 } else if (tipo === 'Exercitado') {
                                     input.addEventListener('change', function() {
@@ -3241,6 +3483,18 @@
                 mostrarTela('principal');
             });
 
+            btnAtualizarConcurso.addEventListener('click', function() {
+                const novoConcurso = concursoInput.value.trim();
+                const novoCargo = cargoInput.value.trim();
+                concurso = novoConcurso || DEFAULT_CONCURSO;
+                cargo = novoCargo || DEFAULT_CARGO;
+                concursoInput.value = concurso;
+                cargoInput.value = cargo;
+                salvarDados();
+                atualizarHeaderConcurso();
+                mostrarToast('✅', 'Concurso e cargo atualizados!');
+            });
+
             /* ============ SALVAR LINK COMPARTILHAR ============ */
             btnSalvarLink.addEventListener('click', function() {
                 const novoLink = linkCompartilharInput.value.trim();
@@ -3334,7 +3588,7 @@
             });
 
             btnResetGeral.addEventListener('click', function() {
-                if (confirm('⚠️ ATENÇÃO!\n\nTem certeza que deseja apagar TODOS os dados e voltar ao estado inicial?\n\nEsta ação não pode ser desfeita. Serão apagados:\n- Nome do usuário\n- Datas inicial e final\n- Data simulada\n- Modo escuro\n- Progresso de leitura\n- Anotações\n- Tempo de estudo\n- Notificações\n- Revisões espaçadas\n- Estado da caixa de saudação\n- Link de compartilhamento\n- Estado do banner Compartilhe')) {
+                if (confirm('⚠️ ATENÇÃO!\n\nTem certeza que deseja apagar TODOS os dados e voltar ao estado inicial?\n\nEsta ação não pode ser desfeita. Serão apagados:\n- Nome do usuário\n- Concurso e cargo\n- Datas inicial e final\n- Data simulada\n- Modo escuro\n- Progresso de leitura\n- Anotações\n- Tempo de estudo\n- Notificações\n- Revisões espaçadas\n- Estado da caixa de saudação\n- Link de compartilhamento\n- Estado do banner Compartilhe')) {
                     estadoCheckboxes = {};
                     ultimasAtividades = {};
                     notificacoes = [];
@@ -3358,6 +3612,8 @@
                     cronometroPausaAcumulada = 0;
                     cronometroPausaInicio = null;
                     nomeUsuario = '';
+                    concurso = DEFAULT_CONCURSO;
+                    cargo = DEFAULT_CARGO;
                     dataInicial = '';
                     dataFinal = '';
                     dataSimulada = '';
@@ -3368,6 +3624,8 @@
                     bannerReduzido = false;
                     if (cronometroInterval) clearInterval(cronometroInterval);
                     nomeUsuarioInput.value = '';
+                    concursoInput.value = concurso;
+                    cargoInput.value = cargo;
                     dataInicialInput.value = '';
                     dataFinalInput.value = '';
                     dataSimuladaInput.value = '';
@@ -3379,6 +3637,7 @@
                     aplicarEstadoSaudacao();
                     aplicarEstadoBanner();
                     atualizarLinksCompartilhamento();
+                    atualizarHeaderConcurso();
                     salvarDados();
                     renderizarTopicos();
                     renderizarModulos();
@@ -3405,12 +3664,15 @@
                 carregarDados();
                 aplicarModoEscuro();
                 if (nomeUsuario) nomeUsuarioInput.value = nomeUsuario;
+                concursoInput.value = concurso;
+                cargoInput.value = cargo;
                 if (dataInicial) dataInicialInput.value = dataInicial;
                 if (dataFinal) dataFinalInput.value = dataFinal;
                 if (dataSimulada) dataSimuladaInput.value = dataSimulada;
                 usarDataSistemaCheckbox.checked = usarDataSistema;
                 modoEscuroToggle.checked = modoEscuroAtivo;
                 linkCompartilharInput.value = linkCompartilhar;
+                atualizarHeaderConcurso();
                 atualizarLinksCompartilhamento();
                 contadorNumero.textContent = obterContadorCompartilhamentos();
                 aplicarEstadoBanner();
