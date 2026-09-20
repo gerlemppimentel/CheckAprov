@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
-    <title>CheckAprovação v0.62 | Guarda Municipal Florianópolis</title>
+    <title>CheckAprovação v0.63 | Guarda Municipal Florianópolis</title>
     <meta name="theme-color" content="#0067b8">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📋</text></svg>">
     <style>
@@ -85,7 +85,101 @@
             --cor-instagram-dark: #b8235a;
         }
 
-        /* ============ DARK MODE ============ */
+        /* ============ TEMA SUAVE (ALTERAÇÃO 22) ============ */
+        body.tema-suave {
+            --ms-blue: #8fc4ec;
+            --ms-blue-dark: #b0d5f0;
+            --ms-blue-light: #34495e;
+            --ms-blue-hover: #a2cff0;
+            --ms-blue-pressed: #7aafd6;
+            --ms-green: #92d492;
+            --ms-green-dark: #6eb86e;
+            --ms-green-light: #2e4530;
+            --ms-yellow: #f0cf6a;
+            --ms-yellow-dark: #d4b04a;
+            --ms-yellow-light: #554a24;
+            --ms-red: #ec8a8a;
+            --ms-red-dark: #d66a6a;
+            --ms-red-light: #553030;
+            --ms-gold: #e0c46a;
+            --ms-gold-light: #554a24;
+            --ms-gold-dark: #c4a84a;
+            --ms-orange: #ecaa76;
+            --ms-orange-light: #553a24;
+            --ms-orange-dark: #d18a5e;
+            --ms-gray-50:  #2a3138;
+            --ms-gray-100: #333b42;
+            --ms-gray-200: #3a4147;
+            --ms-gray-300: #4f585f;
+            --ms-gray-400: #6e777f;
+            --ms-gray-500: #9ba5ad;
+            --ms-gray-600: #b8c0c7;
+            --ms-gray-700: #d8dee3;
+            --ms-gray-800: #ecf1f5;
+            --ms-gray-900: #ffffff;
+            --surface: #4f585f;
+            --surface-alt: #454d54;
+            --surface-hover: #5a646c;
+            --surface-pressed: #3e454b;
+            --border: #6e777f;
+            --border-strong: #8a949c;
+            background-color: #3a4147;
+            color: #ffffff;
+            --shadow-2: 0 1px 3px rgba(0,0,0,0.40), 0 0 3px rgba(0,0,0,0.30);
+            --shadow-4: 0 2px 6px rgba(0,0,0,0.45), 0 0 3px rgba(0,0,0,0.32);
+            --shadow-8: 0 4px 12px rgba(0,0,0,0.50), 0 0 4px rgba(0,0,0,0.35);
+            --shadow-16: 0 8px 20px rgba(0,0,0,0.55), 0 0 6px rgba(0,0,0,0.38);
+            --shadow-28: 0 14px 32px rgba(0,0,0,0.60), 0 0 10px rgba(0,0,0,0.42);
+        }
+
+        /* ============ TEMA ESCURO (ALTERAÇÃO 22 + 23) ============ */
+        body.tema-escuro {
+            --ms-blue: #4cc2ff;
+            --ms-blue-dark: #82c7ff;
+            --ms-blue-light: #1a3a5c;
+            --ms-blue-hover: #5ccaff;
+            --ms-blue-pressed: #3ab0e8;
+            --ms-green: #6ccb5f;
+            --ms-green-dark: #4caf50;
+            --ms-green-light: #1e3a2a;
+            --ms-yellow: #ffd54f;
+            --ms-yellow-dark: #e6b800;
+            --ms-yellow-light: #4a3f1a;
+            --ms-red: #ff6b6b;
+            --ms-red-dark: #e53935;
+            --ms-red-light: #4a2020;
+            --ms-gold: #e6c35c;
+            --ms-gold-light: #4a3f1a;
+            --ms-gold-dark: #d4af37;
+            --ms-orange: #ffa76b;
+            --ms-orange-light: #4a2a1a;
+            --ms-orange-dark: #ff8c42;
+            --ms-gray-50: #1a1a1a;
+            --ms-gray-100: #1f1f1f;
+            --ms-gray-200: #242424;
+            --ms-gray-300: #333333;
+            --ms-gray-400: #4a4a4a;
+            --ms-gray-500: #7a7a7a;
+            --ms-gray-600: #909090;
+            --ms-gray-700: #aaaaaa;
+            --ms-gray-800: #cccccc;
+            --ms-gray-900: #f0f0f0;
+            --surface: #1e1e1e;
+            --surface-alt: #1a1a1a;
+            --surface-hover: #2a2a2a;
+            --surface-pressed: #333333;
+            --border: #333333;
+            --border-strong: #4a4a4a;
+            background-color: #111111;
+            color: #e0e0e0;
+            --shadow-2: 0 1px 2px rgba(0,0,0,0.4), 0 0 2px rgba(0,0,0,0.3);
+            --shadow-4: 0 2px 4px rgba(0,0,0,0.4), 0 0 2px rgba(0,0,0,0.3);
+            --shadow-8: 0 4px 8px rgba(0,0,0,0.5), 0 0 2px rgba(0,0,0,0.4);
+            --shadow-16: 0 8px 16px rgba(0,0,0,0.5), 0 0 2px rgba(0,0,0,0.4);
+            --shadow-28: 0 14px 28px rgba(0,0,0,0.6), 0 0 8px rgba(0,0,0,0.4);
+        }
+
+        /* Compatibilidade: .dark-mode continua funcionando como tema escuro */
         body.dark-mode {
             --ms-blue: #4cc2ff;
             --ms-blue-dark: #82c7ff;
@@ -163,7 +257,16 @@
         .tela.ativa { display: block; animation: fadeInTela var(--dur-slow) var(--ease-decelerate); }
         @keyframes fadeInTela { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 
-        #telaDashboard.ativa { display: flex; flex-direction: column; height: 100vh; padding: 8px; box-sizing: border-box; overflow: hidden; }
+        /* ALTERAÇÃO 26: Dashboard cabe em notebook 14" sem corte */
+        #telaDashboard.ativa {
+            display: flex;
+            flex-direction: column;
+            height: calc(100vh - 24px);
+            max-height: calc(100vh - 24px);
+            padding: 0;
+            box-sizing: border-box;
+            overflow: hidden;
+        }
 
         /* ============ SEÇÃO TÍTULOS ============ */
         .secao-titulo {
@@ -184,7 +287,7 @@
         .secao-titulo.revisao { background: var(--ms-green-light); color: var(--ms-green); }
         .secao-titulo.modulos { background: var(--ms-gray-200); color: var(--ms-gray-700); }
         .secao-titulo.checklist { background: var(--ms-blue-light); color: var(--ms-blue); }
-        body.dark-mode .secao-titulo.modulos { background: #2a2a2a; color: #aaa; }
+        body.tema-escuro .secao-titulo.modulos, body.dark-mode .secao-titulo.modulos { background: #2a2a2a; color: #aaa; }
 
         /* ============ UTILITÁRIOS ============ */
         .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
@@ -205,7 +308,7 @@
         .topo-unificado::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, #4cc2ff, #82c7ff, #4cc2ff); z-index: 2; }
 
         .topo-header { background: var(--ms-blue); color: #fff; padding: 14px 16px; position: relative; display: flex; flex-direction: column; gap: 4px; transition: background var(--dur-slow) var(--ease-standard); }
-        body.dark-mode .topo-header { background: #1a3a5c; }
+        body.tema-escuro .topo-header, body.dark-mode .topo-header { background: #1a3a5c; }
         .topo-header-linha-1 { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
         .topo-header-btn-menu {
             background: rgba(255,255,255,0.2);
@@ -265,19 +368,16 @@
             animation: pulseBadge 1.5s infinite;
             box-shadow: 0 0 0 2px var(--ms-blue);
         }
-        body.dark-mode .topo-header-sino-badge { box-shadow: 0 0 0 2px #1a3a5c; }
+        body.tema-escuro .topo-header-sino-badge, body.dark-mode .topo-header-sino-badge { box-shadow: 0 0 0 2px #1a3a5c; }
         @keyframes pulseBadge { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.08); } }
         .topo-header-linha-2 { font-size: 0.72rem; opacity: 0.9; padding-left: 46px; line-height: 1.3; }
         .topo-header-linha-3 { font-size: 0.7rem; font-weight: 600; background: rgba(255,255,255,0.15); display: inline-block; padding: 3px 9px; border-radius: var(--radius-sm); margin-left: 46px; margin-top: 2px; align-self: flex-start; }
 
         .topo-saudacao { padding: 14px 16px; position: relative; display: flex; flex-direction: column; gap: 2px; background: var(--ms-blue-light); transition: background var(--dur-slow) var(--ease-standard); }
-        body.dark-mode .topo-saudacao { background: #1a3a5c; }
+        body.tema-escuro .topo-saudacao, body.dark-mode .topo-saudacao { background: #1a3a5c; }
         .topo-saudacao-data { font-size: 0.75rem; font-weight: 600; color: var(--ms-blue); text-transform: capitalize; padding-right: 24px; }
-        body.dark-mode .topo-saudacao-data { color: #4cc2ff; }
         .topo-saudacao-principal { font-size: 1rem; font-weight: 700; color: var(--ms-gray-900); line-height: 1.2; }
-        body.dark-mode .topo-saudacao-principal { color: #e0e0e0; }
         .topo-saudacao-frase { font-size: 0.72rem; color: var(--ms-gray-700); font-style: italic; margin-top: 3px; line-height: 1.35; }
-        body.dark-mode .topo-saudacao-frase { color: #aaa; }
         .topo-saudacao-btn-fechar {
             position: absolute;
             top: 8px;
@@ -293,8 +393,6 @@
             transition: background var(--dur-fast) var(--ease-standard), color var(--dur-fast) var(--ease-standard);
         }
         .topo-saudacao-btn-fechar:hover { background: var(--ms-gray-200); color: var(--ms-gray-900); }
-        body.dark-mode .topo-saudacao-btn-fechar { color: #aaa; }
-        body.dark-mode .topo-saudacao-btn-fechar:hover { background: #333; color: #e0e0e0; }
 
         .btn-reabrir-saudacao {
             background: var(--surface);
@@ -314,13 +412,10 @@
             box-shadow: var(--shadow-2);
         }
         .btn-reabrir-saudacao:hover { background: var(--surface-hover); border-color: var(--ms-blue); }
-        body.dark-mode .btn-reabrir-saudacao { background: #2a2a2a; color: #e0e0e0; border-color: #444; }
-        body.dark-mode .btn-reabrir-saudacao:hover { background: #333; }
 
         @media (min-width: 768px) {
             .topo-unificado { grid-template-columns: 1fr 1.2fr; }
             .topo-header { border-right: 1px solid var(--border); }
-            body.dark-mode .topo-header { border-right-color: #333; }
         }
         @media (max-width: 767px) {
             .topo-header { padding: 12px 14px; }
@@ -355,7 +450,6 @@
         .progresso-card:hover { box-shadow: var(--shadow-8); transform: translateY(-2px); }
 
         .progresso-card-label { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; color: var(--ms-gray-700); margin-bottom: 8px; }
-        body.dark-mode .progresso-card-label { color: #aaa; }
 
         .card-farol { gap: 4px; }
         .farol-icon-grande { font-size: 2.4rem; line-height: 1; margin-bottom: 4px; animation: farolPulse 2s infinite ease-in-out; }
@@ -364,7 +458,6 @@
         @keyframes farolPulse { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.06); opacity: 0.9; } }
         .farol-texto { font-size: 0.95rem; font-weight: 700; line-height: 1.2; }
         .farol-status-detalhe { font-size: 0.65rem; color: var(--ms-gray-700); margin-top: 4px; line-height: 1.35; }
-        body.dark-mode .farol-status-detalhe { color: #aaa; }
         .card-farol.farol-verde { background: linear-gradient(180deg, var(--ms-green-light) 0%, var(--surface) 100%); border-color: var(--ms-green); }
         .card-farol.farol-verde .farol-texto { color: var(--ms-green); }
         .card-farol.farol-amarelo { background: linear-gradient(180deg, var(--ms-yellow-light) 0%, var(--surface) 100%); border-color: var(--ms-yellow); }
@@ -373,23 +466,21 @@
         .card-farol.farol-vermelho .farol-texto { color: var(--ms-red); }
         .card-farol.farol-azul { background: linear-gradient(180deg, var(--ms-blue-light) 0%, var(--surface) 100%); border-color: var(--ms-blue); }
         .card-farol.farol-azul .farol-texto { color: var(--ms-blue); }
-        body.dark-mode .card-farol.farol-verde { background: linear-gradient(180deg, #1e3a2a 0%, var(--surface) 100%); }
-        body.dark-mode .card-farol.farol-amarelo { background: linear-gradient(180deg, #4a3f1a 0%, var(--surface) 100%); }
-        body.dark-mode .card-farol.farol-vermelho { background: linear-gradient(180deg, #4a2020 0%, var(--surface) 100%); }
-        body.dark-mode .card-farol.farol-azul { background: linear-gradient(180deg, #1a3a5c 0%, var(--surface) 100%); }
+        body.tema-escuro .card-farol.farol-verde, body.dark-mode .card-farol.farol-verde { background: linear-gradient(180deg, #1e3a2a 0%, var(--surface) 100%); }
+        body.tema-escuro .card-farol.farol-amarelo, body.dark-mode .card-farol.farol-amarelo { background: linear-gradient(180deg, #4a3f1a 0%, var(--surface) 100%); }
+        body.tema-escuro .card-farol.farol-vermelho, body.dark-mode .card-farol.farol-vermelho { background: linear-gradient(180deg, #4a2020 0%, var(--surface) 100%); }
+        body.tema-escuro .card-farol.farol-azul, body.dark-mode .card-farol.farol-azul { background: linear-gradient(180deg, #1a3a5c 0%, var(--surface) 100%); }
 
         .card-pizza { gap: 4px; }
         .pizza-container { width: 120px; height: 120px; position: relative; margin: 2px 0; }
         .pizza-svg { width: 100%; height: 100%; overflow: visible; }
         .pizza-svg .pizza-bg { fill: none; stroke: var(--ms-gray-300); stroke-width: 14; }
-        body.dark-mode .pizza-svg .pizza-bg { stroke: #333; }
         .pizza-svg .pizza-fill { fill: none; stroke-width: 14; stroke-linecap: round; transition: stroke-dashoffset 0.6s var(--ease-decelerate); }
         .pizza-svg .pizza-fill.status-azul { stroke: url(#gradStatusAzul); }
         .pizza-svg .pizza-fill.status-verde { stroke: url(#gradStatusVerde); }
         .pizza-svg .pizza-fill.status-amarelo { stroke: url(#gradStatusAmarelo); }
         .pizza-svg .pizza-fill.status-vermelho { stroke: url(#gradStatusVermelho); }
         .pizza-svg .pizza-ponteiro-previsto { stroke: var(--ms-gray-900); stroke-width: 3.5; stroke-linecap: round; opacity: 0.85; }
-        body.dark-mode .pizza-svg .pizza-ponteiro-previsto { stroke: #e0e0e0; }
         .pizza-svg .pizza-ponteiro-realizado { stroke: var(--surface); stroke-width: 1.5; }
         .pizza-svg .pizza-ponteiro-realizado.ok { fill: #4caf50; }
         .pizza-svg .pizza-ponteiro-realizado.atras { fill: #e53935; }
@@ -407,7 +498,6 @@
         .pizza-centro-pct.lido { color: var(--ms-blue); }
         .pizza-centro-pct.concluido { color: var(--ms-green); }
         .pizza-centro-contagem { font-size: 0.62rem; color: var(--ms-gray-700); font-weight: 600; margin-top: 1px; }
-        body.dark-mode .pizza-centro-contagem { color: #aaa; }
         .pizza-centro-badge {
             font-size: 0.58rem;
             font-weight: 800;
@@ -423,21 +513,16 @@
         .pizza-centro-badge.vermelho { background: var(--ms-red-light); color: var(--ms-red); }
 
         .pizza-info { font-size: 0.68rem; font-weight: 600; color: var(--ms-gray-700); margin-top: 4px; line-height: 1.3; }
-        body.dark-mode .pizza-info { color: #aaa; }
         .pizza-info strong { color: var(--ms-gray-900); }
-        body.dark-mode .pizza-info strong { color: #e0e0e0; }
 
         .card-prova { gap: 4px; }
         .prova-label { font-size: 0.65rem; text-transform: uppercase; font-weight: 700; color: var(--ms-gray-700); letter-spacing: 0.6px; }
-        body.dark-mode .prova-label { color: #aaa; }
         .prova-data { font-size: 0.95rem; font-weight: 700; color: var(--ms-gray-900); margin-bottom: 2px; }
-        body.dark-mode .prova-data { color: #e0e0e0; }
         .prova-dias-numero { font-size: 2.6rem; font-weight: 700; line-height: 1; color: var(--ms-blue); font-variant-numeric: tabular-nums; }
         .prova-dias-numero.verde { color: var(--ms-green); }
         .prova-dias-numero.amarelo { color: var(--ms-yellow-dark); }
         .prova-dias-numero.vermelho { color: var(--ms-red); }
         .prova-dias-texto { font-size: 0.65rem; text-transform: uppercase; font-weight: 600; color: var(--ms-gray-700); text-align: center; margin-top: 2px; }
-        body.dark-mode .prova-dias-texto { color: #aaa; }
 
         @media (max-width: 480px) {
             .progresso-card { min-height: 128px; padding: 10px; }
@@ -474,6 +559,11 @@
         .checklist-bloco { order: 2; margin-top: 0; }
         .banner-bloco-esquerda { order: 3; }
 
+        /* ALTERAÇÃO 24: No mobile, banner Compartilhe vai pro rodapé */
+        @media (max-width: 899px) {
+            .banner-bloco-esquerda { order: 99; margin-top: 16px; }
+        }
+
         @media (min-width: 900px) {
             .layout-pc {
                 display: grid;
@@ -496,6 +586,7 @@
             .coluna-direita { display: flex; flex-direction: column; gap: 12px; }
             .modulos-bloco { order: 1; }
             .checklist-bloco { order: 2; }
+            .banner-bloco-esquerda { order: 3; margin-top: 0; }
         }
 
         /* ============ CARD BASE ============ */
@@ -511,7 +602,6 @@
 
         .planejamento-card { border-left: 4px solid var(--ms-blue); }
         .planejamento-subtitulo { font-size: 0.72rem; color: var(--ms-gray-600); margin-bottom: 10px; }
-        body.dark-mode .planejamento-subtitulo { color: #aaa; }
         .recomendacao-item {
             display: flex;
             align-items: flex-start;
@@ -543,15 +633,12 @@
         .recomendacao-numero.num-3 { background: var(--ms-orange); color: #fff; }
         .recomendacao-info { flex: 1; min-width: 0; }
         .recomendacao-nome { font-size: 0.85rem; font-weight: 600; color: var(--ms-gray-900); line-height: 1.3; }
-        body.dark-mode .recomendacao-nome { color: #e0e0e0; }
         .recomendacao-desc { font-size: 0.72rem; color: var(--ms-gray-700); margin-top: 2px; line-height: 1.35; }
-        body.dark-mode .recomendacao-desc { color: #aaa; }
         .recomendacao-link { color: var(--ms-blue); font-weight: 700; text-decoration: none; cursor: pointer; transition: color var(--dur-fast) var(--ease-standard); border-bottom: 1px dotted var(--ms-blue); }
         .recomendacao-link:hover { color: var(--ms-blue-dark); }
 
         .revisao-card { border-left: 4px solid var(--ms-green); }
         .revisao-espacada-conteudo { font-size: 0.8rem; color: var(--ms-gray-700); padding: 10px 12px; background: var(--surface-alt); border-radius: var(--radius-md); text-align: center; line-height: 1.4; }
-        body.dark-mode .revisao-espacada-conteudo { background: #2a2a2a; color: #aaa; }
 
         /* ============ PROGRESSO POR MÓDULO ============ */
         .modulos-topo { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 10px; }
@@ -578,15 +665,9 @@
         .modulo-card.estagnado { border-color: var(--ms-yellow); background: linear-gradient(135deg, var(--surface) 0%, var(--ms-yellow-light) 100%); }
         .modulo-card.abandonado { border-color: var(--ms-red); background: linear-gradient(135deg, var(--surface) 0%, var(--ms-red-light) 100%); animation: pulseRed 2s infinite; }
         .modulo-card.concluido { border-color: var(--ms-gold); background: linear-gradient(135deg, var(--surface) 0%, var(--ms-gold-light) 100%); box-shadow: 0 0 10px rgba(212, 175, 55, 0.25); }
-        body.dark-mode .modulo-card.nao-iniciado { background: linear-gradient(135deg, #2a2a1a 0%, var(--surface) 100%); }
-        body.dark-mode .modulo-card.em-progresso { background: linear-gradient(135deg, #1a2a1a 0%, var(--surface) 100%); }
-        body.dark-mode .modulo-card.estagnado { background: linear-gradient(135deg, #2a2a1a 0%, var(--surface) 100%); }
-        body.dark-mode .modulo-card.abandonado { background: linear-gradient(135deg, #2a1a1a 0%, var(--surface) 100%); }
-        body.dark-mode .modulo-card.concluido { background: linear-gradient(135deg, #2a251a 0%, var(--surface) 100%); }
         @keyframes pulseRed { 0%, 100% { box-shadow: var(--shadow-2), 0 0 0 0 rgba(209, 52, 56, 0.35); } 50% { box-shadow: var(--shadow-2), 0 0 0 6px rgba(209, 52, 56, 0); } }
 
         .modulo-card .modulo-nome { font-size: 0.78rem; font-weight: 600; color: var(--ms-gray-900); margin-bottom: 8px; display: flex; align-items: center; gap: 5px; line-height: 1.25; }
-        body.dark-mode .modulo-card .modulo-nome { color: #e0e0e0; }
         .modulo-card .modulo-icon { font-size: 1.1rem; }
         .modulo-card .modulo-percentual { font-size: 1.35rem; font-weight: 700; color: var(--ms-blue); line-height: 1; margin-bottom: 6px; font-variant-numeric: tabular-nums; }
         .modulo-card.nao-iniciado .modulo-percentual, .modulo-card.em-progresso .modulo-percentual { color: var(--ms-green); }
@@ -594,9 +675,7 @@
         .modulo-card.abandonado .modulo-percentual { color: var(--ms-red); }
         .modulo-card.concluido .modulo-percentual { color: var(--ms-gold-dark); }
         .modulo-card .modulo-contagem { font-size: 0.68rem; color: var(--ms-gray-700); margin-bottom: 6px; font-weight: 600; }
-        body.dark-mode .modulo-card .modulo-contagem { color: #aaa; }
         .modulo-card .modulo-bar { height: 6px; background: var(--ms-gray-200); border-radius: var(--radius-pill); overflow: hidden; margin-bottom: 4px; }
-        body.dark-mode .modulo-card .modulo-bar { background: #333; }
         .modulo-card .modulo-bar-fill { height: 100%; border-radius: var(--radius-pill); transition: width 0.5s var(--ease-decelerate); background: var(--ms-blue); }
         .modulo-card.nao-iniciado .modulo-bar-fill, .modulo-card.em-progresso .modulo-bar-fill { background: var(--ms-green); }
         .modulo-card.estagnado .modulo-bar-fill { background: var(--ms-yellow); }
@@ -607,7 +686,6 @@
         .modulo-card .modulo-alerta.dourado { color: var(--ms-gold-dark); }
 
         .modulos-resumo { font-size: 0.72rem; color: var(--ms-gray-700); display: flex; gap: 12px; flex-wrap: wrap; }
-        body.dark-mode .modulos-resumo { color: #aaa; }
         .resumo-item { display: flex; align-items: center; gap: 4px; }
         .resumo-dot { width: 10px; height: 10px; border-radius: var(--radius-pill); display: inline-block; }
         .resumo-dot.verde { background: var(--ms-green); }
@@ -632,7 +710,7 @@
             50%  { box-shadow: 0 0 0 6px rgba(0,103,184,0.15); }
             100% { box-shadow: var(--shadow-2); }
         }
-        body.dark-mode .topic-section.destaque { animation: destaqueTopicoDark 1.6s var(--ease-decelerate); }
+        body.tema-escuro .topic-section.destaque, body.dark-mode .topic-section.destaque { animation: destaqueTopicoDark 1.6s var(--ease-decelerate); }
         @keyframes destaqueTopicoDark {
             0%   { box-shadow: 0 0 0 0 rgba(76,194,255,0.5); }
             50%  { box-shadow: 0 0 0 6px rgba(76,194,255,0.15); }
@@ -644,9 +722,20 @@
         .topic-header .topic-header-titulo { flex: 1; display: flex; align-items: center; gap: 8px; }
         .topic-header .arrow { margin-left: 8px; transition: transform var(--dur-normal) var(--ease-standard); font-size: 0.75rem; }
         .topic-header.collapsed .arrow { transform: rotate(-90deg); }
+
+        /* ALTERAÇÃO 23: títulos do checklist dessaturados no dark/suave */
+        body.tema-escuro .topic-header, body.dark-mode .topic-header { background: #1a3a5c; color: #e8ecef; }
+        body.tema-escuro .topic-header:hover, body.dark-mode .topic-header:hover { background: #24476b; }
+        body.tema-suave .topic-header { background: #34495e; color: #f5f8fa; }
+        body.tema-suave .topic-header:hover { background: #3d566f; }
+
         .subtopic-header { background: var(--ms-blue-light); color: var(--ms-blue-dark); font-weight: 600; padding: 10px 16px; font-size: 0.88rem; border-left: 4px solid var(--ms-blue); display: flex; align-items: center; gap: 8px; }
-        body.dark-mode .subtopic-header { background: #1a3a5c; color: #82c7ff; border-left-color: #4cc2ff; }
         .subtopic-header .subtopic-titulo { flex: 1; }
+
+        /* ALTERAÇÃO 23: subtópicos dessaturados no dark/suave */
+        body.tema-escuro .subtopic-header, body.dark-mode .subtopic-header { background: #223749; color: #b8c9d9; border-left-color: #4a6f94; }
+        body.tema-suave .subtopic-header { background: #3d566f; color: #d8dee3; border-left-color: #6e8ba8; }
+
         .topic-content { padding: 0; }
         .table-responsive { overflow-x: auto; -webkit-overflow-scrolling: touch; }
 
@@ -671,22 +760,26 @@
         .btn-foco-total:active { transform: scale(0.96); }
         .subtopic-header .btn-foco-total { background: var(--ms-blue); border-color: var(--ms-blue-dark); color: #fff; }
         .subtopic-header .btn-foco-total:hover { background: var(--ms-blue-hover); }
-        body.dark-mode .subtopic-header .btn-foco-total { background: #4cc2ff; border-color: #3ab0e8; color: #111; }
-        body.dark-mode .subtopic-header .btn-foco-total:hover { background: #5ccaff; }
+        body.tema-escuro .subtopic-header .btn-foco-total, body.dark-mode .subtopic-header .btn-foco-total { background: #4cc2ff; border-color: #3ab0e8; color: #111; }
+        body.tema-escuro .subtopic-header .btn-foco-total:hover, body.dark-mode .subtopic-header .btn-foco-total:hover { background: #5ccaff; }
+        body.tema-suave .subtopic-header .btn-foco-total { background: #8fc4ec; border-color: #6e8ba8; color: #1e1e1e; }
 
         table { width: 100%; border-collapse: collapse; min-width: 600px; }
         th { background: var(--ms-gray-100); color: var(--ms-gray-700); font-weight: 600; font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.4px; padding: 8px 2px; border-bottom: 2px solid var(--ms-gray-300); text-align: center; }
-        body.dark-mode th { background: #2a2a2a; color: #aaa; border-bottom-color: #444; }
+        body.tema-escuro th, body.dark-mode th { background: #2a2a2a; color: #aaa; border-bottom-color: #444; }
+        body.tema-suave th { background: #454d54; color: #d8dee3; border-bottom-color: #6e777f; }
         th.assunto-col { text-align: left; min-width: 140px; padding-left: 8px; }
         th.check-col { min-width: 32px; }
         th.anotacao-col { width: 36px; min-width: 36px; }
-        td { padding: 8px 2px; border-bottom: 1px solid var(--ms-gray-200); text-align: center; font-size: 0.78rem; vertical-align: middle; }
-        body.dark-mode td { border-bottom-color: #333; color: #e0e0e0; }
+        td { padding: 8px 2px; border-bottom: 1px solid var(--ms-gray-200); text-align: center; font-size: 0.78rem; vertical-align: middle; color: var(--ms-gray-900); }
+        body.tema-escuro td, body.dark-mode td { border-bottom-color: #333; color: #e0e0e0; }
+        body.tema-suave td { border-bottom-color: #5a646c; color: #ffffff; }
         td.assunto-col { text-align: left; padding-left: 8px; font-size: 0.75rem; line-height: 1.35; }
         td.anotacao-col { text-align: center; }
         tr { transition: background var(--dur-faster) var(--ease-standard); }
         tr:hover td { background: var(--ms-gray-100); }
-        body.dark-mode tr:hover td { background: #2a2a2a; }
+        body.tema-escuro tr:hover td, body.dark-mode tr:hover td { background: #2a2a2a; }
+        body.tema-suave tr:hover td { background: #5a646c; }
 
         .checkbox-cell { text-align: center; min-width: 32px; }
         .checkbox-cell input[type="checkbox"] { width: 17px; height: 17px; accent-color: var(--ms-blue); cursor: pointer; border-radius: var(--radius-sm); transition: transform var(--dur-faster) var(--ease-standard); }
@@ -696,25 +789,19 @@
 
         .btn-anotacao { background: none; border: none; font-size: 1rem; cursor: pointer; padding: 3px 5px; border-radius: var(--radius-sm); transition: background var(--dur-fast) var(--ease-standard), transform var(--dur-faster) var(--ease-standard); line-height: 1; }
         .btn-anotacao:hover { background: var(--ms-gray-200); transform: scale(1.15); }
-        body.dark-mode .btn-anotacao:hover { background: #333; }
+        body.tema-escuro .btn-anotacao:hover, body.dark-mode .btn-anotacao:hover { background: #333; }
+        body.tema-suave .btn-anotacao:hover { background: #5a646c; }
         .btn-anotacao.tem-anotacao { color: var(--ms-blue); font-weight: 700; }
 
-        /* ============ CRONÔMETRO ============ */
+        /* ============ CRONÔMETRO (ALTERAÇÃO 19) ============ */
         .cronometro-container { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; padding: 10px 14px; background: var(--surface-alt); border-radius: var(--radius-md); margin-bottom: 8px; border: 1px solid var(--border); transition: background var(--dur-slow) var(--ease-standard); }
-        body.dark-mode .cronometro-container { background: #2a2a2a; border-color: #444; }
         .cronometro-display { font-size: 1.25rem; font-weight: 700; color: var(--ms-blue); font-variant-numeric: tabular-nums; min-width: 108px; letter-spacing: 0.5px; font-family: var(--font-mono); }
-        body.dark-mode .cronometro-display { color: #4cc2ff; }
         .cronometro-modulo-label { font-size: 0.7rem; color: var(--ms-gray-700); font-weight: 600; }
-        body.dark-mode .cronometro-modulo-label { color: #aaa; }
         .btn-cronometro { background: var(--surface); border: 1px solid var(--border-strong); color: var(--ms-gray-900); padding: 6px 13px; border-radius: var(--radius-md); font-family: var(--ms-font); font-size: 0.75rem; font-weight: 600; cursor: pointer; transition: background var(--dur-fast) var(--ease-standard), border-color var(--dur-fast) var(--ease-standard), transform var(--dur-faster) var(--ease-standard); white-space: nowrap; }
         .btn-cronometro:hover { background: var(--surface-hover); border-color: var(--ms-blue); }
         .btn-cronometro:active { transform: scale(0.96); }
-        body.dark-mode .btn-cronometro { background: #2a2a2a; color: #e0e0e0; border-color: #444; }
-        body.dark-mode .btn-cronometro:hover { background: #333; }
         .btn-cronometro.rodando { background: var(--ms-green-light); border-color: var(--ms-green); color: var(--ms-green-dark); }
-        body.dark-mode .btn-cronometro.rodando { background: #1e3a2a; color: #6ccb5f; border-color: #2d6b2d; }
         .btn-cronometro.pausado { background: var(--ms-yellow-light); border-color: var(--ms-yellow); color: var(--ms-yellow-dark); }
-        body.dark-mode .btn-cronometro.pausado { background: #4a3f1a; color: #ffd54f; border-color: #6b5a00; }
         .btn-cronometro:disabled { opacity: 0.5; cursor: not-allowed; }
 
         /* ============ MODO FOCO TOTAL ============ */
@@ -783,7 +870,6 @@
             margin-bottom: 24px;
         }
 
-        /* ============ TABELA DO FOCO (dark, igual à principal) ============ */
         .foco-table {
             width: 100%;
             border-collapse: collapse;
@@ -870,7 +956,6 @@
         .foco-table .btn-anotacao:hover { background: #2a2a2a; transform: scale(1.15); color: #fff; }
         .foco-table .btn-anotacao.tem-anotacao { color: #4cc2ff; font-weight: 700; }
 
-        /* ============ PAINEL DIREITO (ABAS + POMODORO) ============ */
         .foco-relogio-painel {
             width: 340px;
             flex-shrink: 0;
@@ -1139,40 +1224,31 @@
         }
         .btn-sair-foco:hover { background: #1a1a1a; color: #fff; }
 
-        /* ============ MODAL ANOTAÇÕES (ALTERAÇÃO 16: z-index 9500) ============ */
+        /* ============ MODAL ANOTAÇÕES (ALTERAÇÃO 16) ============ */
         .modal-anotacao-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 9500; display: none; align-items: center; justify-content: center; padding: 20px; backdrop-filter: blur(3px); }
         .modal-anotacao-overlay.visivel { display: flex; animation: fadeInNotif var(--dur-normal) var(--ease-decelerate); }
         .modal-anotacao-content { background: var(--surface); border-radius: var(--radius-lg); box-shadow: var(--shadow-28); width: 100%; max-width: 560px; max-height: 80vh; display: flex; flex-direction: column; overflow: hidden; border: 1px solid var(--border); }
         .modal-anotacao-header { padding: 14px 18px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; background: var(--surface-alt); }
         .modal-anotacao-header h3 { font-size: 1rem; font-weight: 600; color: var(--ms-gray-900); }
-        body.dark-mode .modal-anotacao-header h3 { color: #e0e0e0; }
         .btn-fechar-modal { background: none; border: none; font-size: 1.4rem; cursor: pointer; color: var(--ms-gray-700); padding: 4px 8px; border-radius: var(--radius-sm); transition: background var(--dur-fast) var(--ease-standard); line-height: 1; }
         .btn-fechar-modal:hover { background: var(--ms-gray-200); }
-        body.dark-mode .btn-fechar-modal { color: #aaa; }
-        body.dark-mode .btn-fechar-modal:hover { background: #333; }
         .modal-anotacao-body { padding: 14px 18px; display: flex; flex-direction: column; gap: 10px; flex: 1; overflow-y: auto; }
         .modal-anotacao-assunto { font-size: 0.8rem; font-weight: 600; color: var(--ms-gray-700); margin-bottom: 4px; }
-        body.dark-mode .modal-anotacao-assunto { color: #aaa; }
 
         .anotacao-tabela { width: 100%; border-collapse: collapse; background: var(--surface-alt); border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--border); }
         .anotacao-tabela th { background: var(--ms-gray-200); color: var(--ms-gray-700); font-weight: 600; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.4px; padding: 8px 10px; border-bottom: 1px solid var(--border); text-align: left; }
-        body.dark-mode .anotacao-tabela th { background: #333; color: #aaa; }
         .anotacao-tabela th.anotacao-data-col { width: 80px; text-align: right; }
         .anotacao-tabela td { padding: 8px 10px; border-bottom: 1px solid var(--ms-gray-200); font-size: 0.8rem; color: var(--ms-gray-900); vertical-align: top; }
-        body.dark-mode .anotacao-tabela td { color: #e0e0e0; border-bottom-color: #333; }
         .anotacao-tabela tr:last-child td { border-bottom: none; }
         .anotacao-tabela .anotacao-texto { word-break: break-word; text-align: left; line-height: 1.4; }
         .anotacao-tabela .anotacao-data { white-space: nowrap; font-weight: 600; color: var(--ms-blue); text-align: right; }
         .anotacao-vazia { text-align: center; padding: 16px; color: var(--ms-gray-500); font-size: 0.8rem; }
         .btn-add-anotacao { display: inline-flex; align-items: center; gap: 6px; background: var(--ms-blue-light); border: 1px dashed var(--ms-blue); color: var(--ms-blue); padding: 8px 14px; border-radius: var(--radius-md); font-family: var(--ms-font); font-size: 0.8rem; font-weight: 600; cursor: pointer; transition: background var(--dur-fast) var(--ease-standard), color var(--dur-fast) var(--ease-standard); align-self: flex-start; }
         .btn-add-anotacao:hover { background: var(--ms-blue); color: #fff; }
-        body.dark-mode .btn-add-anotacao { background: #1a3a5c; color: #4cc2ff; border-color: #4cc2ff; }
-        body.dark-mode .btn-add-anotacao:hover { background: #0f2a44; }
         .nova-anotacao-area { display: none; flex-direction: column; gap: 8px; margin-top: 8px; }
         .nova-anotacao-area.visivel { display: flex; }
         .nova-anotacao-area textarea { width: 100%; min-height: 80px; padding: 10px 12px; border: 1px solid var(--border-strong); border-radius: var(--radius-md); font-family: var(--ms-font); font-size: 0.85rem; resize: vertical; background: var(--surface); color: var(--ms-gray-900); transition: border-color var(--dur-fast) var(--ease-standard), box-shadow var(--dur-fast) var(--ease-standard); }
         .nova-anotacao-area textarea:focus { outline: none; border-color: var(--ms-blue); box-shadow: 0 0 0 3px rgba(0,103,184,0.15); }
-        body.dark-mode .nova-anotacao-area textarea { background: #2a2a2a; border-color: #444; color: #e0e0e0; }
         .modal-anotacao-rodape { padding: 12px 18px; border-top: 1px solid var(--border); display: flex; justify-content: flex-end; gap: 8px; }
 
         /* ============ BOTÕES FLUENT 2 ============ */
@@ -1181,19 +1257,14 @@
         .btn-ms:active { background: var(--ms-blue-pressed); transform: scale(0.98); }
         .btn-ms.danger { background: var(--ms-red); }
         .btn-ms.danger:hover { background: var(--ms-red-dark); }
-        body.dark-mode .btn-ms { background: #4cc2ff; color: #111; }
-        body.dark-mode .btn-ms:hover { background: #82c7ff; }
-        body.dark-mode .btn-ms.danger { background: #ff6b6b; color: #111; }
-        body.dark-mode .btn-ms.danger:hover { background: #ff9999; }
 
-        /* ============ NOTIFICAÇÕES (ALTERAÇÃO 16: z-index 9500) ============ */
+        /* ============ NOTIFICAÇÕES (ALTERAÇÃO 16) ============ */
         .notificacoes-painel { position: fixed; top: 66px; right: 16px; width: 360px; max-width: 90vw; background: var(--surface); border-radius: var(--radius-lg); box-shadow: var(--shadow-28); z-index: 9500; display: none; overflow: hidden; max-height: 460px; border: 1px solid var(--border); }
         .notificacoes-painel.visivel { display: block; animation: fadeInNotif var(--dur-normal) var(--ease-decelerate); }
         @keyframes fadeInNotif { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
         .notificacoes-header { padding: 12px 16px; font-weight: 600; font-size: 0.9rem; border-bottom: 1px solid var(--border); background: var(--surface-alt); display: flex; justify-content: space-between; align-items: center; }
         .notificacoes-lista { overflow-y: auto; max-height: 380px; }
         .notificacao-item { padding: 10px 16px; border-bottom: 1px solid var(--ms-gray-200); display: flex; align-items: flex-start; gap: 8px; font-size: 0.8rem; transition: background var(--dur-fast) var(--ease-standard); line-height: 1.35; }
-        body.dark-mode .notificacao-item { border-bottom-color: #333; }
         .notificacao-item:hover { background: var(--surface-hover); }
         .notificacao-item .notif-icone { font-size: 1.1rem; flex-shrink: 0; line-height: 1.2; }
         .notificacao-item .notif-texto { flex: 1; min-width: 0; }
@@ -1201,67 +1272,102 @@
         .notificacao-item .notif-btn-visto:hover { background: var(--ms-blue-hover); }
         .notificacao-item.visto { opacity: 0.6; }
 
-        /* ============ TOAST (ALTERAÇÃO 16: z-index 9600) ============ */
+        /* ============ TOAST (ALTERAÇÃO 16) ============ */
         .toast-celebracao { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%) translateY(120px); background: var(--surface); border: 2px solid var(--ms-blue); border-radius: var(--radius-lg); padding: 12px 20px; box-shadow: var(--shadow-16); z-index: 9600; display: flex; align-items: center; gap: 10px; font-size: 0.9rem; font-weight: 600; color: var(--ms-gray-900); transition: transform var(--dur-slow) var(--ease-decelerate), opacity var(--dur-slow) var(--ease-standard); opacity: 0; pointer-events: none; max-width: 90vw; }
         .toast-celebracao.visivel { transform: translateX(-50%) translateY(0); opacity: 1; }
         .toast-celebracao .toast-icone { font-size: 1.5rem; }
-        body.dark-mode .toast-celebracao { background: #2a2a2a; border-color: #4cc2ff; color: #e0e0e0; }
-        body.dark-mode .toast-celebracao .toast-icone { color: #6ccb5f; }
 
         /* ============ AVISO PERSISTÊNCIA ============ */
         .aviso-persistencia { background: var(--ms-yellow-light); color: var(--ms-yellow-dark); padding: 10px 16px; border-radius: var(--radius-md); margin-bottom: 12px; font-size: 0.85rem; border: 1px solid var(--ms-yellow); display: none; align-items: center; gap: 8px; line-height: 1.35; }
         .aviso-persistencia.visivel { display: flex; }
         .aviso-persistencia .fechar-aviso { margin-left: auto; cursor: pointer; font-weight: bold; font-size: 1.2rem; background: none; border: none; color: var(--ms-yellow-dark); padding: 0 4px; }
-        body.dark-mode .aviso-persistencia { background: #3a2a1a; color: #ffd54f; border-color: #6b5a00; }
-        body.dark-mode .aviso-persistencia .fechar-aviso { color: #ffd54f; }
 
-        /* ============ DASHBOARD 3x2 ============ */
+        /* ============ DASHBOARD 3x2 (ALTERAÇÃO 26) ============ */
         .dashboard-header-mini { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; flex-shrink: 0; }
         .dashboard-header-mini h2 { font-size: 0.95rem; font-weight: 600; color: var(--ms-blue); margin: 0; }
-        .dashboard-grid-3x2 { display: grid; grid-template-columns: 1fr; gap: 10px; flex: 1; min-height: 0; overflow-y: auto; }
-        @media (min-width: 768px) { .dashboard-grid-3x2 { grid-template-columns: 1fr 1fr 1fr; grid-template-rows: minmax(0, 1fr) minmax(0, 1fr); overflow: hidden; } }
-        .dashboard-quadrante { background: var(--surface); border-radius: var(--radius-lg); box-shadow: var(--shadow-2); padding: 12px; border: 1px solid var(--border); min-width: 0; min-height: 0; display: flex; flex-direction: column; overflow: hidden; transition: background var(--dur-slow) var(--ease-standard); }
-        .dashboard-quadrante-titulo { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; padding: 4px 9px; border-radius: var(--radius-pill); display: inline-block; align-self: flex-start; flex-shrink: 0; }
+
+        .dashboard-grid-3x2 {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+            flex: 1;
+            min-height: 0;
+            overflow-y: auto;
+        }
+
+        @media (min-width: 768px) {
+            .dashboard-grid-3x2 {
+                grid-template-columns: 1fr 1fr 1fr;
+                grid-template-rows: minmax(0, 1fr) minmax(0, 1fr);
+                overflow: hidden;
+                gap: 8px;
+                min-height: 0;
+                height: 100%;
+            }
+        }
+
+        .dashboard-quadrante {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-2);
+            padding: 10px;
+            border: 1px solid var(--border);
+            min-width: 0;
+            min-height: 0;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .dashboard-quadrante-titulo {
+            font-size: 0.68rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 6px;
+            padding: 4px 9px;
+            border-radius: var(--radius-pill);
+            display: inline-block;
+            align-self: flex-start;
+            flex-shrink: 0;
+        }
         .dashboard-quadrante-titulo.q1 { background: var(--ms-blue-light); color: var(--ms-blue); }
         .dashboard-quadrante-titulo.q2 { background: var(--ms-green-light); color: var(--ms-green); }
         .dashboard-quadrante-titulo.q3 { background: var(--ms-yellow-light); color: var(--ms-yellow-dark); }
         .dashboard-quadrante-titulo.q4 { background: var(--ms-red-light); color: var(--ms-red); }
-        .dashboard-quadrante-conteudo { flex: 1; min-height: 0; overflow: hidden; display: flex; flex-direction: column; }
-        .dashboard-tempo-grid { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr 1fr; gap: 6px; flex: 1; min-height: 0; }
-        .dashboard-tempo-item { background: var(--surface-alt); border-radius: var(--radius-md); padding: 6px 4px; text-align: center; border: 1px solid var(--border); display: flex; flex-direction: column; justify-content: center; min-height: 0; }
-        body.dark-mode .dashboard-tempo-item { background: #2a2a2a; border-color: #444; }
-        .dashboard-tempo-item-label { font-size: 0.55rem; text-transform: uppercase; font-weight: 700; color: var(--ms-gray-700); margin-bottom: 2px; letter-spacing: 0.3px; }
-        body.dark-mode .dashboard-tempo-item-label { color: #aaa; }
-        .dashboard-tempo-item-valor { font-size: 0.85rem; font-weight: 700; color: var(--ms-blue); line-height: 1.1; font-variant-numeric: tabular-nums; }
-        body.dark-mode .dashboard-tempo-item-valor { color: #4cc2ff; }
+
+        .dashboard-quadrante-conteudo {
+            flex: 1;
+            min-height: 0;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
 
         /* ============ GRÁFICO COLUNAS ============ */
-        .grafico-colunas-container { display: flex; align-items: flex-end; justify-content: space-between; gap: 4px; padding: 6px 4px 2px 4px; background: var(--surface-alt); border-radius: var(--radius-md); border: 1px solid var(--border); min-height: 120px; overflow: hidden; flex: 1; }
-        body.dark-mode .grafico-colunas-container { background: #2a2a2a; border-color: #444; }
+        .grafico-colunas-container { display: flex; align-items: flex-end; justify-content: space-between; gap: 4px; padding: 6px 4px 2px 4px; background: var(--surface-alt); border-radius: var(--radius-md); border: 1px solid var(--border); min-height: 100px; overflow: hidden; flex: 1; }
         .grafico-coluna-wrapper { display: flex; flex-direction: column; align-items: center; gap: 2px; flex: 1; min-width: 0; }
         .grafico-coluna-valor { font-size: 0.55rem; font-weight: 600; color: var(--ms-gray-700); white-space: nowrap; }
-        body.dark-mode .grafico-coluna-valor { color: #aaa; }
         .grafico-coluna-stack { display: flex; flex-direction: column; align-items: center; width: 100%; max-width: 28px; }
         .grafico-coluna-liquida { width: 100%; background: linear-gradient(180deg, #6ccb5f, #4caf50); border-radius: 3px 3px 0 0; min-height: 3px; transition: height 0.5s var(--ease-decelerate); }
         .grafico-coluna-pausa { width: 100%; background: var(--ms-gray-400); min-height: 3px; transition: height 0.5s var(--ease-decelerate); }
-        body.dark-mode .grafico-coluna-pausa { background: #555; }
         .grafico-coluna-label { font-size: 0.5rem; font-weight: 700; color: var(--ms-gray-700); text-transform: uppercase; white-space: nowrap; }
-        body.dark-mode .grafico-coluna-label { color: #aaa; }
         .legenda-dashboard { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 4px; padding: 4px 8px; background: var(--surface-alt); border-radius: var(--radius-sm); border: 1px solid var(--border); font-size: 0.6rem; flex-shrink: 0; }
-        body.dark-mode .legenda-dashboard { background: #2a2a2a; border-color: #444; }
         .legenda-dashboard-item { display: flex; align-items: center; gap: 4px; color: var(--ms-gray-700); font-weight: 600; }
-        body.dark-mode .legenda-dashboard-item { color: #aaa; }
         .legenda-dot-liquido { width: 10px; height: 10px; background: #4caf50; border-radius: 2px; }
         .legenda-dot-pausa { width: 10px; height: 10px; background: var(--ms-gray-400); border-radius: 2px; }
-        body.dark-mode .legenda-dot-pausa { background: #555; }
+
+        /* ============ DASHBOARD TEMPO ============ */
+        .dashboard-tempo-grid { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr 1fr; gap: 6px; flex: 1; min-height: 0; }
+        .dashboard-tempo-item { background: var(--surface-alt); border-radius: var(--radius-md); padding: 6px 4px; text-align: center; border: 1px solid var(--border); display: flex; flex-direction: column; justify-content: center; min-height: 0; }
+        .dashboard-tempo-item-label { font-size: 0.55rem; text-transform: uppercase; font-weight: 700; color: var(--ms-gray-700); margin-bottom: 2px; letter-spacing: 0.3px; }
+        .dashboard-tempo-item-valor { font-size: 0.85rem; font-weight: 700; color: var(--ms-blue); line-height: 1.1; font-variant-numeric: tabular-nums; }
 
         /* ============ CALENDÁRIO ============ */
         .calendario-container { display: flex; flex-direction: column; gap: 3px; flex: 1; min-height: 0; }
         .calendario-titulo-mes { font-size: 0.75rem; font-weight: 700; color: var(--ms-blue); text-align: center; padding: 2px; text-transform: capitalize; }
-        body.dark-mode .calendario-titulo-mes { color: #4cc2ff; }
         .calendario-header-semana { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; }
         .calendario-header-dia { font-size: 0.55rem; font-weight: 700; color: var(--ms-gray-700); text-align: center; padding: 2px 1px; text-transform: uppercase; }
-        body.dark-mode .calendario-header-dia { color: #aaa; }
         .calendario-dias { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; flex: 1; min-height: 0; }
         .calendario-dia { border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; font-size: 0.55rem; font-weight: 600; border: 1px solid transparent; min-height: 18px; padding: 1px; }
         .calendario-dia-vazio { background: transparent; }
@@ -1270,58 +1376,197 @@
         .calendario-dia-futuro { background: transparent; color: var(--ms-gray-400); }
         .calendario-dia-neutro { background: transparent; color: var(--ms-gray-400); }
         .calendario-dia-atual { border: 2px solid var(--ms-blue); }
-        body.dark-mode .calendario-dia-estudado { background: rgba(16, 124, 16, 0.2); color: #6ccb5f; }
-        body.dark-mode .calendario-dia-nao-estudado { background: rgba(209, 52, 56, 0.15); color: #ff6b6b; }
-        body.dark-mode .calendario-dia-futuro { color: #555; }
-        body.dark-mode .calendario-dia-neutro { color: #555; }
-        body.dark-mode .calendario-dia-atual { border-color: #4cc2ff; }
+        body.tema-escuro .calendario-dia-estudado, body.dark-mode .calendario-dia-estudado { background: rgba(16, 124, 16, 0.2); color: #6ccb5f; }
+        body.tema-escuro .calendario-dia-nao-estudado, body.dark-mode .calendario-dia-nao-estudado { background: rgba(209, 52, 56, 0.15); color: #ff6b6b; }
+        body.tema-escuro .calendario-dia-futuro, body.dark-mode .calendario-dia-futuro { color: #555; }
+        body.tema-escuro .calendario-dia-neutro, body.dark-mode .calendario-dia-neutro { color: #555; }
+        body.tema-escuro .calendario-dia-atual, body.dark-mode .calendario-dia-atual { border-color: #4cc2ff; }
 
-        /* ============ COBERTURA ============ */
-        .cobertura-item { display: flex; align-items: center; gap: 6px; margin-bottom: 5px; font-size: 0.68rem; }
-        .cobertura-label { color: var(--ms-gray-700); font-weight: 600; min-width: 110px; display: flex; align-items: center; gap: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        body.dark-mode .cobertura-label { color: #aaa; }
-        .cobertura-barra { flex: 1; height: 14px; background: var(--ms-gray-200); border-radius: var(--radius-pill); overflow: hidden; }
-        body.dark-mode .cobertura-barra { background: #333; }
-        .cobertura-barra-fill { height: 100%; border-radius: var(--radius-pill); background: linear-gradient(90deg, #c8e6ff, #4cc2ff); transition: width 0.5s var(--ease-decelerate); min-width: 2px; }
+        /* ============ COBERTURA + TEMPO POR MÓDULO (ALTERAÇÃO 27) ============ */
+        .cobertura-item {
+            display: grid;
+            grid-template-columns: 130px 1fr 60px;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.72rem;
+            margin-bottom: 5px;
+        }
+
+        .cobertura-label {
+            color: var(--ms-gray-700);
+            font-weight: 600;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            min-width: 0;
+        }
+
+        .cobertura-barra {
+            height: 14px;
+            background: var(--ms-gray-200);
+            border-radius: var(--radius-pill);
+            overflow: hidden;
+            width: 100%;
+        }
+
+        .cobertura-barra-fill {
+            height: 100%;
+            border-radius: var(--radius-pill);
+            transition: width 0.5s var(--ease-decelerate);
+            min-width: 2px;
+        }
+
         .cobertura-barra-fill.verde { background: linear-gradient(90deg, #b8e6b8, #4caf50); }
         .cobertura-barra-fill.amarelo { background: linear-gradient(90deg, #ffe69c, #ffc107); }
         .cobertura-barra-fill.vermelho { background: linear-gradient(90deg, #ffb8b8, #e53935); }
         .cobertura-barra-fill.dourado { background: linear-gradient(90deg, #ffe9a8, #d4af37); }
-        .cobertura-percentual { font-size: 0.65rem; font-weight: 700; color: var(--ms-gray-900); min-width: 40px; text-align: right; font-variant-numeric: tabular-nums; }
-        body.dark-mode .cobertura-percentual { color: #e0e0e0; }
+        .cobertura-barra-fill.azul { background: linear-gradient(90deg, #c8e6ff, #4cc2ff); }
+
+        .cobertura-percentual {
+            font-size: 0.65rem;
+            font-weight: 700;
+            color: var(--ms-gray-900);
+            text-align: right;
+            font-variant-numeric: tabular-nums;
+            white-space: nowrap;
+        }
 
         .dashboard-alerta-item { font-size: 0.65rem; padding: 5px 8px; border-radius: var(--radius-md); margin-bottom: 3px; display: flex; align-items: center; gap: 4px; flex-wrap: wrap; line-height: 1.3; }
         .dashboard-alerta-item.vermelho { background: var(--ms-red-light); color: var(--ms-red-dark); }
         .dashboard-alerta-item.amarelo { background: var(--ms-yellow-light); color: var(--ms-yellow-dark); }
         .dashboard-alerta-item.azul { background: var(--ms-blue-light); color: var(--ms-blue-dark); }
-        body.dark-mode .dashboard-alerta-item.vermelho { background: #4a2020; color: #ff6b6b; }
-        body.dark-mode .dashboard-alerta-item.amarelo { background: #4a3f1a; color: #ffd54f; }
-        body.dark-mode .dashboard-alerta-item.azul { background: #1a3a5c; color: #82c7ff; }
+
+        /* ============ REVISÃO ESPAÇADA NO DASHBOARD (ALTERAÇÃO 25) ============ */
+        .revisao-quadrante { display: flex; flex-direction: column; flex: 1; min-height: 0; gap: 4px; }
+
+        .revisao-intro {
+            font-size: 0.58rem;
+            color: var(--ms-gray-700);
+            font-weight: 600;
+            text-align: center;
+            padding: 0 0 2px;
+            letter-spacing: 0.2px;
+            flex-shrink: 0;
+        }
+
+        .revisao-lista {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            flex: 1;
+            justify-content: center;
+            min-height: 0;
+        }
+
+        .revisao-item {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+
+        .revisao-cabecalho {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.65rem;
+        }
+
+        .revisao-badge {
+            font-size: 0.55rem;
+            font-weight: 800;
+            padding: 2px 6px;
+            border-radius: var(--radius-pill);
+            letter-spacing: 0.3px;
+            flex-shrink: 0;
+            font-variant-numeric: tabular-nums;
+        }
+        .revisao-badge.rev24 { background: var(--ms-red-light); color: var(--ms-red-dark); }
+        .revisao-badge.rev7  { background: var(--ms-yellow-light); color: var(--ms-yellow-dark); }
+        .revisao-badge.rev15 { background: var(--ms-blue-light); color: var(--ms-blue); }
+
+        .revisao-label {
+            flex: 1;
+            font-weight: 700;
+            color: var(--ms-gray-900);
+            font-size: 0.65rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .revisao-pct {
+            font-weight: 800;
+            font-variant-numeric: tabular-nums;
+            font-size: 0.78rem;
+            flex-shrink: 0;
+        }
+        .revisao-pct.excelente { color: var(--ms-green); }
+        .revisao-pct.bom       { color: var(--ms-blue); }
+        .revisao-pct.atencao   { color: var(--ms-yellow-dark); }
+        .revisao-pct.critico   { color: var(--ms-red); }
+
+        .revisao-track {
+            height: 8px;
+            background: var(--ms-gray-200);
+            border-radius: var(--radius-pill);
+            overflow: hidden;
+            position: relative;
+        }
+        .revisao-fill {
+            height: 100%;
+            border-radius: var(--radius-pill);
+            transition: width 0.6s var(--ease-decelerate);
+        }
+        .revisao-fill.verde    { background: linear-gradient(90deg, var(--ms-green-light), var(--ms-green)); }
+        .revisao-fill.azul     { background: linear-gradient(90deg, var(--ms-blue-light), var(--ms-blue)); }
+        .revisao-fill.amarelo  { background: linear-gradient(90deg, var(--ms-yellow-light), var(--ms-yellow)); }
+        .revisao-fill.vermelho { background: linear-gradient(90deg, var(--ms-red-light), var(--ms-red)); }
+
+        .revisao-contagem {
+            font-size: 0.56rem;
+            color: var(--ms-gray-700);
+            font-weight: 600;
+            text-align: right;
+            font-variant-numeric: tabular-nums;
+            margin-top: -1px;
+        }
+
+        .revisao-rodape {
+            margin-top: auto;
+            padding: 6px 9px;
+            background: var(--surface-alt);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border);
+            font-size: 0.58rem;
+            line-height: 1.35;
+            color: var(--ms-gray-700);
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+        .revisao-rodape .destaque {
+            color: var(--ms-blue);
+            font-weight: 800;
+        }
 
         /* ============ REVISÕES PENDENTES ============ */
         .revisoes-pendentes-section { background: var(--surface); border-radius: var(--radius-lg); box-shadow: var(--shadow-2); padding: 16px; margin-bottom: 14px; border: 1px solid var(--border); }
-        .revisao-item { display: flex; align-items: center; gap: 10px; padding: 10px 12px; background: var(--surface-alt); border-radius: var(--radius-md); margin-bottom: 6px; border: 1px solid var(--border); flex-wrap: wrap; }
-        body.dark-mode .revisao-item { background: #2a2a2a; border-color: #444; }
-        .revisao-badge { font-size: 0.65rem; font-weight: 700; padding: 3px 9px; border-radius: var(--radius-pill); background: var(--ms-yellow-light); color: var(--ms-yellow-dark); white-space: nowrap; }
-        .revisao-badge.rev24 { background: var(--ms-red-light); color: var(--ms-red-dark); }
-        .revisao-badge.rev7 { background: var(--ms-yellow-light); color: var(--ms-yellow-dark); }
-        .revisao-badge.rev15 { background: var(--ms-blue-light); color: var(--ms-blue-dark); }
-        body.dark-mode .revisao-badge.rev24 { background: #4a2020; color: #ff6b6b; }
-        body.dark-mode .revisao-badge.rev7 { background: #4a3f1a; color: #ffd54f; }
-        body.dark-mode .revisao-badge.rev15 { background: #1a3a5c; color: #82c7ff; }
-        .revisao-info { flex: 1; min-width: 120px; }
-        .revisao-nome { font-size: 0.8rem; font-weight: 600; line-height: 1.3; }
-        .revisao-data { font-size: 0.7rem; color: var(--ms-gray-700); margin-top: 2px; }
-        body.dark-mode .revisao-data { color: #aaa; }
+        .revisao-item-tela { display: flex; align-items: center; gap: 10px; padding: 10px 12px; background: var(--surface-alt); border-radius: var(--radius-md); margin-bottom: 6px; border: 1px solid var(--border); flex-wrap: wrap; }
+        .revisao-badge-tela { font-size: 0.65rem; font-weight: 700; padding: 3px 9px; border-radius: var(--radius-pill); background: var(--ms-yellow-light); color: var(--ms-yellow-dark); white-space: nowrap; }
+        .revisao-badge-tela.rev24 { background: var(--ms-red-light); color: var(--ms-red-dark); }
+        .revisao-badge-tela.rev7 { background: var(--ms-yellow-light); color: var(--ms-yellow-dark); }
+        .revisao-badge-tela.rev15 { background: var(--ms-blue-light); color: var(--ms-blue-dark); }
+        .revisao-info-tela { flex: 1; min-width: 120px; }
+        .revisao-nome-tela { font-size: 0.8rem; font-weight: 600; line-height: 1.3; }
+        .revisao-data-tela { font-size: 0.7rem; color: var(--ms-gray-700); margin-top: 2px; }
         .btn-revisao { background: var(--surface); border: 1px solid var(--border-strong); color: var(--ms-gray-900); padding: 6px 13px; border-radius: var(--radius-md); font-family: var(--ms-font); font-size: 0.7rem; font-weight: 600; cursor: pointer; transition: background var(--dur-fast) var(--ease-standard), border-color var(--dur-fast) var(--ease-standard); white-space: nowrap; }
         .btn-revisao:hover { background: var(--surface-hover); }
         .btn-revisao.baixar { background: var(--ms-green-light); border-color: var(--ms-green); color: var(--ms-green-dark); }
         .btn-revisao.baixar:hover { background: var(--ms-green); color: #fff; }
         .btn-revisao.descartar { background: var(--ms-red-light); border-color: var(--ms-red); color: var(--ms-red-dark); }
         .btn-revisao.descartar:hover { background: var(--ms-red); color: #fff; }
-        body.dark-mode .btn-revisao { background: #2a2a2a; color: #e0e0e0; border-color: #444; }
-        body.dark-mode .btn-revisao.baixar { background: #1e3a2a; border-color: #2d6b2d; color: #6ccb5f; }
-        body.dark-mode .btn-revisao.descartar { background: #4a2020; border-color: #6b2d2d; color: #ff6b6b; }
 
         /* ============ CONFIGURAÇÕES ============ */
         .config-section { background: var(--surface); border-radius: var(--radius-lg); box-shadow: var(--shadow-4); padding: 18px; margin-bottom: 20px; border: 1px solid var(--border); }
@@ -1329,13 +1574,10 @@
         .config-header h2 { font-size: 1.15rem; font-weight: 600; color: var(--ms-blue); flex: 1; }
         .btn-voltar { background: var(--surface); color: var(--ms-gray-900); border: 1px solid var(--border-strong); padding: 8px 15px; border-radius: var(--radius-md); font-family: var(--ms-font); font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: background var(--dur-fast) var(--ease-standard), border-color var(--dur-fast) var(--ease-standard); }
         .btn-voltar:hover { background: var(--surface-hover); border-color: var(--ms-blue); }
-        body.dark-mode .btn-voltar { background: #2a2a2a; color: #e0e0e0; border-color: #444; }
-        body.dark-mode .btn-voltar:hover { background: #333; }
         .config-cards-grid { display: grid; grid-template-columns: 1fr; gap: 12px; margin-bottom: 16px; }
         @media (min-width: 600px) { .config-cards-grid { grid-template-columns: 1fr 1fr; } }
         @media (min-width: 992px) { .config-cards-grid { grid-template-columns: 1fr 1fr 1fr; } }
-        .config-card { background: var(--surface); border-radius: var(--radius-lg); box-shadow: var(--shadow-2); padding: 16px; border: 1px solid var(--border); display: flex; flex-direction: column; gap: 12px; transition: box-shadow var(--dur-normal) var(--ease-standard), background var(--dur-slow) var(--ease-standard), border-color var(--dur-slow) var(--ease-standard); }
-        .config-card:hover { box-shadow: var(--shadow-4); }
+        .config-card { background: var(--surface); border-radius: var(--radius-lg); box-shadow: var(--shadow-2); padding: 16px; border: 1px solid var(--border); display: flex; flex-direction: column; gap: 12px; }
         .config-card-titulo { font-size: 0.82rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; padding: 6px 11px; border-radius: var(--radius-pill); display: inline-block; align-self: flex-start; }
         .config-card-titulo.c1 { background: var(--ms-blue-light); color: var(--ms-blue); }
         .config-card-titulo.c2 { background: var(--ms-green-light); color: var(--ms-green); }
@@ -1347,33 +1589,53 @@
         .config-card-descricao { font-size: 0.7rem; color: var(--ms-gray-500); line-height: 1.4; }
         .config-field { display: flex; flex-direction: column; gap: 4px; }
         .config-field label { font-size: 0.82rem; font-weight: 600; color: var(--ms-gray-700); }
-        body.dark-mode .config-field label { color: #aaa; }
         .config-field input[type="date"], .config-field input[type="text"], .config-field input[type="url"] { padding: 9px 12px; border: 1px solid var(--border-strong); border-radius: var(--radius-md); font-family: var(--ms-font); font-size: 0.88rem; min-width: 150px; width: 100%; background: var(--surface); color: var(--ms-gray-900); transition: border-color var(--dur-fast) var(--ease-standard), box-shadow var(--dur-fast) var(--ease-standard); }
         .config-field input:focus { outline: none; border-color: var(--ms-blue); box-shadow: 0 0 0 3px rgba(0,103,184,0.15); }
-        body.dark-mode .config-field input[type="date"], body.dark-mode .config-field input[type="text"], body.dark-mode .config-field input[type="url"] { background: #2a2a2a; border-color: #444; color: #e0e0e0; }
         .config-info { background: var(--surface-alt); padding: 12px 16px; border-radius: var(--radius-md); text-align: center; font-size: 0.82rem; display: flex; flex-direction: column; gap: 4px; border: 1px solid var(--border); }
         .config-info strong { color: var(--ms-blue); }
-        body.dark-mode .config-info { background: #2a2a2a; }
-        body.dark-mode .config-info strong { color: #4cc2ff; }
         .config-info-linha { display: flex; justify-content: space-between; align-items: center; gap: 8px; font-size: 0.78rem; }
         .config-info-linha strong { font-weight: 700; }
         .config-info-linha .meta-diaria { font-size: 0.7rem; color: var(--ms-gray-600); font-weight: 500; }
-        body.dark-mode .config-info-linha .meta-diaria { color: #aaa; }
         .config-field-inline { display: flex; align-items: center; gap: 8px; font-size: 0.85rem; font-weight: 600; color: var(--ms-gray-700); }
-        body.dark-mode .config-field-inline { color: #aaa; }
         .config-field-inline input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--ms-blue); cursor: pointer; flex-shrink: 0; }
         .simulacao-botoes { display: flex; gap: 6px; flex-wrap: wrap; }
         .btn-simulacao { background: var(--surface); border: 1px solid var(--border-strong); color: var(--ms-gray-900); padding: 6px 11px; border-radius: var(--radius-md); font-family: var(--ms-font); font-size: 0.75rem; font-weight: 600; cursor: pointer; transition: background var(--dur-fast) var(--ease-standard), border-color var(--dur-fast) var(--ease-standard); flex: 1; min-width: 70px; text-align: center; }
         .btn-simulacao:hover { background: var(--surface-hover); border-color: var(--ms-blue); }
         .btn-simulacao.zerar { background: var(--ms-red-light); border-color: var(--ms-red); color: var(--ms-red-dark); }
         .btn-simulacao.zerar:hover { background: var(--ms-red); color: #fff; }
-        body.dark-mode .btn-simulacao { background: #2a2a2a; color: #e0e0e0; border-color: #444; }
-        body.dark-mode .btn-simulacao.zerar { background: #4a2020; border-color: #6b2d2d; color: #ff6b6b; }
         .btn-reset-geral { background: #8b0000; color: #fff; border: none; padding: 10px 16px; border-radius: var(--radius-md); font-family: var(--ms-font); font-size: 0.85rem; font-weight: 700; cursor: pointer; transition: background var(--dur-fast) var(--ease-standard), transform var(--dur-faster) var(--ease-standard); box-shadow: var(--shadow-2); display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; justify-content: center; }
         .btn-reset-geral:hover { background: #a00000; }
         .btn-reset-geral:active { transform: scale(0.98); }
-        body.dark-mode .btn-reset-geral { background: #a00000; }
-        body.dark-mode .btn-reset-geral:hover { background: #c00000; }
+
+        /* ============ SELETOR DE TEMA (ALTERAÇÃO 22) ============ */
+        .seletor-tema { display: flex; flex-direction: column; gap: 8px; }
+        .seletor-tema-label { font-size: 0.82rem; font-weight: 600; color: var(--ms-gray-700); }
+        .seletor-tema-opcoes { display: flex; gap: 8px; flex-wrap: wrap; }
+        .seletor-tema-opcao {
+            flex: 1;
+            min-width: 80px;
+            padding: 10px 12px;
+            border-radius: var(--radius-md);
+            border: 2px solid var(--border);
+            background: var(--surface-alt);
+            font-family: var(--ms-font);
+            font-size: 0.82rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: center;
+            color: var(--ms-gray-700);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: border-color var(--dur-fast) var(--ease-standard), background var(--dur-fast) var(--ease-standard), color var(--dur-fast) var(--ease-standard);
+        }
+        .seletor-tema-opcao:hover { border-color: var(--ms-blue); }
+        .seletor-tema-opcao.ativa { border-color: var(--ms-blue); background: var(--ms-blue-light); color: var(--ms-blue); font-weight: 700; }
+        .seletor-tema-opcao .tema-preview { width: 20px; height: 20px; border-radius: 50%; border: 2px solid var(--border); flex-shrink: 0; }
+        .seletor-tema-opcao .tema-preview.claro { background: linear-gradient(135deg, #ffffff 50%, #f3f2f1 50%); }
+        .seletor-tema-opcao .tema-preview.suave { background: linear-gradient(135deg, #4f585f 50%, #3a4147 50%); }
+        .seletor-tema-opcao .tema-preview.escuro { background: linear-gradient(135deg, #1e1e1e 50%, #111111 50%); }
 
         /* ============ MENU LATERAL ============ */
         .menu-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 80; display: none; }
@@ -1381,7 +1643,6 @@
         .menu-lateral { position: fixed; top: 0; left: -320px; width: 300px; max-width: 85vw; height: auto; max-height: 85vh; background: var(--surface); box-shadow: var(--shadow-28); z-index: 90; transition: left var(--dur-slow) var(--ease-decelerate); overflow-y: auto; border-right: 1px solid var(--border); border-radius: 0 0 var(--radius-lg) 0; }
         .menu-lateral.visivel { left: 0; }
         .menu-lateral-header { padding: 20px 16px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; background: var(--ms-blue); color: #fff; }
-        body.dark-mode .menu-lateral-header { background: #1a3a5c; }
         .menu-lateral-header h3 { font-size: 1rem; font-weight: 600; }
         .btn-fechar-menu { background: none; border: none; color: #fff; font-size: 1.4rem; cursor: pointer; padding: 4px 8px; border-radius: var(--radius-sm); line-height: 1; transition: background var(--dur-fast) var(--ease-standard); }
         .btn-fechar-menu:hover { background: rgba(255,255,255,0.2); }
@@ -1389,8 +1650,6 @@
         .menu-item:last-child { border-bottom: none; }
         .menu-item:hover { background: var(--surface-hover); }
         .menu-item.ativo { background: var(--ms-blue-light); border-left: 4px solid var(--ms-blue); font-weight: 600; padding-left: 12px; }
-        body.dark-mode .menu-item { border-bottom-color: #333; }
-        body.dark-mode .menu-item.ativo { background: #1a3a5c; border-left-color: #4cc2ff; }
         .menu-item .menu-icone { font-size: 1.2rem; }
         .menu-item .menu-texto { flex: 1; font-size: 0.9rem; }
         .menu-item .menu-badge { background: var(--ms-red); color: #fff; font-size: 0.65rem; font-weight: 700; padding: 2px 8px; border-radius: var(--radius-pill); min-width: 22px; text-align: center; }
@@ -1399,8 +1658,6 @@
         .rodape { display: flex; justify-content: center; align-items: center; gap: 12px; padding: 14px 0 8px; flex-wrap: wrap; }
         .btn-rodape { background: var(--surface); color: var(--ms-gray-900); border: 1px solid var(--border-strong); padding: 10px 18px; border-radius: var(--radius-md); font-family: var(--ms-font); font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: background var(--dur-fast) var(--ease-standard), box-shadow var(--dur-fast) var(--ease-standard); display: inline-flex; align-items: center; gap: 6px; box-shadow: var(--shadow-2); }
         .btn-rodape:hover { background: var(--surface-hover); box-shadow: var(--shadow-4); }
-        body.dark-mode .btn-rodape { background: #2a2a2a; color: #e0e0e0; border-color: #444; }
-        body.dark-mode .btn-rodape:hover { background: #333; }
         .resumo-rodape { font-size: 0.7rem; color: var(--ms-gray-500); }
 
         /* ============ BANNER COMPARTILHE ============ */
@@ -1435,9 +1692,7 @@
         }
         .banner-texto { flex: 1; min-width: 0; }
         .banner-titulo { font-size: 0.82rem; font-weight: 700; color: var(--ms-gray-900); margin-bottom: 3px; line-height: 1.3; }
-        body.dark-mode .banner-titulo { color: #e0e0e0; }
         .banner-subtitulo { font-size: 0.68rem; color: var(--ms-gray-700); line-height: 1.35; }
-        body.dark-mode .banner-subtitulo { color: #aaa; }
 
         .banner-btn-fechar {
             position: absolute;
@@ -1459,8 +1714,6 @@
             z-index: 3;
         }
         .banner-btn-fechar:hover { background: var(--ms-gray-200); color: var(--ms-gray-900); }
-        body.dark-mode .banner-btn-fechar { background: rgba(42,42,42,0.9); color: #aaa; border-color: #444; }
-        body.dark-mode .banner-btn-fechar:hover { background: #333; color: #e0e0e0; }
 
         .banner-botoes { display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px; margin-bottom: 10px; }
         .btn-share {
@@ -1511,7 +1764,6 @@
             text-align: center;
             line-height: 1.3;
         }
-        body.dark-mode .banner-contador { background: var(--surface-alt); }
         .banner-contador .contador-numero { font-weight: 700; color: var(--ms-blue); font-size: 0.85rem; }
         .banner-contador .contador-icone { font-size: 0.9rem; line-height: 1; }
 
@@ -1564,7 +1816,6 @@
             text-align: center;
         }
         .toast-share.visivel { transform: translateX(-50%) translateY(0); opacity: 1; }
-        body.dark-mode .toast-share { background: #4cc2ff; color: #111; }
 
         /* ============ RESPONSIVO GERAL ============ */
         @media (max-width: 899px) {
@@ -1592,8 +1843,8 @@
 
         @media (max-width: 600px) {
             .app-shell { padding: 6px; }
-            #telaDashboard.ativa { height: auto; overflow: visible; padding: 6px; }
-            .dashboard-grid-3x2 { overflow: visible; flex: none; }
+            #telaDashboard.ativa { height: auto; max-height: none; overflow: visible; padding: 6px; }
+            .dashboard-grid-3x2 { overflow: visible; flex: none; height: auto; }
             .dashboard-quadrante { overflow: visible; }
             .dashboard-quadrante-conteudo { overflow: visible; }
             .dashboard-tempo-grid { grid-template-rows: auto; }
@@ -1611,11 +1862,12 @@
             .grafico-coluna-stack { max-width: 24px; }
             .toast-celebracao { padding: 10px 16px; font-size: 0.8rem; }
             .recomendacao-item { flex-wrap: wrap; }
-            .revisao-item { flex-wrap: wrap; }
-            .cobertura-label { min-width: 90px; }
+            .revisao-item-tela { flex-wrap: wrap; }
+            .cobertura-label { min-width: 0; }
             .modal-anotacao-content { max-width: 95vw; }
             .modulos-topo { gap: 8px; }
             .foco-table { min-width: 600px; }
+            .cobertura-item { grid-template-columns: 100px 1fr 50px; gap: 6px; }
         }
     </style>
 </head>
@@ -1637,7 +1889,7 @@
                         <div class="topo-header-titulo">
                             <span class="header-icon">📋</span>
                             <span>CheckAprovação</span>
-                            <span class="topo-header-versao">v0.62</span>
+                            <span class="topo-header-versao">v0.63</span>
                         </div>
                         <button class="topo-header-sino" id="btnSino" title="Notificações" aria-label="Notificações">
                             🔔
@@ -1985,9 +2237,9 @@
                 </div>
 
                 <div class="dashboard-quadrante">
-                    <div class="dashboard-quadrante-titulo q4">🎯 Recomendações</div>
+                    <div class="dashboard-quadrante-titulo q2">🔄 Revisão Espaçada</div>
                     <div class="dashboard-quadrante-conteudo">
-                        <div id="dashboardRecomendacoes" style="overflow-y:auto;"></div>
+                        <div id="dashboardRevisaoEspacada" class="revisao-quadrante"></div>
                     </div>
                 </div>
             </div>
@@ -2109,11 +2361,24 @@
                 <div class="config-card">
                     <div class="config-card-titulo c4">🎨 Aparência e Ações</div>
                     <div class="config-card-corpo">
-                        <div class="config-field-inline">
-                            <input type="checkbox" id="modoEscuroToggle">
-                            <label for="modoEscuroToggle">🌙 Ativar modo escuro</label>
+                        <div class="seletor-tema">
+                            <div class="seletor-tema-label">🎨 Tema do app</div>
+                            <div class="seletor-tema-opcoes" id="seletorTema">
+                                <button class="seletor-tema-opcao ativa" data-tema="claro">
+                                    <span class="tema-preview claro"></span>
+                                    <span>☀️ Claro</span>
+                                </button>
+                                <button class="seletor-tema-opcao" data-tema="suave">
+                                    <span class="tema-preview suave"></span>
+                                    <span>🌤️ Suave</span>
+                                </button>
+                                <button class="seletor-tema-opcao" data-tema="escuro">
+                                    <span class="tema-preview escuro"></span>
+                                    <span>🌙 Escuro</span>
+                                </button>
+                            </div>
                         </div>
-                        <div class="config-card-descricao">Reduz o brilho da tela para estudar à noite.</div>
+                        <div class="config-card-descricao">Escolha o tema que for mais confortável para seus olhos.</div>
                         <div class="config-card-rodape">
                             <button class="btn-ms danger" id="btnResetar">🗑️ Resetar Progresso</button>
                             <button class="btn-reset-geral" id="btnResetGeral">⚠️ Reset Geral</button>
@@ -2212,7 +2477,8 @@
             let nomeUsuario = '';
             let anotacoes = {};
             let chaveAnotacaoAtual = null;
-            let modoEscuroAtivo = false;
+            let temaAtivo = 'claro'; /* ALTERAÇÃO 22: 'claro' | 'suave' | 'escuro' */
+            let modoEscuroAtivo = false; /* compatibilidade */
             let tempoEstudo = {};
             let cronometroAtivo = false;
             let cronometroPausado = false;
@@ -2291,7 +2557,8 @@
                     usarDataSistema: usarDataSistema,
                     telaAtual: telaAtual,
                     anotacoes: anotacoes,
-                    modoEscuroAtivo: modoEscuroAtivo,
+                    temaAtivo: temaAtivo,
+                    modoEscuroAtivo: temaAtivo === 'escuro',
                     tempoEstudo: tempoEstudo,
                     cronometroAtivo: cronometroAtivo,
                     cronometroPausado: cronometroPausado,
@@ -2347,7 +2614,11 @@
                         usarDataSistema = parsed.usarDataSistema !== undefined ? parsed.usarDataSistema : true;
                         telaAtual = parsed.telaAtual || 'principal';
                         anotacoes = parsed.anotacoes || {};
-                        modoEscuroAtivo = parsed.modoEscuroAtivo || false;
+                        /* ALTERAÇÃO 22: migração compatível */
+                        if (parsed.temaAtivo) temaAtivo = parsed.temaAtivo;
+                        else if (parsed.modoEscuroAtivo) temaAtivo = 'escuro';
+                        else temaAtivo = 'claro';
+                        modoEscuroAtivo = temaAtivo === 'escuro';
                         tempoEstudo = parsed.tempoEstudo || {};
                         cronometroAtivo = parsed.cronometroAtivo || false;
                         cronometroPausado = parsed.cronometroPausado || false;
@@ -2372,11 +2643,10 @@
                         if (dataFinal) document.getElementById('dataFinal').value = dataFinal;
                         if (dataSimulada) document.getElementById('dataSimulada').value = dataSimulada;
                         document.getElementById('usarDataSistema').checked = usarDataSistema;
-                        document.getElementById('modoEscuroToggle').checked = modoEscuroAtivo;
                         document.getElementById('linkCompartilhar').value = linkCompartilhar;
                         document.getElementById('concursoInput').value = concurso;
                         document.getElementById('cargoInput').value = cargo;
-                        if (modoEscuroAtivo) document.body.classList.add('dark-mode');
+                        aplicarTema();
                         atualizarEstadoDataSimulada();
                         aplicarEstadoSaudacao();
                         if (cronometroAtivo && !cronometroPausado) retomarCronometro();
@@ -2394,9 +2664,24 @@
                 else { container.style.display = 'flex'; btnReabrir.style.display = 'none'; }
             }
 
+            /* ============ TEMA (ALTERAÇÃO 22) ============ */
+            function aplicarTema() {
+                document.body.classList.remove('tema-claro', 'tema-suave', 'tema-escuro', 'dark-mode');
+                if (temaAtivo === 'suave') document.body.classList.add('tema-suave');
+                else if (temaAtivo === 'escuro') {
+                    document.body.classList.add('tema-escuro');
+                    document.body.classList.add('dark-mode'); /* compatibilidade */
+                }
+                /* Sincroniza botões do seletor */
+                const botoes = document.querySelectorAll('.seletor-tema-opcao');
+                botoes.forEach(function(b) {
+                    b.classList.toggle('ativa', b.dataset.tema === temaAtivo);
+                });
+            }
+
+            /* Compatibilidade com função antiga */
             function aplicarModoEscuro() {
-                if (modoEscuroAtivo) document.body.classList.add('dark-mode');
-                else document.body.classList.remove('dark-mode');
+                aplicarTema();
             }
 
             /* ============ HEADER DINÂMICO ============ */
@@ -2752,7 +3037,6 @@
             const dataFinalInput = document.getElementById('dataFinal');
             const dataSimuladaInput = document.getElementById('dataSimulada');
             const usarDataSistemaCheckbox = document.getElementById('usarDataSistema');
-            const modoEscuroToggle = document.getElementById('modoEscuroToggle');
             const infoDiasLeituraEl = document.getElementById('infoDiasLeitura');
             const infoDiasConclusaoEl = document.getElementById('infoDiasConclusao');
             const infoMetaLeituraEl = document.getElementById('infoMetaLeitura');
@@ -2789,7 +3073,7 @@
             const dashboardTempoEstudo = document.getElementById('dashboardTempoEstudo');
             const dashboardTempoPorModulo = document.getElementById('dashboardTempoPorModulo');
             const dashboardCobertura = document.getElementById('dashboardCobertura');
-            const dashboardRecomendacoes = document.getElementById('dashboardRecomendacoes');
+            const dashboardRevisaoEspacada = document.getElementById('dashboardRevisaoEspacada');
             const modalAnotacaoOverlay = document.getElementById('modalAnotacaoOverlay');
             const modalAnotacaoTitulo = document.getElementById('modalAnotacaoTitulo');
             const modalAnotacaoAssunto = document.getElementById('modalAnotacaoAssunto');
@@ -2825,6 +3109,7 @@
             const btnSMS = document.getElementById('btnSMS');
             const btnInstagram = document.getElementById('btnInstagram');
             const contadorNumero = document.getElementById('contadorNumero');
+            const seletorTema = document.getElementById('seletorTema');
 
             /* Referências modo foco */
             const modoFoco = document.getElementById('modoFoco');
@@ -2936,11 +3221,9 @@
                     bannerCompartilheCompacto.classList.remove('visivel');
                 }
             }
-            /* ============ RECOMENDAÇÃO (ALTERAÇÃO 18: 3 recomendações) ============ */
-            function obterNomeCurtoModulo(modulo) {
-                return modulo.nome;
-            }
-
+            /* ============ RECOMENDAÇÃO (ALTERAÇÃO 21) ============ */
+            /* Critério ① = módulos com CONCLUÍDO = 0 (não mais Lido = 0)
+               Justificativa: "Nenhum assunto concluído" */
             function calcularDiasSemEstudar(moduloChave) {
                 const ultima = ultimasAtividades[moduloChave];
                 if (!ultima) return null;
@@ -2960,29 +3243,29 @@
                 const usados = {};
                 const resultado = [];
 
-                /* ---------- ① PRIORIDADE 1: ZERADOS (Lido = 0) ---------- */
-                const zerados = naoConcluidos.filter(function(m) {
-                    return contarPorTipo('Lido', m.chave) === 0;
+                /* ---------- ① PRIORIDADE 1: CONCLUÍDO = 0 (ALTERAÇÃO 21) ---------- */
+                const semConcluidos = naoConcluidos.filter(function(m) {
+                    return contarPorTipo('Concluido', m.chave) === 0;
                 });
-                if (zerados.length > 0) {
-                    /* Se houver mais de 1 zerado, evita repetir o último recomendado. */
+                if (semConcluidos.length > 0) {
+                    /* Se houver mais de 1, evita repetir o último recomendado */
                     let escolhido = null;
-                    if (zerados.length > 1) {
-                        const semUltimo = zerados.filter(function(m) { return m.chave !== ultimoModuloRecomendado; });
-                        escolhido = semUltimo.length > 0 ? semUltimo[0] : zerados[0];
+                    if (semConcluidos.length > 1) {
+                        const semUltimo = semConcluidos.filter(function(m) { return m.chave !== ultimoModuloRecomendado; });
+                        escolhido = semUltimo.length > 0 ? semUltimo[0] : semConcluidos[0];
                     } else {
-                        escolhido = zerados[0];
+                        escolhido = semConcluidos[0];
                     }
                     usados[escolhido.chave] = true;
                     resultado.push({
                         modulo: escolhido,
                         criterio: 'zerado',
-                        justificativa: 'Ainda não iniciado',
+                        justificativa: 'Nenhum assunto concluído',
                         numeroClasse: 'num-1'
                     });
                 }
 
-                /* ---------- ② PRIORIDADE 2: MENOR NÚMERO DE LIDOS (entre não-zerados e não-usados) ---------- */
+                /* ---------- ② PRIORIDADE 2: MENOR NÚMERO DE LIDOS ---------- */
                 const restantes2 = naoConcluidos.filter(function(m) {
                     return !usados[m.chave] && contarPorTipo('Lido', m.chave) > 0;
                 });
@@ -3005,7 +3288,7 @@
                     });
                 }
 
-                /* ---------- ③ PRIORIDADE 3: MAIS TEMPO SEM ESTUDAR (excluindo ① e ②) ---------- */
+                /* ---------- ③ PRIORIDADE 3: MAIS TEMPO SEM ESTUDAR ---------- */
                 const restantes3 = naoConcluidos.filter(function(m) {
                     return !usados[m.chave] && ultimasAtividades[m.chave];
                 });
@@ -3025,7 +3308,7 @@
                     });
                 }
 
-                /* Guarda o último recomendado (1º item) para efeito de "não repetir" no dia seguinte. */
+                /* Guarda o último recomendado (1º item) */
                 if (resultado.length > 0) ultimoModuloRecomendado = resultado[0].modulo.chave;
 
                 return resultado;
@@ -3097,9 +3380,9 @@
                     const nomeAssunto = obterNomeAssunto(rev.chave);
                     const topicoId = modulo ? modulo.topicoId : '';
                     const badgeClass = rev.tipo === '24h' ? 'rev24' : rev.tipo === '7d' ? 'rev7' : 'rev15';
-                    html += '<div class="revisao-item" data-chave="' + rev.chave + '" data-tipo="' + rev.tipo + '" data-data="' + rev.data + '">';
-                    html += '<span class="revisao-badge ' + badgeClass + '">' + rev.tipo + '</span>';
-                    html += '<div class="revisao-info"><div class="revisao-nome">' + icone + ' <a class="recomendacao-link" data-topico="' + topicoId + '">' + nomeModulo + ' - ' + nomeAssunto + '</a></div><div class="revisao-data">Venceu em: ' + rev.data.split('-').reverse().join('/') + '</div></div>';
+                    html += '<div class="revisao-item-tela" data-chave="' + rev.chave + '" data-tipo="' + rev.tipo + '" data-data="' + rev.data + '">';
+                    html += '<span class="revisao-badge-tela ' + badgeClass + '">' + rev.tipo + '</span>';
+                    html += '<div class="revisao-info-tela"><div class="revisao-nome-tela">' + icone + ' <a class="recomendacao-link" data-topico="' + topicoId + '">' + nomeModulo + ' - ' + nomeAssunto + '</a></div><div class="revisao-data-tela">Venceu em: ' + rev.data.split('-').reverse().join('/') + '</div></div>';
                     html += '<button class="btn-revisao baixar">✓ Baixar</button>';
                     html += '<button class="btn-revisao descartar">✗ Descartar</button>';
                     html += '</div>';
@@ -3108,7 +3391,7 @@
                 lista.querySelectorAll('.recomendacao-link').forEach(function(link) {
                     link.addEventListener('click', function() { scrollParaModulo(this.dataset.topico); });
                 });
-                lista.querySelectorAll('.revisao-item').forEach(function(item) {
+                lista.querySelectorAll('.revisao-item-tela').forEach(function(item) {
                     const chave = item.dataset.chave;
                     const tipo = item.dataset.tipo;
                     item.querySelector('.baixar').addEventListener('click', function() {
@@ -3518,6 +3801,7 @@
                 htmlTempo += '</div>';
                 dashboardTempoEstudo.innerHTML = htmlTempo;
 
+                /* ALTERAÇÃO 27: barras alinhadas com grid 130/1fr/60 */
                 let htmlCob = '';
                 const dadosCob = modulos.map(function(modulo) {
                     const total = contarAssuntosModulo(modulo.chave);
@@ -3532,7 +3816,7 @@
                     else if (modulo.percentual >= 50) classeBarra = 'verde';
                     else if (modulo.percentual >= 1) classeBarra = 'amarelo';
                     else classeBarra = 'vermelho';
-                    htmlCob += '<div class="cobertura-item"><span class="cobertura-label">' + modulo.icone + ' ' + modulo.nome + '</span><div class="cobertura-barra"><div class="cobertura-barra-fill ' + classeBarra + '" style="width:' + modulo.percentual + '%;"></div></div><span class="cobertura-percentual">' + modulo.percentual + '%</span></div>';
+                    htmlCob += '<div class="cobertura-item"><span class="cobertura-label" title="' + modulo.nome + '">' + modulo.icone + ' ' + modulo.nome + '</span><div class="cobertura-barra"><div class="cobertura-barra-fill ' + classeBarra + '" style="width:' + modulo.percentual + '%;"></div></div><span class="cobertura-percentual">' + modulo.percentual + '%</span></div>';
                 });
                 dashboardCobertura.innerHTML = htmlCob;
 
@@ -3572,6 +3856,7 @@
                 htmlCal += '</div></div>';
                 dashboardEngajamento.innerHTML = htmlCal;
 
+                /* ALTERAÇÃO 27: barras alinhadas com grid 130/1fr/60 */
                 let htmlTempoMod = '';
                 const dadosTempoMod = modulos.map(function(modulo) {
                     let totalMinutos = 0;
@@ -3586,52 +3871,100 @@
                 dadosTempoMod.forEach(function(modulo) {
                     const pct = Math.round((modulo.totalMinutos / maxMinutosMod) * 100);
                     const corClasse = modulo.totalMinutos > 0 ? 'verde' : 'vermelho';
-                    htmlTempoMod += '<div class="cobertura-item"><span class="cobertura-label">' + modulo.icone + ' ' + modulo.nome + '</span><div class="cobertura-barra"><div class="cobertura-barra-fill ' + corClasse + '" style="width:' + pct + '%;"></div></div><span class="cobertura-percentual">' + formatarTempoMinutos(modulo.totalMinutos) + '</span></div>';
+                    htmlTempoMod += '<div class="cobertura-item"><span class="cobertura-label" title="' + modulo.nome + '">' + modulo.icone + ' ' + modulo.nome + '</span><div class="cobertura-barra"><div class="cobertura-barra-fill ' + corClasse + '" style="width:' + pct + '%;"></div></div><span class="cobertura-percentual">' + formatarTempoMinutos(modulo.totalMinutos) + '</span></div>';
                 });
                 dashboardTempoPorModulo.innerHTML = htmlTempoMod;
 
-                let htmlRec = '';
-                const moduloRecomendado = modulos.find(function(m) { return m.chave === ultimoModuloRecomendado; });
-                if (moduloRecomendado) {
-                    const lidos = contarPorTipo('Lido', moduloRecomendado.chave);
-                    const total = contarAssuntosModulo(moduloRecomendado.chave);
-                    const pendentesModulo = total - lidos;
-                    htmlRec += '<div class="dashboard-alerta-item azul">📖 Próximo: ' + moduloRecomendado.icone + ' ' + moduloRecomendado.nome + ' (' + pendentesModulo + ' pendentes)</div>';
+                /* ALTERAÇÃO 25: Revisão Espaçada substitui Recomendações */
+                renderizarRevisaoEspacadaDashboard();
+            }
+
+            /* ============ REVISÃO ESPAÇADA NO DASHBOARD (ALTERAÇÃO 25) ============ */
+            function renderizarRevisaoEspacadaDashboard() {
+                const container = dashboardRevisaoEspacada;
+                if (!container) return;
+
+                /* Computa taxa por tipo (24h / 7d / 15d) */
+                const tipos = ['24h', '7d', '15d'];
+                const labelMap = { '24h': 'Curto prazo', '7d': 'Consolidação', '15d': 'Fixação final' };
+                const badgeClassMap = { '24h': 'rev24', '7d': 'rev7', '15d': 'rev15' };
+
+                const estatisticas = {};
+                tipos.forEach(function(t) {
+                    estatisticas[t] = { feitas: 0, total: 0, pct: 0 };
+                });
+
+                for (const chaveBase in revisoes) {
+                    const lista = revisoes[chaveBase] || [];
+                    lista.forEach(function(rev) {
+                        if (!estatisticas[rev.tipo]) return;
+                        /* Não conta revisões descartadas no denominador */
+                        if (rev.descartada) return;
+                        estatisticas[rev.tipo].total++;
+                        if (rev.baixada) estatisticas[rev.tipo].feitas++;
+                    });
+                }
+
+                tipos.forEach(function(t) {
+                    const e = estatisticas[t];
+                    e.pct = e.total > 0 ? Math.round((e.feitas / e.total) * 100) : 0;
+                });
+
+                /* Classes de cor por faixa */
+                function classePct(pct) {
+                    if (pct >= 90) return 'excelente';
+                    if (pct >= 80) return 'bom';
+                    if (pct >= 70) return 'atencao';
+                    return 'critico';
+                }
+                function classeFill(pct) {
+                    if (pct >= 90) return 'verde';
+                    if (pct >= 80) return 'azul';
+                    if (pct >= 70) return 'amarelo';
+                    return 'vermelho';
+                }
+
+                /* Rodapé: aponta o pior intervalo se algum < 80% */
+                let rodapeHtml = '';
+                let piorTipo = null;
+                let piorPct = 101;
+                let piorAtrasadas = 0;
+                tipos.forEach(function(t) {
+                    const e = estatisticas[t];
+                    if (e.pct < 80 && e.pct < piorPct) {
+                        piorPct = e.pct;
+                        piorTipo = t;
+                        piorAtrasadas = e.total - e.feitas;
+                    }
+                });
+
+                if (piorTipo && piorAtrasadas > 0) {
+                    rodapeHtml = '<div class="revisao-rodape">💡 <span class="destaque">' + piorAtrasadas + ' revisõe' + (piorAtrasadas === 1 ? 'm' : 's') + ' de ' + piorTipo + '</span> estão atrasadas — são as que mais consolidam conteúdo para a prova.</div>';
+                } else if (estatisticas['24h'].total === 0 && estatisticas['7d'].total === 0 && estatisticas['15d'].total === 0) {
+                    rodapeHtml = '<div class="revisao-rodape">💡 Marque "Lido" em um assunto para começar a agendar revisões espaçadas.</div>';
                 } else {
-                    htmlRec += '<div class="dashboard-alerta-item azul">🎉 Todos os módulos concluídos!</div>';
+                    rodapeHtml = '<div class="revisao-rodape">✅ <span class="destaque">Parabéns!</span> Sua revisão espaçada está em dia.</div>';
                 }
-                const modulosAtrasados = modulos.filter(function(m) {
-                    const ultima = ultimasAtividades[m.chave];
-                    if (!ultima) return false;
-                    const dataUltima = new Date(ultima);
-                    dataUltima.setHours(0,0,0,0);
-                    const diffDias = Math.floor((hoje.getTime() - dataUltima.getTime()) / (1000*60*60*24));
-                    return diffDias >= 4 && contarPorTipo('Concluido', m.chave) < contarAssuntosModulo(m.chave);
+
+                let html = '<div class="revisao-intro">Taxa de conclusão por intervalo</div>';
+                html += '<div class="revisao-lista">';
+                tipos.forEach(function(t) {
+                    const e = estatisticas[t];
+                    const c = classePct(e.pct);
+                    const f = classeFill(e.pct);
+                    html += '<div class="revisao-item">';
+                    html += '<div class="revisao-cabecalho">';
+                    html += '<span class="revisao-badge ' + badgeClassMap[t] + '">' + t + '</span>';
+                    html += '<span class="revisao-label">' + labelMap[t] + '</span>';
+                    html += '<span class="revisao-pct ' + c + '">' + e.pct + '%</span>';
+                    html += '</div>';
+                    html += '<div class="revisao-track"><div class="revisao-fill ' + f + '" style="width:' + e.pct + '%;"></div></div>';
+                    html += '<div class="revisao-contagem">' + e.feitas + ' de ' + e.total + ' feitas</div>';
+                    html += '</div>';
                 });
-                modulosAtrasados.forEach(function(m) {
-                    const ultima = ultimasAtividades[m.chave];
-                    const dataUltima = new Date(ultima);
-                    dataUltima.setHours(0,0,0,0);
-                    const diffDias = Math.floor((hoje.getTime() - dataUltima.getTime()) / (1000*60*60*24));
-                    htmlRec += '<div class="dashboard-alerta-item amarelo">⚠️ ' + m.icone + ' ' + m.nome + ': ' + diffDias + ' dias sem estudar</div>';
-                });
-                const pendentes = obterRevisoesPendentes();
-                if (pendentes.length > 0) htmlRec += '<div class="dashboard-alerta-item azul">🔄 ' + pendentes.length + ' revisões pendentes</div>';
-                const abandonados = modulos.filter(function(m) {
-                    const ultima = ultimasAtividades[m.chave];
-                    if (!ultima) return false;
-                    const dataUltima = new Date(ultima);
-                    dataUltima.setHours(0,0,0,0);
-                    const diffDias = Math.floor((hoje.getTime() - dataUltima.getTime()) / (1000*60*60*24));
-                    return diffDias >= 10 && contarPorTipo('Concluido', m.chave) < contarAssuntosModulo(m.chave);
-                });
-                abandonados.forEach(function(m) {
-                    htmlRec += '<div class="dashboard-alerta-item vermelho">🚨 ' + m.icone + ' ' + m.nome + ': abandonado!</div>';
-                });
-                if (modulosAtrasados.length === 0 && pendentes.length === 0 && abandonados.length === 0 && moduloRecomendado) {
-                    htmlRec += '<div style="color:var(--ms-gray-500);font-size:0.65rem;margin-top:4px;">Tudo em ordem! 🎉</div>';
-                }
-                dashboardRecomendacoes.innerHTML = htmlRec;
+                html += '</div>';
+                html += rodapeHtml;
+                container.innerHTML = html;
             }
 
             /* ============ CRONÔMETRO NORMAL ============ */
@@ -3788,7 +4121,6 @@
                     }
                 });
             }
-
             /* ============ HELPER: montar bloco de cronômetro ============ */
             function criarCronometroContainer(moduloChave) {
                 const cronometroContainer = document.createElement('div');
@@ -3936,10 +4268,10 @@
                     });
                 }
             }
+
             /* ============ RENDERIZAR TÓPICOS (CHECKLIST) ============ */
-            /* ALTERAÇÃO 19: cronômetro + botões colados na esquerda
-               ALTERAÇÃO 20: subtópicos com cronômetro + Foco Total próprios
-                            (módulo pai agrupador NÃO tem botões) */
+            /* ALTERAÇÃO 19: cronômetro + botões colados
+               ALTERAÇÃO 20: subtópicos com cronômetro + Foco Total próprios */
             function renderizarTopicos() {
                 conteudoPrincipal.innerHTML = '';
                 estruturaTopicos.forEach(function(topico) {
@@ -3948,13 +4280,11 @@
                     topicSection.id = 'modulo-' + topico.id;
                     topicSection.dataset.topic = topico.id;
 
-                    /* Determina se o tópico é "agrupador" (tem subtópicos com titulo) ou módulo simples */
                     const temSubtopicos = topico.subtopicos.length > 1 || (topico.subtopicos[0] && topico.subtopicos[0].titulo);
 
                     const topicHeader = document.createElement('div');
                     topicHeader.className = 'topic-header collapsed';
 
-                    /* Só cria botão Foco Total no header do módulo se for módulo simples (sem subtópicos) */
                     let headerHtml = '<div class="topic-header-titulo"><span>' + topico.titulo + '</span></div>';
                     if (!temSubtopicos) {
                         const moduloSimples = topico.subtopicos[0].modulo || topico.id;
@@ -3982,21 +4312,15 @@
                         const moduloChave = subtopico.modulo || topico.id;
 
                         if (subtopico.titulo) {
-                            /* Subtópico: header com título + botão Foco Total + cronômetro próprio */
                             const subtopicHeader = document.createElement('div');
                             subtopicHeader.className = 'subtopic-header';
                             subtopicHeader.innerHTML = '<span class="subtopic-titulo">' + subtopico.titulo + '</span>' +
                                 '<button class="btn-foco-total" data-modulo="' + moduloChave + '" data-titulo="' + subtopico.titulo + '" data-tipo="subtopico"><span>🎯</span><span>Foco Total</span></button>';
                             topicContent.appendChild(subtopicHeader);
 
-                            /* Cronômetro + botões do subtópico */
                             topicContent.appendChild(criarCronometroContainer(moduloChave));
-
-                            /* Tabela do subtópico */
                             topicContent.appendChild(criarTabelaModulo(moduloChave));
                         } else {
-                            /* Módulo simples (sem título de subtópico):
-                               Cronômetro colado + tabela */
                             topicContent.appendChild(criarCronometroContainer(moduloChave));
                             topicContent.appendChild(criarTabelaModulo(moduloChave));
                         }
@@ -4006,7 +4330,6 @@
                     conteudoPrincipal.appendChild(topicSection);
                 });
 
-                /* Bind dos botões Foco Total (módulos E subtópicos) */
                 document.querySelectorAll('.btn-foco-total').forEach(function(btn) {
                     btn.addEventListener('click', function(e) {
                         e.stopPropagation();
@@ -4018,7 +4341,6 @@
             }
 
             /* ============ MODO FOCO TOTAL ============ */
-            /* ALTERAÇÃO 20: aceita tipo 'modulo' ou 'subtopico' */
             function abrirModoFoco(moduloChave, moduloTitulo, tipo) {
                 inicializarAudio();
                 focoModuloAtual = moduloChave;
@@ -4028,7 +4350,6 @@
 
                 focoModuloTituloEl.textContent = moduloTitulo;
 
-                /* Preenche tabela do Foco */
                 focoTabelaBody.innerHTML = '';
                 const listaAssuntos = assuntos[moduloChave] || [];
                 listaAssuntos.forEach(function(assunto, idx) {
@@ -4061,7 +4382,6 @@
                         tr.appendChild(tdCheck);
                     });
 
-                    /* Botão de anotação */
                     const tdAnotacao = document.createElement('td');
                     tdAnotacao.className = 'anotacao-col';
                     const btnAnot = document.createElement('button');
@@ -4078,12 +4398,11 @@
                     focoTabelaBody.appendChild(tr);
                 });
 
-                /* Sincroniza o cronômetro padrão */
                 if (cronometroAtivo && cronometroModulo === moduloChave) {
-                    /* Já está rodando neste módulo */
+                    /* Já está rodando */
                 } else {
                     if (cronometroAtivo && cronometroModulo !== moduloChave) {
-                        pararCronometro(false); /* ALTERAÇÃO 11: registra em vez de descartar */
+                        pararCronometro(false);
                     }
                     cronometroAtivo = true;
                     cronometroPausado = false;
@@ -4620,11 +4939,17 @@
                 renderizarNotificacoes();
             });
 
-            modoEscuroToggle.addEventListener('change', function() {
-                modoEscuroAtivo = this.checked;
-                aplicarModoEscuro();
-                salvarDados();
-            });
+            /* ALTERAÇÃO 22: seletor de tema */
+            if (seletorTema) {
+                seletorTema.querySelectorAll('.seletor-tema-opcao').forEach(function(btn) {
+                    btn.addEventListener('click', function() {
+                        temaAtivo = this.dataset.tema;
+                        modoEscuroAtivo = (temaAtivo === 'escuro');
+                        aplicarTema();
+                        salvarDados();
+                    });
+                });
+            }
 
             btnSino.addEventListener('click', function(e) { e.stopPropagation(); notificacoesPainel.classList.toggle('visivel'); });
             document.addEventListener('click', function(e) { if (!notificacoesPainel.contains(e.target) && e.target !== btnSino) notificacoesPainel.classList.remove('visivel'); });
@@ -4873,7 +5198,7 @@
             });
 
             btnResetGeral.addEventListener('click', function() {
-                if (confirm('⚠️ ATENÇÃO!\n\nTem certeza que deseja apagar TODOS os dados e voltar ao estado inicial?\n\nEsta ação não pode ser desfeita. Serão apagados:\n- Nome do usuário\n- Concurso e cargo\n- Datas inicial e final\n- Data simulada\n- Modo escuro\n- Progresso de leitura\n- Anotações\n- Tempo de estudo\n- Notificações\n- Revisões espaçadas\n- Estado da caixa de saudação\n- Link de compartilhamento\n- Estado do banner Compartilhe\n- Som do Pomodoro')) {
+                if (confirm('⚠️ ATENÇÃO!\n\nTem certeza que deseja apagar TODOS os dados e voltar ao estado inicial?\n\nEsta ação não pode ser desfeita. Serão apagados:\n- Nome do usuário\n- Concurso e cargo\n- Datas inicial e final\n- Data simulada\n- Tema escolhido\n- Progresso de leitura\n- Anotações\n- Tempo de estudo\n- Notificações\n- Revisões espaçadas\n- Estado da caixa de saudação\n- Link de compartilhamento\n- Estado do banner Compartilhe\n- Som do Pomodoro')) {
                     estadoCheckboxes = {};
                     ultimasAtividades = {};
                     notificacoes = [];
@@ -4903,6 +5228,7 @@
                     dataFinal = '';
                     dataSimulada = '';
                     usarDataSistema = true;
+                    temaAtivo = 'claro';
                     modoEscuroAtivo = false;
                     saudacaoFechada = false;
                     linkCompartilhar = LINK_COMPARTILHAR_PADRAO;
@@ -4916,9 +5242,8 @@
                     dataFinalInput.value = '';
                     dataSimuladaInput.value = '';
                     usarDataSistemaCheckbox.checked = true;
-                    modoEscuroToggle.checked = false;
                     linkCompartilharInput.value = linkCompartilhar;
-                    aplicarModoEscuro();
+                    aplicarTema();
                     atualizarEstadoDataSimulada();
                     aplicarEstadoSaudacao();
                     aplicarEstadoBanner();
@@ -4948,7 +5273,7 @@
             /* ============ INICIALIZAÇÃO ============ */
             function iniciar() {
                 carregarDados();
-                aplicarModoEscuro();
+                aplicarTema();
                 if (nomeUsuario) nomeUsuarioInput.value = nomeUsuario;
                 concursoInput.value = concurso;
                 cargoInput.value = cargo;
@@ -4956,7 +5281,6 @@
                 if (dataFinal) dataFinalInput.value = dataFinal;
                 if (dataSimulada) dataSimuladaInput.value = dataSimulada;
                 usarDataSistemaCheckbox.checked = usarDataSistema;
-                modoEscuroToggle.checked = modoEscuroAtivo;
                 linkCompartilharInput.value = linkCompartilhar;
                 if (pomodoroSomAtivo) btnSom.classList.add('ativo');
                 else { btnSom.classList.remove('ativo'); btnSom.textContent = '🔇'; }
