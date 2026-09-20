@@ -3,12 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
-    <title>CheckAprovação v0.60 | Guarda Municipal Florianópolis</title>
+    <title>CheckAprovação v0.62 | Guarda Municipal Florianópolis</title>
     <meta name="theme-color" content="#0067b8">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📋</text></svg>">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
     <style>
         /* ============ VARIÁVEIS (FLUENT 2) ============ */
         :root {
@@ -29,6 +26,9 @@
             --ms-gold: #d4af37;
             --ms-gold-light: #fef8e7;
             --ms-gold-dark: #b8962e;
+            --ms-orange: #ff8c42;
+            --ms-orange-light: #ffefe3;
+            --ms-orange-dark: #d96a20;
             --ms-gray-50: #faf9f8;
             --ms-gray-100: #f3f2f1;
             --ms-gray-200: #edebe9;
@@ -47,7 +47,6 @@
             --border-strong: #c8c6c4;
             --ms-font: 'Segoe UI', 'Segoe UI Web (West European)', -apple-system, BlinkMacSystemFont, Roboto, 'Helvetica Neue', sans-serif;
             --font-mono: 'Cascadia Code', 'Consolas', 'SF Mono', Menlo, monospace;
-            --font-digital: 'Orbitron', 'Cascadia Code', 'Consolas', monospace;
             --radius-xs: 2px;
             --radius-sm: 4px;
             --radius-md: 8px;
@@ -105,6 +104,9 @@
             --ms-gold: #e6c35c;
             --ms-gold-light: #4a3f1a;
             --ms-gold-dark: #d4af37;
+            --ms-orange: #ffa76b;
+            --ms-orange-light: #4a2a1a;
+            --ms-orange-dark: #ff8c42;
             --ms-gray-50: #1a1a1a;
             --ms-gray-100: #1f1f1f;
             --ms-gray-200: #242424;
@@ -518,23 +520,27 @@
             background: var(--surface-alt);
             border-radius: var(--radius-md);
             border: 1px solid var(--border);
+            margin-bottom: 8px;
             transition: border-color var(--dur-fast) var(--ease-standard), background var(--dur-fast) var(--ease-standard);
         }
+        .recomendacao-item:last-child { margin-bottom: 0; }
         .recomendacao-item:hover { border-color: var(--ms-blue); }
         .recomendacao-numero {
             width: 28px;
             height: 28px;
             min-width: 28px;
-            background: var(--ms-blue-light);
-            color: var(--ms-blue);
             border-radius: var(--radius-pill);
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 700;
-            font-size: 0.8rem;
+            font-size: 0.85rem;
+            color: #fff;
+            line-height: 1;
         }
-        body.dark-mode .recomendacao-numero { background: #1a3a5c; color: #4cc2ff; }
+        .recomendacao-numero.num-1 { background: var(--ms-red); }
+        .recomendacao-numero.num-2 { background: var(--ms-yellow); color: #3a2f00; }
+        .recomendacao-numero.num-3 { background: var(--ms-orange); color: #fff; }
         .recomendacao-info { flex: 1; min-width: 0; }
         .recomendacao-nome { font-size: 0.85rem; font-weight: 600; color: var(--ms-gray-900); line-height: 1.3; }
         body.dark-mode .recomendacao-nome { color: #e0e0e0; }
@@ -638,12 +644,12 @@
         .topic-header .topic-header-titulo { flex: 1; display: flex; align-items: center; gap: 8px; }
         .topic-header .arrow { margin-left: 8px; transition: transform var(--dur-normal) var(--ease-standard); font-size: 0.75rem; }
         .topic-header.collapsed .arrow { transform: rotate(-90deg); }
-        .subtopic-header { background: var(--ms-blue-light); color: var(--ms-blue-dark); font-weight: 600; padding: 10px 16px; font-size: 0.88rem; border-left: 4px solid var(--ms-blue); }
+        .subtopic-header { background: var(--ms-blue-light); color: var(--ms-blue-dark); font-weight: 600; padding: 10px 16px; font-size: 0.88rem; border-left: 4px solid var(--ms-blue); display: flex; align-items: center; gap: 8px; }
         body.dark-mode .subtopic-header { background: #1a3a5c; color: #82c7ff; border-left-color: #4cc2ff; }
+        .subtopic-header .subtopic-titulo { flex: 1; }
         .topic-content { padding: 0; }
         .table-responsive { overflow-x: auto; -webkit-overflow-scrolling: touch; }
 
-        /* ============ BOTÃO FOCO TOTAL ============ */
         .btn-foco-total {
             background: rgba(255,255,255,0.2);
             border: 1px solid rgba(255,255,255,0.4);
@@ -663,6 +669,10 @@
         }
         .btn-foco-total:hover { background: rgba(255,255,255,0.35); }
         .btn-foco-total:active { transform: scale(0.96); }
+        .subtopic-header .btn-foco-total { background: var(--ms-blue); border-color: var(--ms-blue-dark); color: #fff; }
+        .subtopic-header .btn-foco-total:hover { background: var(--ms-blue-hover); }
+        body.dark-mode .subtopic-header .btn-foco-total { background: #4cc2ff; border-color: #3ab0e8; color: #111; }
+        body.dark-mode .subtopic-header .btn-foco-total:hover { background: #5ccaff; }
 
         table { width: 100%; border-collapse: collapse; min-width: 600px; }
         th { background: var(--ms-gray-100); color: var(--ms-gray-700); font-weight: 600; font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.4px; padding: 8px 2px; border-bottom: 2px solid var(--ms-gray-300); text-align: center; }
@@ -690,11 +700,11 @@
         .btn-anotacao.tem-anotacao { color: var(--ms-blue); font-weight: 700; }
 
         /* ============ CRONÔMETRO ============ */
-        .cronometro-container { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; padding: 10px 14px; background: var(--surface-alt); border-radius: var(--radius-md); margin-bottom: 8px; border: 1px solid var(--border); transition: background var(--dur-slow) var(--ease-standard); }
+        .cronometro-container { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; padding: 10px 14px; background: var(--surface-alt); border-radius: var(--radius-md); margin-bottom: 8px; border: 1px solid var(--border); transition: background var(--dur-slow) var(--ease-standard); }
         body.dark-mode .cronometro-container { background: #2a2a2a; border-color: #444; }
         .cronometro-display { font-size: 1.25rem; font-weight: 700; color: var(--ms-blue); font-variant-numeric: tabular-nums; min-width: 108px; letter-spacing: 0.5px; font-family: var(--font-mono); }
         body.dark-mode .cronometro-display { color: #4cc2ff; }
-        .cronometro-modulo-label { font-size: 0.7rem; color: var(--ms-gray-700); font-weight: 600; margin-left: auto; }
+        .cronometro-modulo-label { font-size: 0.7rem; color: var(--ms-gray-700); font-weight: 600; }
         body.dark-mode .cronometro-modulo-label { color: #aaa; }
         .btn-cronometro { background: var(--surface); border: 1px solid var(--border-strong); color: var(--ms-gray-900); padding: 6px 13px; border-radius: var(--radius-md); font-family: var(--ms-font); font-size: 0.75rem; font-weight: 600; cursor: pointer; transition: background var(--dur-fast) var(--ease-standard), border-color var(--dur-fast) var(--ease-standard), transform var(--dur-faster) var(--ease-standard); white-space: nowrap; }
         .btn-cronometro:hover { background: var(--surface-hover); border-color: var(--ms-blue); }
@@ -752,281 +762,385 @@
             flex: 1;
             display: flex;
             overflow: hidden;
-            position: relative;
         }
 
         .foco-checklist {
             flex: 1;
             overflow-y: auto;
             padding: 20px;
-            background: #0d0d0d;
             min-width: 0;
         }
-        .foco-checklist-inner { max-width: 900px; margin: 0 auto; }
+        .foco-checklist-inner { max-width: 1100px; margin: 0 auto; }
         .foco-modulo-titulo {
             font-size: 1.4rem;
             font-weight: 700;
             color: #fff;
             margin-bottom: 4px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
         }
         .foco-modulo-subtitulo {
             font-size: 0.78rem;
             color: #777;
             margin-bottom: 24px;
         }
-        .foco-lista {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-        .foco-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px 14px;
-            background: #1a1a1a;
+
+        /* ============ TABELA DO FOCO (dark, igual à principal) ============ */
+        .foco-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #141414;
             border-radius: var(--radius-md);
+            overflow: hidden;
             border: 1px solid #262626;
-            font-size: 0.9rem;
-            color: #ddd;
-            transition: background var(--dur-fast) var(--ease-standard), border-color var(--dur-fast) var(--ease-standard);
         }
-        .foco-item:hover { background: #202020; border-color: #333; }
-        .foco-item span.assunto-texto { flex: 1; line-height: 1.35; }
-        .foco-item .foco-checks-grupo {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            flex-shrink: 0;
-        }
-        .foco-item .foco-check-wrap {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 3px;
-        }
-        .foco-item .foco-check-label {
-            font-size: 0.52rem;
-            color: #666;
+        .foco-table thead th {
+            background: #1a1a1a;
+            color: #999;
             font-weight: 700;
+            font-size: 0.6rem;
             text-transform: uppercase;
             letter-spacing: 0.4px;
+            padding: 10px 4px;
+            border-bottom: 2px solid #2a2a2a;
+            text-align: center;
             white-space: nowrap;
         }
-        .foco-item input[type="checkbox"] {
+        .foco-table thead th.assunto-col {
+            text-align: left;
+            min-width: 220px;
+            padding-left: 14px;
+        }
+        .foco-table thead th.check-col {
+            min-width: 44px;
+        }
+        .foco-table thead th.anotacao-col {
+            width: 48px;
+            min-width: 48px;
+        }
+        .foco-table tbody td {
+            padding: 10px 4px;
+            border-bottom: 1px solid #1f1f1f;
+            text-align: center;
+            font-size: 0.82rem;
+            color: #ddd;
+            vertical-align: middle;
+            transition: background var(--dur-fast) var(--ease-standard);
+        }
+        .foco-table tbody td.assunto-col {
+            text-align: left;
+            padding-left: 14px;
+            font-size: 0.85rem;
+            line-height: 1.4;
+            color: #ddd;
+        }
+        .foco-table tbody td.anotacao-col {
+            text-align: center;
+        }
+        .foco-table tbody tr:last-child td { border-bottom: none; }
+        .foco-table tbody tr:hover td { background: #1f1f1f; }
+
+        .foco-table .checkbox-cell {
+            text-align: center;
+            min-width: 44px;
+        }
+        .foco-table .checkbox-cell input[type="checkbox"] {
             width: 18px;
             height: 18px;
             accent-color: #4cc2ff;
             cursor: pointer;
-            flex-shrink: 0;
+            transition: transform var(--dur-faster) var(--ease-standard);
         }
-        .foco-item input[type="checkbox"].lido-check:checked { accent-color: #6ccb5f; }
-        .foco-item input[type="checkbox"].exercitado-check:checked { accent-color: #d4af37; }
-        .foco-item input[type="checkbox"].concluido-check:checked { accent-color: #6ccb5f; }
-        .foco-item input[type="checkbox"].rev24h-check:checked { accent-color: #ff6b6b; }
-        .foco-item input[type="checkbox"].rev7d-check:checked { accent-color: #ffd54f; }
-        .foco-item input[type="checkbox"].rev15d-check:checked { accent-color: #4cc2ff; }
+        .foco-table .checkbox-cell input[type="checkbox"]:hover { transform: scale(1.15); }
+        .foco-table .checkbox-cell input[type="checkbox"].concluido-check:checked { accent-color: #6ccb5f; }
+        .foco-table .checkbox-cell input[type="checkbox"].exercitado-check:checked { accent-color: #d4af37; }
+        .foco-table .checkbox-cell input[type="checkbox"].rev24h-check:checked { accent-color: #ff6b6b; }
+        .foco-table .checkbox-cell input[type="checkbox"].rev7d-check:checked { accent-color: #ffd54f; }
+        .foco-table .checkbox-cell input[type="checkbox"].rev15d-check:checked { accent-color: #4cc2ff; }
 
-        .foco-item.lido { border-color: #2d6b2d; }
-        .foco-item.exercitado { border-color: #6b5a00; }
-        .foco-item.concluido { background: #1a2a1a; border-color: #2d6b2d; }
-        .foco-item.rev24h { border-color: #6b2d2d; }
-        .foco-item.rev7d { border-color: #6b5a00; }
-        .foco-item.rev15d { border-color: #2d4a6b; }
+        .foco-table .btn-anotacao {
+            background: none;
+            border: none;
+            font-size: 1rem;
+            cursor: pointer;
+            padding: 3px 5px;
+            border-radius: var(--radius-sm);
+            transition: background var(--dur-fast) var(--ease-standard), transform var(--dur-faster) var(--ease-standard);
+            line-height: 1;
+            color: #aaa;
+        }
+        .foco-table .btn-anotacao:hover { background: #2a2a2a; transform: scale(1.15); color: #fff; }
+        .foco-table .btn-anotacao.tem-anotacao { color: #4cc2ff; font-weight: 700; }
 
+        /* ============ PAINEL DIREITO (ABAS + POMODORO) ============ */
         .foco-relogio-painel {
-            width: 280px;
+            width: 340px;
             flex-shrink: 0;
             background: #050505;
             border-left: 1px solid #222;
-            padding: 24px 18px;
             display: flex;
             flex-direction: column;
-            gap: 16px;
             overflow: hidden;
         }
 
-        .foco-relogio-display {
-            font-family: var(--font-digital);
-            font-size: 2.2rem;
-            font-weight: 700;
-            font-variant-numeric: tabular-nums;
-            font-feature-settings: "tnum";
-            line-height: 1.1;
-            color: #6ccb5f;
-            text-align: center;
-            letter-spacing: 0.02em;
-            padding: 18px 8px;
+        .painel-abas {
+            display: flex;
             background: #0a0a0a;
-            border: 2px solid #1f1f1f;
-            border-radius: var(--radius-lg);
-            transition: color var(--dur-fast) var(--ease-standard), border-color var(--dur-fast) var(--ease-standard), text-shadow var(--dur-fast) var(--ease-standard);
-            text-shadow: 0 0 18px rgba(108,203,95,0.5);
-            white-space: nowrap;
-            overflow: hidden;
+            border-bottom: 1px solid #1f1f1f;
+            flex-shrink: 0;
         }
-        .foco-relogio-display.rodando {
-            color: #6ccb5f;
-            border-color: #2d6b2d;
-            text-shadow: 0 0 22px rgba(108,203,95,0.7);
-        }
-        .foco-relogio-display.pausado {
-            color: #ffd54f;
-            border-color: #6b5a00;
-            text-shadow: 0 0 22px rgba(255,213,79,0.7);
-        }
-        .foco-relogio-display.parado {
+        .painel-aba {
+            flex: 1;
+            padding: 14px 12px;
+            background: transparent;
+            border: none;
             color: #666;
-            border-color: #222;
-            text-shadow: none;
-        }
-
-        .foco-relogio-label {
-            text-align: center;
-            font-size: 0.68rem;
-            text-transform: uppercase;
-            letter-spacing: 1.2px;
-            color: #666;
-            font-weight: 700;
-        }
-
-        .foco-relogio-botoes {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .foco-btn-principal {
-            background: #1e3a2a;
-            border: 1px solid #2d6b2d;
-            color: #6ccb5f;
-            padding: 16px;
-            border-radius: var(--radius-md);
             font-family: var(--ms-font);
-            font-size: 1rem;
+            font-size: 0.82rem;
             font-weight: 700;
             cursor: pointer;
-            transition: background var(--dur-fast) var(--ease-standard), transform 100ms var(--ease-standard);
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
+            transition: color var(--dur-fast) var(--ease-standard), background var(--dur-fast) var(--ease-standard);
+            border-bottom: 3px solid transparent;
+        }
+        .painel-aba:hover { color: #aaa; background: #111; }
+        .painel-aba.ativa {
+            color: #fff;
+            background: #050505;
+            border-bottom-color: #6ccb5f;
+        }
+        .painel-aba .aba-icone { font-size: 1rem; }
+
+        .painel-conteudo {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px 16px;
+            display: none;
+            flex-direction: column;
+            gap: 14px;
+        }
+        .painel-conteudo.ativo { display: flex; }
+
+        .foco-relogio-display {
+            font-family: var(--font-mono);
+            font-size: 2.4rem;
+            font-weight: 700;
+            line-height: 1.1;
+            color: #6ccb5f;
+            text-align: center;
+            padding: 18px 8px;
+            background: #0a0a0a;
+            border: 2px solid #1f1f1f;
+            border-radius: var(--radius-lg);
+            white-space: nowrap;
+            overflow: visible;
+            min-height: 76px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            letter-spacing: 0.02em;
+            transition: color var(--dur-fast) var(--ease-standard), border-color var(--dur-fast) var(--ease-standard);
+        }
+        .foco-relogio-display.rodando { color: #6ccb5f; border-color: #2d6b2d; }
+        .foco-relogio-display.pausado { color: #ffd54f; border-color: #6b5a00; }
+        .foco-relogio-display.parado { color: #666; border-color: #222; }
+        .foco-relogio-display.pomodoro-foco { color: #6ccb5f; border-color: #2d6b2d; }
+        .foco-relogio-display.pomodoro-pausa { color: #ffd54f; border-color: #6b5a00; }
+        .foco-relogio-display.tempo-extra {
+            color: #4cc2ff;
+            border-color: #1a3a5c;
+            animation: pulseExtra 1.5s infinite;
+        }
+        @keyframes pulseExtra {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+
+        .foco-relogio-botoes { display: flex; flex-direction: row; gap: 8px; }
+
+        .foco-btn-principal {
+            flex: 1;
+            background: #1e3a2a;
+            border: 1px solid #2d6b2d;
+            color: #6ccb5f;
+            padding: 14px;
+            border-radius: var(--radius-md);
+            font-family: var(--ms-font);
+            font-size: 0.95rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: background var(--dur-fast) var(--ease-standard), transform 100ms var(--ease-standard);
         }
         .foco-btn-principal:hover { background: #244a34; }
         .foco-btn-principal:active { transform: scale(0.97); }
-        .foco-btn-principal.pausado {
-            background: #4a3f1a;
-            border-color: #6b5a00;
-            color: #ffd54f;
-        }
+        .foco-btn-principal.pausado { background: #4a3f1a; border-color: #6b5a00; color: #ffd54f; }
         .foco-btn-principal.pausado:hover { background: #5a4a20; }
 
         .foco-btn-secundario {
             background: transparent;
             border: 1px solid #333;
             color: #aaa;
-            padding: 12px;
+            padding: 14px;
             border-radius: var(--radius-md);
             font-family: var(--ms-font);
-            font-size: 0.8rem;
+            font-size: 0.82rem;
             font-weight: 600;
             cursor: pointer;
-            transition: background var(--dur-fast) var(--ease-standard), color var(--dur-fast) var(--ease-standard);
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 6px;
+            transition: background var(--dur-fast) var(--ease-standard), color var(--dur-fast) var(--ease-standard);
         }
         .foco-btn-secundario:hover { background: #1a1a1a; color: #fff; }
 
-        .foco-info-extra {
-            margin-top: auto;
+        .pomodoro-ciclos-box {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 10px;
+            background: #0a0a0a;
+            border: 1px solid #1f1f1f;
+            border-radius: var(--radius-md);
+            font-size: 0.75rem;
+            color: #888;
+            font-weight: 600;
+        }
+        .pomodoro-ciclos-box .ciclo-dot { font-size: 1rem; opacity: 0.3; transition: opacity var(--dur-fast) var(--ease-standard), transform var(--dur-fast) var(--ease-standard); }
+        .pomodoro-ciclos-box .ciclo-dot.ativo { opacity: 1; transform: scale(1.1); }
+
+        .pomodoro-dropdown-wrap { display: flex; flex-direction: column; gap: 4px; }
+        .pomodoro-dropdown-label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1px; color: #666; font-weight: 700; }
+        .pomodoro-dropdown {
+            width: 100%;
+            padding: 10px 32px 10px 12px;
+            background: #0a0a0a;
+            border: 1px solid #262626;
+            border-radius: var(--radius-md);
+            color: #ddd;
+            font-family: var(--ms-font);
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M6 8L2 4h8z' fill='%23666'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            background-size: 12px;
+        }
+        .pomodoro-dropdown:hover { border-color: #4cc2ff; }
+        .pomodoro-dropdown:focus { outline: none; border-color: #4cc2ff; }
+
+        .pomodoro-som-linha { display: flex; align-items: center; justify-content: space-between; font-size: 0.72rem; color: #888; padding: 2px 0; }
+        .pomodoro-som-btn {
+            background: transparent;
+            border: 1px solid #262626;
+            color: #888;
+            cursor: pointer;
+            font-size: 0.9rem;
+            padding: 4px 10px;
+            border-radius: var(--radius-md);
+            transition: background var(--dur-fast) var(--ease-standard), color var(--dur-fast) var(--ease-standard), border-color var(--dur-fast) var(--ease-standard);
+        }
+        .pomodoro-som-btn:hover { background: #1a1a1a; color: #fff; border-color: #333; }
+        .pomodoro-som-btn.ativo { color: #6ccb5f; border-color: #2d6b2d; background: #1e3a2a; }
+
+        .pomodoro-zona-ciclos {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .pomodoro-card {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: #1a1a1a;
+            border: 1px solid #2d6b2d;
+            border-left: 4px solid #6ccb5f;
+            border-radius: var(--radius-md);
+            padding: 12px 12px;
+            display: none;
+            flex-direction: column;
+            gap: 8px;
+            z-index: 10;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.6);
+            animation: fadeInCard 300ms var(--ease-standard);
+        }
+        .pomodoro-card.visivel { display: flex; }
+        .pomodoro-card.pausa { border-color: #6b5a00; border-left-color: #ffd54f; }
+        @keyframes fadeInCard { from { opacity: 0; transform: scale(0.96); } to { opacity: 1; transform: scale(1); } }
+
+        .pomodoro-ciclos-box.escondido,
+        .pomodoro-dropdown-wrap.escondido,
+        .pomodoro-som-linha.escondido { visibility: hidden; }
+
+        .pomodoro-card-titulo {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #fff;
             text-align: center;
-            font-size: 0.68rem;
-            color: #555;
-            line-height: 1.5;
+            line-height: 1.2;
         }
-
-        @media (max-width: 899px) {
-            .foco-corpo {
-                flex-direction: column;
-                overflow: hidden;
-            }
-            .foco-relogio-painel {
-                width: 100%;
-                order: -1;
-                border-left: none;
-                border-bottom: 1px solid #222;
-                padding: 14px 16px;
-                flex-direction: row;
-                flex-wrap: wrap;
-                align-items: center;
-                gap: 12px;
-                flex-shrink: 0;
-            }
-            .foco-relogio-display {
-                font-size: 1.9rem;
-                padding: 10px 12px;
-                flex: 1;
-                min-width: 140px;
-                letter-spacing: 0.02em;
-            }
-            .foco-relogio-label { display: none; }
-            .foco-relogio-botoes {
-                flex-direction: row;
-                gap: 8px;
-                flex-shrink: 0;
-            }
-            .foco-btn-principal {
-                padding: 12px 18px;
-                font-size: 0.9rem;
-            }
-            .foco-btn-secundario {
-                padding: 12px 14px;
-                font-size: 0.75rem;
-            }
-            .foco-info-extra { display: none; }
-            .foco-checklist { padding: 14px; }
-            .foco-modulo-titulo { font-size: 1.15rem; }
-            .foco-item { padding: 10px 12px; font-size: 0.82rem; gap: 8px; flex-wrap: wrap; }
-            .foco-item span.assunto-texto { flex-basis: 100%; order: -1; margin-bottom: 4px; }
-            .foco-item .foco-checks-grupo { width: 100%; justify-content: space-between; gap: 4px; }
-            .foco-item .foco-check-label { font-size: 0.5rem; }
+        .pomodoro-card-botoes { display: flex; flex-direction: column; gap: 6px; }
+        .pomodoro-btn-acao {
+            padding: 11px;
+            border-radius: var(--radius-md);
+            font-family: var(--ms-font);
+            font-size: 0.82rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: background var(--dur-fast) var(--ease-standard), transform 100ms var(--ease-standard);
         }
+        .pomodoro-btn-acao:active { transform: scale(0.97); }
+        .pomodoro-btn-acao.principal { background: #1e3a2a; border: 1px solid #2d6b2d; color: #6ccb5f; }
+        .pomodoro-btn-acao.principal:hover { background: #244a34; }
+        .pomodoro-btn-acao.principal.pausa { background: #4a3f1a; border-color: #6b5a00; color: #ffd54f; }
+        .pomodoro-btn-acao.principal.pausa:hover { background: #5a4a20; }
+        .pomodoro-btn-acao.secundario { background: transparent; border: 1px solid #333; color: #aaa; }
+        .pomodoro-btn-acao.secundario:hover { background: #1a1a1a; color: #fff; }
+        .pomodoro-btn-acao.terciario { background: transparent; border: none; color: #4cc2ff; font-size: 0.72rem; padding: 6px; }
+        .pomodoro-btn-acao.terciario:hover { background: rgba(76,194,255,0.08); }
 
-        @media (max-width: 480px) {
-            .foco-relogio-display {
-                font-size: 1.5rem;
-                padding: 8px 10px;
-                min-width: 120px;
-            }
-            .foco-btn-principal {
-                padding: 10px 14px;
-                font-size: 0.82rem;
-            }
-            .foco-btn-secundario {
-                padding: 10px 10px;
-                font-size: 0.7rem;
-            }
-            .foco-item input[type="checkbox"] { width: 16px; height: 16px; }
+        .painel-rodape {
+            padding: 14px 16px;
+            border-top: 1px solid #1f1f1f;
+            background: #050505;
+            flex-shrink: 0;
         }
-
-        @media (max-width: 360px) {
-            .foco-relogio-display {
-                font-size: 1.2rem;
-                padding: 8px 6px;
-                min-width: 100px;
-            }
-            .foco-item input[type="checkbox"] { width: 15px; height: 15px; }
-            .foco-item .foco-check-label { font-size: 0.45rem; }
+        .btn-sair-foco {
+            width: 100%;
+            background: transparent;
+            border: 1px solid #333;
+            color: #aaa;
+            padding: 12px;
+            border-radius: var(--radius-md);
+            font-family: var(--ms-font);
+            font-size: 0.82rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: background var(--dur-fast) var(--ease-standard), color var(--dur-fast) var(--ease-standard);
         }
+        .btn-sair-foco:hover { background: #1a1a1a; color: #fff; }
 
-        /* ============ MODAL ANOTAÇÕES ============ */
-        .modal-anotacao-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 200; display: none; align-items: center; justify-content: center; padding: 20px; backdrop-filter: blur(3px); }
+        /* ============ MODAL ANOTAÇÕES (ALTERAÇÃO 16: z-index 9500) ============ */
+        .modal-anotacao-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 9500; display: none; align-items: center; justify-content: center; padding: 20px; backdrop-filter: blur(3px); }
         .modal-anotacao-overlay.visivel { display: flex; animation: fadeInNotif var(--dur-normal) var(--ease-decelerate); }
         .modal-anotacao-content { background: var(--surface); border-radius: var(--radius-lg); box-shadow: var(--shadow-28); width: 100%; max-width: 560px; max-height: 80vh; display: flex; flex-direction: column; overflow: hidden; border: 1px solid var(--border); }
         .modal-anotacao-header { padding: 14px 18px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; background: var(--surface-alt); }
@@ -1072,8 +1186,8 @@
         body.dark-mode .btn-ms.danger { background: #ff6b6b; color: #111; }
         body.dark-mode .btn-ms.danger:hover { background: #ff9999; }
 
-        /* ============ NOTIFICAÇÕES ============ */
-        .notificacoes-painel { position: fixed; top: 66px; right: 16px; width: 360px; max-width: 90vw; background: var(--surface); border-radius: var(--radius-lg); box-shadow: var(--shadow-28); z-index: 100; display: none; overflow: hidden; max-height: 460px; border: 1px solid var(--border); }
+        /* ============ NOTIFICAÇÕES (ALTERAÇÃO 16: z-index 9500) ============ */
+        .notificacoes-painel { position: fixed; top: 66px; right: 16px; width: 360px; max-width: 90vw; background: var(--surface); border-radius: var(--radius-lg); box-shadow: var(--shadow-28); z-index: 9500; display: none; overflow: hidden; max-height: 460px; border: 1px solid var(--border); }
         .notificacoes-painel.visivel { display: block; animation: fadeInNotif var(--dur-normal) var(--ease-decelerate); }
         @keyframes fadeInNotif { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
         .notificacoes-header { padding: 12px 16px; font-weight: 600; font-size: 0.9rem; border-bottom: 1px solid var(--border); background: var(--surface-alt); display: flex; justify-content: space-between; align-items: center; }
@@ -1087,8 +1201,8 @@
         .notificacao-item .notif-btn-visto:hover { background: var(--ms-blue-hover); }
         .notificacao-item.visto { opacity: 0.6; }
 
-        /* ============ TOAST ============ */
-        .toast-celebracao { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%) translateY(120px); background: var(--surface); border: 2px solid var(--ms-blue); border-radius: var(--radius-lg); padding: 12px 20px; box-shadow: var(--shadow-16); z-index: 300; display: flex; align-items: center; gap: 10px; font-size: 0.9rem; font-weight: 600; color: var(--ms-gray-900); transition: transform var(--dur-slow) var(--ease-decelerate), opacity var(--dur-slow) var(--ease-standard); opacity: 0; pointer-events: none; max-width: 90vw; }
+        /* ============ TOAST (ALTERAÇÃO 16: z-index 9600) ============ */
+        .toast-celebracao { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%) translateY(120px); background: var(--surface); border: 2px solid var(--ms-blue); border-radius: var(--radius-lg); padding: 12px 20px; box-shadow: var(--shadow-16); z-index: 9600; display: flex; align-items: center; gap: 10px; font-size: 0.9rem; font-weight: 600; color: var(--ms-gray-900); transition: transform var(--dur-slow) var(--ease-decelerate), opacity var(--dur-slow) var(--ease-standard); opacity: 0; pointer-events: none; max-width: 90vw; }
         .toast-celebracao.visivel { transform: translateX(-50%) translateY(0); opacity: 1; }
         .toast-celebracao .toast-icone { font-size: 1.5rem; }
         body.dark-mode .toast-celebracao { background: #2a2a2a; border-color: #4cc2ff; color: #e0e0e0; }
@@ -1453,6 +1567,29 @@
         body.dark-mode .toast-share { background: #4cc2ff; color: #111; }
 
         /* ============ RESPONSIVO GERAL ============ */
+        @media (max-width: 899px) {
+            .foco-corpo { flex-direction: column; overflow: hidden; }
+            .foco-relogio-painel {
+                width: 100%;
+                order: -1;
+                border-left: none;
+                border-bottom: 1px solid #222;
+                max-height: 60vh;
+            }
+            .painel-conteudo { padding: 14px; gap: 10px; }
+            .foco-relogio-display { font-size: 1.8rem; padding: 12px; min-height: 64px; }
+            .foco-btn-principal { padding: 12px; font-size: 0.85rem; }
+            .foco-btn-secundario { padding: 12px; font-size: 0.78rem; }
+            .foco-checklist { padding: 14px; }
+            .foco-modulo-titulo { font-size: 1.15rem; }
+            .painel-aba { padding: 12px 10px; font-size: 0.78rem; }
+            .foco-table { min-width: 700px; }
+            .foco-table thead th { font-size: 0.55rem; padding: 8px 2px; }
+            .foco-table thead th.assunto-col { min-width: 180px; padding-left: 10px; }
+            .foco-table tbody td { padding: 8px 2px; font-size: 0.75rem; }
+            .foco-table tbody td.assunto-col { padding-left: 10px; font-size: 0.78rem; }
+        }
+
         @media (max-width: 600px) {
             .app-shell { padding: 6px; }
             #telaDashboard.ativa { height: auto; overflow: visible; padding: 6px; }
@@ -1469,7 +1606,6 @@
             table { min-width: 550px; }
             .cronometro-container { flex-wrap: wrap; gap: 6px; }
             .cronometro-display { font-size: 1.1rem; min-width: 90px; }
-            .cronometro-modulo-label { margin-left: 0; width: 100%; }
             .grafico-colunas-container { gap: 4px; padding: 8px 4px 3px 4px; }
             .grafico-coluna-wrapper { min-width: 28px; max-width: 42px; }
             .grafico-coluna-stack { max-width: 24px; }
@@ -1479,6 +1615,7 @@
             .cobertura-label { min-width: 90px; }
             .modal-anotacao-content { max-width: 95vw; }
             .modulos-topo { gap: 8px; }
+            .foco-table { min-width: 600px; }
         }
     </style>
 </head>
@@ -1492,7 +1629,7 @@
                 <button class="fechar-aviso" id="fecharAviso" aria-label="Fechar aviso">×</button>
             </div>
 
-            <!-- ============ TOPO UNIFICADO: CABEÇALHO + SAUDAÇÃO ============ -->
+            <!-- ============ TOPO UNIFICADO ============ -->
             <div class="topo-unificado">
                 <div class="topo-header">
                     <div class="topo-header-linha-1">
@@ -1500,7 +1637,7 @@
                         <div class="topo-header-titulo">
                             <span class="header-icon">📋</span>
                             <span>CheckAprovação</span>
-                            <span class="topo-header-versao">v0.60</span>
+                            <span class="topo-header-versao">v0.62</span>
                         </div>
                         <button class="topo-header-sino" id="btnSino" title="Notificações" aria-label="Notificações">
                             🔔
@@ -1524,7 +1661,7 @@
             <!-- ============ ESTRUTURA BASE 30/70 ============ -->
             <div class="layout-pc">
 
-                <!-- ============ COLUNA ESQUERDA (30%) ============ -->
+                <!-- COLUNA ESQUERDA (30%) -->
                 <div class="coluna-esquerda">
                     <div>
                         <div class="secao-titulo planejamento">🎯 SEU PLANEJAMENTO</div>
@@ -1541,7 +1678,6 @@
                         </div>
                     </div>
 
-                    <!-- BANNER COMPARTILHE (dentro da coluna esquerda) -->
                     <div class="banner-bloco-esquerda">
                         <div class="banner-compartilhe" id="bannerCompartilhe">
                             <button class="banner-btn-fechar" id="btnFecharBanner" title="Fechar" aria-label="Fechar banner">×</button>
@@ -1556,37 +1692,27 @@
 
                             <div class="banner-botoes">
                                 <a class="btn-share btn-whats" id="btnWhatsApp" href="#" target="_blank" rel="noopener noreferrer">
-                                    <svg class="share-svg" viewBox="0 0 24 24" aria-hidden="true">
-                                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.693.625.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.688"/>
-                                    </svg>
+                                    <svg class="share-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.693.625.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.688"/></svg>
                                     <span class="share-texto">WhatsApp</span>
                                 </a>
 
                                 <a class="btn-share btn-telegram" id="btnTelegram" href="#" target="_blank" rel="noopener noreferrer">
-                                    <svg class="share-svg" viewBox="0 0 24 24" aria-hidden="true">
-                                        <path d="M11.944 0A12 12 0 000 12a12 12 0 0012 12 12 12 0 0012-12A12 12 0 0012 0a12 12 0 00-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 01.171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
-                                    </svg>
+                                    <svg class="share-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M11.944 0A12 12 0 000 12a12 12 0 0012 12 12 12 0 0012-12A12 12 0 0012 0a12 12 0 00-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 01.171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
                                     <span class="share-texto">Telegram</span>
                                 </a>
 
                                 <a class="btn-share btn-email" id="btnEmail" href="#">
-                                    <svg class="share-svg" viewBox="0 0 24 24" aria-hidden="true">
-                                        <path d="M12 12.713l-11.985-9.713h23.97l-11.985 9.713zm0 2.574l-12-9.725v15.438h24v-15.438l-12 9.725z"/>
-                                    </svg>
+                                    <svg class="share-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 12.713l-11.985-9.713h23.97l-11.985 9.713zm0 2.574l-12-9.725v15.438h24v-15.438l-12 9.725z"/></svg>
                                     <span class="share-texto">E-mail</span>
                                 </a>
 
                                 <a class="btn-share btn-sms" id="btnSMS" href="#">
-                                    <svg class="share-svg" viewBox="0 0 24 24" aria-hidden="true">
-                                        <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM7 9h10v2H7V9zm6 5H7v-2h6v2zm4-6H7V6h10v2z"/>
-                                    </svg>
+                                    <svg class="share-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM7 9h10v2H7V9zm6 5H7v-2h6v2zm4-6H7V6h10v2z"/></svg>
                                     <span class="share-texto">SMS</span>
                                 </a>
 
                                 <a class="btn-share btn-instagram" id="btnInstagram" href="#">
-                                    <svg class="share-svg" viewBox="0 0 24 24" aria-hidden="true">
-                                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
-                                    </svg>
+                                    <svg class="share-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
                                     <span class="share-texto">Instagram</span>
                                 </a>
                             </div>
@@ -1597,7 +1723,6 @@
                             </div>
                         </div>
 
-                        <!-- BOTÃO COMPACTO (quando banner reduzido) -->
                         <div class="banner-compartilhe-compacto" id="bannerCompartilheCompacto">
                             <button class="btn-compacto-share" id="btnReabrirBanner">
                                 <span class="compacto-icone">🎁</span>
@@ -1607,7 +1732,7 @@
                     </div>
                 </div>
 
-                <!-- ============ BLOCO SEU PROGRESSO (4 CARDS) ============ -->
+                <!-- BLOCO SEU PROGRESSO (4 CARDS) -->
                 <div class="bloco-progresso">
                     <div class="secao-titulo progresso">📈 SEU PROGRESSO</div>
                     <div class="progresso-grid">
@@ -1631,27 +1756,13 @@
                             <div class="pizza-container">
                                 <svg class="pizza-svg" viewBox="0 0 120 120" aria-hidden="true">
                                     <defs>
-                                        <linearGradient id="gradStatusAzul" x1="0%" y1="0%" x2="100%" y2="100%">
-                                            <stop offset="0%" stop-color="#4cc2ff"/>
-                                            <stop offset="100%" stop-color="#0067b8"/>
-                                        </linearGradient>
-                                        <linearGradient id="gradStatusVerde" x1="0%" y1="0%" x2="100%" y2="100%">
-                                            <stop offset="0%" stop-color="#b8e6b8"/>
-                                            <stop offset="100%" stop-color="#107c10"/>
-                                        </linearGradient>
-                                        <linearGradient id="gradStatusAmarelo" x1="0%" y1="0%" x2="100%" y2="100%">
-                                            <stop offset="0%" stop-color="#ffe69c"/>
-                                            <stop offset="100%" stop-color="#b8860b"/>
-                                        </linearGradient>
-                                        <linearGradient id="gradStatusVermelho" x1="0%" y1="0%" x2="100%" y2="100%">
-                                            <stop offset="0%" stop-color="#ffb8b8"/>
-                                            <stop offset="100%" stop-color="#d13438"/>
-                                        </linearGradient>
+                                        <linearGradient id="gradStatusAzul" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#4cc2ff"/><stop offset="100%" stop-color="#0067b8"/></linearGradient>
+                                        <linearGradient id="gradStatusVerde" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#b8e6b8"/><stop offset="100%" stop-color="#107c10"/></linearGradient>
+                                        <linearGradient id="gradStatusAmarelo" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#ffe69c"/><stop offset="100%" stop-color="#b8860b"/></linearGradient>
+                                        <linearGradient id="gradStatusVermelho" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#ffb8b8"/><stop offset="100%" stop-color="#d13438"/></linearGradient>
                                     </defs>
                                     <circle class="pizza-bg" cx="60" cy="60" r="52"/>
-                                    <circle class="pizza-fill pizza-fill-lido status-verde" cx="60" cy="60" r="52"
-                                            stroke-dasharray="326.7" stroke-dashoffset="326.7"
-                                            id="pizzaLidoFill" transform="rotate(-90 60 60)"/>
+                                    <circle class="pizza-fill pizza-fill-lido status-verde" cx="60" cy="60" r="52" stroke-dasharray="326.7" stroke-dashoffset="326.7" id="pizzaLidoFill" transform="rotate(-90 60 60)"/>
                                     <line class="pizza-ponteiro-previsto" id="pizzaLidoPrev" x1="0" y1="0" x2="0" y2="0"/>
                                     <circle class="pizza-ponteiro-realizado atras" id="pizzaLidoReal" cx="60" cy="60" r="4.5"/>
                                 </svg>
@@ -1669,9 +1780,7 @@
                             <div class="pizza-container">
                                 <svg class="pizza-svg" viewBox="0 0 120 120" aria-hidden="true">
                                     <circle class="pizza-bg" cx="60" cy="60" r="52"/>
-                                    <circle class="pizza-fill pizza-fill-concluido status-verde" cx="60" cy="60" r="52"
-                                            stroke-dasharray="326.7" stroke-dashoffset="326.7"
-                                            id="pizzaConcluidoFill" transform="rotate(-90 60 60)"/>
+                                    <circle class="pizza-fill pizza-fill-concluido status-verde" cx="60" cy="60" r="52" stroke-dasharray="326.7" stroke-dashoffset="326.7" id="pizzaConcluidoFill" transform="rotate(-90 60 60)"/>
                                     <line class="pizza-ponteiro-previsto" id="pizzaConcluidoPrev" x1="0" y1="0" x2="0" y2="0"/>
                                     <circle class="pizza-ponteiro-realizado atras" id="pizzaConcluidoReal" cx="60" cy="60" r="4.5"/>
                                 </svg>
@@ -1686,7 +1795,7 @@
                     </div>
                 </div>
 
-                <!-- ============ BLOCO PRINCIPAL (coluna direita 70%) ============ -->
+                <!-- BLOCO PRINCIPAL (coluna direita 70%) -->
                 <div class="layout-principal">
                     <div class="coluna-direita">
 
@@ -1708,7 +1817,6 @@
 
             </div>
 
-            <!-- ============ PAINEL DE NOTIFICAÇÕES ============ -->
             <div class="notificacoes-painel" id="notificacoesPainel">
                 <div class="notificacoes-header">
                     <span>🔔 Notificações</span>
@@ -1720,7 +1828,7 @@
         </div>
         <!-- /telaPrincipal -->
 
-        <!-- ============ MODO FOCO TOTAL (OVERLAY) ============ -->
+        <!-- MODO FOCO TOTAL -->
         <div class="modo-foco" id="modoFoco">
             <div class="foco-barra">
                 <div class="foco-barra-titulo">
@@ -1731,39 +1839,109 @@
             </div>
 
             <div class="foco-corpo">
-                <div class="foco-checklist" id="focoChecklist">
+                <div class="foco-checklist">
                     <div class="foco-checklist-inner">
                         <div class="foco-modulo-titulo" id="focoModuloTitulo">📚 Módulo</div>
-                        <div class="foco-modulo-subtitulo">Concentre-se. O relógio está sempre visível à direita.</div>
-                        <ul class="foco-lista" id="focoLista"></ul>
+                        <div class="foco-modulo-subtitulo">Concentre-se. Use as abas ao lado para alternar entre cronômetro padrão e Pomodoro.</div>
+                        <div class="table-responsive">
+                            <table class="foco-table" id="focoTabela">
+                                <thead>
+                                    <tr>
+                                        <th class="assunto-col">Assunto</th>
+                                        <th class="check-col">Lido</th>
+                                        <th class="check-col">Exercitado</th>
+                                        <th class="check-col">Concluído</th>
+                                        <th class="check-col">Rev 24h</th>
+                                        <th class="check-col">Rev 7d</th>
+                                        <th class="check-col">Rev 15d</th>
+                                        <th class="anotacao-col">📝</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="focoTabelaBody"></tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
 
                 <div class="foco-relogio-painel">
-                    <div class="foco-relogio-label">Tempo de Foco</div>
-                    <div class="foco-relogio-display parado" id="focoRelogioDisplay">00:00:00</div>
-                    <div class="foco-relogio-botoes">
-                        <button class="foco-btn-principal" id="btnFocoIniciar">
-                            <span id="focoIniciarIcone">▶</span>
-                            <span id="focoIniciarTexto">Iniciar</span>
+                    <div class="painel-abas">
+                        <button class="painel-aba ativa" data-aba="padrao">
+                            <span class="aba-icone">⏱️</span>
+                            <span>Padrão</span>
                         </button>
-                        <button class="foco-btn-secundario" id="btnFocoParar" style="display:none;">
-                            <span>⏹</span>
-                            <span>Parar</span>
+                        <button class="painel-aba" data-aba="pomodoro">
+                            <span class="aba-icone">🍅</span>
+                            <span>Pomodoro</span>
                         </button>
-                        <button class="foco-btn-secundario" id="btnFocoSair">
+                    </div>
+
+                    <div class="painel-conteudo ativo" id="conteudoPadrao">
+                        <div class="foco-relogio-display parado" id="relogioPadrao">00:00</div>
+                        <div class="foco-relogio-botoes">
+                            <button class="foco-btn-principal" id="btnPadraoIniciar">
+                                <span id="padraoIcone">▶</span>
+                                <span id="padraoTexto">Iniciar</span>
+                            </button>
+                            <button class="foco-btn-secundario" id="btnPadraoParar" style="display:none;">
+                                <span>⏹</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="painel-conteudo" id="conteudoPomodoro">
+                        <div class="foco-relogio-display parado" id="relogioPomodoro">25:00</div>
+                        <div class="foco-relogio-botoes">
+                            <button class="foco-btn-principal" id="btnPomodoroIniciar">
+                                <span id="pomodoroIcone">▶</span>
+                                <span id="pomodoroTexto">Iniciar</span>
+                            </button>
+                            <button class="foco-btn-secundario" id="btnPomodoroParar" style="display:none;">
+                                <span>⏹</span>
+                            </button>
+                        </div>
+
+                        <div class="pomodoro-zona-ciclos">
+                            <div class="pomodoro-ciclos-box" id="pomodoroCiclos">
+                                <span class="ciclo-dot">🍅</span>
+                                <span class="ciclo-dot">🍅</span>
+                                <span class="ciclo-dot">🍅</span>
+                                <span class="ciclo-dot">🍅</span>
+                                <span style="margin-left:6px;color:#555;font-size:0.7rem;">0/4</span>
+                            </div>
+
+                            <div class="pomodoro-dropdown-wrap" id="pomodoroDropdown">
+                                <label class="pomodoro-dropdown-label" for="pomodoroTempo">Tempo do ciclo</label>
+                                <select class="pomodoro-dropdown" id="pomodoroTempo">
+                                    <option value="25-5" selected>25 min foco · 5 min pausa</option>
+                                    <option value="50-10">50 min foco · 10 min pausa</option>
+                                    <option value="90-20">90 min foco · 20 min pausa</option>
+                                    <option value="1-0.5">1 min foco · 30s pausa (teste)</option>
+                                </select>
+                            </div>
+
+                            <div class="pomodoro-som-linha" id="pomodoroSomLinha">
+                                <span>🔊 Som ao fim do ciclo</span>
+                                <button class="pomodoro-som-btn ativo" id="btnSom">🔊</button>
+                            </div>
+
+                            <div class="pomodoro-card" id="pomodoroCard">
+                                <div class="pomodoro-card-titulo" id="cardTitulo">Ciclo completo!</div>
+                                <div class="pomodoro-card-botoes" id="cardBotoes"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="painel-rodape">
+                        <button class="btn-sair-foco" id="btnSair">
                             <span>🚪</span>
                             <span>Sair do Modo Foco</span>
                         </button>
-                    </div>
-                    <div class="foco-info-extra">
-                        Role o checklist à vontade —<br>o relógio não se move.
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- ============ TELA DASHBOARD ============ -->
+        <!-- TELA DASHBOARD -->
         <div id="telaDashboard" class="tela">
             <div class="dashboard-header-mini">
                 <button class="btn-voltar" id="btnVoltarDashboardTopo">← Voltar</button>
@@ -1815,7 +1993,7 @@
             </div>
         </div>
 
-        <!-- ============ TELA REVISÕES PENDENTES ============ -->
+        <!-- TELA REVISÕES PENDENTES -->
         <div id="telaRevisoes" class="tela">
             <div class="config-header">
                 <button class="btn-voltar" id="btnVoltarRevisoes">← Voltar</button>
@@ -1831,7 +2009,7 @@
             </div>
         </div>
 
-        <!-- ============ TELA CONFIGURAÇÕES ============ -->
+        <!-- TELA CONFIGURAÇÕES -->
         <div id="telaConfig" class="tela">
             <div class="config-header">
                 <button class="btn-voltar" id="btnVoltarPrincipal">← Voltar</button>
@@ -1948,41 +2126,7 @@
     </div>
     <!-- /app-shell -->
 
-    <!-- ============ TOAST DE CELEBRAÇÃO ============ -->
-    <div class="toast-celebracao" id="toastCelebracao" role="status" aria-live="polite">
-        <span class="toast-icone" id="toastIcone">✅</span>
-        <span id="toastTexto">Assunto concluído!</span>
-    </div>
-
-    <!-- ============ TOAST DE COMPARTILHAMENTO ============ -->
-    <div class="toast-share" id="toastShare" role="status" aria-live="polite">📋 Link copiado!</div>
-
-    <!-- ============ MODAL DE ANOTAÇÕES ============ -->
-    <div class="modal-anotacao-overlay" id="modalAnotacaoOverlay">
-        <div class="modal-anotacao-content" role="dialog" aria-modal="true" aria-labelledby="modalAnotacaoTitulo">
-            <div class="modal-anotacao-header">
-                <h3 id="modalAnotacaoTitulo">📝 Anotações</h3>
-                <button class="btn-fechar-modal" id="btnFecharModalAnotacao" aria-label="Fechar">×</button>
-            </div>
-            <div class="modal-anotacao-body">
-                <div class="modal-anotacao-assunto" id="modalAnotacaoAssunto">Assunto:</div>
-                <div id="anotacaoTabelaContainer"></div>
-                <button class="btn-add-anotacao" id="btnAddAnotacao">+ Nova Anotação</button>
-                <div class="nova-anotacao-area" id="novaAnotacaoArea">
-                    <textarea id="novaAnotacaoTextarea" placeholder="Digite sua anotação..."></textarea>
-                    <div style="display:flex;gap:8px;">
-                        <button class="btn-ms" id="btnSalvarNovaAnotacao">💾 Salvar</button>
-                        <button class="btn-ms" id="btnCancelarNovaAnotacao" style="background:var(--ms-gray-200);color:var(--ms-gray-900);">Cancelar</button>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-anotacao-rodape">
-                <button class="btn-ms danger" id="btnExcluirAnotacao">🗑️ Excluir Todas</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- ============ MENU LATERAL ============ -->
+    <!-- MENU LATERAL -->
     <div class="menu-overlay" id="menuOverlay"></div>
     <div class="menu-lateral" id="menuLateral">
         <div class="menu-lateral-header">
@@ -2006,6 +2150,40 @@
             <span class="menu-icone">⚙️</span>
             <span class="menu-texto">Configurações</span>
         </a>
+    </div>
+
+    <!-- TOAST CELEBRAÇÃO -->
+    <div class="toast-celebracao" id="toastCelebracao" role="status" aria-live="polite">
+        <span class="toast-icone" id="toastIcone">✅</span>
+        <span id="toastTexto">Assunto concluído!</span>
+    </div>
+
+    <!-- TOAST COMPARTILHAR -->
+    <div class="toast-share" id="toastShare" role="status" aria-live="polite">📋 Link copiado!</div>
+
+    <!-- MODAL ANOTAÇÕES -->
+    <div class="modal-anotacao-overlay" id="modalAnotacaoOverlay">
+        <div class="modal-anotacao-content" role="dialog" aria-modal="true" aria-labelledby="modalAnotacaoTitulo">
+            <div class="modal-anotacao-header">
+                <h3 id="modalAnotacaoTitulo">📝 Anotações</h3>
+                <button class="btn-fechar-modal" id="btnFecharModalAnotacao" aria-label="Fechar">×</button>
+            </div>
+            <div class="modal-anotacao-body">
+                <div class="modal-anotacao-assunto" id="modalAnotacaoAssunto">Assunto:</div>
+                <div id="anotacaoTabelaContainer"></div>
+                <button class="btn-add-anotacao" id="btnAddAnotacao">+ Nova Anotação</button>
+                <div class="nova-anotacao-area" id="novaAnotacaoArea">
+                    <textarea id="novaAnotacaoTextarea" placeholder="Digite sua anotação..."></textarea>
+                    <div style="display:flex;gap:8px;">
+                        <button class="btn-ms" id="btnSalvarNovaAnotacao">💾 Salvar</button>
+                        <button class="btn-ms" id="btnCancelarNovaAnotacao" style="background:var(--ms-gray-200);color:var(--ms-gray-900);">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-anotacao-rodape">
+                <button class="btn-ms danger" id="btnExcluirAnotacao">🗑️ Excluir Todas</button>
+            </div>
+        </div>
     </div>
     <script>
         (function() {
@@ -2067,12 +2245,25 @@
             /* ============ ESTADO MODO FOCO ============ */
             let focoModuloAtual = null;
             let focoModuloTitulo = '';
+            let focoModuloTipo = 'modulo'; /* 'modulo' | 'subtopico' */
             let focoAtivo = false;
-            let focoRodando = false;
-            let focoPausado = false;
-            let focoInicio = null;
-            let focoTempoAcumulado = 0;
-            let focoInterval = null;
+
+            /* ============ ESTADO POMODORO ============ */
+            let abaAtiva = 'padrao';
+            let pomodoroAtivo = false;
+            let pomodoroEstado = 'off';
+            let pomodoroTempoFoco = 25;
+            let pomodoroTempoPausa = 5;
+            let pomodoroTempoRestante = 25 * 60;
+            let pomodoroUltimoTick = null;
+            let pomodoroCicloAtual = 0;
+            let pomodoroSomAtivo = true;
+            let pomodoroInterval = null;
+            let pomodoroAguardandoAcao = false;
+            let padraoPausado = false;
+
+            /* ============ ÁUDIO ============ */
+            let audioCtx = null;
 
             /* ============ CONSTANTES ============ */
             const LINK_COMPARTILHAR_PADRAO = 'https://gerlemppimentel.github.io/CheckAprov/';
@@ -2118,7 +2309,8 @@
                     linkCompartilhar: linkCompartilhar,
                     bannerReduzido: bannerReduzido,
                     concurso: concurso,
-                    cargo: cargo
+                    cargo: cargo,
+                    pomodoroSomAtivo: pomodoroSomAtivo
                 };
                 const json = JSON.stringify(dados);
                 if (armazenamento.disponivel) {
@@ -2174,6 +2366,7 @@
                         bannerReduzido = parsed.bannerReduzido || false;
                         concurso = parsed.concurso || DEFAULT_CONCURSO;
                         cargo = parsed.cargo || DEFAULT_CARGO;
+                        pomodoroSomAtivo = parsed.pomodoroSomAtivo !== undefined ? parsed.pomodoroSomAtivo : true;
                         if (nomeUsuario) document.getElementById('nomeUsuario').value = nomeUsuario;
                         if (dataInicial) document.getElementById('dataInicial').value = dataInicial;
                         if (dataFinal) document.getElementById('dataFinal').value = dataFinal;
@@ -2442,6 +2635,16 @@
                 return String(horas).padStart(2, '0') + ':' + String(minutos).padStart(2, '0') + ':' + String(segundos).padStart(2, '0');
             }
 
+            function formatarMMSS(segundosTotais) {
+                const s = Math.floor(segundosTotais);
+                const negativo = s < 0;
+                const absS = Math.abs(s);
+                const m = Math.floor(absS / 60);
+                const seg = absS % 60;
+                const str = String(m).padStart(2, '0') + ':' + String(seg).padStart(2, '0');
+                return negativo ? '+' + str : str;
+            }
+
             function formatarTempoMinutos(minutosTotais) {
                 const horas = Math.floor(minutosTotais / 60);
                 const minutos = Math.round(minutosTotais % 60);
@@ -2456,6 +2659,41 @@
                 if (horas > 0) return horas + 'h';
                 return minutos + 'min';
             }
+
+            /* ============ ÁUDIO ============ */
+            function inicializarAudio() {
+                if (audioCtx) return;
+                try {
+                    const Ctx = window.AudioContext || window.webkitAudioContext;
+                    if (!Ctx) return;
+                    audioCtx = new Ctx();
+                    if (audioCtx.state === 'suspended') {
+                        try { audioCtx.resume(); } catch (e) {}
+                    }
+                } catch (e) { audioCtx = null; }
+            }
+
+            function tocarSom() {
+                if (!pomodoroSomAtivo) return;
+                try {
+                    if (!audioCtx) inicializarAudio();
+                    if (!audioCtx) return;
+                    try { if (audioCtx.state === 'suspended') audioCtx.resume(); } catch (e) {}
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+                    osc.frequency.value = 880;
+                    osc.type = 'sine';
+                    const t = audioCtx.currentTime;
+                    gain.gain.setValueAtTime(0.0001, t);
+                    gain.gain.exponentialRampToValueAtTime(0.15, t + 0.02);
+                    gain.gain.exponentialRampToValueAtTime(0.0001, t + 0.4);
+                    osc.start(t);
+                    osc.stop(t + 0.45);
+                } catch (e) {}
+            }
+
             /* ============ ASSUNTOS E ESTRUTURA DO EDITAL ============ */
             const assuntos = {
                 portugues: ["Compreensão e interpretação de textos","Significação das palavras: sinônimos, antônimos, sentido próprio e figurado","Ortografia vigente","Pontuação","Acentuação gráfica","Emprego das classes de palavras: substantivo, adjetivo, numeral, pronome, verbo, advérbio, preposição, conjunção","Concordância verbal e nominal","Regência verbal e nominal","Crase","Emprego dos verbos e dos porquês","Linguagem figurada, conotação e denotação","Vícios de linguagem"],
@@ -2591,13 +2829,24 @@
             /* Referências modo foco */
             const modoFoco = document.getElementById('modoFoco');
             const focoModuloTituloEl = document.getElementById('focoModuloTitulo');
-            const focoLista = document.getElementById('focoLista');
-            const focoRelogioDisplay = document.getElementById('focoRelogioDisplay');
-            const btnFocoIniciar = document.getElementById('btnFocoIniciar');
-            const focoIniciarIcone = document.getElementById('focoIniciarIcone');
-            const focoIniciarTexto = document.getElementById('focoIniciarTexto');
-            const btnFocoParar = document.getElementById('btnFocoParar');
-            const btnFocoSair = document.getElementById('btnFocoSair');
+            const focoTabelaBody = document.getElementById('focoTabelaBody');
+            const relogioPadrao = document.getElementById('relogioPadrao');
+            const btnPadraoIniciar = document.getElementById('btnPadraoIniciar');
+            const padraoIcone = document.getElementById('padraoIcone');
+            const padraoTexto = document.getElementById('padraoTexto');
+            const btnPadraoParar = document.getElementById('btnPadraoParar');
+            const relogioPomodoro = document.getElementById('relogioPomodoro');
+            const btnPomodoroIniciar = document.getElementById('btnPomodoroIniciar');
+            const pomodoroIcone = document.getElementById('pomodoroIcone');
+            const pomodoroTexto = document.getElementById('pomodoroTexto');
+            const btnPomodoroParar = document.getElementById('btnPomodoroParar');
+            const pomodoroCiclos = document.getElementById('pomodoroCiclos');
+            const pomodoroTempoSelect = document.getElementById('pomodoroTempo');
+            const btnSom = document.getElementById('btnSom');
+            const pomodoroCard = document.getElementById('pomodoroCard');
+            const cardTitulo = document.getElementById('cardTitulo');
+            const cardBotoes = document.getElementById('cardBotoes');
+            const btnSair = document.getElementById('btnSair');
             const btnSairTopo = document.getElementById('btnSairTopo');
 
             /* ============ ESTADO DATA SIMULADA ============ */
@@ -2687,35 +2936,123 @@
                     bannerCompartilheCompacto.classList.remove('visivel');
                 }
             }
+            /* ============ RECOMENDAÇÃO (ALTERAÇÃO 18: 3 recomendações) ============ */
+            function obterNomeCurtoModulo(modulo) {
+                return modulo.nome;
+            }
 
-            /* ============ RECOMENDAÇÃO ============ */
-            function obterRecomendacaoDoDia() {
-                const modulosNaoConcluidos = modulos.filter(function(m) { return contarPorTipo('Concluido', m.chave) < contarAssuntosModulo(m.chave); });
-                if (modulosNaoConcluidos.length === 0) return null;
-                const naoIniciados = modulosNaoConcluidos.filter(function(m) { return contarPorTipo('Lido', m.chave) === 0; });
-                let candidatos = naoIniciados.length > 0 ? naoIniciados : modulosNaoConcluidos;
-                candidatos = candidatos.filter(function(m) { return m.chave !== ultimoModuloRecomendado; });
-                if (candidatos.length === 0) candidatos = modulosNaoConcluidos;
-                const recomendado = candidatos[0];
-                ultimoModuloRecomendado = recomendado.chave;
-                return recomendado;
+            function calcularDiasSemEstudar(moduloChave) {
+                const ultima = ultimasAtividades[moduloChave];
+                if (!ultima) return null;
+                const hoje = obterDataAtual();
+                const dataUltima = new Date(ultima);
+                dataUltima.setHours(0,0,0,0);
+                const diffDias = Math.floor((hoje.getTime() - dataUltima.getTime()) / (1000*60*60*24));
+                return Math.max(0, diffDias);
+            }
+
+            function obterTresRecomendacoes() {
+                const naoConcluidos = modulos.filter(function(m) {
+                    return contarPorTipo('Concluido', m.chave) < contarAssuntosModulo(m.chave);
+                });
+                if (naoConcluidos.length === 0) return [];
+
+                const usados = {};
+                const resultado = [];
+
+                /* ---------- ① PRIORIDADE 1: ZERADOS (Lido = 0) ---------- */
+                const zerados = naoConcluidos.filter(function(m) {
+                    return contarPorTipo('Lido', m.chave) === 0;
+                });
+                if (zerados.length > 0) {
+                    /* Se houver mais de 1 zerado, evita repetir o último recomendado. */
+                    let escolhido = null;
+                    if (zerados.length > 1) {
+                        const semUltimo = zerados.filter(function(m) { return m.chave !== ultimoModuloRecomendado; });
+                        escolhido = semUltimo.length > 0 ? semUltimo[0] : zerados[0];
+                    } else {
+                        escolhido = zerados[0];
+                    }
+                    usados[escolhido.chave] = true;
+                    resultado.push({
+                        modulo: escolhido,
+                        criterio: 'zerado',
+                        justificativa: 'Ainda não iniciado',
+                        numeroClasse: 'num-1'
+                    });
+                }
+
+                /* ---------- ② PRIORIDADE 2: MENOR NÚMERO DE LIDOS (entre não-zerados e não-usados) ---------- */
+                const restantes2 = naoConcluidos.filter(function(m) {
+                    return !usados[m.chave] && contarPorTipo('Lido', m.chave) > 0;
+                });
+                if (restantes2.length > 0) {
+                    restantes2.sort(function(a, b) {
+                        const lidosA = contarPorTipo('Lido', a.chave);
+                        const lidosB = contarPorTipo('Lido', b.chave);
+                        if (lidosA !== lidosB) return lidosA - lidosB;
+                        return contarAssuntosModulo(b.chave) - contarAssuntosModulo(a.chave);
+                    });
+                    const escolhido2 = restantes2[0];
+                    usados[escolhido2.chave] = true;
+                    const lidos2 = contarPorTipo('Lido', escolhido2.chave);
+                    const total2 = contarAssuntosModulo(escolhido2.chave);
+                    resultado.push({
+                        modulo: escolhido2,
+                        criterio: 'menos-lido',
+                        justificativa: 'Apenas ' + lidos2 + ' lido' + (lidos2 === 1 ? '' : 's') + ' de ' + total2,
+                        numeroClasse: 'num-2'
+                    });
+                }
+
+                /* ---------- ③ PRIORIDADE 3: MAIS TEMPO SEM ESTUDAR (excluindo ① e ②) ---------- */
+                const restantes3 = naoConcluidos.filter(function(m) {
+                    return !usados[m.chave] && ultimasAtividades[m.chave];
+                });
+                if (restantes3.length > 0) {
+                    restantes3.sort(function(a, b) {
+                        const da = ultimasAtividades[a.chave] || 0;
+                        const db = ultimasAtividades[b.chave] || 0;
+                        return da - db;
+                    });
+                    const escolhido3 = restantes3[0];
+                    const dias3 = calcularDiasSemEstudar(escolhido3.chave);
+                    resultado.push({
+                        modulo: escolhido3,
+                        criterio: 'mais-parado',
+                        justificativa: (dias3 === 0 ? 'Hoje' : dias3 + ' dia' + (dias3 === 1 ? '' : 's')) + ' sem estudar',
+                        numeroClasse: 'num-3'
+                    });
+                }
+
+                /* Guarda o último recomendado (1º item) para efeito de "não repetir" no dia seguinte. */
+                if (resultado.length > 0) ultimoModuloRecomendado = resultado[0].modulo.chave;
+
+                return resultado;
             }
 
             function renderizarRecomendacao() {
                 const container = document.getElementById('recomendacaoConteudo');
-                const moduloRecomendado = obterRecomendacaoDoDia();
-                let html = '';
-                if (moduloRecomendado) {
-                    const lidos = contarPorTipo('Lido', moduloRecomendado.chave);
-                    const total = contarAssuntosModulo(moduloRecomendado.chave);
-                    const desc = lidos === 0 ? 'você ainda não viu este módulo' : lidos + '/' + total + ' lidos - continue avançando';
-                    html += '<div class="recomendacao-item"><div class="recomendacao-numero">1</div><div class="recomendacao-info"><div class="recomendacao-nome">📖 ' + moduloRecomendado.icone + ' <a class="recomendacao-link" data-topico="' + moduloRecomendado.topicoId + '">' + moduloRecomendado.nome + '</a></div><div class="recomendacao-desc">' + desc + '</div></div></div>';
-                } else {
-                    html = '<div class="recomendacao-desc">🎉 Todos os módulos concluídos!</div>';
+                const recomendacoes = obterTresRecomendacoes();
+                if (recomendacoes.length === 0) {
+                    container.innerHTML = '<div class="recomendacao-desc">🎉 Todos os módulos concluídos!</div>';
+                    return;
                 }
+                let html = '';
+                recomendacoes.forEach(function(rec) {
+                    const mod = rec.modulo;
+                    html += '<div class="recomendacao-item">';
+                    html += '<div class="recomendacao-numero ' + rec.numeroClasse + '">' + (rec.numeroClasse === 'num-1' ? '①' : rec.numeroClasse === 'num-2' ? '②' : '③') + '</div>';
+                    html += '<div class="recomendacao-info">';
+                    html += '<div class="recomendacao-nome">' + mod.icone + ' <a class="recomendacao-link" data-topico="' + mod.topicoId + '" data-modulo="' + mod.chave + '">' + mod.nome + '</a></div>';
+                    html += '<div class="recomendacao-desc">' + rec.justificativa + '</div>';
+                    html += '</div></div>';
+                });
                 container.innerHTML = html;
                 container.querySelectorAll('.recomendacao-link').forEach(function(link) {
-                    link.addEventListener('click', function() { scrollParaModulo(this.dataset.topico); });
+                    link.addEventListener('click', function() {
+                        scrollParaModulo(this.dataset.topico);
+                    });
                 });
             }
 
@@ -2733,7 +3070,7 @@
                         const nomeModulo = modulo ? modulo.nome : '';
                         const nomeAssunto = obterNomeAssunto(rev.chave);
                         const topicoId = modulo ? modulo.topicoId : '';
-                        html += '<div class="recomendacao-item"><div class="recomendacao-numero">' + (idx + 1) + '</div><div class="recomendacao-info"><div class="recomendacao-nome">🔄 ' + icone + ' <a class="recomendacao-link" data-topico="' + topicoId + '">' + nomeModulo + ' - ' + nomeAssunto + '</a></div><div class="recomendacao-desc">Revisão ' + rev.tipo + ' (venceu em ' + rev.data.split('-').reverse().join('/') + ')</div></div></div>';
+                        html += '<div class="recomendacao-item"><div class="recomendacao-numero" style="background:var(--ms-green);">' + (idx + 1) + '</div><div class="recomendacao-info"><div class="recomendacao-nome">🔄 ' + icone + ' <a class="recomendacao-link" data-topico="' + topicoId + '">' + nomeModulo + ' - ' + nomeAssunto + '</a></div><div class="recomendacao-desc">Revisão ' + rev.tipo + ' (venceu em ' + rev.data.split('-').reverse().join('/') + ')</div></div></div>';
                     });
                 }
                 container.innerHTML = html;
@@ -2822,6 +3159,15 @@
                 });
                 html += '</tbody></table>';
                 anotacaoTabelaContainer.innerHTML = html;
+            }
+
+            function atualizarBotoesAnotacaoFoco() {
+                document.querySelectorAll('.foco-table .btn-anotacao').forEach(function(btn) {
+                    const chave = btn.dataset.chaveAnotacao;
+                    const tem = anotacoes[chave] && anotacoes[chave].length > 0;
+                    btn.textContent = tem ? '📝✓' : '📝';
+                    btn.classList.toggle('tem-anotacao', tem);
+                });
             }
 
             /* ============ CONTAGENS ============ */
@@ -2919,7 +3265,7 @@
                 else { el.textContent = dias; textoDiasProva.textContent = 'dias até a prova'; el.className = dias > 30 ? 'prova-dias-numero verde' : dias >= 10 ? 'prova-dias-numero amarelo' : 'prova-dias-numero vermelho'; }
             }
 
-            /* ============ HELPERS DE PIZZA (PROPOSTA C) ============ */
+            /* ============ HELPERS DE PIZZA ============ */
             function calcularStatusDiff(real, prev) {
                 const diff = real - prev;
                 if (diff >= 3) return 'azul';
@@ -2984,25 +3330,13 @@
                 const metaConclusaoAteHoje = calcularMetaConclusaoAteHoje();
 
                 atualizarPizza({
-                    fill: pizzaLidoFill,
-                    fillClass: 'pizza-fill-lido',
-                    prev: pizzaLidoPrev,
-                    real: pizzaLidoReal,
-                    percentual: pizzaLidoPercentual,
-                    contagem: pizzaLidoContagem,
-                    badge: pizzaLidoBadge,
-                    info: pizzaLidoInfo
+                    fill: pizzaLidoFill, fillClass: 'pizza-fill-lido', prev: pizzaLidoPrev, real: pizzaLidoReal,
+                    percentual: pizzaLidoPercentual, contagem: pizzaLidoContagem, badge: pizzaLidoBadge, info: pizzaLidoInfo
                 }, lidosAtual, metaLeituraAteHoje);
 
                 atualizarPizza({
-                    fill: pizzaConcluidoFill,
-                    fillClass: 'pizza-fill-concluido',
-                    prev: pizzaConcluidoPrev,
-                    real: pizzaConcluidoReal,
-                    percentual: pizzaConcluidoPercentual,
-                    contagem: pizzaConcluidoContagem,
-                    badge: pizzaConcluidoBadge,
-                    info: pizzaConcluidoInfo
+                    fill: pizzaConcluidoFill, fillClass: 'pizza-fill-concluido', prev: pizzaConcluidoPrev, real: pizzaConcluidoReal,
+                    percentual: pizzaConcluidoPercentual, contagem: pizzaConcluidoContagem, badge: pizzaConcluidoBadge, info: pizzaConcluidoInfo
                 }, concluidosAtual, metaConclusaoAteHoje);
 
                 atualizarDiasProva();
@@ -3302,7 +3636,7 @@
 
             /* ============ CRONÔMETRO NORMAL ============ */
             function iniciarCronometro(moduloChave) {
-                if (cronometroAtivo && cronometroModulo !== moduloChave) pararCronometro(true);
+                if (cronometroAtivo && cronometroModulo !== moduloChave) pararCronometro(false);
                 if (!cronometroAtivo) {
                     cronometroAtivo = true;
                     cronometroPausado = false;
@@ -3321,6 +3655,8 @@
                 salvarDados();
                 atualizarCronometroBotoes();
                 atualizarCronometroDisplay();
+                atualizarDisplayPadrao();
+                atualizarBotoesPadrao();
             }
 
             function pausarCronometro() {
@@ -3333,6 +3669,8 @@
                     salvarDados();
                     atualizarCronometroBotoes();
                     atualizarCronometroDisplay();
+                    atualizarDisplayPadrao();
+                    atualizarBotoesPadrao();
                 }
             }
 
@@ -3451,7 +3789,157 @@
                 });
             }
 
+            /* ============ HELPER: montar bloco de cronômetro ============ */
+            function criarCronometroContainer(moduloChave) {
+                const cronometroContainer = document.createElement('div');
+                cronometroContainer.className = 'cronometro-container';
+                cronometroContainer.dataset.modulo = moduloChave;
+                cronometroContainer.innerHTML = '<span class="cronometro-display" data-modulo="' + moduloChave + '">⏱️ 00:00:00</span>' +
+                    '<button class="btn-cronometro btn-iniciar" data-modulo="' + moduloChave + '">▶ Iniciar</button>' +
+                    '<button class="btn-cronometro btn-pausar" data-modulo="' + moduloChave + '" style="display:none;">⏸</button>' +
+                    '<button class="btn-cronometro btn-parar" data-modulo="' + moduloChave + '" style="display:none;">⏹</button>' +
+                    '<span class="cronometro-modulo-label"></span>';
+                const btnIniciar = cronometroContainer.querySelector('.btn-iniciar');
+                const btnPausar = cronometroContainer.querySelector('.btn-pausar');
+                const btnParar = cronometroContainer.querySelector('.btn-parar');
+                btnIniciar.addEventListener('click', function() { iniciarCronometro(this.dataset.modulo); });
+                btnPausar.addEventListener('click', function() { pausarCronometro(); });
+                btnParar.addEventListener('click', function() { pararCronometro(false); });
+                return cronometroContainer;
+            }
+
+            /* ============ HELPER: montar tabela de um módulo ============ */
+            function criarTabelaModulo(moduloChave) {
+                const tableResponsive = document.createElement('div');
+                tableResponsive.className = 'table-responsive';
+                const table = document.createElement('table');
+                const thead = document.createElement('thead');
+                const trHead = document.createElement('tr');
+                trHead.innerHTML = '<th class="assunto-col">Assunto</th><th class="check-col">Lido</th><th class="check-col">Exercitado</th><th class="check-col">Concluído</th><th class="check-col">Rev 24h</th><th class="check-col">Rev 7d</th><th class="check-col">Rev 15d</th><th class="anotacao-col">📝</th>';
+                thead.appendChild(trHead);
+                table.appendChild(thead);
+                const tbody = document.createElement('tbody');
+                const listaAssuntos = assuntos[moduloChave] || [];
+                listaAssuntos.forEach(function(assunto, idx) {
+                    const tr = document.createElement('tr');
+                    const chaveBase = moduloChave + '-geral-' + idx;
+                    const tdAssunto = document.createElement('td');
+                    tdAssunto.className = 'assunto-col';
+                    tdAssunto.textContent = assunto;
+                    tr.appendChild(tdAssunto);
+                    ['Lido', 'Exercitado', 'Concluido', 'Rev24h', 'Rev7d', 'Rev15d'].forEach(function(tipo) {
+                        const tdCheck = document.createElement('td');
+                        tdCheck.className = 'checkbox-cell';
+                        const input = document.createElement('input');
+                        input.type = 'checkbox';
+                        input.dataset.chave = chaveBase + '-' + tipo;
+                        input.dataset.tipo = tipo;
+                        input.dataset.modulo = moduloChave;
+                        input.dataset.chaveBase = chaveBase;
+                        if (tipo === 'Concluido') input.className = 'concluido-check';
+                        if (tipo === 'Exercitado') input.className = 'exercitado-check';
+                        input.checked = !!estadoCheckboxes[input.dataset.chave];
+                        ligarEventoCheckboxPrincipal(input, tipo, chaveBase, moduloChave);
+                        tdCheck.appendChild(input);
+                        tr.appendChild(tdCheck);
+                    });
+                    const tdAnotacao = document.createElement('td');
+                    tdAnotacao.className = 'anotacao-col';
+                    const btnAnotacao = document.createElement('button');
+                    btnAnotacao.className = 'btn-anotacao';
+                    const chaveAnotacao = chaveBase + '-anotacao';
+                    btnAnotacao.dataset.chaveAnotacao = chaveAnotacao;
+                    btnAnotacao.dataset.assuntoTexto = assunto;
+                    const anotacoesDoAssunto = anotacoes[chaveAnotacao] || [];
+                    btnAnotacao.textContent = anotacoesDoAssunto.length > 0 ? '📝✓' : '📝';
+                    if (anotacoesDoAssunto.length > 0) btnAnotacao.classList.add('tem-anotacao');
+                    btnAnotacao.addEventListener('click', function() { abrirModalAnotacao(this.dataset.chaveAnotacao, this.dataset.assuntoTexto); });
+                    tdAnotacao.appendChild(btnAnotacao);
+                    tr.appendChild(tdAnotacao);
+                    tbody.appendChild(tr);
+                });
+                table.appendChild(tbody);
+                tableResponsive.appendChild(table);
+                return tableResponsive;
+            }
+
+            /* ============ HELPER: ligar eventos de um checkbox (tela principal) ============ */
+            function ligarEventoCheckboxPrincipal(input, tipo, chaveBase, moduloChave) {
+                if (tipo === 'Lido') {
+                    input.addEventListener('change', function() {
+                        estadoCheckboxes[this.dataset.chave] = this.checked;
+                        if (this.checked) {
+                            ultimasAtividades[this.dataset.modulo] = obterDataAtual().getTime();
+                            agendarRevisao(this.dataset.chaveBase, 1);
+                            mostrarToast('📖', 'Leitura registrada! Revisão de 24h agendada.');
+                        }
+                        salvarDados();
+                        renderizarModulos();
+                        renderizarRevisoesPendentes();
+                        renderizarRecomendacao();
+                        renderizarRevisaoEspacada();
+                        atualizarGraficoStatus();
+                    });
+                } else if (tipo === 'Exercitado') {
+                    input.addEventListener('change', function() {
+                        const lidoKey = chaveBase + '-Lido';
+                        if (this.checked && !estadoCheckboxes[lidoKey]) { this.checked = false; mostrarToast('⚠️', 'Registre a Leitura antes de marcar Exercitado.'); return; }
+                        estadoCheckboxes[this.dataset.chave] = this.checked;
+                        if (this.checked) mostrarToast('📝', 'Exercício registrado! Continue assim.');
+                        salvarDados();
+                        renderizarModulos();
+                    });
+                } else if (tipo === 'Rev24h' || tipo === 'Rev7d' || tipo === 'Rev15d') {
+                    input.addEventListener('change', function() {
+                        const lidoKey = chaveBase + '-Lido';
+                        if (this.checked && !estadoCheckboxes[lidoKey]) { this.checked = false; mostrarToast('⚠️', 'Registre a Leitura antes de registrar a Revisão.'); return; }
+                        estadoCheckboxes[this.dataset.chave] = this.checked;
+                        if (this.checked) {
+                            const tipoRev = tipo === 'Rev24h' ? '24h' : tipo === 'Rev7d' ? '7d' : '15d';
+                            if (revisoes[chaveBase]) revisoes[chaveBase].forEach(function(rev) { if (rev.tipo === tipoRev) rev.baixada = true; });
+                            if (tipo === 'Rev24h') { agendarRevisao(chaveBase, 7); mostrarToast('🔄', 'Revisão 24h feita! Revisão de 7 dias agendada.'); }
+                            else if (tipo === 'Rev7d') { agendarRevisao(chaveBase, 15); mostrarToast('🔄', 'Revisão 7d feita! Revisão de 15 dias agendada.'); }
+                            else { mostrarToast('🏆', 'Ciclo de revisão espaçada completo!'); }
+                        }
+                        salvarDados();
+                        renderizarModulos();
+                        renderizarRevisoesPendentes();
+                        renderizarRevisaoEspacada();
+                    });
+                } else if (tipo === 'Concluido') {
+                    input.addEventListener('change', function() {
+                        const baseChave = chaveBase;
+                        if (this.checked) {
+                            estadoCheckboxes[baseChave + '-Lido'] = true;
+                            estadoCheckboxes[baseChave + '-Exercitado'] = true;
+                            estadoCheckboxes[baseChave + '-Concluido'] = true;
+                            ultimasAtividades[this.dataset.modulo] = obterDataAtual().getTime();
+                            registrarConclusaoHoje();
+                            const trElement = this.closest('tr');
+                            trElement.querySelectorAll('input[type="checkbox"]').forEach(function(cb) {
+                                const cbBase = cb.dataset.chave.replace(/-[^-]+$/, '');
+                                if (cbBase === baseChave && (cb.dataset.chave.endsWith('-Lido') || cb.dataset.chave.endsWith('-Exercitado') || cb.dataset.chave.endsWith('-Concluido'))) cb.checked = true;
+                            });
+                            mostrarToast('✅', 'Assunto concluído! +1 para sua meta!');
+                        } else {
+                            estadoCheckboxes[baseChave + '-Concluido'] = false;
+                            const hojeStr = obterDataAtual().toISOString().split('T')[0];
+                            if (conclusoesPorDia[hojeStr] && conclusoesPorDia[hojeStr] > 0) conclusoesPorDia[hojeStr]--;
+                        }
+                        gerarNotificacoes();
+                        salvarDados();
+                        renderizarModulos();
+                        renderizarNotificacoes();
+                        atualizarGraficoStatus();
+                        atualizarSaudacao();
+                        verificarMetaDiaria();
+                    });
+                }
+            }
             /* ============ RENDERIZAR TÓPICOS (CHECKLIST) ============ */
+            /* ALTERAÇÃO 19: cronômetro + botões colados na esquerda
+               ALTERAÇÃO 20: subtópicos com cronômetro + Foco Total próprios
+                            (módulo pai agrupador NÃO tem botões) */
             function renderizarTopicos() {
                 conteudoPrincipal.innerHTML = '';
                 estruturaTopicos.forEach(function(topico) {
@@ -3460,12 +3948,20 @@
                     topicSection.id = 'modulo-' + topico.id;
                     topicSection.dataset.topic = topico.id;
 
-                    const primeiroModulo = topico.subtopicos[0].modulo || topico.id;
+                    /* Determina se o tópico é "agrupador" (tem subtópicos com titulo) ou módulo simples */
+                    const temSubtopicos = topico.subtopicos.length > 1 || (topico.subtopicos[0] && topico.subtopicos[0].titulo);
+
                     const topicHeader = document.createElement('div');
                     topicHeader.className = 'topic-header collapsed';
-                    topicHeader.innerHTML = '<div class="topic-header-titulo"><span>' + topico.titulo + '</span></div>' +
-                        '<button class="btn-foco-total" data-modulo="' + primeiroModulo + '" data-titulo="' + topico.titulo + '"><span>🎯</span><span>Foco Total</span></button>' +
-                        '<span class="arrow">▼</span>';
+
+                    /* Só cria botão Foco Total no header do módulo se for módulo simples (sem subtópicos) */
+                    let headerHtml = '<div class="topic-header-titulo"><span>' + topico.titulo + '</span></div>';
+                    if (!temSubtopicos) {
+                        const moduloSimples = topico.subtopicos[0].modulo || topico.id;
+                        headerHtml += '<button class="btn-foco-total" data-modulo="' + moduloSimples + '" data-titulo="' + topico.titulo + '" data-tipo="modulo"><span>🎯</span><span>Foco Total</span></button>';
+                    }
+                    headerHtml += '<span class="arrow">▼</span>';
+                    topicHeader.innerHTML = headerHtml;
 
                     topicHeader.addEventListener('click', function(e) {
                         if (e.target.closest('.btn-foco-total')) return;
@@ -3481,161 +3977,473 @@
                     const topicContent = document.createElement('div');
                     topicContent.className = 'topic-content';
                     topicContent.style.display = 'none';
+
                     topico.subtopicos.forEach(function(subtopico) {
+                        const moduloChave = subtopico.modulo || topico.id;
+
                         if (subtopico.titulo) {
+                            /* Subtópico: header com título + botão Foco Total + cronômetro próprio */
                             const subtopicHeader = document.createElement('div');
                             subtopicHeader.className = 'subtopic-header';
-                            subtopicHeader.textContent = subtopico.titulo;
+                            subtopicHeader.innerHTML = '<span class="subtopic-titulo">' + subtopico.titulo + '</span>' +
+                                '<button class="btn-foco-total" data-modulo="' + moduloChave + '" data-titulo="' + subtopico.titulo + '" data-tipo="subtopico"><span>🎯</span><span>Foco Total</span></button>';
                             topicContent.appendChild(subtopicHeader);
-                        }
-                        const moduloChave = subtopico.modulo || topico.id;
-                        const cronometroContainer = document.createElement('div');
-                        cronometroContainer.className = 'cronometro-container';
-                        cronometroContainer.dataset.modulo = moduloChave;
-                        cronometroContainer.innerHTML = '<span class="cronometro-display" data-modulo="' + moduloChave + '">⏱️ 00:00:00</span><span class="cronometro-modulo-label"></span><button class="btn-cronometro btn-iniciar" data-modulo="' + moduloChave + '">▶ Iniciar</button><button class="btn-cronometro btn-pausar" data-modulo="' + moduloChave + '" style="display:none;">⏸</button><button class="btn-cronometro btn-parar" data-modulo="' + moduloChave + '" style="display:none;">⏹</button>';
-                        const btnIniciar = cronometroContainer.querySelector('.btn-iniciar');
-                        const btnPausar = cronometroContainer.querySelector('.btn-pausar');
-                        const btnParar = cronometroContainer.querySelector('.btn-parar');
-                        btnIniciar.addEventListener('click', function() { iniciarCronometro(this.dataset.modulo); });
-                        btnPausar.addEventListener('click', function() { pausarCronometro(); });
-                        btnParar.addEventListener('click', function() { pararCronometro(false); });
-                        topicContent.appendChild(cronometroContainer);
 
-                        const tableResponsive = document.createElement('div');
-                        tableResponsive.className = 'table-responsive';
-                        const table = document.createElement('table');
-                        const thead = document.createElement('thead');
-                        const trHead = document.createElement('tr');
-                        trHead.innerHTML = '<th class="assunto-col">Assunto</th><th class="check-col">Lido</th><th class="check-col">Exercitado</th><th class="check-col">Concluído</th><th class="check-col">Rev 24h</th><th class="check-col">Rev 7d</th><th class="check-col">Rev 15d</th><th class="anotacao-col">📝</th>';
-                        thead.appendChild(trHead);
-                        table.appendChild(thead);
-                        const tbody = document.createElement('tbody');
-                        subtopico.assuntos.forEach(function(assunto, idx) {
-                            const tr = document.createElement('tr');
-                            const chaveBase = moduloChave + '-' + (subtopico.titulo || 'geral') + '-' + idx;
-                            const tdAssunto = document.createElement('td');
-                            tdAssunto.className = 'assunto-col';
-                            tdAssunto.textContent = assunto;
-                            tr.appendChild(tdAssunto);
-                            ['Lido', 'Exercitado', 'Concluido', 'Rev24h', 'Rev7d', 'Rev15d'].forEach(function(tipo) {
-                                const tdCheck = document.createElement('td');
-                                tdCheck.className = 'checkbox-cell';
-                                const input = document.createElement('input');
-                                input.type = 'checkbox';
-                                input.dataset.chave = chaveBase + '-' + tipo;
-                                input.dataset.tipo = tipo;
-                                input.dataset.modulo = moduloChave;
-                                input.dataset.chaveBase = chaveBase;
-                                if (tipo === 'Concluido') input.className = 'concluido-check';
-                                if (tipo === 'Exercitado') input.className = 'exercitado-check';
-                                input.checked = !!estadoCheckboxes[input.dataset.chave];
-                                if (tipo === 'Lido') {
-                                    input.addEventListener('change', function() {
-                                        estadoCheckboxes[this.dataset.chave] = this.checked;
-                                        if (this.checked) {
-                                            ultimasAtividades[this.dataset.modulo] = obterDataAtual().getTime();
-                                            agendarRevisao(this.dataset.chaveBase, 1);
-                                            mostrarToast('📖', 'Leitura registrada! Revisão de 24h agendada.');
-                                        }
-                                        salvarDados();
-                                        renderizarModulos();
-                                        renderizarRevisoesPendentes();
-                                        renderizarRecomendacao();
-                                        renderizarRevisaoEspacada();
-                                        atualizarGraficoStatus();
-                                    });
-                                } else if (tipo === 'Exercitado') {
-                                    input.addEventListener('change', function() {
-                                        const chaveBase = this.dataset.chaveBase;
-                                        const lidoKey = chaveBase + '-Lido';
-                                        if (this.checked && !estadoCheckboxes[lidoKey]) { this.checked = false; mostrarToast('⚠️', 'Registre a Leitura antes de marcar Exercitado.'); return; }
-                                        estadoCheckboxes[this.dataset.chave] = this.checked;
-                                        if (this.checked) mostrarToast('📝', 'Exercício registrado! Continue assim.');
-                                        salvarDados();
-                                        renderizarModulos();
-                                    });
-                                } else if (tipo === 'Rev24h' || tipo === 'Rev7d' || tipo === 'Rev15d') {
-                                    input.addEventListener('change', function() {
-                                        const chaveBase = this.dataset.chaveBase;
-                                        const lidoKey = chaveBase + '-Lido';
-                                        if (this.checked && !estadoCheckboxes[lidoKey]) { this.checked = false; mostrarToast('⚠️', 'Registre a Leitura antes de registrar a Revisão.'); return; }
-                                        estadoCheckboxes[this.dataset.chave] = this.checked;
-                                        if (this.checked) {
-                                            const tipoRev = tipo === 'Rev24h' ? '24h' : tipo === 'Rev7d' ? '7d' : '15d';
-                                            if (revisoes[chaveBase]) revisoes[chaveBase].forEach(function(rev) { if (rev.tipo === tipoRev) rev.baixada = true; });
-                                            if (tipo === 'Rev24h') { agendarRevisao(chaveBase, 7); mostrarToast('🔄', 'Revisão 24h feita! Revisão de 7 dias agendada.'); }
-                                            else if (tipo === 'Rev7d') { agendarRevisao(chaveBase, 15); mostrarToast('🔄', 'Revisão 7d feita! Revisão de 15 dias agendada.'); }
-                                            else { mostrarToast('🏆', 'Ciclo de revisão espaçada completo!'); }
-                                        }
-                                        salvarDados();
-                                        renderizarModulos();
-                                        renderizarRevisoesPendentes();
-                                        renderizarRevisaoEspacada();
-                                    });
-                                } else if (tipo === 'Concluido') {
-                                    input.addEventListener('change', function() {
-                                        const baseChave = this.dataset.chave.replace('-Concluido', '');
-                                        if (this.checked) {
-                                            estadoCheckboxes[baseChave + '-Lido'] = true;
-                                            estadoCheckboxes[baseChave + '-Exercitado'] = true;
-                                            estadoCheckboxes[baseChave + '-Concluido'] = true;
-                                            ultimasAtividades[this.dataset.modulo] = obterDataAtual().getTime();
-                                            registrarConclusaoHoje();
-                                            const trElement = this.closest('tr');
-                                            trElement.querySelectorAll('input[type="checkbox"]').forEach(function(cb) {
-                                                const cbBase = cb.dataset.chave.replace(/-[^-]+$/, '');
-                                                if (cbBase === baseChave && (cb.dataset.chave.endsWith('-Lido') || cb.dataset.chave.endsWith('-Exercitado') || cb.dataset.chave.endsWith('-Concluido'))) cb.checked = true;
-                                            });
-                                            mostrarToast('✅', 'Assunto concluído! +1 para sua meta!');
-                                        } else {
-                                            estadoCheckboxes[baseChave + '-Concluido'] = false;
-                                            const hojeStr = obterDataAtual().toISOString().split('T')[0];
-                                            if (conclusoesPorDia[hojeStr] && conclusoesPorDia[hojeStr] > 0) conclusoesPorDia[hojeStr]--;
-                                        }
-                                        gerarNotificacoes();
-                                        salvarDados();
-                                        renderizarModulos();
-                                        renderizarNotificacoes();
-                                        atualizarGraficoStatus();
-                                        atualizarSaudacao();
-                                        verificarMetaDiaria();
-                                    });
-                                }
-                                tdCheck.appendChild(input);
-                                tr.appendChild(tdCheck);
-                            });
-                            const tdAnotacao = document.createElement('td');
-                            tdAnotacao.className = 'anotacao-col';
-                            const btnAnotacao = document.createElement('button');
-                            btnAnotacao.className = 'btn-anotacao';
-                            const chaveAnotacao = chaveBase + '-anotacao';
-                            btnAnotacao.dataset.chaveAnotacao = chaveAnotacao;
-                            btnAnotacao.dataset.assuntoTexto = assunto;
-                            const anotacoesDoAssunto = anotacoes[chaveAnotacao] || [];
-                            btnAnotacao.textContent = anotacoesDoAssunto.length > 0 ? '📝✓' : '📝';
-                            if (anotacoesDoAssunto.length > 0) btnAnotacao.classList.add('tem-anotacao');
-                            btnAnotacao.addEventListener('click', function() { abrirModalAnotacao(this.dataset.chaveAnotacao, this.dataset.assuntoTexto); });
-                            tdAnotacao.appendChild(btnAnotacao);
-                            tr.appendChild(tdAnotacao);
-                            tbody.appendChild(tr);
-                        });
-                        table.appendChild(tbody);
-                        tableResponsive.appendChild(table);
-                        topicContent.appendChild(tableResponsive);
+                            /* Cronômetro + botões do subtópico */
+                            topicContent.appendChild(criarCronometroContainer(moduloChave));
+
+                            /* Tabela do subtópico */
+                            topicContent.appendChild(criarTabelaModulo(moduloChave));
+                        } else {
+                            /* Módulo simples (sem título de subtópico):
+                               Cronômetro colado + tabela */
+                            topicContent.appendChild(criarCronometroContainer(moduloChave));
+                            topicContent.appendChild(criarTabelaModulo(moduloChave));
+                        }
                     });
+
                     topicSection.appendChild(topicContent);
                     conteudoPrincipal.appendChild(topicSection);
                 });
 
-                /* Bind dos botões Foco Total */
+                /* Bind dos botões Foco Total (módulos E subtópicos) */
                 document.querySelectorAll('.btn-foco-total').forEach(function(btn) {
                     btn.addEventListener('click', function(e) {
                         e.stopPropagation();
-                        abrirModoFoco(this.dataset.modulo, this.dataset.titulo);
+                        abrirModoFoco(this.dataset.modulo, this.dataset.titulo, this.dataset.tipo || 'modulo');
                     });
                 });
 
                 atualizarCronometroBotoes();
+            }
+
+            /* ============ MODO FOCO TOTAL ============ */
+            /* ALTERAÇÃO 20: aceita tipo 'modulo' ou 'subtopico' */
+            function abrirModoFoco(moduloChave, moduloTitulo, tipo) {
+                inicializarAudio();
+                focoModuloAtual = moduloChave;
+                focoModuloTitulo = moduloTitulo;
+                focoModuloTipo = tipo || 'modulo';
+                focoAtivo = true;
+
+                focoModuloTituloEl.textContent = moduloTitulo;
+
+                /* Preenche tabela do Foco */
+                focoTabelaBody.innerHTML = '';
+                const listaAssuntos = assuntos[moduloChave] || [];
+                listaAssuntos.forEach(function(assunto, idx) {
+                    const chaveBase = moduloChave + '-geral-' + idx;
+                    const chaveAnotacao = chaveBase + '-anotacao';
+                    const tr = document.createElement('tr');
+
+                    const tdAssunto = document.createElement('td');
+                    tdAssunto.className = 'assunto-col';
+                    tdAssunto.textContent = assunto;
+                    tr.appendChild(tdAssunto);
+
+                    ['Lido', 'Exercitado', 'Concluido', 'Rev24h', 'Rev7d', 'Rev15d'].forEach(function(tp) {
+                        const tdCheck = document.createElement('td');
+                        tdCheck.className = 'checkbox-cell';
+                        const input = document.createElement('input');
+                        input.type = 'checkbox';
+                        input.dataset.chave = chaveBase + '-' + tp;
+                        input.dataset.tipo = tp;
+                        input.dataset.modulo = moduloChave;
+                        input.dataset.chaveBase = chaveBase;
+                        if (tp === 'Concluido') input.className = 'concluido-check';
+                        if (tp === 'Exercitado') input.className = 'exercitado-check';
+                        if (tp === 'Rev24h') input.className = 'rev24h-check';
+                        if (tp === 'Rev7d') input.className = 'rev7d-check';
+                        if (tp === 'Rev15d') input.className = 'rev15d-check';
+                        input.checked = !!estadoCheckboxes[input.dataset.chave];
+                        ligarEventoCheckboxFoco(input, tp, chaveBase, moduloChave);
+                        tdCheck.appendChild(input);
+                        tr.appendChild(tdCheck);
+                    });
+
+                    /* Botão de anotação */
+                    const tdAnotacao = document.createElement('td');
+                    tdAnotacao.className = 'anotacao-col';
+                    const btnAnot = document.createElement('button');
+                    btnAnot.className = 'btn-anotacao';
+                    btnAnot.dataset.chaveAnotacao = chaveAnotacao;
+                    btnAnot.dataset.assuntoTexto = assunto;
+                    const temAnot = anotacoes[chaveAnotacao] && anotacoes[chaveAnotacao].length > 0;
+                    btnAnot.textContent = temAnot ? '📝✓' : '📝';
+                    if (temAnot) btnAnot.classList.add('tem-anotacao');
+                    btnAnot.addEventListener('click', function() { abrirModalAnotacao(this.dataset.chaveAnotacao, this.dataset.assuntoTexto); });
+                    tdAnotacao.appendChild(btnAnot);
+                    tr.appendChild(tdAnotacao);
+
+                    focoTabelaBody.appendChild(tr);
+                });
+
+                /* Sincroniza o cronômetro padrão */
+                if (cronometroAtivo && cronometroModulo === moduloChave) {
+                    /* Já está rodando neste módulo */
+                } else {
+                    if (cronometroAtivo && cronometroModulo !== moduloChave) {
+                        pararCronometro(false); /* ALTERAÇÃO 11: registra em vez de descartar */
+                    }
+                    cronometroAtivo = true;
+                    cronometroPausado = false;
+                    cronometroModulo = moduloChave;
+                    cronometroInicio = Date.now();
+                    cronometroTempoAcumulado = 0;
+                    cronometroPausaAcumulada = 0;
+                    cronometroPausaInicio = null;
+                    if (cronometroInterval) clearInterval(cronometroInterval);
+                    cronometroInterval = setInterval(atualizarCronometroDisplay, 1000);
+                }
+
+                modoFoco.classList.add('ativo');
+                document.body.style.overflow = 'hidden';
+
+                atualizarDisplayPadrao();
+                atualizarBotoesPadrao();
+                atualizarDisplayPomodoro();
+                atualizarBotoesPomodoro();
+                atualizarCiclos();
+
+                trocarAba('padrao');
+            }
+
+            /* ============ EVENTO DE CHECKBOX NO MODO FOCO ============ */
+            function ligarEventoCheckboxFoco(input, tipo, chaveBase, moduloChave) {
+                if (tipo === 'Lido') {
+                    input.addEventListener('change', function() {
+                        estadoCheckboxes[this.dataset.chave] = this.checked;
+                        if (this.checked) {
+                            ultimasAtividades[this.dataset.modulo] = obterDataAtual().getTime();
+                            agendarRevisao(this.dataset.chaveBase, 1);
+                            mostrarToast('📖', 'Leitura registrada! Revisão de 24h agendada.');
+                        }
+                        salvarDados();
+                        renderizarModulos();
+                        renderizarRevisoesPendentes();
+                        renderizarRecomendacao();
+                        renderizarRevisaoEspacada();
+                        atualizarGraficoStatus();
+                    });
+                } else if (tipo === 'Exercitado') {
+                    input.addEventListener('change', function() {
+                        const lidoKey = chaveBase + '-Lido';
+                        if (this.checked && !estadoCheckboxes[lidoKey]) { this.checked = false; mostrarToast('⚠️', 'Registre a Leitura antes de marcar Exercitado.'); return; }
+                        estadoCheckboxes[this.dataset.chave] = this.checked;
+                        if (this.checked) mostrarToast('📝', 'Exercício registrado! Continue assim.');
+                        salvarDados();
+                        renderizarModulos();
+                    });
+                } else if (tipo === 'Concluido') {
+                    input.addEventListener('change', function() {
+                        const baseChave = chaveBase;
+                        if (this.checked) {
+                            estadoCheckboxes[baseChave + '-Lido'] = true;
+                            estadoCheckboxes[baseChave + '-Exercitado'] = true;
+                            estadoCheckboxes[baseChave + '-Concluido'] = true;
+                            ultimasAtividades[this.dataset.modulo] = obterDataAtual().getTime();
+                            registrarConclusaoHoje();
+                            const trElement = this.closest('tr');
+                            trElement.querySelectorAll('input[type="checkbox"]').forEach(function(cb) {
+                                const cbBase = cb.dataset.chave.replace(/-[^-]+$/, '');
+                                if (cbBase === baseChave && (cb.dataset.chave.endsWith('-Lido') || cb.dataset.chave.endsWith('-Exercitado') || cb.dataset.chave.endsWith('-Concluido'))) cb.checked = true;
+                            });
+                            mostrarToast('✅', 'Assunto concluído! +1 para sua meta!');
+                        } else {
+                            estadoCheckboxes[baseChave + '-Concluido'] = false;
+                            const hojeStr = obterDataAtual().toISOString().split('T')[0];
+                            if (conclusoesPorDia[hojeStr] && conclusoesPorDia[hojeStr] > 0) conclusoesPorDia[hojeStr]--;
+                        }
+                        gerarNotificacoes();
+                        salvarDados();
+                        renderizarModulos();
+                        renderizarNotificacoes();
+                        atualizarGraficoStatus();
+                        atualizarSaudacao();
+                        verificarMetaDiaria();
+                    });
+                } else if (tipo === 'Rev24h' || tipo === 'Rev7d' || tipo === 'Rev15d') {
+                    input.addEventListener('change', function() {
+                        const lidoKey = chaveBase + '-Lido';
+                        if (this.checked && !estadoCheckboxes[lidoKey]) { this.checked = false; mostrarToast('⚠️', 'Registre a Leitura antes de registrar a Revisão.'); return; }
+                        estadoCheckboxes[this.dataset.chave] = this.checked;
+                        if (this.checked) {
+                            const tipoRev = tipo === 'Rev24h' ? '24h' : tipo === 'Rev7d' ? '7d' : '15d';
+                            if (revisoes[chaveBase]) revisoes[chaveBase].forEach(function(rev) { if (rev.tipo === tipoRev) rev.baixada = true; });
+                            if (tipo === 'Rev24h') { agendarRevisao(chaveBase, 7); mostrarToast('🔄', 'Revisão 24h feita! Revisão de 7 dias agendada.'); }
+                            else if (tipo === 'Rev7d') { agendarRevisao(chaveBase, 15); mostrarToast('🔄', 'Revisão 7d feita! Revisão de 15 dias agendada.'); }
+                            else { mostrarToast('🏆', 'Ciclo de revisão espaçada completo!'); }
+                        }
+                        salvarDados();
+                        renderizarModulos();
+                        renderizarRevisoesPendentes();
+                        renderizarRevisaoEspacada();
+                    });
+                }
+            }
+
+            function sairModoFoco() {
+                if (cronometroAtivo) {
+                    pararCronometro(false);
+                }
+                if (pomodoroInterval) { clearInterval(pomodoroInterval); pomodoroInterval = null; }
+                pomodoroAtivo = false;
+                pomodoroEstado = 'off';
+                pomodoroCicloAtual = 0;
+                pomodoroAguardandoAcao = false;
+                padraoPausado = false;
+                fecharCard();
+                atualizarCiclos();
+
+                focoAtivo = false;
+                modoFoco.classList.remove('ativo');
+                document.body.style.overflow = '';
+                atualizarGraficoStatus();
+                renderizarModulos();
+                renderizarTopicos();
+            }
+
+            /* ============ ABAS DO PAINEL ============ */
+            function trocarAba(destino) {
+                abaAtiva = destino;
+                const abas = document.querySelectorAll('.painel-aba');
+                abas.forEach(function(a) { a.classList.remove('ativa'); });
+                const abaAlvo = document.querySelector('.painel-aba[data-aba="' + destino + '"]');
+                if (abaAlvo) abaAlvo.classList.add('ativa');
+                if (destino === 'padrao') {
+                    document.getElementById('conteudoPadrao').classList.add('ativo');
+                    document.getElementById('conteudoPomodoro').classList.remove('ativo');
+                } else {
+                    document.getElementById('conteudoPadrao').classList.remove('ativo');
+                    document.getElementById('conteudoPomodoro').classList.add('ativo');
+                }
+            }
+
+            /* ============ CRONÔMETRO PADRÃO (NO FOCO) ============ */
+            function atualizarDisplayPadrao() {
+                if (!relogioPadrao) return;
+                relogioPadrao.classList.remove('rodando', 'pausado', 'parado');
+                if (cronometroAtivo && cronometroModulo === focoModuloAtual) {
+                    let total = cronometroTempoAcumulado;
+                    if (!cronometroPausado && cronometroInicio) total += (Date.now() - cronometroInicio) / 1000;
+                    relogioPadrao.textContent = formatarTempo(total).substring(3);
+                    if (!cronometroPausado) relogioPadrao.classList.add('rodando');
+                    else relogioPadrao.classList.add('pausado');
+                } else {
+                    relogioPadrao.textContent = '00:00';
+                    relogioPadrao.classList.add('parado');
+                }
+            }
+
+            function atualizarBotoesPadrao() {
+                if (!btnPadraoIniciar) return;
+                const ativo = cronometroAtivo && cronometroModulo === focoModuloAtual;
+                if (!ativo) {
+                    btnPadraoIniciar.classList.remove('pausado');
+                    padraoIcone.textContent = '▶';
+                    padraoTexto.textContent = 'Iniciar';
+                    btnPadraoParar.style.display = 'none';
+                } else if (cronometroPausado) {
+                    btnPadraoIniciar.classList.add('pausado');
+                    padraoIcone.textContent = '▶';
+                    padraoTexto.textContent = 'Continuar';
+                    btnPadraoParar.style.display = 'flex';
+                } else {
+                    btnPadraoIniciar.classList.remove('pausado');
+                    padraoIcone.textContent = '⏸';
+                    padraoTexto.textContent = 'Pausar';
+                    btnPadraoParar.style.display = 'flex';
+                }
+            }
+
+            /* ============ POMODORO ============ */
+            function atualizarDisplayPomodoro() {
+                if (!relogioPomodoro) return;
+                relogioPomodoro.classList.remove('pomodoro-foco', 'pomodoro-pausa', 'parado', 'tempo-extra');
+                relogioPomodoro.textContent = formatarMMSS(pomodoroTempoRestante);
+                if (pomodoroTempoRestante < 0) {
+                    relogioPomodoro.classList.add('tempo-extra');
+                } else if (pomodoroEstado === 'foco') {
+                    relogioPomodoro.classList.add('pomodoro-foco');
+                } else if (pomodoroEstado === 'pausa') {
+                    relogioPomodoro.classList.add('pomodoro-pausa');
+                } else {
+                    relogioPomodoro.classList.add('parado');
+                }
+            }
+
+            function atualizarBotoesPomodoro() {
+                if (!btnPomodoroIniciar) return;
+                if (!pomodoroAtivo || pomodoroEstado === 'off') {
+                    btnPomodoroIniciar.classList.remove('pausado');
+                    pomodoroIcone.textContent = '▶';
+                    pomodoroTexto.textContent = 'Iniciar';
+                    btnPomodoroParar.style.display = 'none';
+                } else if (!padraoPausado) {
+                    btnPomodoroIniciar.classList.remove('pausado');
+                    pomodoroIcone.textContent = '⏸';
+                    pomodoroTexto.textContent = 'Pausar';
+                    btnPomodoroParar.style.display = 'flex';
+                } else {
+                    btnPomodoroIniciar.classList.add('pausado');
+                    pomodoroIcone.textContent = '▶';
+                    pomodoroTexto.textContent = 'Continuar';
+                    btnPomodoroParar.style.display = 'flex';
+                }
+            }
+
+            function atualizarCiclos() {
+                if (!pomodoroCiclos) return;
+                const dots = pomodoroCiclos.querySelectorAll('.ciclo-dot');
+                dots.forEach(function(dot, i) {
+                    if (i < pomodoroCicloAtual) dot.classList.add('ativo');
+                    else dot.classList.remove('ativo');
+                });
+                const label = pomodoroCiclos.querySelector('span:last-child');
+                if (label) label.textContent = pomodoroCicloAtual + '/4';
+            }
+
+            function mostrarCard(tipo) {
+                if (!pomodoroCard) return;
+                pomodoroCard.classList.remove('visivel', 'pausa');
+                cardBotoes.innerHTML = '';
+
+                document.getElementById('pomodoroCiclos').classList.add('escondido');
+                document.getElementById('pomodoroDropdown').classList.add('escondido');
+                document.getElementById('pomodoroSomLinha').classList.add('escondido');
+
+                if (tipo === 'fim-foco') {
+                    pomodoroCard.classList.add('visivel');
+                    cardTitulo.textContent = '🍅 Ciclo completo!';
+
+                    const btn1 = document.createElement('button');
+                    btn1.className = 'pomodoro-btn-acao principal';
+                    btn1.innerHTML = '<span>▶</span><span>Continuar estudando</span>';
+                    btn1.onclick = function() {
+                        pomodoroCicloAtual = Math.min(4, pomodoroCicloAtual + 1);
+                        atualizarCiclos();
+                        iniciarCicloFoco();
+                        fecharCard();
+                    };
+
+                    const btn2 = document.createElement('button');
+                    btn2.className = 'pomodoro-btn-acao principal pausa';
+                    btn2.innerHTML = '<span>⏸</span><span>Iniciar pausa</span>';
+                    btn2.onclick = function() {
+                        pomodoroCicloAtual = Math.min(4, pomodoroCicloAtual + 1);
+                        atualizarCiclos();
+                        iniciarCicloPausa();
+                        fecharCard();
+                    };
+
+                    const btn3 = document.createElement('button');
+                    btn3.className = 'pomodoro-btn-acao terciario';
+                    btn3.innerHTML = '⏱️ +5 min no ciclo atual';
+                    btn3.onclick = function() {
+                        pomodoroTempoRestante += 5 * 60;
+                        pomodoroUltimoTick = Date.now();
+                        if (pomodoroInterval) clearInterval(pomodoroInterval);
+                        pomodoroInterval = setInterval(tickPomodoro, 250);
+                        atualizarDisplayPomodoro();
+                        fecharCard();
+                    };
+
+                    cardBotoes.appendChild(btn1);
+                    cardBotoes.appendChild(btn2);
+                    cardBotoes.appendChild(btn3);
+
+                } else if (tipo === 'fim-pausa') {
+                    pomodoroCard.classList.add('visivel', 'pausa');
+                    cardTitulo.textContent = '⏱️ Pausa encerrada!';
+
+                    const btnA = document.createElement('button');
+                    btnA.className = 'pomodoro-btn-acao principal';
+                    btnA.innerHTML = '<span>▶</span><span>Começar novo ciclo</span>';
+                    btnA.onclick = function() {
+                        iniciarCicloFoco();
+                        fecharCard();
+                    };
+
+                    const btnB = document.createElement('button');
+                    btnB.className = 'pomodoro-btn-acao secundario';
+                    btnB.innerHTML = '<span>⏹</span><span>Pular ciclo</span>';
+                    btnB.onclick = function() {
+                        pomodoroEstado = 'off';
+                        pomodoroCicloAtual = 0;
+                        atualizarCiclos();
+                        if (pomodoroInterval) { clearInterval(pomodoroInterval); pomodoroInterval = null; }
+                        pomodoroTempoRestante = pomodoroTempoFoco * 60;
+                        pomodoroAguardandoAcao = false;
+                        padraoPausado = false;
+                        atualizarDisplayPomodoro();
+                        atualizarBotoesPomodoro();
+                        fecharCard();
+                    };
+
+                    cardBotoes.appendChild(btnA);
+                    cardBotoes.appendChild(btnB);
+                }
+            }
+
+            function fecharCard() {
+                if (!pomodoroCard) return;
+                pomodoroCard.classList.remove('visivel');
+                document.getElementById('pomodoroCiclos').classList.remove('escondido');
+                document.getElementById('pomodoroDropdown').classList.remove('escondido');
+                document.getElementById('pomodoroSomLinha').classList.remove('escondido');
+                pomodoroAguardandoAcao = false;
+            }
+
+            function tickPomodoro() {
+                if (!pomodoroAtivo || pomodoroEstado === 'off') return;
+                const agora = Date.now();
+                const delta = (agora - pomodoroUltimoTick) / 1000;
+                pomodoroUltimoTick = agora;
+                pomodoroTempoRestante -= delta;
+
+                if (pomodoroTempoRestante <= 0 && !pomodoroAguardandoAcao) {
+                    pomodoroAguardandoAcao = true;
+                    tocarSom();
+                    if (pomodoroEstado === 'foco') {
+                        mostrarCard('fim-foco');
+                    } else if (pomodoroEstado === 'pausa') {
+                        if (pomodoroCicloAtual >= 4) {
+                            pomodoroCicloAtual = 0;
+                            atualizarCiclos();
+                        }
+                        mostrarCard('fim-pausa');
+                    }
+                }
+
+                atualizarDisplayPomodoro();
+            }
+
+            function iniciarCicloFoco() {
+                pomodoroEstado = 'foco';
+                pomodoroTempoRestante = pomodoroTempoFoco * 60;
+                pomodoroUltimoTick = Date.now();
+                pomodoroAtivo = true;
+                pomodoroAguardandoAcao = false;
+                padraoPausado = false;
+                if (pomodoroInterval) clearInterval(pomodoroInterval);
+                pomodoroInterval = setInterval(tickPomodoro, 250);
+                atualizarDisplayPomodoro();
+                atualizarBotoesPomodoro();
+            }
+
+            function iniciarCicloPausa() {
+                pomodoroEstado = 'pausa';
+                const ehPausaLonga = (pomodoroCicloAtual >= 4);
+                const tempoPausa = ehPausaLonga ? pomodoroTempoPausa * 3 : pomodoroTempoPausa;
+                pomodoroTempoRestante = tempoPausa * 60;
+                pomodoroUltimoTick = Date.now();
+                pomodoroAtivo = true;
+                pomodoroAguardandoAcao = false;
+                padraoPausado = false;
+                if (pomodoroInterval) clearInterval(pomodoroInterval);
+                pomodoroInterval = setInterval(tickPomodoro, 250);
+                atualizarDisplayPomodoro();
+                atualizarBotoesPomodoro();
             }
 
             /* ============ SIMULAÇÕES ============ */
@@ -3784,7 +4592,6 @@
             document.getElementById('btnFecharSaudacao').addEventListener('click', function() { saudacaoFechada = true; aplicarEstadoSaudacao(); salvarDados(); });
             document.getElementById('btnReabrirSaudacao').addEventListener('click', function() { saudacaoFechada = false; aplicarEstadoSaudacao(); salvarDados(); });
 
-            /* Salvar nome automaticamente */
             nomeUsuarioInput.addEventListener('input', function() {
                 nomeUsuario = this.value.trim();
                 salvarDados();
@@ -3850,6 +4657,7 @@
                     novaAnotacaoTextarea.value = '';
                     renderizarAnotacoes();
                     renderizarTopicos();
+                    atualizarBotoesAnotacaoFoco();
                 }
             });
             btnExcluirAnotacao.addEventListener('click', function() {
@@ -3859,6 +4667,7 @@
                         salvarDados();
                         renderizarAnotacoes();
                         renderizarTopicos();
+                        atualizarBotoesAnotacaoFoco();
                     }
                 }
             });
@@ -3938,6 +4747,94 @@
                 }, 400);
             });
 
+            /* ============ MODO FOCO: EVENTOS ============ */
+            document.querySelectorAll('.painel-aba').forEach(function(aba) {
+                aba.addEventListener('click', function() {
+                    inicializarAudio();
+                    trocarAba(this.dataset.aba);
+                });
+            });
+
+            btnPadraoIniciar.addEventListener('click', function() {
+                inicializarAudio();
+                if (!cronometroAtivo || cronometroModulo !== focoModuloAtual) {
+                    iniciarCronometro(focoModuloAtual);
+                } else if (cronometroPausado) {
+                    iniciarCronometro(focoModuloAtual);
+                } else {
+                    pausarCronometro();
+                }
+                atualizarDisplayPadrao();
+                atualizarBotoesPadrao();
+            });
+
+            btnPadraoParar.addEventListener('click', function() {
+                pararCronometro(false);
+                atualizarDisplayPadrao();
+                atualizarBotoesPadrao();
+            });
+
+            btnPomodoroIniciar.addEventListener('click', function() {
+                inicializarAudio();
+                if (!pomodoroAtivo || pomodoroEstado === 'off') {
+                    iniciarCicloFoco();
+                } else {
+                    if (pomodoroInterval) {
+                        clearInterval(pomodoroInterval);
+                        pomodoroInterval = null;
+                        padraoPausado = true;
+                    } else {
+                        padraoPausado = false;
+                        pomodoroUltimoTick = Date.now();
+                        pomodoroInterval = setInterval(tickPomodoro, 250);
+                    }
+                    atualizarBotoesPomodoro();
+                }
+            });
+
+            btnPomodoroParar.addEventListener('click', function() {
+                pomodoroAtivo = false;
+                pomodoroEstado = 'off';
+                padraoPausado = false;
+                pomodoroTempoRestante = pomodoroTempoFoco * 60;
+                pomodoroCicloAtual = 0;
+                pomodoroAguardandoAcao = false;
+                if (pomodoroInterval) { clearInterval(pomodoroInterval); pomodoroInterval = null; }
+                atualizarCiclos();
+                atualizarDisplayPomodoro();
+                atualizarBotoesPomodoro();
+                fecharCard();
+            });
+
+            pomodoroTempoSelect.addEventListener('change', function() {
+                const partes = this.value.split('-');
+                pomodoroTempoFoco = parseFloat(partes[0]);
+                pomodoroTempoPausa = parseFloat(partes[1]);
+                if (pomodoroAtivo && pomodoroEstado !== 'off') {
+                    iniciarCicloFoco();
+                } else {
+                    pomodoroTempoRestante = pomodoroTempoFoco * 60;
+                    atualizarDisplayPomodoro();
+                }
+            });
+
+            btnSom.addEventListener('click', function() {
+                inicializarAudio();
+                pomodoroSomAtivo = !pomodoroSomAtivo;
+                this.textContent = pomodoroSomAtivo ? '🔊' : '🔇';
+                if (pomodoroSomAtivo) this.classList.add('ativo');
+                else this.classList.remove('ativo');
+                salvarDados();
+            });
+
+            btnSair.addEventListener('click', sairModoFoco);
+            btnSairTopo.addEventListener('click', sairModoFoco);
+
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && focoAtivo) sairModoFoco();
+            });
+
+            /* ============ RESET ============ */
             btnResetar.addEventListener('click', function() {
                 if (confirm('Tem certeza que deseja apagar TODOS os checkboxes, anotações, tempo de estudo e progresso?')) {
                     estadoCheckboxes = {};
@@ -3976,7 +4873,7 @@
             });
 
             btnResetGeral.addEventListener('click', function() {
-                if (confirm('⚠️ ATENÇÃO!\n\nTem certeza que deseja apagar TODOS os dados e voltar ao estado inicial?\n\nEsta ação não pode ser desfeita. Serão apagados:\n- Nome do usuário\n- Concurso e cargo\n- Datas inicial e final\n- Data simulada\n- Modo escuro\n- Progresso de leitura\n- Anotações\n- Tempo de estudo\n- Notificações\n- Revisões espaçadas\n- Estado da caixa de saudação\n- Link de compartilhamento\n- Estado do banner Compartilhe')) {
+                if (confirm('⚠️ ATENÇÃO!\n\nTem certeza que deseja apagar TODOS os dados e voltar ao estado inicial?\n\nEsta ação não pode ser desfeita. Serão apagados:\n- Nome do usuário\n- Concurso e cargo\n- Datas inicial e final\n- Data simulada\n- Modo escuro\n- Progresso de leitura\n- Anotações\n- Tempo de estudo\n- Notificações\n- Revisões espaçadas\n- Estado da caixa de saudação\n- Link de compartilhamento\n- Estado do banner Compartilhe\n- Som do Pomodoro')) {
                     estadoCheckboxes = {};
                     ultimasAtividades = {};
                     notificacoes = [];
@@ -4010,6 +4907,7 @@
                     saudacaoFechada = false;
                     linkCompartilhar = LINK_COMPARTILHAR_PADRAO;
                     bannerReduzido = false;
+                    pomodoroSomAtivo = true;
                     if (cronometroInterval) clearInterval(cronometroInterval);
                     nomeUsuarioInput.value = '';
                     concursoInput.value = concurso;
@@ -4060,6 +4958,8 @@
                 usarDataSistemaCheckbox.checked = usarDataSistema;
                 modoEscuroToggle.checked = modoEscuroAtivo;
                 linkCompartilharInput.value = linkCompartilhar;
+                if (pomodoroSomAtivo) btnSom.classList.add('ativo');
+                else { btnSom.classList.remove('ativo'); btnSom.textContent = '🔇'; }
                 atualizarHeaderConcurso();
                 atualizarLinksCompartilhamento();
                 contadorNumero.textContent = obterContadorCompartilhamentos();
@@ -4083,336 +4983,6 @@
 
             if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', iniciar);
             else iniciar();
-            /* ============ MODO FOCO TOTAL ============ */
-            function abrirModoFoco(moduloChave, moduloTitulo) {
-                focoModuloAtual = moduloChave;
-                focoModuloTitulo = moduloTitulo;
-                focoAtivo = true;
-
-                focoModuloTituloEl.textContent = moduloTitulo;
-
-                focoLista.innerHTML = '';
-                const listaAssuntos = assuntos[moduloChave] || [];
-                listaAssuntos.forEach(function(assunto, idx) {
-                    const chaveBase = moduloChave + '-geral-' + idx;
-                    const li = document.createElement('li');
-                    li.className = 'foco-item';
-
-                    /* 6 checkboxes: Lido, Exercitado, Concluído, Rev24h, Rev7d, Rev15d */
-                    li.innerHTML =
-                        '<input type="checkbox" class="lido-check" ' + (estadoCheckboxes[chaveBase + '-Lido'] ? 'checked' : '') + '>' +
-                        '<span class="assunto-texto">' + assunto + '</span>' +
-                        '<div class="foco-checks-grupo">' +
-                            '<div class="foco-check-wrap">' +
-                                '<span class="foco-check-label">Exer.</span>' +
-                                '<input type="checkbox" class="exercitado-check" ' + (estadoCheckboxes[chaveBase + '-Exercitado'] ? 'checked' : '') + '>' +
-                            '</div>' +
-                            '<div class="foco-check-wrap">' +
-                                '<span class="foco-check-label">Conc.</span>' +
-                                '<input type="checkbox" class="concluido-check" ' + (estadoCheckboxes[chaveBase + '-Concluido'] ? 'checked' : '') + '>' +
-                            '</div>' +
-                            '<div class="foco-check-wrap">' +
-                                '<span class="foco-check-label">24h</span>' +
-                                '<input type="checkbox" class="rev24h-check" ' + (estadoCheckboxes[chaveBase + '-Rev24h'] ? 'checked' : '') + '>' +
-                            '</div>' +
-                            '<div class="foco-check-wrap">' +
-                                '<span class="foco-check-label">7d</span>' +
-                                '<input type="checkbox" class="rev7d-check" ' + (estadoCheckboxes[chaveBase + '-Rev7d'] ? 'checked' : '') + '>' +
-                            '</div>' +
-                            '<div class="foco-check-wrap">' +
-                                '<span class="foco-check-label">15d</span>' +
-                                '<input type="checkbox" class="rev15d-check" ' + (estadoCheckboxes[chaveBase + '-Rev15d'] ? 'checked' : '') + '>' +
-                            '</div>' +
-                        '</div>';
-
-                    /* Aplica classes iniciais */
-                    if (estadoCheckboxes[chaveBase + '-Lido']) li.classList.add('lido');
-                    if (estadoCheckboxes[chaveBase + '-Exercitado']) li.classList.add('exercitado');
-                    if (estadoCheckboxes[chaveBase + '-Concluido']) li.classList.add('concluido');
-                    if (estadoCheckboxes[chaveBase + '-Rev24h']) li.classList.add('rev24h');
-                    if (estadoCheckboxes[chaveBase + '-Rev7d']) li.classList.add('rev7d');
-                    if (estadoCheckboxes[chaveBase + '-Rev15d']) li.classList.add('rev15d');
-
-                    /* ============ LIDO ============ */
-                    li.querySelector('.lido-check').addEventListener('change', function() {
-                        estadoCheckboxes[chaveBase + '-Lido'] = this.checked;
-                        if (this.checked) {
-                            li.classList.add('lido');
-                            ultimasAtividades[moduloChave] = obterDataAtual().getTime();
-                            agendarRevisao(chaveBase, 1);
-                            mostrarToast('📖', 'Leitura registrada! Revisão de 24h agendada.');
-                        } else {
-                            li.classList.remove('lido');
-                        }
-                        salvarDados();
-                        renderizarModulos();
-                        renderizarRevisoesPendentes();
-                        renderizarRecomendacao();
-                        renderizarRevisaoEspacada();
-                        atualizarGraficoStatus();
-                    });
-
-                    /* ============ EXERCITADO ============ */
-                    li.querySelector('.exercitado-check').addEventListener('change', function() {
-                        const lidoKey = chaveBase + '-Lido';
-                        if (this.checked && !estadoCheckboxes[lidoKey]) {
-                            this.checked = false;
-                            mostrarToast('⚠️', 'Registre a Leitura antes de marcar Exercitado.');
-                            return;
-                        }
-                        estadoCheckboxes[chaveBase + '-Exercitado'] = this.checked;
-                        if (this.checked) {
-                            li.classList.add('exercitado');
-                            mostrarToast('📝', 'Exercício registrado! Continue assim.');
-                        } else {
-                            li.classList.remove('exercitado');
-                        }
-                        salvarDados();
-                        renderizarModulos();
-                    });
-
-                    /* ============ CONCLUÍDO ============ */
-                    li.querySelector('.concluido-check').addEventListener('change', function() {
-                        if (this.checked) {
-                            estadoCheckboxes[chaveBase + '-Lido'] = true;
-                            estadoCheckboxes[chaveBase + '-Exercitado'] = true;
-                            estadoCheckboxes[chaveBase + '-Concluido'] = true;
-                            li.querySelector('.lido-check').checked = true;
-                            li.querySelector('.exercitado-check').checked = true;
-                            li.classList.add('lido', 'exercitado', 'concluido');
-                            ultimasAtividades[moduloChave] = obterDataAtual().getTime();
-                            registrarConclusaoHoje();
-                            mostrarToast('✅', 'Assunto concluído! +1 para sua meta!');
-                        } else {
-                            estadoCheckboxes[chaveBase + '-Concluido'] = false;
-                            li.classList.remove('concluido');
-                            const hojeStr = obterDataAtual().toISOString().split('T')[0];
-                            if (conclusoesPorDia[hojeStr] && conclusoesPorDia[hojeStr] > 0) conclusoesPorDia[hojeStr]--;
-                        }
-                        gerarNotificacoes();
-                        salvarDados();
-                        renderizarModulos();
-                        renderizarNotificacoes();
-                        atualizarGraficoStatus();
-                        atualizarSaudacao();
-                        verificarMetaDiaria();
-                    });
-
-                    /* ============ REV 24h ============ */
-                    li.querySelector('.rev24h-check').addEventListener('change', function() {
-                        const lidoKey = chaveBase + '-Lido';
-                        if (this.checked && !estadoCheckboxes[lidoKey]) {
-                            this.checked = false;
-                            mostrarToast('⚠️', 'Registre a Leitura antes de registrar a Revisão.');
-                            return;
-                        }
-                        estadoCheckboxes[chaveBase + '-Rev24h'] = this.checked;
-                        if (this.checked) {
-                            li.classList.add('rev24h');
-                            if (revisoes[chaveBase]) revisoes[chaveBase].forEach(function(rev) { if (rev.tipo === '24h') rev.baixada = true; });
-                            agendarRevisao(chaveBase, 7);
-                            mostrarToast('🔄', 'Revisão 24h feita! Revisão de 7 dias agendada.');
-                        } else {
-                            li.classList.remove('rev24h');
-                        }
-                        salvarDados();
-                        renderizarModulos();
-                        renderizarRevisoesPendentes();
-                        renderizarRevisaoEspacada();
-                    });
-
-                    /* ============ REV 7d ============ */
-                    li.querySelector('.rev7d-check').addEventListener('change', function() {
-                        const lidoKey = chaveBase + '-Lido';
-                        if (this.checked && !estadoCheckboxes[lidoKey]) {
-                            this.checked = false;
-                            mostrarToast('⚠️', 'Registre a Leitura antes de registrar a Revisão.');
-                            return;
-                        }
-                        estadoCheckboxes[chaveBase + '-Rev7d'] = this.checked;
-                        if (this.checked) {
-                            li.classList.add('rev7d');
-                            if (revisoes[chaveBase]) revisoes[chaveBase].forEach(function(rev) { if (rev.tipo === '7d') rev.baixada = true; });
-                            agendarRevisao(chaveBase, 15);
-                            mostrarToast('🔄', 'Revisão 7d feita! Revisão de 15 dias agendada.');
-                        } else {
-                            li.classList.remove('rev7d');
-                        }
-                        salvarDados();
-                        renderizarModulos();
-                        renderizarRevisoesPendentes();
-                        renderizarRevisaoEspacada();
-                    });
-
-                    /* ============ REV 15d ============ */
-                    li.querySelector('.rev15d-check').addEventListener('change', function() {
-                        const lidoKey = chaveBase + '-Lido';
-                        if (this.checked && !estadoCheckboxes[lidoKey]) {
-                            this.checked = false;
-                            mostrarToast('⚠️', 'Registre a Leitura antes de registrar a Revisão.');
-                            return;
-                        }
-                        estadoCheckboxes[chaveBase + '-Rev15d'] = this.checked;
-                        if (this.checked) {
-                            li.classList.add('rev15d');
-                            if (revisoes[chaveBase]) revisoes[chaveBase].forEach(function(rev) { if (rev.tipo === '15d') rev.baixada = true; });
-                            mostrarToast('🏆', 'Ciclo de revisão espaçada completo!');
-                        } else {
-                            li.classList.remove('rev15d');
-                        }
-                        salvarDados();
-                        renderizarModulos();
-                        renderizarRevisoesPendentes();
-                        renderizarRevisaoEspacada();
-                    });
-
-                    focoLista.appendChild(li);
-                });
-
-                /* ============ SINCRONIZA O CRONÔMETRO ============ */
-                if (cronometroAtivo && cronometroModulo === moduloChave) {
-                    /* Já está rodando neste módulo — sincroniza */
-                    focoRodando = true;
-                    focoPausado = cronometroPausado;
-                    if (!cronometroPausado && cronometroInicio) {
-                        focoInicio = cronometroInicio;
-                        focoTempoAcumulado = cronometroTempoAcumulado;
-                    } else {
-                        focoInicio = null;
-                        focoTempoAcumulado = cronometroTempoAcumulado;
-                    }
-                } else {
-                    /* Novo foco — para qualquer outro e inicia */
-                    if (cronometroAtivo && cronometroModulo !== moduloChave) {
-                        pararCronometro(true);
-                    }
-                    cronometroAtivo = true;
-                    cronometroPausado = false;
-                    cronometroModulo = moduloChave;
-                    cronometroInicio = Date.now();
-                    cronometroTempoAcumulado = 0;
-                    cronometroPausaAcumulada = 0;
-                    cronometroPausaInicio = null;
-                    if (cronometroInterval) clearInterval(cronometroInterval);
-                    cronometroInterval = setInterval(atualizarCronometroDisplay, 1000);
-                    focoRodando = true;
-                    focoPausado = false;
-                    focoInicio = cronometroInicio;
-                    focoTempoAcumulado = 0;
-                }
-                if (focoInterval) clearInterval(focoInterval);
-                focoInterval = setInterval(atualizarFocoDisplay, 1000);
-
-                modoFoco.classList.add('ativo');
-                document.body.style.overflow = 'hidden';
-
-                atualizarFocoBotao();
-                atualizarFocoDisplay();
-                salvarDados();
-            }
-
-            /* ============ SAIR DO MODO FOCO (para e registra) ============ */
-            function sairModoFoco() {
-                if (cronometroAtivo) {
-                    pararCronometro(false);
-                }
-                if (focoInterval) { clearInterval(focoInterval); focoInterval = null; }
-                focoAtivo = false;
-                focoRodando = false;
-                focoPausado = false;
-                focoInicio = null;
-                focoTempoAcumulado = 0;
-                modoFoco.classList.remove('ativo');
-                document.body.style.overflow = '';
-                atualizarGraficoStatus();
-                renderizarModulos();
-                renderizarTopicos();
-            }
-
-            /* ============ DISPLAY DO RELÓGIO NO FOCO ============ */
-            function obterTempoFocoTotal() {
-                let t = focoTempoAcumulado;
-                if (focoRodando && !focoPausado && focoInicio) {
-                    t += (Date.now() - focoInicio) / 1000;
-                } else if (cronometroAtivo && !cronometroPausado && cronometroInicio) {
-                    t = cronometroTempoAcumulado + (Date.now() - cronometroInicio) / 1000;
-                } else if (cronometroAtivo && cronometroPausado) {
-                    t = cronometroTempoAcumulado;
-                }
-                return t;
-            }
-
-            function atualizarFocoDisplay() {
-                if (!focoRelogioDisplay) return;
-                focoRelogioDisplay.textContent = formatarTempo(obterTempoFocoTotal());
-                focoRelogioDisplay.classList.remove('rodando', 'pausado', 'parado');
-                if (cronometroAtivo && !cronometroPausado) focoRelogioDisplay.classList.add('rodando');
-                else if (cronometroAtivo && cronometroPausado) focoRelogioDisplay.classList.add('pausado');
-                else focoRelogioDisplay.classList.add('parado');
-            }
-
-            function atualizarFocoBotao() {
-                if (!btnFocoIniciar) return;
-                if (!cronometroAtivo) {
-                    btnFocoIniciar.classList.remove('pausado');
-                    focoIniciarIcone.textContent = '▶';
-                    focoIniciarTexto.textContent = 'Iniciar';
-                    btnFocoParar.style.display = 'none';
-                } else if (cronometroPausado) {
-                    btnFocoIniciar.classList.add('pausado');
-                    focoIniciarIcone.textContent = '▶';
-                    focoIniciarTexto.textContent = 'Continuar';
-                    btnFocoParar.style.display = 'flex';
-                } else {
-                    btnFocoIniciar.classList.remove('pausado');
-                    focoIniciarIcone.textContent = '⏸';
-                    focoIniciarTexto.textContent = 'Pausar';
-                    btnFocoParar.style.display = 'flex';
-                }
-            }
-
-            function iniciarFoco() {
-                if (!cronometroAtivo) {
-                    iniciarCronometro(focoModuloAtual);
-                    focoRodando = true;
-                    focoPausado = false;
-                    focoInicio = cronometroInicio;
-                    focoTempoAcumulado = 0;
-                } else if (cronometroPausado) {
-                    iniciarCronometro(focoModuloAtual);
-                    focoRodando = true;
-                    focoPausado = false;
-                    focoInicio = cronometroInicio;
-                } else {
-                    pausarCronometro();
-                    focoPausado = true;
-                    focoInicio = null;
-                    focoTempoAcumulado = cronometroTempoAcumulado;
-                }
-                atualizarFocoBotao();
-                atualizarFocoDisplay();
-                atualizarCronometroBotoes();
-            }
-
-            function pararFocoClick() {
-                pararCronometro(false);
-                focoRodando = false;
-                focoPausado = false;
-                focoInicio = null;
-                focoTempoAcumulado = 0;
-                atualizarFocoBotao();
-                atualizarFocoDisplay();
-            }
-
-            /* ============ EVENT LISTENERS DO MODO FOCO ============ */
-            btnFocoIniciar.addEventListener('click', iniciarFoco);
-            btnFocoParar.addEventListener('click', pararFocoClick);
-            btnFocoSair.addEventListener('click', sairModoFoco);
-            btnSairTopo.addEventListener('click', sairModoFoco);
-
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape' && focoAtivo) sairModoFoco();
-            });
         })();
     </script>
 </body>
