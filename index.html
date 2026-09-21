@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
-    <title>CheckAprovação v0.63 | Guarda Municipal Florianópolis</title>
+    <title>CheckAprovação v0.66 | Guarda Municipal Florianópolis</title>
     <meta name="theme-color" content="#0067b8">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📋</text></svg>">
     <style>
@@ -85,7 +85,7 @@
             --cor-instagram-dark: #b8235a;
         }
 
-        /* ============ TEMA SUAVE (ALTERAÇÃO 22) ============ */
+        /* ============ TEMA SUAVE ============ */
         body.tema-suave {
             --ms-blue: #8fc4ec;
             --ms-blue-dark: #b0d5f0;
@@ -132,7 +132,7 @@
             --shadow-28: 0 14px 32px rgba(0,0,0,0.60), 0 0 10px rgba(0,0,0,0.42);
         }
 
-        /* ============ TEMA ESCURO (ALTERAÇÃO 22 + 23) ============ */
+        /* ============ TEMA ESCURO ============ */
         body.tema-escuro {
             --ms-blue: #4cc2ff;
             --ms-blue-dark: #82c7ff;
@@ -179,7 +179,6 @@
             --shadow-28: 0 14px 28px rgba(0,0,0,0.6), 0 0 8px rgba(0,0,0,0.4);
         }
 
-        /* Compatibilidade: .dark-mode continua funcionando como tema escuro */
         body.dark-mode {
             --ms-blue: #4cc2ff;
             --ms-blue-dark: #82c7ff;
@@ -219,11 +218,6 @@
             --border-strong: #4a4a4a;
             background-color: #111111;
             color: #e0e0e0;
-            --shadow-2: 0 1px 2px rgba(0,0,0,0.4), 0 0 2px rgba(0,0,0,0.3);
-            --shadow-4: 0 2px 4px rgba(0,0,0,0.4), 0 0 2px rgba(0,0,0,0.3);
-            --shadow-8: 0 4px 8px rgba(0,0,0,0.5), 0 0 2px rgba(0,0,0,0.4);
-            --shadow-16: 0 8px 16px rgba(0,0,0,0.5), 0 0 2px rgba(0,0,0,0.4);
-            --shadow-28: 0 14px 28px rgba(0,0,0,0.6), 0 0 8px rgba(0,0,0,0.4);
         }
 
         /* ============ RESET ============ */
@@ -257,7 +251,6 @@
         .tela.ativa { display: block; animation: fadeInTela var(--dur-slow) var(--ease-decelerate); }
         @keyframes fadeInTela { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* ALTERAÇÃO 26: Dashboard cabe em notebook 14" sem corte */
         #telaDashboard.ativa {
             display: flex;
             flex-direction: column;
@@ -551,18 +544,12 @@
 
         /* ============ LAYOUT PRINCIPAL 30/70 ============ */
         .layout-pc { display: flex; flex-direction: column; gap: 14px; }
-        .bloco-progresso { order: 1; }
-        .layout-principal { display: flex; flex-direction: column; gap: 14px; order: 2; }
         .coluna-esquerda { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
         .coluna-direita { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
-        .modulos-bloco { order: 1; }
-        .checklist-bloco { order: 2; margin-top: 0; }
-        .banner-bloco-esquerda { order: 3; }
 
-        /* ALTERAÇÃO 24: No mobile, banner Compartilhe vai pro rodapé */
-        @media (max-width: 899px) {
-            .banner-bloco-esquerda { order: 99; margin-top: 16px; }
-        }
+        /* Banner desktop: só a cópia interna da coluna esquerda aparece */
+        .banner-bloco-esquerda-desktop { display: block; }
+        .banner-bloco-esquerda-mobile { display: none; }
 
         @media (min-width: 900px) {
             .layout-pc {
@@ -581,12 +568,24 @@
                 position: sticky;
                 top: 12px;
             }
-            .bloco-progresso { grid-area: progresso; order: 0; }
-            .layout-principal { grid-area: principal; display: block; order: 0; }
+            .bloco-progresso { grid-area: progresso; }
+            .layout-principal { grid-area: principal; display: block; }
             .coluna-direita { display: flex; flex-direction: column; gap: 12px; }
-            .modulos-bloco { order: 1; }
-            .checklist-bloco { order: 2; }
-            .banner-bloco-esquerda { order: 3; margin-top: 0; }
+            .banner-bloco-esquerda-desktop { display: block; }
+            .banner-bloco-esquerda-mobile { display: none; }
+        }
+
+        @media (max-width: 899px) {
+            .layout-pc {
+                display: flex;
+                flex-direction: column;
+                gap: 14px;
+            }
+            .coluna-esquerda { order: 1; }
+            .bloco-progresso { order: 2; }
+            .layout-principal { order: 3; }
+            .banner-bloco-esquerda-desktop { display: none; }
+            .banner-bloco-esquerda-mobile { order: 4; margin-top: 8px; display: block; }
         }
 
         /* ============ CARD BASE ============ */
@@ -664,7 +663,6 @@
         .modulo-card.em-progresso { border-color: var(--ms-green); background: linear-gradient(135deg, var(--surface) 0%, var(--ms-green-light) 100%); }
         .modulo-card.estagnado { border-color: var(--ms-yellow); background: linear-gradient(135deg, var(--surface) 0%, var(--ms-yellow-light) 100%); }
         .modulo-card.abandonado { border-color: var(--ms-red); background: linear-gradient(135deg, var(--surface) 0%, var(--ms-red-light) 100%); animation: pulseRed 2s infinite; }
-        .modulo-card.concluido { border-color: var(--ms-gold); background: linear-gradient(135deg, var(--surface) 0%, var(--ms-gold-light) 100%); box-shadow: 0 0 10px rgba(212, 175, 55, 0.25); }
         @keyframes pulseRed { 0%, 100% { box-shadow: var(--shadow-2), 0 0 0 0 rgba(209, 52, 56, 0.35); } 50% { box-shadow: var(--shadow-2), 0 0 0 6px rgba(209, 52, 56, 0); } }
 
         .modulo-card .modulo-nome { font-size: 0.78rem; font-weight: 600; color: var(--ms-gray-900); margin-bottom: 8px; display: flex; align-items: center; gap: 5px; line-height: 1.25; }
@@ -673,17 +671,114 @@
         .modulo-card.nao-iniciado .modulo-percentual, .modulo-card.em-progresso .modulo-percentual { color: var(--ms-green); }
         .modulo-card.estagnado .modulo-percentual { color: var(--ms-yellow-dark); }
         .modulo-card.abandonado .modulo-percentual { color: var(--ms-red); }
-        .modulo-card.concluido .modulo-percentual { color: var(--ms-gold-dark); }
         .modulo-card .modulo-contagem { font-size: 0.68rem; color: var(--ms-gray-700); margin-bottom: 6px; font-weight: 600; }
         .modulo-card .modulo-bar { height: 6px; background: var(--ms-gray-200); border-radius: var(--radius-pill); overflow: hidden; margin-bottom: 4px; }
         .modulo-card .modulo-bar-fill { height: 100%; border-radius: var(--radius-pill); transition: width 0.5s var(--ease-decelerate); background: var(--ms-blue); }
         .modulo-card.nao-iniciado .modulo-bar-fill, .modulo-card.em-progresso .modulo-bar-fill { background: var(--ms-green); }
         .modulo-card.estagnado .modulo-bar-fill { background: var(--ms-yellow); }
         .modulo-card.abandonado .modulo-bar-fill { background: var(--ms-red); }
-        .modulo-card.concluido .modulo-bar-fill { background: var(--ms-gold); }
         .modulo-card .modulo-alerta { font-size: 0.65rem; font-weight: 600; color: var(--ms-red); display: flex; align-items: center; gap: 3px; min-height: 16px; line-height: 1.2; }
         .modulo-card .modulo-alerta.amarelo { color: var(--ms-yellow-dark); }
-        .modulo-card .modulo-alerta.dourado { color: var(--ms-gold-dark); }
+
+        /* ALTERAÇÃO 28: Card concluído gamificado */
+        .modulo-card.concluido-v6 {
+            align-items: center;
+            text-align: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #fffbe8 0%, #fef3c4 50%, #ffeaa0 100%);
+            border-color: var(--ms-gold);
+            box-shadow: 0 4px 14px rgba(212, 175, 55, 0.45), 0 0 0 1px rgba(212, 175, 55, 0.2);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            padding: 12px;
+            min-height: 120px;
+        }
+        body.tema-escuro .modulo-card.concluido-v6, body.dark-mode .modulo-card.concluido-v6 {
+            background: linear-gradient(135deg, #2a251a 0%, #3a2f1a 50%, #4a3f1f 100%);
+            box-shadow: 0 4px 14px rgba(212, 175, 55, 0.35), 0 0 0 1px rgba(212, 175, 55, 0.25);
+        }
+        body.tema-suave .modulo-card.concluido-v6 {
+            background: linear-gradient(135deg, #554a24 0%, #5f5129 50%, #6b5a2e 100%);
+            box-shadow: 0 4px 14px rgba(212, 175, 55, 0.4), 0 0 0 1px rgba(212, 175, 55, 0.3);
+        }
+        .modulo-card.concluido-v6::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 60%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.55), transparent);
+            animation: shimmer 3s infinite;
+            pointer-events: none;
+            z-index: 1;
+        }
+        body.tema-escuro .modulo-card.concluido-v6::before,
+        body.dark-mode .modulo-card.concluido-v6::before,
+        body.tema-suave .modulo-card.concluido-v6::before {
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+        }
+        @keyframes shimmer {
+            0% { left: -100%; }
+            60% { left: 150%; }
+            100% { left: 150%; }
+        }
+        .modulo-card.concluido-v6 .modulo-nome {
+            justify-content: center;
+            position: relative;
+            z-index: 2;
+            margin-bottom: 2px;
+        }
+        .trofeu-container {
+            position: relative;
+            display: inline-block;
+            margin: 2px 0;
+            z-index: 2;
+            line-height: 1;
+        }
+        .trofeu-grande {
+            font-size: 3.4rem;
+            line-height: 1;
+            display: block;
+            filter: drop-shadow(0 4px 8px rgba(212, 175, 55, 0.65));
+        }
+        .sparkle-trofeu {
+            position: absolute;
+            width: 22px;
+            height: 22px;
+            top: 2%;
+            right: 6%;
+            pointer-events: none;
+            opacity: 0;
+            animation: sparkleTrofeuPulse 3s ease-in-out infinite;
+            transform-origin: center;
+            z-index: 3;
+        }
+        .sparkle-trofeu svg {
+            width: 100%;
+            height: 100%;
+            display: block;
+            filter:
+                drop-shadow(0 0 3px rgba(255, 240, 150, 1))
+                drop-shadow(0 0 6px rgba(255, 210, 80, 0.9))
+                drop-shadow(0 0 12px rgba(255, 190, 40, 0.6));
+        }
+        @keyframes sparkleTrofeuPulse {
+            0%, 68% { opacity: 0; transform: scale(0.2) rotate(0deg); }
+            73% { opacity: 1; transform: scale(1.15) rotate(20deg); }
+            78% { opacity: 0.85; transform: scale(0.9) rotate(-12deg); }
+            86% { opacity: 1; transform: scale(1.08) rotate(8deg); }
+            93% { opacity: 0; transform: scale(0.2) rotate(0deg); }
+            100% { opacity: 0; transform: scale(0.2) rotate(0deg); }
+        }
+        .pct-concluido {
+            font-size: 1rem;
+            font-weight: 900;
+            color: var(--ms-gold-dark);
+            position: relative;
+            z-index: 2;
+            letter-spacing: 0.3px;
+        }
 
         .modulos-resumo { font-size: 0.72rem; color: var(--ms-gray-700); display: flex; gap: 12px; flex-wrap: wrap; }
         .resumo-item { display: flex; align-items: center; gap: 4px; }
@@ -723,7 +818,6 @@
         .topic-header .arrow { margin-left: 8px; transition: transform var(--dur-normal) var(--ease-standard); font-size: 0.75rem; }
         .topic-header.collapsed .arrow { transform: rotate(-90deg); }
 
-        /* ALTERAÇÃO 23: títulos do checklist dessaturados no dark/suave */
         body.tema-escuro .topic-header, body.dark-mode .topic-header { background: #1a3a5c; color: #e8ecef; }
         body.tema-escuro .topic-header:hover, body.dark-mode .topic-header:hover { background: #24476b; }
         body.tema-suave .topic-header { background: #34495e; color: #f5f8fa; }
@@ -732,7 +826,6 @@
         .subtopic-header { background: var(--ms-blue-light); color: var(--ms-blue-dark); font-weight: 600; padding: 10px 16px; font-size: 0.88rem; border-left: 4px solid var(--ms-blue); display: flex; align-items: center; gap: 8px; }
         .subtopic-header .subtopic-titulo { flex: 1; }
 
-        /* ALTERAÇÃO 23: subtópicos dessaturados no dark/suave */
         body.tema-escuro .subtopic-header, body.dark-mode .subtopic-header { background: #223749; color: #b8c9d9; border-left-color: #4a6f94; }
         body.tema-suave .subtopic-header { background: #3d566f; color: #d8dee3; border-left-color: #6e8ba8; }
 
@@ -787,13 +880,62 @@
         .checkbox-cell input[type="checkbox"].concluido-check:checked { accent-color: var(--ms-green); }
         .checkbox-cell input[type="checkbox"].exercitado-check:checked { accent-color: var(--ms-gold); }
 
+        /* ============ ALFINETE (Alteração 29) ============ */
+        .assunto-linha { display: flex; align-items: center; gap: 6px; }
+        .btn-importante {
+            position: relative;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 2px 4px;
+            border-radius: var(--radius-sm);
+            line-height: 1;
+            font-size: 1rem;
+            flex-shrink: 0;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform var(--dur-fast) var(--ease-standard), filter var(--dur-normal) var(--ease-standard), opacity var(--dur-normal) var(--ease-standard), background var(--dur-fast) var(--ease-standard);
+            opacity: 0.25;
+            filter: grayscale(0.8);
+        }
+        .btn-importante:hover { opacity: 1; filter: grayscale(0); background: var(--ms-red-light); transform: scale(1.2); }
+        .btn-importante.ativo { opacity: 1; filter: grayscale(0) drop-shadow(0 1px 3px rgba(209, 52, 56, 0.55)); transform: scale(1.05); }
+        .btn-importante.ativo:hover { background: var(--ms-red-light); transform: scale(1.2); }
+        .btn-importante::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            left: 130%;
+            top: 50%;
+            transform: translateY(-50%) translateX(-6px);
+            background: var(--ms-gray-900);
+            color: #fff;
+            font-size: 0.65rem;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: var(--radius-sm);
+            white-space: nowrap;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity var(--dur-normal) var(--ease-standard), transform var(--dur-normal) var(--ease-standard);
+            z-index: 20;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+        }
+        body.tema-escuro .btn-importante::after, body.dark-mode .btn-importante::after { background: #f0f0f0; color: #111; }
+        .btn-importante:hover::after,
+        .btn-importante.mostrar-tooltip::after {
+            opacity: 1;
+            transform: translateY(-50%) translateX(0);
+        }
+        .assunto-texto { flex: 1; min-width: 0; line-height: 1.35; }
+
         .btn-anotacao { background: none; border: none; font-size: 1rem; cursor: pointer; padding: 3px 5px; border-radius: var(--radius-sm); transition: background var(--dur-fast) var(--ease-standard), transform var(--dur-faster) var(--ease-standard); line-height: 1; }
         .btn-anotacao:hover { background: var(--ms-gray-200); transform: scale(1.15); }
         body.tema-escuro .btn-anotacao:hover, body.dark-mode .btn-anotacao:hover { background: #333; }
         body.tema-suave .btn-anotacao:hover { background: #5a646c; }
         .btn-anotacao.tem-anotacao { color: var(--ms-blue); font-weight: 700; }
 
-        /* ============ CRONÔMETRO (ALTERAÇÃO 19) ============ */
+        /* ============ CRONÔMETRO ============ */
         .cronometro-container { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; padding: 10px 14px; background: var(--surface-alt); border-radius: var(--radius-md); margin-bottom: 8px; border: 1px solid var(--border); transition: background var(--dur-slow) var(--ease-standard); }
         .cronometro-display { font-size: 1.25rem; font-weight: 700; color: var(--ms-blue); font-variant-numeric: tabular-nums; min-width: 108px; letter-spacing: 0.5px; font-family: var(--font-mono); }
         .cronometro-modulo-label { font-size: 0.7rem; color: var(--ms-gray-700); font-weight: 600; }
@@ -823,188 +965,85 @@
             padding: 10px 16px;
             background: #050505;
             border-bottom: 1px solid #222;
+            flex-shrink: 0;
+            gap: 8px;
+        }
+        .foco-barra-titulo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
             font-size: 0.78rem;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 1px;
             color: #aaa;
-            flex-shrink: 0;
+            flex: 1;
+            min-width: 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
-        .foco-barra-titulo { display: flex; align-items: center; gap: 8px; }
-        .foco-barra-fechar {
-            background: none;
+        .btn-sair-topo {
+            background: transparent;
             border: 1px solid #333;
             color: #aaa;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 1rem;
-            line-height: 1;
-            transition: background var(--dur-fast) var(--ease-standard), color var(--dur-fast) var(--ease-standard);
-        }
-        .foco-barra-fechar:hover { background: #333; color: #fff; }
-
-        .foco-corpo {
-            flex: 1;
-            display: flex;
-            overflow: hidden;
-        }
-
-        .foco-checklist {
-            flex: 1;
-            overflow-y: auto;
-            padding: 20px;
-            min-width: 0;
-        }
-        .foco-checklist-inner { max-width: 1100px; margin: 0 auto; }
-        .foco-modulo-titulo {
-            font-size: 1.4rem;
-            font-weight: 700;
-            color: #fff;
-            margin-bottom: 4px;
-        }
-        .foco-modulo-subtitulo {
-            font-size: 0.78rem;
-            color: #777;
-            margin-bottom: 24px;
-        }
-
-        .foco-table {
-            width: 100%;
-            border-collapse: collapse;
-            background: #141414;
+            padding: 6px 14px;
             border-radius: var(--radius-md);
-            overflow: hidden;
-            border: 1px solid #262626;
-        }
-        .foco-table thead th {
-            background: #1a1a1a;
-            color: #999;
+            font-family: var(--ms-font);
+            font-size: 0.72rem;
             font-weight: 700;
-            font-size: 0.6rem;
+            cursor: pointer;
+            flex-shrink: 0;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
             text-transform: uppercase;
-            letter-spacing: 0.4px;
-            padding: 10px 4px;
-            border-bottom: 2px solid #2a2a2a;
-            text-align: center;
-            white-space: nowrap;
+            letter-spacing: 0.5px;
+            transition: background var(--dur-fast) var(--ease-standard), color var(--dur-fast) var(--ease-standard), border-color var(--dur-fast) var(--ease-standard);
         }
-        .foco-table thead th.assunto-col {
-            text-align: left;
-            min-width: 220px;
-            padding-left: 14px;
-        }
-        .foco-table thead th.check-col {
-            min-width: 44px;
-        }
-        .foco-table thead th.anotacao-col {
-            width: 48px;
-            min-width: 48px;
-        }
-        .foco-table tbody td {
-            padding: 10px 4px;
-            border-bottom: 1px solid #1f1f1f;
-            text-align: center;
-            font-size: 0.82rem;
-            color: #ddd;
-            vertical-align: middle;
-            transition: background var(--dur-fast) var(--ease-standard);
-        }
-        .foco-table tbody td.assunto-col {
-            text-align: left;
-            padding-left: 14px;
-            font-size: 0.85rem;
-            line-height: 1.4;
-            color: #ddd;
-        }
-        .foco-table tbody td.anotacao-col {
-            text-align: center;
-        }
+        .btn-sair-topo:hover { background: #1a1a1a; color: #fff; border-color: #555; }
+
+        .foco-corpo { flex: 1; display: flex; overflow: hidden; min-height: 0; }
+        .foco-checklist { flex: 1; overflow-y: auto; padding: 20px; min-width: 0; }
+        .foco-checklist-inner { max-width: 1100px; margin: 0 auto; }
+        .foco-modulo-titulo { font-size: 1.4rem; font-weight: 700; color: #fff; margin-bottom: 16px; }
+
+        .foco-table { width: 100%; border-collapse: collapse; background: #141414; border-radius: var(--radius-md); overflow: hidden; border: 1px solid #262626; }
+        .foco-table thead th { background: #1a1a1a; color: #999; font-weight: 700; font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.4px; padding: 10px 4px; border-bottom: 2px solid #2a2a2a; text-align: center; white-space: nowrap; }
+        .foco-table thead th.assunto-col { text-align: left; min-width: 220px; padding-left: 14px; }
+        .foco-table thead th.check-col { min-width: 44px; }
+        .foco-table thead th.anotacao-col { width: 48px; min-width: 48px; }
+        .foco-table tbody td { padding: 10px 4px; border-bottom: 1px solid #1f1f1f; text-align: center; font-size: 0.82rem; color: #ddd; vertical-align: middle; transition: background var(--dur-fast) var(--ease-standard); }
+        .foco-table tbody td.assunto-col { text-align: left; padding-left: 14px; font-size: 0.85rem; line-height: 1.4; color: #ddd; }
         .foco-table tbody tr:last-child td { border-bottom: none; }
         .foco-table tbody tr:hover td { background: #1f1f1f; }
-
-        .foco-table .checkbox-cell {
-            text-align: center;
-            min-width: 44px;
-        }
-        .foco-table .checkbox-cell input[type="checkbox"] {
-            width: 18px;
-            height: 18px;
-            accent-color: #4cc2ff;
-            cursor: pointer;
-            transition: transform var(--dur-faster) var(--ease-standard);
-        }
+        .foco-table .checkbox-cell { text-align: center; min-width: 44px; }
+        .foco-table .checkbox-cell input[type="checkbox"] { width: 18px; height: 18px; accent-color: #4cc2ff; cursor: pointer; transition: transform var(--dur-faster) var(--ease-standard); }
         .foco-table .checkbox-cell input[type="checkbox"]:hover { transform: scale(1.15); }
         .foco-table .checkbox-cell input[type="checkbox"].concluido-check:checked { accent-color: #6ccb5f; }
         .foco-table .checkbox-cell input[type="checkbox"].exercitado-check:checked { accent-color: #d4af37; }
         .foco-table .checkbox-cell input[type="checkbox"].rev24h-check:checked { accent-color: #ff6b6b; }
         .foco-table .checkbox-cell input[type="checkbox"].rev7d-check:checked { accent-color: #ffd54f; }
         .foco-table .checkbox-cell input[type="checkbox"].rev15d-check:checked { accent-color: #4cc2ff; }
-
-        .foco-table .btn-anotacao {
-            background: none;
-            border: none;
-            font-size: 1rem;
-            cursor: pointer;
-            padding: 3px 5px;
-            border-radius: var(--radius-sm);
-            transition: background var(--dur-fast) var(--ease-standard), transform var(--dur-faster) var(--ease-standard);
-            line-height: 1;
-            color: #aaa;
-        }
+        .foco-table .btn-anotacao { background: none; border: none; font-size: 1rem; cursor: pointer; padding: 3px 5px; border-radius: var(--radius-sm); transition: background var(--dur-fast) var(--ease-standard), transform var(--dur-faster) var(--ease-standard); line-height: 1; color: #aaa; }
         .foco-table .btn-anotacao:hover { background: #2a2a2a; transform: scale(1.15); color: #fff; }
         .foco-table .btn-anotacao.tem-anotacao { color: #4cc2ff; font-weight: 700; }
 
-        .foco-relogio-painel {
-            width: 340px;
-            flex-shrink: 0;
-            background: #050505;
-            border-left: 1px solid #222;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-        }
+        /* Alfinete no Foco */
+        .foco-table .btn-importante { opacity: 0.3; filter: grayscale(0.9) brightness(1.2); }
+        .foco-table .btn-importante:hover { opacity: 1; filter: grayscale(0) brightness(1); background: rgba(209, 52, 56, 0.15); }
+        .foco-table .btn-importante.ativo { opacity: 1; filter: grayscale(0) brightness(1) drop-shadow(0 0 4px rgba(255, 100, 100, 0.6)); }
+        .foco-table .btn-importante::after { background: #f0f0f0; color: #111; }
 
-        .painel-abas {
-            display: flex;
-            background: #0a0a0a;
-            border-bottom: 1px solid #1f1f1f;
-            flex-shrink: 0;
-        }
-        .painel-aba {
-            flex: 1;
-            padding: 14px 12px;
-            background: transparent;
-            border: none;
-            color: #666;
-            font-family: var(--ms-font);
-            font-size: 0.82rem;
-            font-weight: 700;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            transition: color var(--dur-fast) var(--ease-standard), background var(--dur-fast) var(--ease-standard);
-            border-bottom: 3px solid transparent;
-        }
+        /* Painel do Modo Foco */
+        .foco-relogio-painel { width: 340px; flex-shrink: 0; background: #050505; border-left: 1px solid #222; display: flex; flex-direction: column; overflow: hidden; }
+        .painel-abas { display: flex; background: #0a0a0a; border-bottom: 1px solid #1f1f1f; flex-shrink: 0; }
+        .painel-aba { flex: 1; padding: 14px 12px; background: transparent; border: none; color: #666; font-family: var(--ms-font); font-size: 0.82rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: color var(--dur-fast) var(--ease-standard), background var(--dur-fast) var(--ease-standard); border-bottom: 3px solid transparent; }
         .painel-aba:hover { color: #aaa; background: #111; }
-        .painel-aba.ativa {
-            color: #fff;
-            background: #050505;
-            border-bottom-color: #6ccb5f;
-        }
+        .painel-aba.ativa { color: #fff; background: #050505; border-bottom-color: #6ccb5f; }
         .painel-aba .aba-icone { font-size: 1rem; }
 
-        .painel-conteudo {
-            flex: 1;
-            overflow-y: auto;
-            padding: 20px 16px;
-            display: none;
-            flex-direction: column;
-            gap: 14px;
-        }
+        .painel-conteudo { flex: 1; overflow-y: auto; padding: 20px 16px; display: none; flex-direction: column; gap: 14px; }
         .painel-conteudo.ativo { display: flex; }
 
         .foco-relogio-display {
@@ -1032,122 +1071,41 @@
         .foco-relogio-display.parado { color: #666; border-color: #222; }
         .foco-relogio-display.pomodoro-foco { color: #6ccb5f; border-color: #2d6b2d; }
         .foco-relogio-display.pomodoro-pausa { color: #ffd54f; border-color: #6b5a00; }
-        .foco-relogio-display.tempo-extra {
-            color: #4cc2ff;
-            border-color: #1a3a5c;
-            animation: pulseExtra 1.5s infinite;
-        }
-        @keyframes pulseExtra {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.6; }
-        }
+        .foco-relogio-display.tempo-extra { color: #4cc2ff; border-color: #1a3a5c; animation: pulseExtra 1.5s infinite; }
+        @keyframes pulseExtra { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
 
         .foco-relogio-botoes { display: flex; flex-direction: row; gap: 8px; }
 
-        .foco-btn-principal {
-            flex: 1;
-            background: #1e3a2a;
-            border: 1px solid #2d6b2d;
-            color: #6ccb5f;
-            padding: 14px;
-            border-radius: var(--radius-md);
-            font-family: var(--ms-font);
-            font-size: 0.95rem;
-            font-weight: 700;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            transition: background var(--dur-fast) var(--ease-standard), transform 100ms var(--ease-standard);
-        }
+        .foco-btn-principal { flex: 1; background: #1e3a2a; border: 1px solid #2d6b2d; color: #6ccb5f; padding: 14px; border-radius: var(--radius-md); font-family: var(--ms-font); font-size: 0.95rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: background var(--dur-fast) var(--ease-standard), transform 100ms var(--ease-standard); }
         .foco-btn-principal:hover { background: #244a34; }
         .foco-btn-principal:active { transform: scale(0.97); }
         .foco-btn-principal.pausado { background: #4a3f1a; border-color: #6b5a00; color: #ffd54f; }
         .foco-btn-principal.pausado:hover { background: #5a4a20; }
 
-        .foco-btn-secundario {
-            background: transparent;
-            border: 1px solid #333;
-            color: #aaa;
-            padding: 14px;
-            border-radius: var(--radius-md);
-            font-family: var(--ms-font);
-            font-size: 0.82rem;
-            font-weight: 600;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-            transition: background var(--dur-fast) var(--ease-standard), color var(--dur-fast) var(--ease-standard);
-        }
+        .foco-btn-secundario { background: transparent; border: 1px solid #333; color: #aaa; padding: 14px; border-radius: var(--radius-md); font-family: var(--ms-font); font-size: 0.82rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; transition: background var(--dur-fast) var(--ease-standard), color var(--dur-fast) var(--ease-standard); }
         .foco-btn-secundario:hover { background: #1a1a1a; color: #fff; }
 
-        .pomodoro-ciclos-box {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-            padding: 10px;
-            background: #0a0a0a;
-            border: 1px solid #1f1f1f;
-            border-radius: var(--radius-md);
-            font-size: 0.75rem;
-            color: #888;
-            font-weight: 600;
-        }
-        .pomodoro-ciclos-box .ciclo-dot { font-size: 1rem; opacity: 0.3; transition: opacity var(--dur-fast) var(--ease-standard), transform var(--dur-fast) var(--ease-standard); }
-        .pomodoro-ciclos-box .ciclo-dot.ativo { opacity: 1; transform: scale(1.1); }
-
-        .pomodoro-dropdown-wrap { display: flex; flex-direction: column; gap: 4px; }
-        .pomodoro-dropdown-label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1px; color: #666; font-weight: 700; }
-        .pomodoro-dropdown {
-            width: 100%;
-            padding: 10px 32px 10px 12px;
-            background: #0a0a0a;
-            border: 1px solid #262626;
-            border-radius: var(--radius-md);
-            color: #ddd;
-            font-family: var(--ms-font);
-            font-size: 0.85rem;
-            font-weight: 600;
-            cursor: pointer;
-            appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M6 8L2 4h8z' fill='%23666'/%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 12px center;
-            background-size: 12px;
-        }
-        .pomodoro-dropdown:hover { border-color: #4cc2ff; }
-        .pomodoro-dropdown:focus { outline: none; border-color: #4cc2ff; }
+        /* Pomodoro compacto */
+        .pomodoro-controles { display: flex; align-items: center; gap: 10px; flex-wrap: nowrap; }
+        .ciclos-compacto { display: flex; align-items: center; gap: 4px; padding: 8px 10px; background: #0a0a0a; border: 1px solid #1f1f1f; border-radius: var(--radius-md); flex: 1; min-width: 0; justify-content: center; }
+        .ciclos-compacto .ciclo-dot { font-size: 0.9rem; opacity: 0.3; transition: opacity var(--dur-fast) var(--ease-standard), transform var(--dur-fast) var(--ease-standard); }
+        .ciclos-compacto .ciclo-dot.ativo { opacity: 1; transform: scale(1.1); }
+        .ciclos-label { font-size: 0.65rem; color: #666; font-weight: 700; margin-left: 4px; }
+        .tempo-ciclo-compacto { display: flex; align-items: center; gap: 4px; background: #0a0a0a; border: 1px solid #1f1f1f; border-radius: var(--radius-md); padding: 4px 4px 4px 12px; flex-shrink: 0; }
+        .tempo-ciclo-label { font-size: 0.72rem; font-weight: 800; color: #ddd; white-space: nowrap; font-variant-numeric: tabular-nums; }
+        .btn-config-ciclo { background: transparent; border: none; color: #888; cursor: pointer; font-size: 0.9rem; padding: 4px 8px; border-radius: var(--radius-sm); line-height: 1; transition: background var(--dur-fast) var(--ease-standard), color var(--dur-fast) var(--ease-standard); }
+        .btn-config-ciclo:hover { background: #1a1a1a; color: #fff; }
 
         .pomodoro-som-linha { display: flex; align-items: center; justify-content: space-between; font-size: 0.72rem; color: #888; padding: 2px 0; }
-        .pomodoro-som-btn {
-            background: transparent;
-            border: 1px solid #262626;
-            color: #888;
-            cursor: pointer;
-            font-size: 0.9rem;
-            padding: 4px 10px;
-            border-radius: var(--radius-md);
-            transition: background var(--dur-fast) var(--ease-standard), color var(--dur-fast) var(--ease-standard), border-color var(--dur-fast) var(--ease-standard);
-        }
+        .pomodoro-som-btn { background: transparent; border: 1px solid #262626; color: #888; cursor: pointer; font-size: 0.9rem; padding: 4px 10px; border-radius: var(--radius-md); transition: background var(--dur-fast) var(--ease-standard), color var(--dur-fast) var(--ease-standard), border-color var(--dur-fast) var(--ease-standard); }
         .pomodoro-som-btn:hover { background: #1a1a1a; color: #fff; border-color: #333; }
         .pomodoro-som-btn.ativo { color: #6ccb5f; border-color: #2d6b2d; background: #1e3a2a; }
 
-        .pomodoro-zona-ciclos {
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
-        }
+        .pomodoro-zona-ciclos { position: relative; display: flex; flex-direction: column; gap: 14px; }
 
         .pomodoro-card {
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
+            top: 0; left: 0; right: 0;
             background: #1a1a1a;
             border: 1px solid #2d6b2d;
             border-left: 4px solid #6ccb5f;
@@ -1164,31 +1122,9 @@
         .pomodoro-card.pausa { border-color: #6b5a00; border-left-color: #ffd54f; }
         @keyframes fadeInCard { from { opacity: 0; transform: scale(0.96); } to { opacity: 1; transform: scale(1); } }
 
-        .pomodoro-ciclos-box.escondido,
-        .pomodoro-dropdown-wrap.escondido,
-        .pomodoro-som-linha.escondido { visibility: hidden; }
-
-        .pomodoro-card-titulo {
-            font-size: 0.95rem;
-            font-weight: 700;
-            color: #fff;
-            text-align: center;
-            line-height: 1.2;
-        }
+        .pomodoro-card-titulo { font-size: 0.95rem; font-weight: 700; color: #fff; text-align: center; line-height: 1.2; }
         .pomodoro-card-botoes { display: flex; flex-direction: column; gap: 6px; }
-        .pomodoro-btn-acao {
-            padding: 11px;
-            border-radius: var(--radius-md);
-            font-family: var(--ms-font);
-            font-size: 0.82rem;
-            font-weight: 700;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-            transition: background var(--dur-fast) var(--ease-standard), transform 100ms var(--ease-standard);
-        }
+        .pomodoro-btn-acao { padding: 11px; border-radius: var(--radius-md); font-family: var(--ms-font); font-size: 0.82rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; transition: background var(--dur-fast) var(--ease-standard), transform 100ms var(--ease-standard); }
         .pomodoro-btn-acao:active { transform: scale(0.97); }
         .pomodoro-btn-acao.principal { background: #1e3a2a; border: 1px solid #2d6b2d; color: #6ccb5f; }
         .pomodoro-btn-acao.principal:hover { background: #244a34; }
@@ -1199,32 +1135,31 @@
         .pomodoro-btn-acao.terciario { background: transparent; border: none; color: #4cc2ff; font-size: 0.72rem; padding: 6px; }
         .pomodoro-btn-acao.terciario:hover { background: rgba(76,194,255,0.08); }
 
-        .painel-rodape {
-            padding: 14px 16px;
-            border-top: 1px solid #1f1f1f;
-            background: #050505;
-            flex-shrink: 0;
-        }
-        .btn-sair-foco {
-            width: 100%;
-            background: transparent;
-            border: 1px solid #333;
-            color: #aaa;
-            padding: 12px;
-            border-radius: var(--radius-md);
-            font-family: var(--ms-font);
-            font-size: 0.82rem;
-            font-weight: 600;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-            transition: background var(--dur-fast) var(--ease-standard), color var(--dur-fast) var(--ease-standard);
-        }
+        /* Modal de tempo de ciclo */
+        .modal-ciclo-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.75); backdrop-filter: blur(3px); z-index: 9999; display: none; align-items: center; justify-content: center; padding: 20px; }
+        .modal-ciclo-overlay.visivel { display: flex; }
+        .modal-ciclo-content { background: #1a1a1a; border: 1px solid #333; border-radius: var(--radius-lg); width: 100%; max-width: 380px; overflow: hidden; animation: modalIn var(--dur-normal) ease; box-shadow: 0 20px 60px rgba(0,0,0,0.7); }
+        @keyframes modalIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+        .modal-ciclo-header { padding: 14px 18px; border-bottom: 1px solid #2a2a2a; display: flex; align-items: center; justify-content: space-between; background: #141414; }
+        .modal-ciclo-header h3 { font-size: 0.9rem; font-weight: 700; color: #fff; }
+        .modal-ciclo-fechar { background: none; border: none; color: #888; font-size: 1.4rem; cursor: pointer; padding: 2px 8px; border-radius: var(--radius-sm); line-height: 1; }
+        .modal-ciclo-fechar:hover { background: #2a2a2a; color: #fff; }
+        .modal-ciclo-body { padding: 12px 14px; display: flex; flex-direction: column; gap: 8px; }
+        .opcao-ciclo { display: flex; align-items: center; gap: 12px; padding: 12px 14px; background: #141414; border: 2px solid #262626; border-radius: var(--radius-md); cursor: pointer; transition: all var(--dur-fast) var(--ease-standard); color: #ddd; font-family: inherit; text-align: left; width: 100%; }
+        .opcao-ciclo:hover { border-color: #3a3a3a; background: #1f1f1f; }
+        .opcao-ciclo.ativa { border-color: #6ccb5f; background: #1e3a2a; }
+        .opcao-ciclo-radio { width: 18px; height: 18px; border-radius: 50%; border: 2px solid #555; flex-shrink: 0; position: relative; }
+        .opcao-ciclo.ativa .opcao-ciclo-radio { border-color: #6ccb5f; }
+        .opcao-ciclo.ativa .opcao-ciclo-radio::after { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 10px; height: 10px; background: #6ccb5f; border-radius: 50%; }
+        .opcao-ciclo-texto { flex: 1; font-size: 0.82rem; font-weight: 600; line-height: 1.3; }
+        .opcao-ciclo-desc { font-size: 0.7rem; color: #888; margin-top: 2px; font-weight: 500; }
+        .opcao-ciclo.ativa .opcao-ciclo-desc { color: #a8d89a; }
+
+        .painel-rodape { padding: 14px 16px; border-top: 1px solid #1f1f1f; background: #050505; flex-shrink: 0; }
+        .btn-sair-foco { width: 100%; background: transparent; border: 1px solid #333; color: #aaa; padding: 12px; border-radius: var(--radius-md); font-family: var(--ms-font); font-size: 0.82rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; transition: background var(--dur-fast) var(--ease-standard), color var(--dur-fast) var(--ease-standard); }
         .btn-sair-foco:hover { background: #1a1a1a; color: #fff; }
 
-        /* ============ MODAL ANOTAÇÕES (ALTERAÇÃO 16) ============ */
+        /* ============ MODAL ANOTAÇÕES ============ */
         .modal-anotacao-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 9500; display: none; align-items: center; justify-content: center; padding: 20px; backdrop-filter: blur(3px); }
         .modal-anotacao-overlay.visivel { display: flex; animation: fadeInNotif var(--dur-normal) var(--ease-decelerate); }
         .modal-anotacao-content { background: var(--surface); border-radius: var(--radius-lg); box-shadow: var(--shadow-28); width: 100%; max-width: 560px; max-height: 80vh; display: flex; flex-direction: column; overflow: hidden; border: 1px solid var(--border); }
@@ -1234,7 +1169,6 @@
         .btn-fechar-modal:hover { background: var(--ms-gray-200); }
         .modal-anotacao-body { padding: 14px 18px; display: flex; flex-direction: column; gap: 10px; flex: 1; overflow-y: auto; }
         .modal-anotacao-assunto { font-size: 0.8rem; font-weight: 600; color: var(--ms-gray-700); margin-bottom: 4px; }
-
         .anotacao-tabela { width: 100%; border-collapse: collapse; background: var(--surface-alt); border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--border); }
         .anotacao-tabela th { background: var(--ms-gray-200); color: var(--ms-gray-700); font-weight: 600; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.4px; padding: 8px 10px; border-bottom: 1px solid var(--border); text-align: left; }
         .anotacao-tabela th.anotacao-data-col { width: 80px; text-align: right; }
@@ -1247,7 +1181,7 @@
         .btn-add-anotacao:hover { background: var(--ms-blue); color: #fff; }
         .nova-anotacao-area { display: none; flex-direction: column; gap: 8px; margin-top: 8px; }
         .nova-anotacao-area.visivel { display: flex; }
-        .nova-anotacao-area textarea { width: 100%; min-height: 80px; padding: 10px 12px; border: 1px solid var(--border-strong); border-radius: var(--radius-md); font-family: var(--ms-font); font-size: 0.85rem; resize: vertical; background: var(--surface); color: var(--ms-gray-900); transition: border-color var(--dur-fast) var(--ease-standard), box-shadow var(--dur-fast) var(--ease-standard); }
+        .nova-anotacao-area textarea { width: 100%; min-height: 80px; padding: 10px 12px; border: 1px solid var(--border-strong); border-radius: var(--radius-md); font-family: var(--ms-font); font-size: 0.85rem; resize: vertical; background: var(--surface); color: var(--ms-gray-900); }
         .nova-anotacao-area textarea:focus { outline: none; border-color: var(--ms-blue); box-shadow: 0 0 0 3px rgba(0,103,184,0.15); }
         .modal-anotacao-rodape { padding: 12px 18px; border-top: 1px solid var(--border); display: flex; justify-content: flex-end; gap: 8px; }
 
@@ -1258,7 +1192,7 @@
         .btn-ms.danger { background: var(--ms-red); }
         .btn-ms.danger:hover { background: var(--ms-red-dark); }
 
-        /* ============ NOTIFICAÇÕES (ALTERAÇÃO 16) ============ */
+        /* ============ NOTIFICAÇÕES ============ */
         .notificacoes-painel { position: fixed; top: 66px; right: 16px; width: 360px; max-width: 90vw; background: var(--surface); border-radius: var(--radius-lg); box-shadow: var(--shadow-28); z-index: 9500; display: none; overflow: hidden; max-height: 460px; border: 1px solid var(--border); }
         .notificacoes-painel.visivel { display: block; animation: fadeInNotif var(--dur-normal) var(--ease-decelerate); }
         @keyframes fadeInNotif { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
@@ -1272,77 +1206,32 @@
         .notificacao-item .notif-btn-visto:hover { background: var(--ms-blue-hover); }
         .notificacao-item.visto { opacity: 0.6; }
 
-        /* ============ TOAST (ALTERAÇÃO 16) ============ */
+        /* ============ TOAST ============ */
         .toast-celebracao { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%) translateY(120px); background: var(--surface); border: 2px solid var(--ms-blue); border-radius: var(--radius-lg); padding: 12px 20px; box-shadow: var(--shadow-16); z-index: 9600; display: flex; align-items: center; gap: 10px; font-size: 0.9rem; font-weight: 600; color: var(--ms-gray-900); transition: transform var(--dur-slow) var(--ease-decelerate), opacity var(--dur-slow) var(--ease-standard); opacity: 0; pointer-events: none; max-width: 90vw; }
         .toast-celebracao.visivel { transform: translateX(-50%) translateY(0); opacity: 1; }
         .toast-celebracao .toast-icone { font-size: 1.5rem; }
+        .toast-celebracao.toast-sucesso { border-color: var(--ms-green); }
+        .toast-celebracao.toast-remover { border-color: var(--ms-gray-500); }
 
         /* ============ AVISO PERSISTÊNCIA ============ */
         .aviso-persistencia { background: var(--ms-yellow-light); color: var(--ms-yellow-dark); padding: 10px 16px; border-radius: var(--radius-md); margin-bottom: 12px; font-size: 0.85rem; border: 1px solid var(--ms-yellow); display: none; align-items: center; gap: 8px; line-height: 1.35; }
         .aviso-persistencia.visivel { display: flex; }
         .aviso-persistencia .fechar-aviso { margin-left: auto; cursor: pointer; font-weight: bold; font-size: 1.2rem; background: none; border: none; color: var(--ms-yellow-dark); padding: 0 4px; }
 
-        /* ============ DASHBOARD 3x2 (ALTERAÇÃO 26) ============ */
+        /* ============ DASHBOARD 3x2 ============ */
         .dashboard-header-mini { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; flex-shrink: 0; }
         .dashboard-header-mini h2 { font-size: 0.95rem; font-weight: 600; color: var(--ms-blue); margin: 0; }
-
-        .dashboard-grid-3x2 {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 10px;
-            flex: 1;
-            min-height: 0;
-            overflow-y: auto;
-        }
-
+        .dashboard-grid-3x2 { display: grid; grid-template-columns: 1fr; gap: 10px; flex: 1; min-height: 0; overflow-y: auto; }
         @media (min-width: 768px) {
-            .dashboard-grid-3x2 {
-                grid-template-columns: 1fr 1fr 1fr;
-                grid-template-rows: minmax(0, 1fr) minmax(0, 1fr);
-                overflow: hidden;
-                gap: 8px;
-                min-height: 0;
-                height: 100%;
-            }
+            .dashboard-grid-3x2 { grid-template-columns: 1fr 1fr 1fr; grid-template-rows: minmax(0, 1fr) minmax(0, 1fr); overflow: hidden; gap: 8px; min-height: 0; height: 100%; }
         }
-
-        .dashboard-quadrante {
-            background: var(--surface);
-            border-radius: var(--radius-lg);
-            box-shadow: var(--shadow-2);
-            padding: 10px;
-            border: 1px solid var(--border);
-            min-width: 0;
-            min-height: 0;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-        }
-
-        .dashboard-quadrante-titulo {
-            font-size: 0.68rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 6px;
-            padding: 4px 9px;
-            border-radius: var(--radius-pill);
-            display: inline-block;
-            align-self: flex-start;
-            flex-shrink: 0;
-        }
+        .dashboard-quadrante { background: var(--surface); border-radius: var(--radius-lg); box-shadow: var(--shadow-2); padding: 10px; border: 1px solid var(--border); min-width: 0; min-height: 0; display: flex; flex-direction: column; overflow: hidden; }
+        .dashboard-quadrante-titulo { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; padding: 4px 9px; border-radius: var(--radius-pill); display: inline-block; align-self: flex-start; flex-shrink: 0; }
         .dashboard-quadrante-titulo.q1 { background: var(--ms-blue-light); color: var(--ms-blue); }
         .dashboard-quadrante-titulo.q2 { background: var(--ms-green-light); color: var(--ms-green); }
         .dashboard-quadrante-titulo.q3 { background: var(--ms-yellow-light); color: var(--ms-yellow-dark); }
         .dashboard-quadrante-titulo.q4 { background: var(--ms-red-light); color: var(--ms-red); }
-
-        .dashboard-quadrante-conteudo {
-            flex: 1;
-            min-height: 0;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-        }
+        .dashboard-quadrante-conteudo { flex: 1; min-height: 0; overflow: hidden; display: flex; flex-direction: column; }
 
         /* ============ GRÁFICO COLUNAS ============ */
         .grafico-colunas-container { display: flex; align-items: flex-end; justify-content: space-between; gap: 4px; padding: 6px 4px 2px 4px; background: var(--surface-alt); border-radius: var(--radius-md); border: 1px solid var(--border); min-height: 100px; overflow: hidden; flex: 1; }
@@ -1382,174 +1271,83 @@
         body.tema-escuro .calendario-dia-neutro, body.dark-mode .calendario-dia-neutro { color: #555; }
         body.tema-escuro .calendario-dia-atual, body.dark-mode .calendario-dia-atual { border-color: #4cc2ff; }
 
-        /* ============ COBERTURA + TEMPO POR MÓDULO (ALTERAÇÃO 27) ============ */
-        .cobertura-item {
-            display: grid;
-            grid-template-columns: 130px 1fr 60px;
-            align-items: center;
-            gap: 10px;
-            font-size: 0.72rem;
-            margin-bottom: 5px;
-        }
-
-        .cobertura-label {
-            color: var(--ms-gray-700);
-            font-weight: 600;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            min-width: 0;
-        }
-
-        .cobertura-barra {
-            height: 14px;
-            background: var(--ms-gray-200);
-            border-radius: var(--radius-pill);
-            overflow: hidden;
-            width: 100%;
-        }
-
-        .cobertura-barra-fill {
-            height: 100%;
-            border-radius: var(--radius-pill);
-            transition: width 0.5s var(--ease-decelerate);
-            min-width: 2px;
-        }
-
+        /* ============ COBERTURA + TEMPO POR MÓDULO ============ */
+        .cobertura-item { display: grid; grid-template-columns: 130px 1fr 60px; align-items: center; gap: 10px; font-size: 0.72rem; margin-bottom: 5px; }
+        .cobertura-label { color: var(--ms-gray-700); font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: flex; align-items: center; gap: 4px; min-width: 0; }
+        .cobertura-barra { height: 14px; background: var(--ms-gray-200); border-radius: var(--radius-pill); overflow: hidden; width: 100%; }
+        .cobertura-barra-fill { height: 100%; border-radius: var(--radius-pill); transition: width 0.5s var(--ease-decelerate); min-width: 2px; }
         .cobertura-barra-fill.verde { background: linear-gradient(90deg, #b8e6b8, #4caf50); }
         .cobertura-barra-fill.amarelo { background: linear-gradient(90deg, #ffe69c, #ffc107); }
         .cobertura-barra-fill.vermelho { background: linear-gradient(90deg, #ffb8b8, #e53935); }
         .cobertura-barra-fill.dourado { background: linear-gradient(90deg, #ffe9a8, #d4af37); }
         .cobertura-barra-fill.azul { background: linear-gradient(90deg, #c8e6ff, #4cc2ff); }
-
-        .cobertura-percentual {
-            font-size: 0.65rem;
-            font-weight: 700;
-            color: var(--ms-gray-900);
-            text-align: right;
-            font-variant-numeric: tabular-nums;
-            white-space: nowrap;
-        }
+        .cobertura-percentual { font-size: 0.65rem; font-weight: 700; color: var(--ms-gray-900); text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
 
         .dashboard-alerta-item { font-size: 0.65rem; padding: 5px 8px; border-radius: var(--radius-md); margin-bottom: 3px; display: flex; align-items: center; gap: 4px; flex-wrap: wrap; line-height: 1.3; }
         .dashboard-alerta-item.vermelho { background: var(--ms-red-light); color: var(--ms-red-dark); }
         .dashboard-alerta-item.amarelo { background: var(--ms-yellow-light); color: var(--ms-yellow-dark); }
         .dashboard-alerta-item.azul { background: var(--ms-blue-light); color: var(--ms-blue-dark); }
 
-        /* ============ REVISÃO ESPAÇADA NO DASHBOARD (ALTERAÇÃO 25) ============ */
+        /* ============ REVISÃO ESPAÇADA NO DASHBOARD ============ */
         .revisao-quadrante { display: flex; flex-direction: column; flex: 1; min-height: 0; gap: 4px; }
-
-        .revisao-intro {
-            font-size: 0.58rem;
-            color: var(--ms-gray-700);
-            font-weight: 600;
-            text-align: center;
-            padding: 0 0 2px;
-            letter-spacing: 0.2px;
-            flex-shrink: 0;
-        }
-
-        .revisao-lista {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-            flex: 1;
-            justify-content: center;
-            min-height: 0;
-        }
-
-        .revisao-item {
-            display: flex;
-            flex-direction: column;
-            gap: 3px;
-        }
-
-        .revisao-cabecalho {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 0.65rem;
-        }
-
-        .revisao-badge {
-            font-size: 0.55rem;
-            font-weight: 800;
-            padding: 2px 6px;
-            border-radius: var(--radius-pill);
-            letter-spacing: 0.3px;
-            flex-shrink: 0;
-            font-variant-numeric: tabular-nums;
-        }
+        .revisao-intro { font-size: 0.58rem; color: var(--ms-gray-700); font-weight: 600; text-align: center; padding: 0 0 2px; letter-spacing: 0.2px; flex-shrink: 0; }
+        .revisao-lista { display: flex; flex-direction: column; gap: 6px; flex: 1; justify-content: center; min-height: 0; }
+        .revisao-item { display: flex; flex-direction: column; gap: 3px; }
+        .revisao-cabecalho { display: flex; align-items: center; gap: 6px; font-size: 0.65rem; }
+        .revisao-badge { font-size: 0.55rem; font-weight: 800; padding: 2px 6px; border-radius: var(--radius-pill); letter-spacing: 0.3px; flex-shrink: 0; font-variant-numeric: tabular-nums; }
         .revisao-badge.rev24 { background: var(--ms-red-light); color: var(--ms-red-dark); }
         .revisao-badge.rev7  { background: var(--ms-yellow-light); color: var(--ms-yellow-dark); }
         .revisao-badge.rev15 { background: var(--ms-blue-light); color: var(--ms-blue); }
-
-        .revisao-label {
-            flex: 1;
-            font-weight: 700;
-            color: var(--ms-gray-900);
-            font-size: 0.65rem;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .revisao-pct {
-            font-weight: 800;
-            font-variant-numeric: tabular-nums;
-            font-size: 0.78rem;
-            flex-shrink: 0;
-        }
+        .revisao-label { flex: 1; font-weight: 700; color: var(--ms-gray-900); font-size: 0.65rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .revisao-pct { font-weight: 800; font-variant-numeric: tabular-nums; font-size: 0.78rem; flex-shrink: 0; }
         .revisao-pct.excelente { color: var(--ms-green); }
         .revisao-pct.bom       { color: var(--ms-blue); }
         .revisao-pct.atencao   { color: var(--ms-yellow-dark); }
         .revisao-pct.critico   { color: var(--ms-red); }
-
-        .revisao-track {
-            height: 8px;
-            background: var(--ms-gray-200);
-            border-radius: var(--radius-pill);
-            overflow: hidden;
-            position: relative;
-        }
-        .revisao-fill {
-            height: 100%;
-            border-radius: var(--radius-pill);
-            transition: width 0.6s var(--ease-decelerate);
-        }
+        .revisao-track { height: 8px; background: var(--ms-gray-200); border-radius: var(--radius-pill); overflow: hidden; position: relative; }
+        .revisao-fill { height: 100%; border-radius: var(--radius-pill); transition: width 0.6s var(--ease-decelerate); }
         .revisao-fill.verde    { background: linear-gradient(90deg, var(--ms-green-light), var(--ms-green)); }
         .revisao-fill.azul     { background: linear-gradient(90deg, var(--ms-blue-light), var(--ms-blue)); }
         .revisao-fill.amarelo  { background: linear-gradient(90deg, var(--ms-yellow-light), var(--ms-yellow)); }
         .revisao-fill.vermelho { background: linear-gradient(90deg, var(--ms-red-light), var(--ms-red)); }
+        .revisao-contagem { font-size: 0.56rem; color: var(--ms-gray-700); font-weight: 600; text-align: right; font-variant-numeric: tabular-nums; margin-top: -1px; }
+        .revisao-rodape { margin-top: auto; padding: 6px 9px; background: var(--surface-alt); border-radius: var(--radius-md); border: 1px solid var(--border); font-size: 0.58rem; line-height: 1.35; color: var(--ms-gray-700); font-weight: 600; flex-shrink: 0; }
+        .revisao-rodape .destaque { color: var(--ms-blue); font-weight: 800; }
 
-        .revisao-contagem {
-            font-size: 0.56rem;
-            color: var(--ms-gray-700);
-            font-weight: 600;
-            text-align: right;
-            font-variant-numeric: tabular-nums;
-            margin-top: -1px;
-        }
-
-        .revisao-rodape {
-            margin-top: auto;
-            padding: 6px 9px;
-            background: var(--surface-alt);
-            border-radius: var(--radius-md);
-            border: 1px solid var(--border);
-            font-size: 0.58rem;
-            line-height: 1.35;
-            color: var(--ms-gray-700);
-            font-weight: 600;
-            flex-shrink: 0;
-        }
-        .revisao-rodape .destaque {
-            color: var(--ms-blue);
-            font-weight: 800;
-        }
+        /* ============ TELAS DE LISTA ============ */
+        .filtros-bar { background: var(--surface); border-radius: var(--radius-lg); border: 1px solid var(--border); box-shadow: var(--shadow-2); padding: 14px; margin-bottom: 14px; display: flex; flex-direction: column; gap: 12px; }
+        .filtro-busca-wrap { position: relative; }
+        .filtro-busca { width: 100%; padding: 10px 14px 10px 38px; background: var(--surface-alt); border: 1px solid var(--border); border-radius: var(--radius-md); color: var(--ms-gray-900); font-family: inherit; font-size: 0.85rem; }
+        .filtro-busca:focus { outline: none; border-color: var(--ms-blue); }
+        .filtro-busca::placeholder { color: var(--ms-gray-500); }
+        .filtro-busca-icone { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); font-size: 1rem; pointer-events: none; opacity: 0.6; }
+        .filtro-pills { display: flex; gap: 6px; flex-wrap: wrap; }
+        .pill { background: var(--surface-alt); border: 1px solid var(--border); color: var(--ms-gray-700); padding: 6px 12px; border-radius: var(--radius-pill); font-size: 0.72rem; font-weight: 600; cursor: pointer; font-family: inherit; display: inline-flex; align-items: center; gap: 4px; }
+        .pill:hover { border-color: var(--ms-blue); color: var(--ms-blue); }
+        .pill.ativo { background: var(--ms-blue); color: #fff; border-color: var(--ms-blue); }
+        .filtro-ordenacao-wrap { display: flex; align-items: center; gap: 8px; font-size: 0.75rem; }
+        .filtro-ordenacao-wrap label { color: var(--ms-gray-700); font-weight: 600; white-space: nowrap; }
+        .filtro-ordenacao { flex: 1; padding: 8px 12px; background: var(--surface-alt); border: 1px solid var(--border); border-radius: var(--radius-md); color: var(--ms-gray-900); font-family: inherit; font-size: 0.78rem; font-weight: 600; cursor: pointer; }
+        .filtro-ordenacao:focus { outline: none; border-color: var(--ms-blue); }
+        .filtro-contador { font-size: 0.72rem; color: var(--ms-gray-700); font-weight: 600; text-align: right; }
+        .filtro-contador strong { color: var(--ms-blue); }
+        .lista-itens { display: flex; flex-direction: column; gap: 8px; }
+        .item-card { background: var(--surface); border-radius: var(--radius-lg); border: 1px solid var(--border); box-shadow: var(--shadow-2); padding: 12px 14px; transition: box-shadow var(--dur-fast) var(--ease-standard), border-color var(--dur-fast) var(--ease-standard); }
+        .item-card:hover { box-shadow: var(--shadow-4); border-color: var(--ms-blue); }
+        .item-cabecalho { display: flex; align-items: flex-start; gap: 8px; margin-bottom: 6px; }
+        .item-modulo-tag { font-size: 0.6rem; font-weight: 800; padding: 3px 8px; border-radius: var(--radius-pill); white-space: nowrap; background: var(--ms-blue-light); color: var(--ms-blue); display: inline-flex; align-items: center; gap: 4px; flex-shrink: 0; }
+        .item-assunto { font-size: 0.78rem; font-weight: 700; color: var(--ms-gray-900); line-height: 1.3; flex: 1; min-width: 0; }
+        .item-data { font-size: 0.65rem; color: var(--ms-gray-500); font-weight: 600; white-space: nowrap; flex-shrink: 0; }
+        .item-texto { font-size: 0.8rem; color: var(--ms-gray-700); line-height: 1.45; padding: 8px 0; border-top: 1px dashed var(--border); margin-top: 4px; word-break: break-word; }
+        .item-acoes { display: flex; gap: 6px; margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--border); flex-wrap: wrap; }
+        .btn-acao { background: var(--surface-alt); border: 1px solid var(--border); color: var(--ms-gray-700); padding: 5px 10px; border-radius: var(--radius-sm); font-size: 0.68rem; font-weight: 600; cursor: pointer; font-family: inherit; display: inline-flex; align-items: center; gap: 4px; }
+        .btn-acao:hover { background: var(--ms-blue-light); border-color: var(--ms-blue); color: var(--ms-blue); }
+        .btn-acao.perigo { color: var(--ms-red); }
+        .btn-acao.perigo:hover { background: var(--ms-red-light); border-color: var(--ms-red); color: var(--ms-red-dark); }
+        .item-textarea-edit { width: 100%; min-height: 70px; padding: 8px 10px; background: var(--surface-alt); border: 1px solid var(--ms-blue); border-radius: var(--radius-sm); color: var(--ms-gray-900); font-family: inherit; font-size: 0.8rem; resize: vertical; margin-top: 6px; }
+        .item-textarea-edit:focus { outline: none; box-shadow: 0 0 0 3px rgba(0,103,184,0.15); }
+        .lista-vazia { text-align: center; padding: 40px 20px; color: var(--ms-gray-500); font-size: 0.85rem; background: var(--surface); border-radius: var(--radius-lg); border: 1px dashed var(--border); }
+        .lista-vazia .icone-grande { font-size: 2.5rem; opacity: 0.4; margin-bottom: 8px; display: block; }
 
         /* ============ REVISÕES PENDENTES ============ */
         .revisoes-pendentes-section { background: var(--surface); border-radius: var(--radius-lg); box-shadow: var(--shadow-2); padding: 16px; margin-bottom: 14px; border: 1px solid var(--border); }
@@ -1589,7 +1387,7 @@
         .config-card-descricao { font-size: 0.7rem; color: var(--ms-gray-500); line-height: 1.4; }
         .config-field { display: flex; flex-direction: column; gap: 4px; }
         .config-field label { font-size: 0.82rem; font-weight: 600; color: var(--ms-gray-700); }
-        .config-field input[type="date"], .config-field input[type="text"], .config-field input[type="url"] { padding: 9px 12px; border: 1px solid var(--border-strong); border-radius: var(--radius-md); font-family: var(--ms-font); font-size: 0.88rem; min-width: 150px; width: 100%; background: var(--surface); color: var(--ms-gray-900); transition: border-color var(--dur-fast) var(--ease-standard), box-shadow var(--dur-fast) var(--ease-standard); }
+        .config-field input[type="date"], .config-field input[type="text"], .config-field input[type="url"] { padding: 9px 12px; border: 1px solid var(--border-strong); border-radius: var(--radius-md); font-family: var(--ms-font); font-size: 0.88rem; min-width: 150px; width: 100%; background: var(--surface); color: var(--ms-gray-900); }
         .config-field input:focus { outline: none; border-color: var(--ms-blue); box-shadow: 0 0 0 3px rgba(0,103,184,0.15); }
         .config-info { background: var(--surface-alt); padding: 12px 16px; border-radius: var(--radius-md); text-align: center; font-size: 0.82rem; display: flex; flex-direction: column; gap: 4px; border: 1px solid var(--border); }
         .config-info strong { color: var(--ms-blue); }
@@ -1599,37 +1397,18 @@
         .config-field-inline { display: flex; align-items: center; gap: 8px; font-size: 0.85rem; font-weight: 600; color: var(--ms-gray-700); }
         .config-field-inline input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--ms-blue); cursor: pointer; flex-shrink: 0; }
         .simulacao-botoes { display: flex; gap: 6px; flex-wrap: wrap; }
-        .btn-simulacao { background: var(--surface); border: 1px solid var(--border-strong); color: var(--ms-gray-900); padding: 6px 11px; border-radius: var(--radius-md); font-family: var(--ms-font); font-size: 0.75rem; font-weight: 600; cursor: pointer; transition: background var(--dur-fast) var(--ease-standard), border-color var(--dur-fast) var(--ease-standard); flex: 1; min-width: 70px; text-align: center; }
+        .btn-simulacao { background: var(--surface); border: 1px solid var(--border-strong); color: var(--ms-gray-900); padding: 6px 11px; border-radius: var(--radius-md); font-family: var(--ms-font); font-size: 0.75rem; font-weight: 600; cursor: pointer; flex: 1; min-width: 70px; text-align: center; }
         .btn-simulacao:hover { background: var(--surface-hover); border-color: var(--ms-blue); }
         .btn-simulacao.zerar { background: var(--ms-red-light); border-color: var(--ms-red); color: var(--ms-red-dark); }
         .btn-simulacao.zerar:hover { background: var(--ms-red); color: #fff; }
-        .btn-reset-geral { background: #8b0000; color: #fff; border: none; padding: 10px 16px; border-radius: var(--radius-md); font-family: var(--ms-font); font-size: 0.85rem; font-weight: 700; cursor: pointer; transition: background var(--dur-fast) var(--ease-standard), transform var(--dur-faster) var(--ease-standard); box-shadow: var(--shadow-2); display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; justify-content: center; }
+        .btn-reset-geral { background: #8b0000; color: #fff; border: none; padding: 10px 16px; border-radius: var(--radius-md); font-family: var(--ms-font); font-size: 0.85rem; font-weight: 700; cursor: pointer; box-shadow: var(--shadow-2); display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; justify-content: center; }
         .btn-reset-geral:hover { background: #a00000; }
-        .btn-reset-geral:active { transform: scale(0.98); }
 
-        /* ============ SELETOR DE TEMA (ALTERAÇÃO 22) ============ */
+        /* ============ SELETOR DE TEMA ============ */
         .seletor-tema { display: flex; flex-direction: column; gap: 8px; }
         .seletor-tema-label { font-size: 0.82rem; font-weight: 600; color: var(--ms-gray-700); }
         .seletor-tema-opcoes { display: flex; gap: 8px; flex-wrap: wrap; }
-        .seletor-tema-opcao {
-            flex: 1;
-            min-width: 80px;
-            padding: 10px 12px;
-            border-radius: var(--radius-md);
-            border: 2px solid var(--border);
-            background: var(--surface-alt);
-            font-family: var(--ms-font);
-            font-size: 0.82rem;
-            font-weight: 600;
-            cursor: pointer;
-            text-align: center;
-            color: var(--ms-gray-700);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-            transition: border-color var(--dur-fast) var(--ease-standard), background var(--dur-fast) var(--ease-standard), color var(--dur-fast) var(--ease-standard);
-        }
+        .seletor-tema-opcao { flex: 1; min-width: 80px; padding: 10px 12px; border-radius: var(--radius-md); border: 2px solid var(--border); background: var(--surface-alt); font-family: var(--ms-font); font-size: 0.82rem; font-weight: 600; cursor: pointer; text-align: center; color: var(--ms-gray-700); display: flex; align-items: center; justify-content: center; gap: 6px; }
         .seletor-tema-opcao:hover { border-color: var(--ms-blue); }
         .seletor-tema-opcao.ativa { border-color: var(--ms-blue); background: var(--ms-blue-light); color: var(--ms-blue); font-weight: 700; }
         .seletor-tema-opcao .tema-preview { width: 20px; height: 20px; border-radius: 50%; border: 2px solid var(--border); flex-shrink: 0; }
@@ -1656,7 +1435,7 @@
 
         /* ============ RODAPÉ ============ */
         .rodape { display: flex; justify-content: center; align-items: center; gap: 12px; padding: 14px 0 8px; flex-wrap: wrap; }
-        .btn-rodape { background: var(--surface); color: var(--ms-gray-900); border: 1px solid var(--border-strong); padding: 10px 18px; border-radius: var(--radius-md); font-family: var(--ms-font); font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: background var(--dur-fast) var(--ease-standard), box-shadow var(--dur-fast) var(--ease-standard); display: inline-flex; align-items: center; gap: 6px; box-shadow: var(--shadow-2); }
+        .btn-rodape { background: var(--surface); color: var(--ms-gray-900); border: 1px solid var(--border-strong); padding: 10px 18px; border-radius: var(--radius-md); font-family: var(--ms-font); font-size: 0.85rem; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; box-shadow: var(--shadow-2); }
         .btn-rodape:hover { background: var(--surface-hover); box-shadow: var(--shadow-4); }
         .resumo-rodape { font-size: 0.7rem; color: var(--ms-gray-500); }
 
@@ -1669,7 +1448,6 @@
             padding: 16px 16px;
             box-shadow: var(--shadow-2);
             overflow: hidden;
-            transition: background var(--dur-slow) var(--ease-standard), box-shadow var(--dur-normal) var(--ease-standard);
             width: 100%;
         }
         .banner-compartilhe:hover { box-shadow: var(--shadow-8); }
@@ -1682,7 +1460,6 @@
             opacity: 0.85;
         }
         .banner-compartilhe.reduzido { display: none; }
-
         .banner-header { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 12px; padding-right: 26px; }
         .banner-icone { font-size: 1.6rem; line-height: 1; flex-shrink: 0; animation: balancarPresente 3s ease-in-out infinite; }
         @keyframes balancarPresente {
@@ -1693,52 +1470,13 @@
         .banner-texto { flex: 1; min-width: 0; }
         .banner-titulo { font-size: 0.82rem; font-weight: 700; color: var(--ms-gray-900); margin-bottom: 3px; line-height: 1.3; }
         .banner-subtitulo { font-size: 0.68rem; color: var(--ms-gray-700); line-height: 1.35; }
-
-        .banner-btn-fechar {
-            position: absolute;
-            top: 8px;
-            right: 8px;
-            background: rgba(255,255,255,0.7);
-            border: 1px solid var(--border);
-            font-size: 0.95rem;
-            cursor: pointer;
-            color: var(--ms-gray-700);
-            width: 24px;
-            height: 24px;
-            border-radius: var(--radius-pill);
-            line-height: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: background var(--dur-fast) var(--ease-standard), color var(--dur-fast) var(--ease-standard);
-            z-index: 3;
-        }
+        .banner-btn-fechar { position: absolute; top: 8px; right: 8px; background: rgba(255,255,255,0.7); border: 1px solid var(--border); font-size: 0.95rem; cursor: pointer; color: var(--ms-gray-700); width: 24px; height: 24px; border-radius: var(--radius-pill); line-height: 1; display: flex; align-items: center; justify-content: center; z-index: 3; }
         .banner-btn-fechar:hover { background: var(--ms-gray-200); color: var(--ms-gray-900); }
-
         .banner-botoes { display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px; margin-bottom: 10px; }
-        .btn-share {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-            padding: 9px 8px;
-            border: none;
-            border-radius: var(--radius-md);
-            font-family: var(--ms-font);
-            font-size: 0.72rem;
-            font-weight: 700;
-            color: #fff;
-            cursor: pointer;
-            text-decoration: none;
-            white-space: nowrap;
-            transition: background var(--dur-fast) var(--ease-standard), transform var(--dur-faster) var(--ease-standard), box-shadow var(--dur-fast) var(--ease-standard);
-            box-shadow: var(--shadow-2);
-            line-height: 1;
-        }
+        .btn-share { display: flex; align-items: center; justify-content: center; gap: 6px; padding: 9px 8px; border: none; border-radius: var(--radius-md); font-family: var(--ms-font); font-size: 0.72rem; font-weight: 700; color: #fff; cursor: pointer; text-decoration: none; white-space: nowrap; box-shadow: var(--shadow-2); line-height: 1; }
         .btn-share:hover { box-shadow: var(--shadow-8); transform: translateY(-1px); }
         .btn-share:active { transform: scale(0.97); }
         .btn-share .share-svg { width: 15px; height: 15px; flex-shrink: 0; display: block; fill: currentColor; }
-
         .btn-whats { background: var(--cor-whatsapp); }
         .btn-whats:hover { background: var(--cor-whatsapp-dark); }
         .btn-telegram { background: var(--cor-telegram); }
@@ -1749,96 +1487,37 @@
         .btn-sms:hover { background: var(--cor-sms-dark); }
         .btn-instagram { background: var(--cor-instagram); }
         .btn-instagram:hover { background: var(--cor-instagram-dark); }
-
-        .banner-contador {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-            padding: 7px 10px;
-            background: var(--surface);
-            border: 1px dashed var(--border);
-            border-radius: var(--radius-md);
-            font-size: 0.7rem;
-            color: var(--ms-gray-700);
-            text-align: center;
-            line-height: 1.3;
-        }
+        .banner-contador { display: flex; align-items: center; justify-content: center; gap: 6px; padding: 7px 10px; background: var(--surface); border: 1px dashed var(--border); border-radius: var(--radius-md); font-size: 0.7rem; color: var(--ms-gray-700); text-align: center; line-height: 1.3; }
         .banner-contador .contador-numero { font-weight: 700; color: var(--ms-blue); font-size: 0.85rem; }
         .banner-contador .contador-icone { font-size: 0.9rem; line-height: 1; }
-
-        .banner-compartilhe-compacto {
-            display: none;
-            margin-top: 0;
-            justify-content: center;
-        }
+        .banner-compartilhe-compacto { display: none; margin-top: 0; justify-content: center; }
         .banner-compartilhe-compacto.visivel { display: flex; }
-        .btn-compacto-share {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 12px 18px;
-            border: none;
-            border-radius: var(--radius-md);
-            background: linear-gradient(135deg, var(--ms-blue) 0%, var(--ms-green) 100%);
-            color: #fff;
-            font-family: var(--ms-font);
-            font-size: 0.85rem;
-            font-weight: 700;
-            cursor: pointer;
-            box-shadow: var(--shadow-4);
-            transition: box-shadow var(--dur-fast) var(--ease-standard), transform var(--dur-faster) var(--ease-standard);
-            line-height: 1;
-            width: 100%;
-            justify-content: center;
-        }
+        .btn-compacto-share { display: inline-flex; align-items: center; gap: 8px; padding: 12px 18px; border: none; border-radius: var(--radius-md); background: linear-gradient(135deg, var(--ms-blue) 0%, var(--ms-green) 100%); color: #fff; font-family: var(--ms-font); font-size: 0.85rem; font-weight: 700; cursor: pointer; box-shadow: var(--shadow-4); line-height: 1; width: 100%; justify-content: center; }
         .btn-compacto-share:hover { box-shadow: var(--shadow-8); transform: translateY(-1px); }
         .btn-compacto-share:active { transform: scale(0.97); }
         .btn-compacto-share .compacto-icone { font-size: 1.1rem; line-height: 1; }
-
-        .toast-share {
-            position: fixed;
-            bottom: 90px;
-            left: 50%;
-            transform: translateX(-50%) translateY(100px);
-            background: var(--ms-gray-900);
-            color: #fff;
-            padding: 12px 20px;
-            border-radius: var(--radius-md);
-            font-size: 0.85rem;
-            font-weight: 600;
-            box-shadow: var(--shadow-8);
-            opacity: 0;
-            transition: transform var(--dur-slow) var(--ease-decelerate), opacity var(--dur-slow) var(--ease-standard);
-            pointer-events: none;
-            z-index: 9999;
-            max-width: 90vw;
-            text-align: center;
-        }
+        .toast-share { position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%) translateY(100px); background: var(--ms-gray-900); color: #fff; padding: 12px 20px; border-radius: var(--radius-md); font-size: 0.85rem; font-weight: 600; box-shadow: var(--shadow-8); opacity: 0; transition: transform var(--dur-slow) var(--ease-decelerate), opacity var(--dur-slow) var(--ease-standard); pointer-events: none; z-index: 9999; max-width: 90vw; text-align: center; }
         .toast-share.visivel { transform: translateX(-50%) translateY(0); opacity: 1; }
 
         /* ============ RESPONSIVO GERAL ============ */
         @media (max-width: 899px) {
             .foco-corpo { flex-direction: column; overflow: hidden; }
-            .foco-relogio-painel {
-                width: 100%;
-                order: -1;
-                border-left: none;
-                border-bottom: 1px solid #222;
-                max-height: 60vh;
-            }
-            .painel-conteudo { padding: 14px; gap: 10px; }
-            .foco-relogio-display { font-size: 1.8rem; padding: 12px; min-height: 64px; }
-            .foco-btn-principal { padding: 12px; font-size: 0.85rem; }
-            .foco-btn-secundario { padding: 12px; font-size: 0.78rem; }
-            .foco-checklist { padding: 14px; }
-            .foco-modulo-titulo { font-size: 1.15rem; }
-            .painel-aba { padding: 12px 10px; font-size: 0.78rem; }
+            .foco-relogio-painel { width: 100%; order: -1; border-left: none; border-bottom: 1px solid #222; max-height: none; flex-shrink: 0; }
+            .painel-conteudo { padding: 12px; gap: 10px; }
+            .foco-relogio-display { font-size: 1.6rem; padding: 10px 8px; min-height: 56px; flex: 0 0 50%; max-width: 50%; }
+            .foco-btn-principal { padding: 10px 8px; font-size: 0.78rem; min-height: 56px; }
+            .foco-btn-secundario { padding: 10px 14px; font-size: 0.9rem; min-height: 56px; }
+            .foco-checklist { flex: 1; padding: 12px; min-height: 0; overflow-y: auto; }
+            .foco-modulo-titulo { font-size: 1rem; margin-bottom: 10px; }
+            .painel-aba { padding: 10px 8px; font-size: 0.75rem; }
             .foco-table { min-width: 700px; }
             .foco-table thead th { font-size: 0.55rem; padding: 8px 2px; }
             .foco-table thead th.assunto-col { min-width: 180px; padding-left: 10px; }
             .foco-table tbody td { padding: 8px 2px; font-size: 0.75rem; }
             .foco-table tbody td.assunto-col { padding-left: 10px; font-size: 0.78rem; }
+            .foco-barra { padding: 8px 12px; }
+            .foco-barra-titulo { font-size: 0.7rem; letter-spacing: 0.8px; }
+            .btn-sair-topo { padding: 5px 12px; font-size: 0.68rem; }
         }
 
         @media (max-width: 600px) {
@@ -1868,6 +1547,8 @@
             .modulos-topo { gap: 8px; }
             .foco-table { min-width: 600px; }
             .cobertura-item { grid-template-columns: 100px 1fr 50px; gap: 6px; }
+            .item-cabecalho { flex-wrap: wrap; }
+            .item-data { width: 100%; text-align: right; }
         }
     </style>
 </head>
@@ -1889,7 +1570,7 @@
                         <div class="topo-header-titulo">
                             <span class="header-icon">📋</span>
                             <span>CheckAprovação</span>
-                            <span class="topo-header-versao">v0.63</span>
+                            <span class="topo-header-versao">v0.66</span>
                         </div>
                         <button class="topo-header-sino" id="btnSino" title="Notificações" aria-label="Notificações">
                             🔔
@@ -1913,7 +1594,7 @@
             <!-- ============ ESTRUTURA BASE 30/70 ============ -->
             <div class="layout-pc">
 
-                <!-- COLUNA ESQUERDA (30%) -->
+                <!-- COLUNA ESQUERDA (contém o banner desktop) -->
                 <div class="coluna-esquerda">
                     <div>
                         <div class="secao-titulo planejamento">🎯 SEU PLANEJAMENTO</div>
@@ -1930,7 +1611,8 @@
                         </div>
                     </div>
 
-                    <div class="banner-bloco-esquerda">
+                    <!-- BANNER DESKTOP (dentro da coluna esquerda, sticky junto) -->
+                    <div class="banner-bloco-esquerda-desktop" id="bannerBlocoDesktop">
                         <div class="banner-compartilhe" id="bannerCompartilhe">
                             <button class="banner-btn-fechar" id="btnFecharBanner" title="Fechar" aria-label="Fechar banner">×</button>
 
@@ -1984,7 +1666,7 @@
                     </div>
                 </div>
 
-                <!-- BLOCO SEU PROGRESSO (4 CARDS) -->
+                <!-- BLOCO SEU PROGRESSO -->
                 <div class="bloco-progresso">
                     <div class="secao-titulo progresso">📈 SEU PROGRESSO</div>
                     <div class="progresso-grid">
@@ -2047,7 +1729,7 @@
                     </div>
                 </div>
 
-                <!-- BLOCO PRINCIPAL (coluna direita 70%) -->
+                <!-- BLOCO PRINCIPAL -->
                 <div class="layout-principal">
                     <div class="coluna-direita">
 
@@ -2064,6 +1746,60 @@
                             <div id="conteudoPrincipal"></div>
                         </div>
 
+                    </div>
+                </div>
+
+                <!-- BANNER MOBILE (cópia, escondida no desktop) -->
+                <div class="banner-bloco-esquerda-mobile" id="bannerBlocoMobile">
+                    <div class="banner-compartilhe banner-compartilhe-mobile" id="bannerCompartilheMobile">
+                        <button class="banner-btn-fechar" id="btnFecharBannerMobile" title="Fechar" aria-label="Fechar banner">×</button>
+
+                        <div class="banner-header">
+                            <div class="banner-icone">🎁</div>
+                            <div class="banner-texto">
+                                <div class="banner-titulo">Dê o CheckAprovação de presente para um amigo!</div>
+                                <div class="banner-subtitulo">Compartilhe o app e ajude alguém a conquistar a aprovação.</div>
+                            </div>
+                        </div>
+
+                        <div class="banner-botoes">
+                            <a class="btn-share btn-whats" id="btnWhatsAppMobile" href="#" target="_blank" rel="noopener noreferrer">
+                                <svg class="share-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.693.625.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.688"/></svg>
+                                <span class="share-texto">WhatsApp</span>
+                            </a>
+
+                            <a class="btn-share btn-telegram" id="btnTelegramMobile" href="#" target="_blank" rel="noopener noreferrer">
+                                <svg class="share-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M11.944 0A12 12 0 000 12a12 12 0 0012 12 12 12 0 0012-12A12 12 0 0012 0a12 12 0 00-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 01.171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+                                <span class="share-texto">Telegram</span>
+                            </a>
+
+                            <a class="btn-share btn-email" id="btnEmailMobile" href="#">
+                                <svg class="share-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 12.713l-11.985-9.713h23.97l-11.985 9.713zm0 2.574l-12-9.725v15.438h24v-15.438l-12 9.725z"/></svg>
+                                <span class="share-texto">E-mail</span>
+                            </a>
+
+                            <a class="btn-share btn-sms" id="btnSMSMobile" href="#">
+                                <svg class="share-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM7 9h10v2H7V9zm6 5H7v-2h6v2zm4-6H7V6h10v2z"/></svg>
+                                <span class="share-texto">SMS</span>
+                            </a>
+
+                            <a class="btn-share btn-instagram" id="btnInstagramMobile" href="#">
+                                <svg class="share-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+                                <span class="share-texto">Instagram</span>
+                            </a>
+                        </div>
+
+                        <div class="banner-contador">
+                            <span class="contador-icone">🎉</span>
+                            <span>Já compartilhou <span class="contador-numero" id="contadorNumeroMobile">0</span> vez(es)!</span>
+                        </div>
+                    </div>
+
+                    <div class="banner-compartilhe-compacto" id="bannerCompartilheCompactoMobile">
+                        <button class="btn-compacto-share" id="btnReabrirBannerMobile">
+                            <span class="compacto-icone">🎁</span>
+                            <span>Compartilhe!</span>
+                        </button>
                     </div>
                 </div>
 
@@ -2087,14 +1823,13 @@
                     <span>⏱️</span>
                     <span>Modo Foco Total</span>
                 </div>
-                <button class="foco-barra-fechar" id="btnSairTopo" title="Sair" aria-label="Sair do modo foco">×</button>
+                <button class="btn-sair-topo" id="btnSairTopo">🚪 Sair</button>
             </div>
 
             <div class="foco-corpo">
                 <div class="foco-checklist">
                     <div class="foco-checklist-inner">
                         <div class="foco-modulo-titulo" id="focoModuloTitulo">📚 Módulo</div>
-                        <div class="foco-modulo-subtitulo">Concentre-se. Use as abas ao lado para alternar entre cronômetro padrão e Pomodoro.</div>
                         <div class="table-responsive">
                             <table class="foco-table" id="focoTabela">
                                 <thead>
@@ -2128,8 +1863,8 @@
                     </div>
 
                     <div class="painel-conteudo ativo" id="conteudoPadrao">
-                        <div class="foco-relogio-display parado" id="relogioPadrao">00:00</div>
-                        <div class="foco-relogio-botoes">
+                        <div class="foco-relogio-botoes" style="align-items:stretch;">
+                            <div class="foco-relogio-display parado" id="relogioPadrao">00:00</div>
                             <button class="foco-btn-principal" id="btnPadraoIniciar">
                                 <span id="padraoIcone">▶</span>
                                 <span id="padraoTexto">Iniciar</span>
@@ -2141,8 +1876,8 @@
                     </div>
 
                     <div class="painel-conteudo" id="conteudoPomodoro">
-                        <div class="foco-relogio-display parado" id="relogioPomodoro">25:00</div>
-                        <div class="foco-relogio-botoes">
+                        <div class="foco-relogio-botoes" style="align-items:stretch;">
+                            <div class="foco-relogio-display parado" id="relogioPomodoro">25:00</div>
                             <button class="foco-btn-principal" id="btnPomodoroIniciar">
                                 <span id="pomodoroIcone">▶</span>
                                 <span id="pomodoroTexto">Iniciar</span>
@@ -2152,25 +1887,21 @@
                             </button>
                         </div>
 
+                        <div class="pomodoro-controles">
+                            <div class="ciclos-compacto" id="pomodoroCiclos">
+                                <span class="ciclo-dot">🍅</span>
+                                <span class="ciclo-dot">🍅</span>
+                                <span class="ciclo-dot">🍅</span>
+                                <span class="ciclo-dot">🍅</span>
+                                <span class="ciclos-label">0/4</span>
+                            </div>
+                            <div class="tempo-ciclo-compacto">
+                                <span class="tempo-ciclo-label" id="tempoCicloLabel">25/5</span>
+                                <button class="btn-config-ciclo" id="btnConfigCiclo" title="Escolher tempo de ciclo">⚙️</button>
+                            </div>
+                        </div>
+
                         <div class="pomodoro-zona-ciclos">
-                            <div class="pomodoro-ciclos-box" id="pomodoroCiclos">
-                                <span class="ciclo-dot">🍅</span>
-                                <span class="ciclo-dot">🍅</span>
-                                <span class="ciclo-dot">🍅</span>
-                                <span class="ciclo-dot">🍅</span>
-                                <span style="margin-left:6px;color:#555;font-size:0.7rem;">0/4</span>
-                            </div>
-
-                            <div class="pomodoro-dropdown-wrap" id="pomodoroDropdown">
-                                <label class="pomodoro-dropdown-label" for="pomodoroTempo">Tempo do ciclo</label>
-                                <select class="pomodoro-dropdown" id="pomodoroTempo">
-                                    <option value="25-5" selected>25 min foco · 5 min pausa</option>
-                                    <option value="50-10">50 min foco · 10 min pausa</option>
-                                    <option value="90-20">90 min foco · 20 min pausa</option>
-                                    <option value="1-0.5">1 min foco · 30s pausa (teste)</option>
-                                </select>
-                            </div>
-
                             <div class="pomodoro-som-linha" id="pomodoroSomLinha">
                                 <span>🔊 Som ao fim do ciclo</span>
                                 <button class="pomodoro-som-btn ativo" id="btnSom">🔊</button>
@@ -2189,6 +1920,46 @@
                             <span>Sair do Modo Foco</span>
                         </button>
                     </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MODAL DE TEMPO DE CICLO -->
+        <div class="modal-ciclo-overlay" id="modalCicloOverlay">
+            <div class="modal-ciclo-content">
+                <div class="modal-ciclo-header">
+                    <h3>⚙️ Tempo do ciclo Pomodoro</h3>
+                    <button class="modal-ciclo-fechar" id="btnFecharModalCiclo">×</button>
+                </div>
+                <div class="modal-ciclo-body">
+                    <button class="opcao-ciclo ativa" data-ciclo="25-5">
+                        <span class="opcao-ciclo-radio"></span>
+                        <span>
+                            <span class="opcao-ciclo-texto">🍅 25 min de foco · 5 min de pausa</span>
+                            <div class="opcao-ciclo-desc">Padrão Pomodoro — recomendado</div>
+                        </span>
+                    </button>
+                    <button class="opcao-ciclo" data-ciclo="50-10">
+                        <span class="opcao-ciclo-radio"></span>
+                        <span>
+                            <span class="opcao-ciclo-texto">🍅 50 min de foco · 10 min de pausa</span>
+                            <div class="opcao-ciclo-desc">Para tarefas longas</div>
+                        </span>
+                    </button>
+                    <button class="opcao-ciclo" data-ciclo="90-20">
+                        <span class="opcao-ciclo-radio"></span>
+                        <span>
+                            <span class="opcao-ciclo-texto">🍅 90 min de foco · 20 min de pausa</span>
+                            <div class="opcao-ciclo-desc">Ciclo estendido — blocos profundos</div>
+                        </span>
+                    </button>
+                    <button class="opcao-ciclo" data-ciclo="1-0.5">
+                        <span class="opcao-ciclo-radio"></span>
+                        <span>
+                            <span class="opcao-ciclo-texto">🍅 1 min de foco · 30s de pausa</span>
+                            <div class="opcao-ciclo-desc">Modo teste</div>
+                        </span>
+                    </button>
                 </div>
             </div>
         </div>
@@ -2258,6 +2029,87 @@
             </div>
             <div class="rodape">
                 <button class="btn-rodape" id="btnVoltarRevisoesRodape">← Voltar ao Início</button>
+            </div>
+        </div>
+
+        <!-- TELA ASSUNTOS IMPORTANTES -->
+        <div id="telaImportantes" class="tela">
+            <div class="config-header">
+                <button class="btn-voltar" id="btnVoltarImportantes">← Voltar</button>
+                <h2 style="font-size:1rem;font-weight:600;color:var(--ms-blue);">📌 Assuntos Importantes</h2>
+            </div>
+
+            <div class="filtros-bar">
+                <div class="filtro-busca-wrap">
+                    <span class="filtro-busca-icone">🔍</span>
+                    <input type="text" class="filtro-busca" id="buscaImportantes" placeholder="Buscar por assunto ou módulo...">
+                </div>
+                <div class="filtro-pills" id="pillsImportantes">
+                    <button class="pill ativo" data-modulo="todos">Todos</button>
+                    <button class="pill" data-modulo="portugues">📚 Português</button>
+                    <button class="pill" data-modulo="legislacao">⚖️ Legislação</button>
+                    <button class="pill" data-modulo="dirAdmin">🏛️ Dir. Admin</button>
+                    <button class="pill" data-modulo="dirConst">📜 Dir. Const</button>
+                    <button class="pill" data-modulo="dirPenal">⚖️ Dir. Penal</button>
+                    <button class="pill" data-modulo="dirProcPenal">📋 Proc. Penal</button>
+                    <button class="pill" data-modulo="complementar">🌐 Complementar</button>
+                </div>
+                <div class="filtro-ordenacao-wrap">
+                    <label for="ordemImportantes">Ordenar:</label>
+                    <select class="filtro-ordenacao" id="ordemImportantes">
+                        <option value="recentes">Marcados recentemente</option>
+                        <option value="antigos">Marcados há mais tempo</option>
+                        <option value="modulo">Por módulo</option>
+                        <option value="alfabetica">Alfabética</option>
+                    </select>
+                </div>
+                <div class="filtro-contador" id="contadorImportantes">—</div>
+            </div>
+
+            <div class="lista-itens" id="listaImportantes"></div>
+
+            <div class="rodape">
+                <button class="btn-rodape" id="btnVoltarImportantesRodape">← Voltar ao Início</button>
+            </div>
+        </div>
+
+        <!-- TELA CENTRAL DE ANOTAÇÕES -->
+        <div id="telaAnotacoes" class="tela">
+            <div class="config-header">
+                <button class="btn-voltar" id="btnVoltarAnotacoes">← Voltar</button>
+                <h2 style="font-size:1rem;font-weight:600;color:var(--ms-blue);">📝 Central de Anotações</h2>
+            </div>
+
+            <div class="filtros-bar">
+                <div class="filtro-busca-wrap">
+                    <span class="filtro-busca-icone">🔍</span>
+                    <input type="text" class="filtro-busca" id="buscaAnotacoes" placeholder="Buscar por texto, assunto ou módulo...">
+                </div>
+                <div class="filtro-pills" id="pillsAnotacoes">
+                    <button class="pill ativo" data-modulo="todos">Todos</button>
+                    <button class="pill" data-modulo="portugues">📚 Português</button>
+                    <button class="pill" data-modulo="legislacao">⚖️ Legislação</button>
+                    <button class="pill" data-modulo="dirAdmin">🏛️ Dir. Admin</button>
+                    <button class="pill" data-modulo="dirConst">📜 Dir. Const</button>
+                    <button class="pill" data-modulo="dirPenal">⚖️ Dir. Penal</button>
+                    <button class="pill" data-modulo="dirProcPenal">📋 Proc. Penal</button>
+                    <button class="pill" data-modulo="complementar">🌐 Complementar</button>
+                </div>
+                <div class="filtro-ordenacao-wrap">
+                    <label for="ordemAnotacoes">Ordenar:</label>
+                    <select class="filtro-ordenacao" id="ordemAnotacoes">
+                        <option value="recentes">Mais recentes</option>
+                        <option value="antigas">Mais antigas</option>
+                        <option value="modulo">Por módulo</option>
+                    </select>
+                </div>
+                <div class="filtro-contador" id="contadorAnotacoes">—</div>
+            </div>
+
+            <div class="lista-itens" id="listaAnotacoes"></div>
+
+            <div class="rodape">
+                <button class="btn-rodape" id="btnVoltarAnotacoesRodape">← Voltar ao Início</button>
             </div>
         </div>
 
@@ -2411,6 +2263,16 @@
             <span class="menu-texto">Revisão Espaçada (Pendências)</span>
             <span class="menu-badge" id="revisoesBadge" style="display:none;">0</span>
         </a>
+        <a class="menu-item" data-tela="importantes" id="menuImportantes">
+            <span class="menu-icone">📌</span>
+            <span class="menu-texto">Assuntos Importantes</span>
+            <span class="menu-badge" id="importantesBadge" style="display:none;">0</span>
+        </a>
+        <a class="menu-item" data-tela="anotacoes" id="menuAnotacoes">
+            <span class="menu-icone">📝</span>
+            <span class="menu-texto">Central de Anotações</span>
+            <span class="menu-badge" id="anotacoesBadge" style="display:none;">0</span>
+        </a>
         <a class="menu-item" data-tela="config" id="menuConfig">
             <span class="menu-icone">⚙️</span>
             <span class="menu-texto">Configurações</span>
@@ -2477,8 +2339,8 @@
             let nomeUsuario = '';
             let anotacoes = {};
             let chaveAnotacaoAtual = null;
-            let temaAtivo = 'claro'; /* ALTERAÇÃO 22: 'claro' | 'suave' | 'escuro' */
-            let modoEscuroAtivo = false; /* compatibilidade */
+            let temaAtivo = 'claro';
+            let modoEscuroAtivo = false;
             let tempoEstudo = {};
             let cronometroAtivo = false;
             let cronometroPausado = false;
@@ -2511,7 +2373,7 @@
             /* ============ ESTADO MODO FOCO ============ */
             let focoModuloAtual = null;
             let focoModuloTitulo = '';
-            let focoModuloTipo = 'modulo'; /* 'modulo' | 'subtopico' */
+            let focoModuloTipo = 'modulo';
             let focoAtivo = false;
 
             /* ============ ESTADO POMODORO ============ */
@@ -2527,6 +2389,14 @@
             let pomodoroInterval = null;
             let pomodoroAguardandoAcao = false;
             let padraoPausado = false;
+
+            /* ============ ESTADO TELAS DE LISTA ============ */
+            let importantesFiltroModulo = 'todos';
+            let importantesOrdem = 'recentes';
+            let importantesBusca = '';
+            let anotacoesFiltroModulo = 'todos';
+            let anotacoesOrdem = 'recentes';
+            let anotacoesBusca = '';
 
             /* ============ ÁUDIO ============ */
             let audioCtx = null;
@@ -2577,7 +2447,9 @@
                     bannerReduzido: bannerReduzido,
                     concurso: concurso,
                     cargo: cargo,
-                    pomodoroSomAtivo: pomodoroSomAtivo
+                    pomodoroSomAtivo: pomodoroSomAtivo,
+                    pomodoroTempoFoco: pomodoroTempoFoco,
+                    pomodoroTempoPausa: pomodoroTempoPausa
                 };
                 const json = JSON.stringify(dados);
                 if (armazenamento.disponivel) {
@@ -2614,7 +2486,6 @@
                         usarDataSistema = parsed.usarDataSistema !== undefined ? parsed.usarDataSistema : true;
                         telaAtual = parsed.telaAtual || 'principal';
                         anotacoes = parsed.anotacoes || {};
-                        /* ALTERAÇÃO 22: migração compatível */
                         if (parsed.temaAtivo) temaAtivo = parsed.temaAtivo;
                         else if (parsed.modoEscuroAtivo) temaAtivo = 'escuro';
                         else temaAtivo = 'claro';
@@ -2638,6 +2509,9 @@
                         concurso = parsed.concurso || DEFAULT_CONCURSO;
                         cargo = parsed.cargo || DEFAULT_CARGO;
                         pomodoroSomAtivo = parsed.pomodoroSomAtivo !== undefined ? parsed.pomodoroSomAtivo : true;
+                        if (parsed.pomodoroTempoFoco) pomodoroTempoFoco = parsed.pomodoroTempoFoco;
+                        if (parsed.pomodoroTempoPausa) pomodoroTempoPausa = parsed.pomodoroTempoPausa;
+                        pomodoroTempoRestante = pomodoroTempoFoco * 60;
                         if (nomeUsuario) document.getElementById('nomeUsuario').value = nomeUsuario;
                         if (dataInicial) document.getElementById('dataInicial').value = dataInicial;
                         if (dataFinal) document.getElementById('dataFinal').value = dataFinal;
@@ -2664,25 +2538,21 @@
                 else { container.style.display = 'flex'; btnReabrir.style.display = 'none'; }
             }
 
-            /* ============ TEMA (ALTERAÇÃO 22) ============ */
+            /* ============ TEMA ============ */
             function aplicarTema() {
                 document.body.classList.remove('tema-claro', 'tema-suave', 'tema-escuro', 'dark-mode');
                 if (temaAtivo === 'suave') document.body.classList.add('tema-suave');
                 else if (temaAtivo === 'escuro') {
                     document.body.classList.add('tema-escuro');
-                    document.body.classList.add('dark-mode'); /* compatibilidade */
+                    document.body.classList.add('dark-mode');
                 }
-                /* Sincroniza botões do seletor */
                 const botoes = document.querySelectorAll('.seletor-tema-opcao');
                 botoes.forEach(function(b) {
                     b.classList.toggle('ativa', b.dataset.tema === temaAtivo);
                 });
             }
 
-            /* Compatibilidade com função antiga */
-            function aplicarModoEscuro() {
-                aplicarTema();
-            }
+            function aplicarModoEscuro() { aplicarTema(); }
 
             /* ============ HEADER DINÂMICO ============ */
             function atualizarHeaderConcurso() {
@@ -2814,12 +2684,15 @@
             }
 
             /* ============ TOAST ============ */
-            function mostrarToast(icone, texto) {
+            function mostrarToast(icone, texto, tipo) {
                 const toast = document.getElementById('toastCelebracao');
                 const toastIcone = document.getElementById('toastIcone');
                 const toastTexto = document.getElementById('toastTexto');
                 toastIcone.textContent = icone;
                 toastTexto.textContent = texto;
+                toast.classList.remove('toast-sucesso', 'toast-remover');
+                if (tipo === 'sucesso') toast.classList.add('toast-sucesso');
+                if (tipo === 'remover') toast.classList.add('toast-remover');
                 toast.classList.add('visivel');
                 if (toastTimeout) clearTimeout(toastTimeout);
                 toastTimeout = setTimeout(function() { toast.classList.remove('visivel'); }, 2500);
@@ -2945,6 +2818,20 @@
                 return minutos + 'min';
             }
 
+            function formatarDataRelativa(ms) {
+                const diff = Date.now() - ms;
+                const dias = Math.floor(diff / (1000 * 60 * 60 * 24));
+                if (dias === 0) return 'hoje';
+                if (dias === 1) return 'ontem';
+                if (dias < 7) return dias + ' dias atrás';
+                if (dias < 30) {
+                    const semanas = Math.floor(dias / 7);
+                    return semanas + ' semana' + (semanas === 1 ? '' : 's') + ' atrás';
+                }
+                const meses = Math.floor(dias / 30);
+                return meses + ' mês' + (meses === 1 ? '' : 'es') + ' atrás';
+            }
+
             /* ============ ÁUDIO ============ */
             function inicializarAudio() {
                 if (audioCtx) return;
@@ -3021,11 +2908,17 @@
             const telaPrincipal = document.getElementById('telaPrincipal');
             const telaDashboard = document.getElementById('telaDashboard');
             const telaRevisoes = document.getElementById('telaRevisoes');
+            const telaImportantes = document.getElementById('telaImportantes');
+            const telaAnotacoes = document.getElementById('telaAnotacoes');
             const telaConfig = document.getElementById('telaConfig');
             const btnVoltarPrincipal = document.getElementById('btnVoltarPrincipal');
             const btnVoltarDashboardTopo = document.getElementById('btnVoltarDashboardTopo');
             const btnVoltarRevisoes = document.getElementById('btnVoltarRevisoes');
             const btnVoltarRevisoesRodape = document.getElementById('btnVoltarRevisoesRodape');
+            const btnVoltarImportantes = document.getElementById('btnVoltarImportantes');
+            const btnVoltarImportantesRodape = document.getElementById('btnVoltarImportantesRodape');
+            const btnVoltarAnotacoes = document.getElementById('btnVoltarAnotacoes');
+            const btnVoltarAnotacoesRodape = document.getElementById('btnVoltarAnotacoesRodape');
             const btnAtualizar = document.getElementById('btnAtualizar');
             const btnAtualizarConcurso = document.getElementById('btnAtualizarConcurso');
             const btnResetar = document.getElementById('btnResetar');
@@ -3092,13 +2985,20 @@
             const menuInicio = document.getElementById('menuInicio');
             const menuDashboard = document.getElementById('menuDashboard');
             const menuRevisoes = document.getElementById('menuRevisoes');
+            const menuImportantes = document.getElementById('menuImportantes');
+            const menuAnotacoes = document.getElementById('menuAnotacoes');
             const menuConfig = document.getElementById('menuConfig');
+            const importantesBadge = document.getElementById('importantesBadge');
+            const anotacoesBadge = document.getElementById('anotacoesBadge');
             const btnSimularBaixo = document.getElementById('btnSimularBaixo');
             const btnSimularMedio = document.getElementById('btnSimularMedio');
             const btnSimularAlto = document.getElementById('btnSimularAlto');
             const btnZerarSimulacao = document.getElementById('btnZerarSimulacao');
             const linkCompartilharInput = document.getElementById('linkCompartilhar');
             const btnSalvarLink = document.getElementById('btnSalvarLink');
+            const seletorTema = document.getElementById('seletorTema');
+
+            /* Banner DESKTOP */
             const bannerCompartilhe = document.getElementById('bannerCompartilhe');
             const bannerCompartilheCompacto = document.getElementById('bannerCompartilheCompacto');
             const btnFecharBanner = document.getElementById('btnFecharBanner');
@@ -3109,7 +3009,38 @@
             const btnSMS = document.getElementById('btnSMS');
             const btnInstagram = document.getElementById('btnInstagram');
             const contadorNumero = document.getElementById('contadorNumero');
-            const seletorTema = document.getElementById('seletorTema');
+
+            /* Banner MOBILE */
+            const bannerCompartilheMobile = document.getElementById('bannerCompartilheMobile');
+            const bannerCompartilheCompactoMobile = document.getElementById('bannerCompartilheCompactoMobile');
+            const btnFecharBannerMobile = document.getElementById('btnFecharBannerMobile');
+            const btnReabrirBannerMobile = document.getElementById('btnReabrirBannerMobile');
+            const btnWhatsAppMobile = document.getElementById('btnWhatsAppMobile');
+            const btnTelegramMobile = document.getElementById('btnTelegramMobile');
+            const btnEmailMobile = document.getElementById('btnEmailMobile');
+            const btnSMSMobile = document.getElementById('btnSMSMobile');
+            const btnInstagramMobile = document.getElementById('btnInstagramMobile');
+            const contadorNumeroMobile = document.getElementById('contadorNumeroMobile');
+
+            /* Busca Importantes */
+            const buscaImportantesInput = document.getElementById('buscaImportantes');
+            const pillsImportantes = document.getElementById('pillsImportantes');
+            const ordemImportantesSelect = document.getElementById('ordemImportantes');
+            const contadorImportantesEl = document.getElementById('contadorImportantes');
+            const listaImportantesEl = document.getElementById('listaImportantes');
+
+            /* Busca Anotações */
+            const buscaAnotacoesInput = document.getElementById('buscaAnotacoes');
+            const pillsAnotacoes = document.getElementById('pillsAnotacoes');
+            const ordemAnotacoesSelect = document.getElementById('ordemAnotacoes');
+            const contadorAnotacoesEl = document.getElementById('contadorAnotacoes');
+            const listaAnotacoesEl = document.getElementById('listaAnotacoes');
+
+            /* Modal ciclo */
+            const modalCicloOverlay = document.getElementById('modalCicloOverlay');
+            const btnFecharModalCiclo = document.getElementById('btnFecharModalCiclo');
+            const tempoCicloLabel = document.getElementById('tempoCicloLabel');
+            const btnConfigCiclo = document.getElementById('btnConfigCiclo');
 
             /* Referências modo foco */
             const modoFoco = document.getElementById('modoFoco');
@@ -3126,7 +3057,6 @@
             const pomodoroTexto = document.getElementById('pomodoroTexto');
             const btnPomodoroParar = document.getElementById('btnPomodoroParar');
             const pomodoroCiclos = document.getElementById('pomodoroCiclos');
-            const pomodoroTempoSelect = document.getElementById('pomodoroTempo');
             const btnSom = document.getElementById('btnSom');
             const pomodoroCard = document.getElementById('pomodoroCard');
             const cardTitulo = document.getElementById('cardTitulo');
@@ -3171,18 +3101,27 @@
                 const novo = obterContadorCompartilhamentos() + 1;
                 try { localStorage.setItem(CHAVE_CONTADOR_COMPARTILHAMENTOS, String(novo)); } catch (e) {}
                 if (contadorNumero) contadorNumero.textContent = novo;
+                if (contadorNumeroMobile) contadorNumeroMobile.textContent = novo;
             }
 
             function atualizarLinksCompartilhamento() {
                 const msg = MENSAGEM_COMPARTILHAR + linkCompartilhar;
-                if (btnWhatsApp) btnWhatsApp.href = 'https://wa.me/?text=' + encodeURIComponent(msg);
-                if (btnTelegram) btnTelegram.href = 'https://t.me/share/url?url=' + encodeURIComponent(linkCompartilhar) + '&text=' + encodeURIComponent(MENSAGEM_COMPARTILHAR);
-                if (btnEmail) {
-                    const assunto = encodeURIComponent('🎁 CheckAprovação — App para concurseiros');
-                    const corpo = encodeURIComponent(msg);
-                    btnEmail.href = 'mailto:?subject=' + assunto + '&body=' + corpo;
-                }
-                if (btnSMS) btnSMS.href = 'sms:?&body=' + encodeURIComponent(msg);
+                const urlWhats = 'https://wa.me/?text=' + encodeURIComponent(msg);
+                const urlTelegram = 'https://t.me/share/url?url=' + encodeURIComponent(linkCompartilhar) + '&text=' + encodeURIComponent(MENSAGEM_COMPARTILHAR);
+                const assuntoEmail = encodeURIComponent('🎁 CheckAprovação — App para concurseiros');
+                const corpoEmail = encodeURIComponent(msg);
+                const urlEmail = 'mailto:?subject=' + assuntoEmail + '&body=' + corpoEmail;
+                const urlSMS = 'sms:?&body=' + encodeURIComponent(msg);
+
+                if (btnWhatsApp) btnWhatsApp.href = urlWhats;
+                if (btnTelegram) btnTelegram.href = urlTelegram;
+                if (btnEmail) btnEmail.href = urlEmail;
+                if (btnSMS) btnSMS.href = urlSMS;
+
+                if (btnWhatsAppMobile) btnWhatsAppMobile.href = urlWhats;
+                if (btnTelegramMobile) btnTelegramMobile.href = urlTelegram;
+                if (btnEmailMobile) btnEmailMobile.href = urlEmail;
+                if (btnSMSMobile) btnSMSMobile.href = urlSMS;
             }
 
             function copiarLinkComFallback() {
@@ -3212,18 +3151,26 @@
             }
 
             function aplicarEstadoBanner() {
-                if (!bannerCompartilhe || !bannerCompartilheCompacto) return;
-                if (bannerReduzido) {
-                    bannerCompartilhe.classList.add('reduzido');
-                    bannerCompartilheCompacto.classList.add('visivel');
-                } else {
-                    bannerCompartilhe.classList.remove('reduzido');
-                    bannerCompartilheCompacto.classList.remove('visivel');
+                /* Desktop */
+                if (bannerCompartilhe) {
+                    if (bannerReduzido) bannerCompartilhe.classList.add('reduzido');
+                    else bannerCompartilhe.classList.remove('reduzido');
+                }
+                if (bannerCompartilheCompacto) {
+                    if (bannerReduzido) bannerCompartilheCompacto.classList.add('visivel');
+                    else bannerCompartilheCompacto.classList.remove('visivel');
+                }
+                /* Mobile */
+                if (bannerCompartilheMobile) {
+                    if (bannerReduzido) bannerCompartilheMobile.classList.add('reduzido');
+                    else bannerCompartilheMobile.classList.remove('reduzido');
+                }
+                if (bannerCompartilheCompactoMobile) {
+                    if (bannerReduzido) bannerCompartilheCompactoMobile.classList.add('visivel');
+                    else bannerCompartilheCompactoMobile.classList.remove('visivel');
                 }
             }
-            /* ============ RECOMENDAÇÃO (ALTERAÇÃO 21) ============ */
-            /* Critério ① = módulos com CONCLUÍDO = 0 (não mais Lido = 0)
-               Justificativa: "Nenhum assunto concluído" */
+            /* ============ RECOMENDAÇÃO ============ */
             function calcularDiasSemEstudar(moduloChave) {
                 const ultima = ultimasAtividades[moduloChave];
                 if (!ultima) return null;
@@ -3243,12 +3190,11 @@
                 const usados = {};
                 const resultado = [];
 
-                /* ---------- ① PRIORIDADE 1: CONCLUÍDO = 0 (ALTERAÇÃO 21) ---------- */
+                /* ---------- ① PRIORIDADE 1: CONCLUÍDO = 0 ---------- */
                 const semConcluidos = naoConcluidos.filter(function(m) {
                     return contarPorTipo('Concluido', m.chave) === 0;
                 });
                 if (semConcluidos.length > 0) {
-                    /* Se houver mais de 1, evita repetir o último recomendado */
                     let escolhido = null;
                     if (semConcluidos.length > 1) {
                         const semUltimo = semConcluidos.filter(function(m) { return m.chave !== ultimoModuloRecomendado; });
@@ -3308,7 +3254,6 @@
                     });
                 }
 
-                /* Guarda o último recomendado (1º item) */
                 if (resultado.length > 0) ultimoModuloRecomendado = resultado[0].modulo.chave;
 
                 return resultado;
@@ -3339,7 +3284,7 @@
                 });
             }
 
-            /* ============ REVISÃO ESPAÇADA UI ============ */
+            /* ============ REVISÃO ESPAÇADA UI (tela principal) ============ */
             function renderizarRevisaoEspacada() {
                 const container = document.getElementById('revisaoEspacadaConteudo');
                 const pendentes = obterRevisoesPendentes().slice(0, 3);
@@ -3418,7 +3363,7 @@
                 });
             }
 
-            /* ============ ANOTAÇÕES ============ */
+            /* ============ ANOTAÇÕES (modal) ============ */
             function abrirModalAnotacao(chave, assuntoTexto) {
                 chaveAnotacaoAtual = chave;
                 modalAnotacaoTitulo.textContent = '📝 Anotações';
@@ -3467,6 +3412,37 @@
                 return assuntos[chaveModulo] ? assuntos[chaveModulo].length : 0;
             }
 
+            function contarImportantes() {
+                let contador = 0;
+                for (const chave in estadoCheckboxes) {
+                    if (estadoCheckboxes[chave] && chave.endsWith('-Importante')) contador++;
+                }
+                return contador;
+            }
+
+            function contarAnotacoes() {
+                let contador = 0;
+                for (const chave in anotacoes) contador += anotacoes[chave].length;
+                return contador;
+            }
+
+            function atualizarBadgesMenu() {
+                const totalImp = contarImportantes();
+                if (importantesBadge) {
+                    if (totalImp > 0) { importantesBadge.style.display = 'inline-flex'; importantesBadge.textContent = totalImp; }
+                    else { importantesBadge.style.display = 'none'; }
+                }
+                const totalAnot = contarAnotacoes();
+                if (anotacoesBadge) {
+                    if (totalAnot > 0) { anotacoesBadge.style.display = 'inline-flex'; anotacoesBadge.textContent = totalAnot; }
+                    else { anotacoesBadge.style.display = 'none'; }
+                }
+            }
+
+            function assuntoEhImportante(chaveBase) {
+                return !!estadoCheckboxes[chaveBase + '-Importante'];
+            }
+
             /* ============ RENDERIZAR MÓDULOS ============ */
             function renderizarModulos() {
                 modulosGrid.innerHTML = '';
@@ -3500,12 +3476,31 @@
                     return b.percentual - a.percentual;
                 });
                 dadosModulos.forEach(function(modulo) {
-                    const restantesStr = String(modulo.restantes).padStart(2, '0');
-                    const totalStr = String(modulo.total).padStart(2, '0');
                     const card = document.createElement('a');
-                    card.className = 'modulo-card ' + modulo.estado;
                     card.href = '#modulo-' + modulo.topicoId;
-                    card.innerHTML = '<div class="modulo-nome"><span class="modulo-icon">' + modulo.icone + '</span> ' + modulo.nome + '</div><div class="modulo-percentual">' + modulo.percentual + '%</div><div class="modulo-contagem">' + restantesStr + '/' + totalStr + ' restantes</div><div class="modulo-bar"><div class="modulo-bar-fill" style="width:' + modulo.percentual + '%;"></div></div><div class="modulo-alerta ' + (modulo.estado === 'estagnado' ? 'amarelo' : '') + ' ' + (modulo.estado === 'concluido' ? 'dourado' : '') + '">' + (modulo.alerta ? (modulo.estado === 'concluido' ? '🏆 ' : '⚠️ ') + modulo.alerta : '') + '</div>';
+                    if (modulo.estado === 'concluido') {
+                        card.className = 'modulo-card concluido-v6';
+                        card.innerHTML = '<div class="modulo-nome"><span class="modulo-icon">' + modulo.icone + '</span> ' + modulo.nome + '</div>' +
+                            '<div class="trofeu-container">' +
+                                '<span class="trofeu-grande">🏆</span>' +
+                                '<span class="sparkle-trofeu">' +
+                                    '<svg viewBox="0 0 24 24" fill="none">' +
+                                        '<path d="M12 0 L13.8 10.2 L24 12 L13.8 13.8 L12 24 L10.2 13.8 L0 12 L10.2 10.2 Z" fill="#ffd84a"/>' +
+                                        '<path d="M12 4 L12.9 10.2 L19 12 L12.9 13.8 L12 20 L11.1 13.8 L5 12 L11.1 10.2 Z" fill="#ffffff"/>' +
+                                    '</svg>' +
+                                '</span>' +
+                            '</div>' +
+                            '<div class="pct-concluido">100% concluído</div>';
+                    } else {
+                        const restantesStr = String(modulo.restantes).padStart(2, '0');
+                        const totalStr = String(modulo.total).padStart(2, '0');
+                        card.className = 'modulo-card ' + modulo.estado;
+                        card.innerHTML = '<div class="modulo-nome"><span class="modulo-icon">' + modulo.icone + '</span> ' + modulo.nome + '</div>' +
+                            '<div class="modulo-percentual">' + modulo.percentual + '%</div>' +
+                            '<div class="modulo-contagem">' + restantesStr + '/' + totalStr + ' restantes</div>' +
+                            '<div class="modulo-bar"><div class="modulo-bar-fill" style="width:' + modulo.percentual + '%;"></div></div>' +
+                            '<div class="modulo-alerta ' + (modulo.estado === 'estagnado' ? 'amarelo' : '') + '">' + (modulo.alerta ? '⚠️ ' + modulo.alerta : '') + '</div>';
+                    }
                     card.addEventListener('click', function(e) { e.preventDefault(); scrollParaModulo(modulo.topicoId); });
                     modulosGrid.appendChild(card);
                 });
@@ -3801,7 +3796,6 @@
                 htmlTempo += '</div>';
                 dashboardTempoEstudo.innerHTML = htmlTempo;
 
-                /* ALTERAÇÃO 27: barras alinhadas com grid 130/1fr/60 */
                 let htmlCob = '';
                 const dadosCob = modulos.map(function(modulo) {
                     const total = contarAssuntosModulo(modulo.chave);
@@ -3856,7 +3850,6 @@
                 htmlCal += '</div></div>';
                 dashboardEngajamento.innerHTML = htmlCal;
 
-                /* ALTERAÇÃO 27: barras alinhadas com grid 130/1fr/60 */
                 let htmlTempoMod = '';
                 const dadosTempoMod = modulos.map(function(modulo) {
                     let totalMinutos = 0;
@@ -3875,16 +3868,14 @@
                 });
                 dashboardTempoPorModulo.innerHTML = htmlTempoMod;
 
-                /* ALTERAÇÃO 25: Revisão Espaçada substitui Recomendações */
                 renderizarRevisaoEspacadaDashboard();
             }
 
-            /* ============ REVISÃO ESPAÇADA NO DASHBOARD (ALTERAÇÃO 25) ============ */
+            /* ============ REVISÃO ESPAÇADA NO DASHBOARD ============ */
             function renderizarRevisaoEspacadaDashboard() {
                 const container = dashboardRevisaoEspacada;
                 if (!container) return;
 
-                /* Computa taxa por tipo (24h / 7d / 15d) */
                 const tipos = ['24h', '7d', '15d'];
                 const labelMap = { '24h': 'Curto prazo', '7d': 'Consolidação', '15d': 'Fixação final' };
                 const badgeClassMap = { '24h': 'rev24', '7d': 'rev7', '15d': 'rev15' };
@@ -3898,7 +3889,6 @@
                     const lista = revisoes[chaveBase] || [];
                     lista.forEach(function(rev) {
                         if (!estatisticas[rev.tipo]) return;
-                        /* Não conta revisões descartadas no denominador */
                         if (rev.descartada) return;
                         estatisticas[rev.tipo].total++;
                         if (rev.baixada) estatisticas[rev.tipo].feitas++;
@@ -3910,7 +3900,6 @@
                     e.pct = e.total > 0 ? Math.round((e.feitas / e.total) * 100) : 0;
                 });
 
-                /* Classes de cor por faixa */
                 function classePct(pct) {
                     if (pct >= 90) return 'excelente';
                     if (pct >= 80) return 'bom';
@@ -3924,7 +3913,6 @@
                     return 'vermelho';
                 }
 
-                /* Rodapé: aponta o pior intervalo se algum < 80% */
                 let rodapeHtml = '';
                 let piorTipo = null;
                 let piorPct = 101;
@@ -4079,6 +4067,13 @@
                     const label = container.querySelector('.cronometro-modulo-label');
                     if (label) label.textContent = cronometroPausado ? '(pausado)' : '(estudando...)';
                 });
+
+                if (focoAtivo && focoModuloAtual === cronometroModulo && relogioPadrao) {
+                    relogioPadrao.classList.remove('rodando', 'pausado', 'parado');
+                    relogioPadrao.textContent = formatarTempo(tempoTotal).substring(3);
+                    if (!cronometroPausado) relogioPadrao.classList.add('rodando');
+                    else relogioPadrao.classList.add('pausado');
+                }
             }
 
             function atualizarCronometroBotoes() {
@@ -4121,6 +4116,48 @@
                     }
                 });
             }
+            /* ============ HELPER: criar botão Importante (📌) ============ */
+            function criarBotaoImportante(chaveBase) {
+                const btn = document.createElement('button');
+                btn.className = 'btn-importante' + (assuntoEhImportante(chaveBase) ? ' ativo' : '');
+                btn.dataset.chave = chaveBase;
+                btn.dataset.tooltip = assuntoEhImportante(chaveBase) ? 'Desmarcar Importante' : 'Marcar como Importante';
+                btn.textContent = '📌';
+                btn.type = 'button';
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    toggleImportante(chaveBase, this);
+                });
+                return btn;
+            }
+
+            function toggleImportante(chaveBase, btn) {
+                const chave = chaveBase + '-Importante';
+                const marcado = !!estadoCheckboxes[chave];
+                if (marcado) {
+                    delete estadoCheckboxes[chave];
+                    if (btn) {
+                        btn.classList.remove('ativo');
+                        btn.dataset.tooltip = 'Marcar como Importante';
+                        btn.classList.add('mostrar-tooltip');
+                        setTimeout(function() { btn.classList.remove('mostrar-tooltip'); }, 1500);
+                    }
+                    mostrarToast('🔖', 'Removido da lista de assuntos importantes', 'remover');
+                } else {
+                    estadoCheckboxes[chave] = true;
+                    if (btn) {
+                        btn.classList.add('ativo');
+                        btn.dataset.tooltip = 'Desmarcar Importante';
+                        btn.classList.add('mostrar-tooltip');
+                        setTimeout(function() { btn.classList.remove('mostrar-tooltip'); }, 1500);
+                    }
+                    mostrarToast('📌', 'Adicionado à sua lista de assuntos importantes', 'sucesso');
+                }
+                salvarDados();
+                atualizarBadgesMenu();
+                if (telaImportantes.classList.contains('ativa')) renderizarImportantes();
+            }
+
             /* ============ HELPER: montar bloco de cronômetro ============ */
             function criarCronometroContainer(moduloChave) {
                 const cronometroContainer = document.createElement('div');
@@ -4140,7 +4177,7 @@
                 return cronometroContainer;
             }
 
-            /* ============ HELPER: montar tabela de um módulo ============ */
+            /* ============ HELPER: montar tabela de um módulo (checklist principal) ============ */
             function criarTabelaModulo(moduloChave) {
                 const tableResponsive = document.createElement('div');
                 tableResponsive.className = 'table-responsive';
@@ -4157,7 +4194,15 @@
                     const chaveBase = moduloChave + '-geral-' + idx;
                     const tdAssunto = document.createElement('td');
                     tdAssunto.className = 'assunto-col';
-                    tdAssunto.textContent = assunto;
+                    const spanLinha = document.createElement('span');
+                    spanLinha.className = 'assunto-linha';
+                    const btnImp = criarBotaoImportante(chaveBase);
+                    const spanTexto = document.createElement('span');
+                    spanTexto.className = 'assunto-texto';
+                    spanTexto.textContent = assunto;
+                    spanLinha.appendChild(btnImp);
+                    spanLinha.appendChild(spanTexto);
+                    tdAssunto.appendChild(spanLinha);
                     tr.appendChild(tdAssunto);
                     ['Lido', 'Exercitado', 'Concluido', 'Rev24h', 'Rev7d', 'Rev15d'].forEach(function(tipo) {
                         const tdCheck = document.createElement('td');
@@ -4195,7 +4240,7 @@
                 return tableResponsive;
             }
 
-            /* ============ HELPER: ligar eventos de um checkbox (tela principal) ============ */
+            /* ============ HELPER: ligar eventos de um checkbox (checklist principal) ============ */
             function ligarEventoCheckboxPrincipal(input, tipo, chaveBase, moduloChave) {
                 if (tipo === 'Lido') {
                     input.addEventListener('change', function() {
@@ -4269,9 +4314,7 @@
                 }
             }
 
-            /* ============ RENDERIZAR TÓPICOS (CHECKLIST) ============ */
-            /* ALTERAÇÃO 19: cronômetro + botões colados
-               ALTERAÇÃO 20: subtópicos com cronômetro + Foco Total próprios */
+            /* ============ RENDERIZAR TÓPICOS ============ */
             function renderizarTopicos() {
                 conteudoPrincipal.innerHTML = '';
                 estruturaTopicos.forEach(function(topico) {
@@ -4317,7 +4360,6 @@
                             subtopicHeader.innerHTML = '<span class="subtopic-titulo">' + subtopico.titulo + '</span>' +
                                 '<button class="btn-foco-total" data-modulo="' + moduloChave + '" data-titulo="' + subtopico.titulo + '" data-tipo="subtopico"><span>🎯</span><span>Foco Total</span></button>';
                             topicContent.appendChild(subtopicHeader);
-
                             topicContent.appendChild(criarCronometroContainer(moduloChave));
                             topicContent.appendChild(criarTabelaModulo(moduloChave));
                         } else {
@@ -4340,7 +4382,7 @@
                 atualizarCronometroBotoes();
             }
 
-            /* ============ MODO FOCO TOTAL ============ */
+            /* ============ MODO FOCO ============ */
             function abrirModoFoco(moduloChave, moduloTitulo, tipo) {
                 inicializarAudio();
                 focoModuloAtual = moduloChave;
@@ -4357,9 +4399,18 @@
                     const chaveAnotacao = chaveBase + '-anotacao';
                     const tr = document.createElement('tr');
 
+                    /* Célula do assunto — COM alfinete 📌 */
                     const tdAssunto = document.createElement('td');
                     tdAssunto.className = 'assunto-col';
-                    tdAssunto.textContent = assunto;
+                    const spanLinhaFoco = document.createElement('span');
+                    spanLinhaFoco.className = 'assunto-linha';
+                    const btnImpFoco = criarBotaoImportante(chaveBase);
+                    const spanTextoFoco = document.createElement('span');
+                    spanTextoFoco.className = 'assunto-texto';
+                    spanTextoFoco.textContent = assunto;
+                    spanLinhaFoco.appendChild(btnImpFoco);
+                    spanLinhaFoco.appendChild(spanTextoFoco);
+                    tdAssunto.appendChild(spanLinhaFoco);
                     tr.appendChild(tdAssunto);
 
                     ['Lido', 'Exercitado', 'Concluido', 'Rev24h', 'Rev7d', 'Rev15d'].forEach(function(tp) {
@@ -4398,21 +4449,21 @@
                     focoTabelaBody.appendChild(tr);
                 });
 
+                /* Abre o cronômetro PARADO (igual ao Pomodoro) */
                 if (cronometroAtivo && cronometroModulo === moduloChave) {
-                    /* Já está rodando */
+                    /* Já está rodando neste módulo — mantém */
                 } else {
-                    if (cronometroAtivo && cronometroModulo !== moduloChave) {
+                    if (cronometroAtivo) {
                         pararCronometro(false);
                     }
-                    cronometroAtivo = true;
+                    cronometroAtivo = false;
                     cronometroPausado = false;
                     cronometroModulo = moduloChave;
-                    cronometroInicio = Date.now();
+                    cronometroInicio = null;
                     cronometroTempoAcumulado = 0;
                     cronometroPausaAcumulada = 0;
                     cronometroPausaInicio = null;
-                    if (cronometroInterval) clearInterval(cronometroInterval);
-                    cronometroInterval = setInterval(atualizarCronometroDisplay, 1000);
+                    if (cronometroInterval) { clearInterval(cronometroInterval); cronometroInterval = null; }
                 }
 
                 modoFoco.classList.add('ativo');
@@ -4427,7 +4478,6 @@
                 trocarAba('padrao');
             }
 
-            /* ============ EVENTO DE CHECKBOX NO MODO FOCO ============ */
             function ligarEventoCheckboxFoco(input, tipo, chaveBase, moduloChave) {
                 if (tipo === 'Lido') {
                     input.addEventListener('change', function() {
@@ -4618,8 +4668,20 @@
                     if (i < pomodoroCicloAtual) dot.classList.add('ativo');
                     else dot.classList.remove('ativo');
                 });
-                const label = pomodoroCiclos.querySelector('span:last-child');
+                const label = pomodoroCiclos.querySelector('.ciclos-label');
                 if (label) label.textContent = pomodoroCicloAtual + '/4';
+            }
+
+            function atualizarLabelTempoCiclo() {
+                if (tempoCicloLabel) {
+                    tempoCicloLabel.textContent = pomodoroTempoFoco + '/' + pomodoroTempoPausa;
+                }
+                document.querySelectorAll('.opcao-ciclo').forEach(function(op) {
+                    const partes = op.dataset.ciclo.split('-');
+                    const foco = parseFloat(partes[0]);
+                    const pausa = parseFloat(partes[1]);
+                    op.classList.toggle('ativa', foco === pomodoroTempoFoco && pausa === pomodoroTempoPausa);
+                });
             }
 
             function mostrarCard(tipo) {
@@ -4627,9 +4689,8 @@
                 pomodoroCard.classList.remove('visivel', 'pausa');
                 cardBotoes.innerHTML = '';
 
-                document.getElementById('pomodoroCiclos').classList.add('escondido');
-                document.getElementById('pomodoroDropdown').classList.add('escondido');
-                document.getElementById('pomodoroSomLinha').classList.add('escondido');
+                const somLinha = document.getElementById('pomodoroSomLinha');
+                if (somLinha) somLinha.style.visibility = 'hidden';
 
                 if (tipo === 'fim-foco') {
                     pomodoroCard.classList.add('visivel');
@@ -4707,9 +4768,8 @@
             function fecharCard() {
                 if (!pomodoroCard) return;
                 pomodoroCard.classList.remove('visivel');
-                document.getElementById('pomodoroCiclos').classList.remove('escondido');
-                document.getElementById('pomodoroDropdown').classList.remove('escondido');
-                document.getElementById('pomodoroSomLinha').classList.remove('escondido');
+                const somLinha = document.getElementById('pomodoroSomLinha');
+                if (somLinha) somLinha.style.visibility = 'visible';
                 pomodoroAguardandoAcao = false;
             }
 
@@ -4763,6 +4823,191 @@
                 pomodoroInterval = setInterval(tickPomodoro, 250);
                 atualizarDisplayPomodoro();
                 atualizarBotoesPomodoro();
+            }
+
+            /* ============ TELA IMPORTANTES ============ */
+            function renderizarImportantes() {
+                const container = listaImportantesEl;
+                const contador = contadorImportantesEl;
+                const lista = [];
+
+                for (const chave in estadoCheckboxes) {
+                    if (!estadoCheckboxes[chave] || !chave.endsWith('-Importante')) continue;
+                    const chaveBase = chave.replace('-Importante', '');
+                    const mod = chaveBase.split('-')[0];
+                    if (importantesFiltroModulo !== 'todos' && mod !== importantesFiltroModulo) continue;
+                    const nomeAssunto = obterNomeAssunto(chaveBase);
+                    const modInfo = modulos.find(function(m) { return m.chave === mod; }) || { nome: mod, icone: '📚', topicoId: '' };
+                    if (importantesBusca) {
+                        const alvo = (nomeAssunto + ' ' + modInfo.nome).toLowerCase();
+                        if (!alvo.includes(importantesBusca.toLowerCase())) continue;
+                    }
+                    lista.push({ chave: chaveBase, mod, nomeAssunto, modInfo });
+                }
+
+                if (importantesOrdem === 'modulo') lista.sort(function(a, b) { return a.mod.localeCompare(b.mod); });
+                else if (importantesOrdem === 'alfabetica') lista.sort(function(a, b) { return a.nomeAssunto.localeCompare(b.nomeAssunto); });
+
+                contador.innerHTML = '<strong>' + lista.length + '</strong> assunto' + (lista.length === 1 ? '' : 's') + ' importante' + (lista.length === 1 ? '' : 's');
+
+                if (lista.length === 0) {
+                    container.innerHTML = '<div class="lista-vazia"><span class="icone-grande">📌</span>Nenhum assunto importante ' + (importantesBusca || importantesFiltroModulo !== 'todos' ? 'encontrado com esses filtros.' : 'ainda. Clique no 📌 no checklist!') + '</div>';
+                    return;
+                }
+
+                let html = '';
+                lista.forEach(function(item) {
+                    html += '<div class="item-card">';
+                    html += '<div class="item-cabecalho">';
+                    html += '<span class="item-modulo-tag">' + item.modInfo.icone + ' ' + item.modInfo.nome + '</span>';
+                    html += '<span class="item-assunto">' + item.nomeAssunto + '</span>';
+                    html += '</div>';
+                    html += '<div class="item-acoes">';
+                    html += '<button class="btn-acao" data-acao="desmarcar" data-chave="' + item.chave + '">📌 Desmarcar importante</button>';
+                    html += '<button class="btn-acao" data-acao="ver" data-topico="' + item.modInfo.topicoId + '">🔗 Ver no checklist</button>';
+                    html += '</div>';
+                    html += '</div>';
+                });
+                container.innerHTML = html;
+
+                container.querySelectorAll('button[data-acao]').forEach(function(btn) {
+                    btn.addEventListener('click', function() {
+                        const acao = this.dataset.acao;
+                        const chave = this.dataset.chave;
+                        const topicoId = this.dataset.topico;
+                        if (acao === 'desmarcar') {
+                            delete estadoCheckboxes[chave + '-Importante'];
+                            salvarDados();
+                            atualizarBadgesMenu();
+                            renderizarImportantes();
+                            renderizarTopicos();
+                            mostrarToast('🔖', 'Removido da lista de assuntos importantes', 'remover');
+                        } else if (acao === 'ver') {
+                            mostrarTela('principal');
+                            setTimeout(function() { scrollParaModulo(topicoId); }, 200);
+                        }
+                    });
+                });
+            }
+
+            /* ============ TELA CENTRAL DE ANOTAÇÕES ============ */
+            function dataParaNum(d) {
+                const partes = d.split('/').map(function(n) { return parseInt(n); });
+                return partes[2] * 10000 + partes[1] * 100 + partes[0];
+            }
+
+            function renderizarAnotacoesCentral() {
+                const container = listaAnotacoesEl;
+                const contador = contadorAnotacoesEl;
+                const lista = [];
+
+                for (const chaveAnot in anotacoes) {
+                    const chaveBase = chaveAnot.replace('-anotacao', '');
+                    const mod = chaveBase.split('-')[0];
+                    if (anotacoesFiltroModulo !== 'todos' && mod !== anotacoesFiltroModulo) continue;
+                    const nomeAssunto = obterNomeAssunto(chaveBase);
+                    const modInfo = modulos.find(function(m) { return m.chave === mod; }) || { nome: mod, icone: '📚', topicoId: '' };
+                    anotacoes[chaveAnot].forEach(function(anot, idx) {
+                        if (anotacoesBusca) {
+                            const alvo = (anot.texto + ' ' + nomeAssunto + ' ' + modInfo.nome).toLowerCase();
+                            if (!alvo.includes(anotacoesBusca.toLowerCase())) return;
+                        }
+                        lista.push({ chaveAnot: chaveAnot, chaveBase: chaveBase, mod: mod, idx: idx, texto: anot.texto, data: anot.data, nomeAssunto: nomeAssunto, modInfo: modInfo });
+                    });
+                }
+
+                if (anotacoesOrdem === 'recentes') lista.sort(function(a, b) { return dataParaNum(b.data) - dataParaNum(a.data); });
+                else if (anotacoesOrdem === 'antigas') lista.sort(function(a, b) { return dataParaNum(a.data) - dataParaNum(b.data); });
+                else if (anotacoesOrdem === 'modulo') lista.sort(function(a, b) { return a.mod.localeCompare(b.mod); });
+
+                contador.innerHTML = '<strong>' + lista.length + '</strong> anotaç' + (lista.length === 1 ? 'ão' : 'ões');
+
+                if (lista.length === 0) {
+                    container.innerHTML = '<div class="lista-vazia"><span class="icone-grande">📝</span>Nenhuma anotação ' + (anotacoesBusca || anotacoesFiltroModulo !== 'todos' ? 'encontrada com esses filtros.' : 'ainda. Faça anotações no checklist!') + '</div>';
+                    return;
+                }
+
+                let html = '';
+                lista.forEach(function(item) {
+                    const textoEscapado = item.texto.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+                    html += '<div class="item-card" data-chave="' + item.chaveAnot + '" data-idx="' + item.idx + '">';
+                    html += '<div class="item-cabecalho">';
+                    html += '<span class="item-modulo-tag">' + item.modInfo.icone + ' ' + item.modInfo.nome + '</span>';
+                    html += '<span class="item-assunto">' + item.nomeAssunto + '</span>';
+                    html += '<span class="item-data">📅 ' + item.data + '</span>';
+                    html += '</div>';
+                    html += '<div class="item-texto">' + textoEscapado + '</div>';
+                    html += '<div class="item-acoes">';
+                    html += '<button class="btn-acao" data-acao="editar" data-chave="' + item.chaveAnot + '" data-idx="' + item.idx + '">✏️ Editar</button>';
+                    html += '<button class="btn-acao" data-acao="copiar" data-chave="' + item.chaveAnot + '" data-idx="' + item.idx + '">📋 Copiar</button>';
+                    html += '<button class="btn-acao" data-acao="ver" data-topico="' + item.modInfo.topicoId + '">🔗 Ver no checklist</button>';
+                    html += '<button class="btn-acao perigo" data-acao="excluir" data-chave="' + item.chaveAnot + '" data-idx="' + item.idx + '">🗑️ Excluir</button>';
+                    html += '</div>';
+                    html += '</div>';
+                });
+                container.innerHTML = html;
+
+                container.querySelectorAll('button[data-acao]').forEach(function(btn) {
+                    btn.addEventListener('click', function() {
+                        const acao = this.dataset.acao;
+                        const chaveAnot = this.dataset.chave;
+                        const idx = parseInt(this.dataset.idx);
+                        const topicoId = this.dataset.topico;
+                        const card = this.closest('.item-card');
+                        if (acao === 'editar') editarAnotacaoInline(card, chaveAnot, idx);
+                        else if (acao === 'copiar') {
+                            navigator.clipboard.writeText(anotacoes[chaveAnot][idx].texto).then(function() {
+                                mostrarToast('📋', 'Anotação copiada!', 'sucesso');
+                            }).catch(function() {
+                                mostrarToast('⚠️', 'Não foi possível copiar');
+                            });
+                        } else if (acao === 'ver') {
+                            mostrarTela('principal');
+                            setTimeout(function() { scrollParaModulo(topicoId); }, 200);
+                        } else if (acao === 'excluir') {
+                            if (confirm('Excluir esta anotação?')) {
+                                anotacoes[chaveAnot].splice(idx, 1);
+                                if (anotacoes[chaveAnot].length === 0) delete anotacoes[chaveAnot];
+                                salvarDados();
+                                atualizarBadgesMenu();
+                                renderizarAnotacoesCentral();
+                                renderizarTopicos();
+                                mostrarToast('🗑️', 'Anotação excluída', 'remover');
+                            }
+                        }
+                    });
+                });
+            }
+
+            function editarAnotacaoInline(card, chaveAnot, idx) {
+                const textoAtual = anotacoes[chaveAnot][idx].texto;
+                const divTexto = card.querySelector('.item-texto');
+                const divAcoes = card.querySelector('.item-acoes');
+                const textoOriginal = divTexto.innerHTML;
+                const acoesOriginais = divAcoes.innerHTML;
+
+                divTexto.innerHTML = '<textarea class="item-textarea-edit">' + textoAtual + '</textarea>';
+                const ta = divTexto.querySelector('textarea');
+                ta.focus();
+
+                divAcoes.innerHTML = '<button class="btn-acao" data-acao-edit="salvar">💾 Salvar</button>' +
+                    '<button class="btn-acao perigo" data-acao-edit="cancelar">✗ Cancelar</button>';
+
+                divAcoes.querySelector('[data-acao-edit="salvar"]').addEventListener('click', function() {
+                    const novo = ta.value.trim();
+                    if (novo) {
+                        anotacoes[chaveAnot][idx].texto = novo;
+                        salvarDados();
+                        renderizarAnotacoesCentral();
+                        renderizarTopicos();
+                        mostrarToast('💾', 'Anotação salva!', 'sucesso');
+                    }
+                });
+                divAcoes.querySelector('[data-acao-edit="cancelar"]').addEventListener('click', function() {
+                    divTexto.innerHTML = textoOriginal;
+                    divAcoes.innerHTML = acoesOriginais;
+                    renderizarAnotacoesCentral();
+                });
             }
 
             /* ============ SIMULAÇÕES ============ */
@@ -4826,6 +5071,7 @@
                                 if (!conclusoesPorDia[dStr]) conclusoesPorDia[dStr] = 0;
                                 conclusoesPorDia[dStr]++;
                             }
+                            if (r < 0.25) estadoCheckboxes[chaveBase + '-Importante'] = true;
                         }
                     }
                     tempoEstudo[dStr] = { totalMinutos: totalDia, totalPausa: totalPausaDia, modulos: modulosDia };
@@ -4841,6 +5087,7 @@
                 atualizarGraficoStatus();
                 atualizarSaudacao();
                 atualizarConfigInfo();
+                atualizarBadgesMenu();
                 mostrarTela('dashboard');
             }
 
@@ -4877,6 +5124,7 @@
                 renderizarRevisaoEspacada();
                 atualizarGraficoStatus();
                 atualizarSaudacao();
+                atualizarBadgesMenu();
             }
 
             /* ============ NAVEGAÇÃO ENTRE TELAS ============ */
@@ -4885,6 +5133,8 @@
                 telaPrincipal.classList.remove('ativa');
                 telaDashboard.classList.remove('ativa');
                 telaRevisoes.classList.remove('ativa');
+                telaImportantes.classList.remove('ativa');
+                telaAnotacoes.classList.remove('ativa');
                 telaConfig.classList.remove('ativa');
                 if (nomeTela === 'principal') {
                     telaPrincipal.classList.add('ativa');
@@ -4897,12 +5147,20 @@
                 } else if (nomeTela === 'revisoes') {
                     telaRevisoes.classList.add('ativa');
                     renderizarRevisoesPendentes();
+                } else if (nomeTela === 'importantes') {
+                    telaImportantes.classList.add('ativa');
+                    renderizarImportantes();
+                } else if (nomeTela === 'anotacoes') {
+                    telaAnotacoes.classList.add('ativa');
+                    renderizarAnotacoesCentral();
                 } else {
                     telaConfig.classList.add('ativa');
                 }
                 menuInicio.classList.toggle('ativo', nomeTela === 'principal');
                 menuDashboard.classList.toggle('ativo', nomeTela === 'dashboard');
                 menuRevisoes.classList.toggle('ativo', nomeTela === 'revisoes');
+                menuImportantes.classList.toggle('ativo', nomeTela === 'importantes');
+                menuAnotacoes.classList.toggle('ativo', nomeTela === 'anotacoes');
                 menuConfig.classList.toggle('ativo', nomeTela === 'config');
                 salvarDados();
             }
@@ -4939,7 +5197,6 @@
                 renderizarNotificacoes();
             });
 
-            /* ALTERAÇÃO 22: seletor de tema */
             if (seletorTema) {
                 seletorTema.querySelectorAll('.seletor-tema-opcao').forEach(function(btn) {
                     btn.addEventListener('click', function() {
@@ -4962,7 +5219,57 @@
             menuInicio.addEventListener('click', function(e) { e.preventDefault(); fecharMenu(); mostrarTela('principal'); });
             menuDashboard.addEventListener('click', function(e) { e.preventDefault(); fecharMenu(); mostrarTela('dashboard'); });
             menuRevisoes.addEventListener('click', function(e) { e.preventDefault(); fecharMenu(); mostrarTela('revisoes'); });
+            menuImportantes.addEventListener('click', function(e) { e.preventDefault(); fecharMenu(); mostrarTela('importantes'); });
+            menuAnotacoes.addEventListener('click', function(e) { e.preventDefault(); fecharMenu(); mostrarTela('anotacoes'); });
             menuConfig.addEventListener('click', function(e) { e.preventDefault(); fecharMenu(); mostrarTela('config'); });
+
+            /* Filtros Importantes */
+            buscaImportantesInput.addEventListener('input', function() { importantesBusca = this.value.toLowerCase().trim(); renderizarImportantes(); });
+            pillsImportantes.querySelectorAll('.pill').forEach(function(pill) {
+                pill.addEventListener('click', function() {
+                    pillsImportantes.querySelectorAll('.pill').forEach(function(p) { p.classList.remove('ativo'); });
+                    this.classList.add('ativo');
+                    importantesFiltroModulo = this.dataset.modulo;
+                    renderizarImportantes();
+                });
+            });
+            ordemImportantesSelect.addEventListener('change', function() { importantesOrdem = this.value; renderizarImportantes(); });
+
+            /* Filtros Anotações */
+            buscaAnotacoesInput.addEventListener('input', function() { anotacoesBusca = this.value.toLowerCase().trim(); renderizarAnotacoesCentral(); });
+            pillsAnotacoes.querySelectorAll('.pill').forEach(function(pill) {
+                pill.addEventListener('click', function() {
+                    pillsAnotacoes.querySelectorAll('.pill').forEach(function(p) { p.classList.remove('ativo'); });
+                    this.classList.add('ativo');
+                    anotacoesFiltroModulo = this.dataset.modulo;
+                    renderizarAnotacoesCentral();
+                });
+            });
+            ordemAnotacoesSelect.addEventListener('change', function() { anotacoesOrdem = this.value; renderizarAnotacoesCentral(); });
+
+            /* Modal ciclo */
+            btnConfigCiclo.addEventListener('click', function() {
+                modalCicloOverlay.classList.add('visivel');
+                atualizarLabelTempoCiclo();
+            });
+            btnFecharModalCiclo.addEventListener('click', function() { modalCicloOverlay.classList.remove('visivel'); });
+            modalCicloOverlay.addEventListener('click', function(e) { if (e.target === modalCicloOverlay) modalCicloOverlay.classList.remove('visivel'); });
+            modalCicloOverlay.querySelectorAll('.opcao-ciclo').forEach(function(op) {
+                op.addEventListener('click', function() {
+                    const partes = this.dataset.ciclo.split('-');
+                    pomodoroTempoFoco = parseFloat(partes[0]);
+                    pomodoroTempoPausa = parseFloat(partes[1]);
+                    atualizarLabelTempoCiclo();
+                    salvarDados();
+                    if (pomodoroAtivo && pomodoroEstado !== 'off') {
+                        iniciarCicloFoco();
+                    } else {
+                        pomodoroTempoRestante = pomodoroTempoFoco * 60;
+                        atualizarDisplayPomodoro();
+                    }
+                    setTimeout(function() { modalCicloOverlay.classList.remove('visivel'); }, 200);
+                });
+            });
 
             function fecharModalAnotacao() { modalAnotacaoOverlay.classList.remove('visivel'); chaveAnotacaoAtual = null; }
             btnFecharModalAnotacao.addEventListener('click', fecharModalAnotacao);
@@ -4983,6 +5290,7 @@
                     renderizarAnotacoes();
                     renderizarTopicos();
                     atualizarBotoesAnotacaoFoco();
+                    atualizarBadgesMenu();
                 }
             });
             btnExcluirAnotacao.addEventListener('click', function() {
@@ -4993,6 +5301,7 @@
                         renderizarAnotacoes();
                         renderizarTopicos();
                         atualizarBotoesAnotacaoFoco();
+                        atualizarBadgesMenu();
                     }
                 }
             });
@@ -5001,6 +5310,10 @@
             if (btnVoltarDashboardTopo) btnVoltarDashboardTopo.addEventListener('click', function() { mostrarTela('principal'); });
             btnVoltarRevisoes.addEventListener('click', function() { mostrarTela('principal'); });
             btnVoltarRevisoesRodape.addEventListener('click', function() { mostrarTela('principal'); });
+            btnVoltarImportantes.addEventListener('click', function() { mostrarTela('principal'); });
+            btnVoltarImportantesRodape.addEventListener('click', function() { mostrarTela('principal'); });
+            btnVoltarAnotacoes.addEventListener('click', function() { mostrarTela('principal'); });
+            btnVoltarAnotacoesRodape.addEventListener('click', function() { mostrarTela('principal'); });
 
             btnAtualizar.addEventListener('click', function() {
                 dataInicial = dataInicialInput.value;
@@ -5035,42 +5348,71 @@
                 mostrarToast('✅', 'Link salvo com sucesso!');
             });
 
-            btnFecharBanner.addEventListener('click', function() {
-                bannerReduzido = true;
-                aplicarEstadoBanner();
-                salvarDados();
-            });
-
-            btnReabrirBanner.addEventListener('click', function() {
-                bannerReduzido = false;
-                aplicarEstadoBanner();
-                salvarDados();
-            });
-
+            /* BANNER DESKTOP */
+            if (btnFecharBanner) {
+                btnFecharBanner.addEventListener('click', function() {
+                    bannerReduzido = true;
+                    aplicarEstadoBanner();
+                    salvarDados();
+                });
+            }
+            if (btnReabrirBanner) {
+                btnReabrirBanner.addEventListener('click', function() {
+                    bannerReduzido = false;
+                    aplicarEstadoBanner();
+                    salvarDados();
+                });
+            }
             ['btnWhatsApp', 'btnTelegram', 'btnEmail', 'btnSMS'].forEach(function(id) {
                 const btn = document.getElementById(id);
                 if (btn) btn.addEventListener('click', function() { incrementarContadorCompartilhamentos(); });
             });
+            if (btnInstagram) {
+                btnInstagram.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    if (navigator.share) {
+                        navigator.share({ title: 'CheckAprovação', text: MENSAGEM_COMPARTILHAR, url: linkCompartilhar })
+                            .then(function() { incrementarContadorCompartilhamentos(); })
+                            .catch(function(err) { if (err && err.name !== 'AbortError') copiarLinkComFallback(); });
+                        return;
+                    }
+                    copiarLinkComFallback();
+                    setTimeout(function() { window.open('https://www.instagram.com/', '_blank', 'noopener,noreferrer'); }, 400);
+                });
+            }
 
-            btnInstagram.addEventListener('click', function(e) {
-                e.preventDefault();
-                if (navigator.share) {
-                    navigator.share({
-                        title: 'CheckAprovação',
-                        text: MENSAGEM_COMPARTILHAR,
-                        url: linkCompartilhar
-                    }).then(function() {
-                        incrementarContadorCompartilhamentos();
-                    }).catch(function(err) {
-                        if (err && err.name !== 'AbortError') copiarLinkComFallback();
-                    });
-                    return;
-                }
-                copiarLinkComFallback();
-                setTimeout(function() {
-                    window.open('https://www.instagram.com/', '_blank', 'noopener,noreferrer');
-                }, 400);
+            /* BANNER MOBILE */
+            if (btnFecharBannerMobile) {
+                btnFecharBannerMobile.addEventListener('click', function() {
+                    bannerReduzido = true;
+                    aplicarEstadoBanner();
+                    salvarDados();
+                });
+            }
+            if (btnReabrirBannerMobile) {
+                btnReabrirBannerMobile.addEventListener('click', function() {
+                    bannerReduzido = false;
+                    aplicarEstadoBanner();
+                    salvarDados();
+                });
+            }
+            ['btnWhatsAppMobile', 'btnTelegramMobile', 'btnEmailMobile', 'btnSMSMobile'].forEach(function(id) {
+                const btn = document.getElementById(id);
+                if (btn) btn.addEventListener('click', function() { incrementarContadorCompartilhamentos(); });
             });
+            if (btnInstagramMobile) {
+                btnInstagramMobile.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    if (navigator.share) {
+                        navigator.share({ title: 'CheckAprovação', text: MENSAGEM_COMPARTILHAR, url: linkCompartilhar })
+                            .then(function() { incrementarContadorCompartilhamentos(); })
+                            .catch(function(err) { if (err && err.name !== 'AbortError') copiarLinkComFallback(); });
+                        return;
+                    }
+                    copiarLinkComFallback();
+                    setTimeout(function() { window.open('https://www.instagram.com/', '_blank', 'noopener,noreferrer'); }, 400);
+                });
+            }
 
             /* ============ MODO FOCO: EVENTOS ============ */
             document.querySelectorAll('.painel-aba').forEach(function(aba) {
@@ -5131,18 +5473,6 @@
                 fecharCard();
             });
 
-            pomodoroTempoSelect.addEventListener('change', function() {
-                const partes = this.value.split('-');
-                pomodoroTempoFoco = parseFloat(partes[0]);
-                pomodoroTempoPausa = parseFloat(partes[1]);
-                if (pomodoroAtivo && pomodoroEstado !== 'off') {
-                    iniciarCicloFoco();
-                } else {
-                    pomodoroTempoRestante = pomodoroTempoFoco * 60;
-                    atualizarDisplayPomodoro();
-                }
-            });
-
             btnSom.addEventListener('click', function() {
                 inicializarAudio();
                 pomodoroSomAtivo = !pomodoroSomAtivo;
@@ -5156,7 +5486,10 @@
             btnSairTopo.addEventListener('click', sairModoFoco);
 
             document.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape' && focoAtivo) sairModoFoco();
+                if (e.key === 'Escape') {
+                    if (focoAtivo) sairModoFoco();
+                    else if (modalCicloOverlay.classList.contains('visivel')) modalCicloOverlay.classList.remove('visivel');
+                }
             });
 
             /* ============ RESET ============ */
@@ -5194,11 +5527,12 @@
                     renderizarRevisaoEspacada();
                     atualizarGraficoStatus();
                     atualizarSaudacao();
+                    atualizarBadgesMenu();
                 }
             });
 
             btnResetGeral.addEventListener('click', function() {
-                if (confirm('⚠️ ATENÇÃO!\n\nTem certeza que deseja apagar TODOS os dados e voltar ao estado inicial?\n\nEsta ação não pode ser desfeita. Serão apagados:\n- Nome do usuário\n- Concurso e cargo\n- Datas inicial e final\n- Data simulada\n- Tema escolhido\n- Progresso de leitura\n- Anotações\n- Tempo de estudo\n- Notificações\n- Revisões espaçadas\n- Estado da caixa de saudação\n- Link de compartilhamento\n- Estado do banner Compartilhe\n- Som do Pomodoro')) {
+                if (confirm('⚠️ ATENÇÃO!\n\nTem certeza que deseja apagar TODOS os dados e voltar ao estado inicial?\n\nEsta ação não pode ser desfeita. Serão apagados:\n- Nome do usuário\n- Concurso e cargo\n- Datas inicial e final\n- Data simulada\n- Tema escolhido\n- Progresso de leitura\n- Anotações\n- Assuntos importantes\n- Tempo de estudo\n- Notificações\n- Revisões espaçadas\n- Estado da caixa de saudação\n- Link de compartilhamento\n- Estado do banner Compartilhe\n- Som do Pomodoro')) {
                     estadoCheckboxes = {};
                     ultimasAtividades = {};
                     notificacoes = [];
@@ -5234,6 +5568,9 @@
                     linkCompartilhar = LINK_COMPARTILHAR_PADRAO;
                     bannerReduzido = false;
                     pomodoroSomAtivo = true;
+                    pomodoroTempoFoco = 25;
+                    pomodoroTempoPausa = 5;
+                    pomodoroTempoRestante = 25 * 60;
                     if (cronometroInterval) clearInterval(cronometroInterval);
                     nomeUsuarioInput.value = '';
                     concursoInput.value = concurso;
@@ -5249,6 +5586,7 @@
                     aplicarEstadoBanner();
                     atualizarLinksCompartilhamento();
                     atualizarHeaderConcurso();
+                    atualizarLabelTempoCiclo();
                     salvarDados();
                     renderizarTopicos();
                     renderizarModulos();
@@ -5259,6 +5597,7 @@
                     atualizarConfigInfo();
                     atualizarGraficoStatus();
                     atualizarSaudacao();
+                    atualizarBadgesMenu();
                     mostrarTela('principal');
                 }
             });
@@ -5286,10 +5625,13 @@
                 else { btnSom.classList.remove('ativo'); btnSom.textContent = '🔇'; }
                 atualizarHeaderConcurso();
                 atualizarLinksCompartilhamento();
-                contadorNumero.textContent = obterContadorCompartilhamentos();
+                const contadorAtual = obterContadorCompartilhamentos();
+                if (contadorNumero) contadorNumero.textContent = contadorAtual;
+                if (contadorNumeroMobile) contadorNumeroMobile.textContent = contadorAtual;
                 aplicarEstadoBanner();
                 atualizarEstadoDataSimulada();
                 aplicarEstadoSaudacao();
+                atualizarLabelTempoCiclo();
                 renderizarTopicos();
                 renderizarModulos();
                 renderizarNotificacoes();
@@ -5300,6 +5642,7 @@
                 renderizarRevisaoEspacada();
                 atualizarConfigInfo();
                 atualizarGraficoStatus();
+                atualizarBadgesMenu();
                 mostrarTela('principal');
                 atualizarSaudacao();
                 if (!armazenamento.disponivel) mostrarAvisoPersistencia();
