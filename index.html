@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>CheckAprovação v0.69 | Guarda Municipal Florianópolis</title>
+<title>CheckAprovação v0.70 | Guarda Municipal Florianópolis</title>
 <meta name="theme-color" content="#0f6cbd">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📋</text></svg>">
 <style>
@@ -71,6 +71,23 @@ body[data-sistema="windows"][data-tema="claro"] {
     --color-orange: #ca5010;
     --color-orange-light: #fdf3e5;
 
+    /* v0.70 — faixas de cabeçalho do checklist (tons escuros, texto claro) */
+    --color-header-ativo: #0b4d0b;
+    --color-header-atencao: #8a3707;
+    --color-header-critico: #7a0a14;
+    --color-header-concluido: #6b4a10;
+
+    /* v0.70 — tópico pai neutro */
+    --color-header-neutro-bg: #ebe9e7;
+    --color-header-neutro-text: #4a4a4a;
+    --color-header-neutro-linha: #d2d0ce;
+
+    /* v0.70 — borda fina colorida dos cards de módulo */
+    --color-modulo-borda-ativo: #0e700e;
+    --color-modulo-borda-atencao: #bc4b09;
+    --color-modulo-borda-critico: #b10e1c;
+    --color-modulo-borda-concluido: #8a6116;
+
     --font-base: 'Segoe UI Variable Display', 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
     --font-mono: 'Cascadia Code', 'Consolas', ui-monospace, monospace;
     --font-size-base: 14px;
@@ -125,6 +142,23 @@ body[data-sistema="windows"][data-tema="escuro"] {
     --color-gold-light: #3a2d0f;
     --color-orange: #ffa76b;
     --color-orange-light: #3d1e05;
+
+    /* v0.70 — faixas de cabeçalho do checklist (tons escuros, texto claro) */
+    --color-header-ativo: #0d3d0d;
+    --color-header-atencao: #4a2408;
+    --color-header-critico: #4a0a10;
+    --color-header-concluido: #3d2d0a;
+
+    /* v0.70 — tópico pai neutro */
+    --color-header-neutro-bg: #2a2a2a;
+    --color-header-neutro-text: #b8b8b8;
+    --color-header-neutro-linha: #3d3d3d;
+
+    /* v0.70 — borda fina colorida dos cards de módulo */
+    --color-modulo-borda-ativo: #6ccb5f;
+    --color-modulo-borda-atencao: #fce100;
+    --color-modulo-borda-critico: #ff6b6b;
+    --color-modulo-borda-concluido: #e6c35c;
 
     --font-base: 'Segoe UI Variable Display', 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
     --font-mono: 'Cascadia Code', 'Consolas', ui-monospace, monospace;
@@ -185,6 +219,23 @@ body[data-sistema="android"][data-tema="claro"] {
     --color-orange: #8b3f00;
     --color-orange-light: #ffd9c2;
 
+    /* v0.70 — faixas de cabeçalho do checklist (tons escuros, texto claro) */
+    --color-header-ativo: #0d3f28;
+    --color-header-atencao: #4a2a00;
+    --color-header-critico: #5c0d0d;
+    --color-header-concluido: #3d2d00;
+
+    /* v0.70 — tópico pai neutro */
+    --color-header-neutro-bg: #ece6f0;
+    --color-header-neutro-text: #49454f;
+    --color-header-neutro-linha: #cac4d0;
+
+    /* v0.70 — borda fina colorida dos cards de módulo */
+    --color-modulo-borda-ativo: #146c43;
+    --color-modulo-borda-atencao: #8b5000;
+    --color-modulo-borda-critico: #ba1a1a;
+    --color-modulo-borda-concluido: #7a5a00;
+
     --font-base: 'Roboto', 'Google Sans Text', 'Google Sans', -apple-system, BlinkMacSystemFont, sans-serif;
     --font-mono: 'Roboto Mono', ui-monospace, Menlo, Consolas, monospace;
     --font-size-base: 14px;
@@ -239,6 +290,23 @@ body[data-sistema="android"][data-tema="escuro"] {
     --color-gold-light: #4a3f1a;
     --color-orange: #ffb68c;
     --color-orange-light: #4f2400;
+
+    /* v0.70 — faixas de cabeçalho do checklist (tons escuros, texto claro) */
+    --color-header-ativo: #0d3a24;
+    --color-header-atencao: #4a2f00;
+    --color-header-critico: #4a0f0a;
+    --color-header-concluido: #3a2d05;
+
+    /* v0.70 — tópico pai neutro */
+    --color-header-neutro-bg: #2b2930;
+    --color-header-neutro-text: #cac4d0;
+    --color-header-neutro-linha: #49454f;
+
+    /* v0.70 — borda fina colorida dos cards de módulo */
+    --color-modulo-borda-ativo: #88d8a3;
+    --color-modulo-borda-atencao: #ffd54f;
+    --color-modulo-borda-critico: #ffb4ab;
+    --color-modulo-borda-concluido: #f0cd6c;
 
     --font-base: 'Roboto', 'Google Sans Text', 'Google Sans', -apple-system, BlinkMacSystemFont, sans-serif;
     --font-mono: 'Roboto Mono', ui-monospace, Menlo, Consolas, monospace;
@@ -304,6 +372,23 @@ body[data-sistema="iphone"][data-tema="claro"] {
     --color-orange: #ff9500;
     --color-orange-light: rgba(255, 149, 0, 0.14);
 
+    /* v0.70 — faixas de cabeçalho do checklist (tons escuros, texto claro) */
+    --color-header-ativo: #1a7a35;
+    --color-header-atencao: #a85e00;
+    --color-header-critico: #a82a22;
+    --color-header-concluido: #a87c00;
+
+    /* v0.70 — tópico pai neutro */
+    --color-header-neutro-bg: rgba(60, 60, 67, 0.06);
+    --color-header-neutro-text: rgba(60, 60, 67, 0.7);
+    --color-header-neutro-linha: rgba(60, 60, 67, 0.16);
+
+    /* v0.70 — borda fina colorida dos cards de módulo */
+    --color-modulo-borda-ativo: #34c759;
+    --color-modulo-borda-atencao: #ff9500;
+    --color-modulo-borda-critico: #ff3b30;
+    --color-modulo-borda-concluido: #ffb800;
+
     --font-base: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', 'Segoe UI', sans-serif;
     --font-mono: ui-monospace, 'SF Mono', Menlo, 'Cascadia Code', monospace;
     --font-size-base: 15px;
@@ -363,6 +448,23 @@ body[data-sistema="iphone"][data-tema="escuro"] {
     --color-gold-light: rgba(255, 204, 0, 0.16);
     --color-orange: #ff9f0a;
     --color-orange-light: rgba(255, 159, 10, 0.16);
+
+    /* v0.70 — faixas de cabeçalho do checklist (tons escuros, texto claro) */
+    --color-header-ativo: #145c28;
+    --color-header-atencao: #7a4400;
+    --color-header-critico: #7a2018;
+    --color-header-concluido: #7a5a00;
+
+    /* v0.70 — tópico pai neutro */
+    --color-header-neutro-bg: rgba(255, 255, 255, 0.05);
+    --color-header-neutro-text: rgba(235, 235, 245, 0.7);
+    --color-header-neutro-linha: rgba(255, 255, 255, 0.14);
+
+    /* v0.70 — borda fina colorida dos cards de módulo */
+    --color-modulo-borda-ativo: #30d158;
+    --color-modulo-borda-atencao: #ff9f0a;
+    --color-modulo-borda-critico: #ff453a;
+    --color-modulo-borda-concluido: #ffcc00;
 
     --font-base: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', 'Segoe UI', sans-serif;
     --font-mono: ui-monospace, 'SF Mono', Menlo, 'Cascadia Code', monospace;
@@ -788,6 +890,7 @@ body[data-sistema="iphone"] .saudacao__x {
 body[data-sistema="iphone"][data-tema="escuro"] .saudacao__x {
     background: rgba(255,255,255,0.1);
 }
+
 /* ============================================================
    PROGRESSO — 4 cards
    ============================================================ */
@@ -974,7 +1077,6 @@ body[data-sistema="android"] .card-farol {
 }
 @media (max-width: 400px) { .pizza-info { font-size: 0.55rem; margin-top: 4px; } }
 .pizza-info strong { color: var(--color-text); }
-
 /* ============================================================
    RECOMENDAÇÕES
    ============================================================ */
@@ -1046,7 +1148,8 @@ body[data-sistema="iphone"] .reco-name { font-size: 0.95rem; }
 }
 
 /* ============================================================
-   MÓDULOS GRID — v0.69 com 4 estados
+   MÓDULOS GRID — v0.70
+   Correção Android + bordas finas coloridas em todos os sistemas
    ============================================================ */
 .modulos-topo {
     display: flex;
@@ -1105,19 +1208,19 @@ body[data-sistema="iphone"] .reco-name { font-size: 0.95rem; }
 }
 
 .modulo-card--ativo {
-    border-color: var(--color-success);
+    border-color: var(--color-modulo-borda-ativo);
     background: linear-gradient(135deg, var(--color-surface) 0%, var(--color-success-light) 100%);
 }
 .modulo-card--atencao {
-    border-color: var(--color-warning);
+    border-color: var(--color-modulo-borda-atencao);
     background: linear-gradient(135deg, var(--color-surface) 0%, var(--color-warning-light) 100%);
 }
 .modulo-card--critico {
-    border-color: var(--color-danger);
+    border-color: var(--color-modulo-borda-critico);
     background: linear-gradient(135deg, var(--color-surface) 0%, var(--color-danger-light) 100%);
 }
 .modulo-card--concluido {
-    border-color: var(--color-gold);
+    border-color: var(--color-modulo-borda-concluido);
     background: linear-gradient(135deg, var(--color-surface) 0%, var(--color-gold-light) 100%);
     align-items: center;
     text-align: center;
@@ -1143,19 +1246,19 @@ body[data-sistema="iphone"][data-tema="escuro"] .modulo-card {
 }
 body[data-sistema="iphone"] .modulo-card--ativo {
     background: linear-gradient(180deg, rgba(52, 199, 89, 0.22) 0%, var(--color-glass) 70%);
-    border-color: rgba(52, 199, 89, 0.32);
+    border: 1.5px solid var(--color-modulo-borda-ativo);
 }
 body[data-sistema="iphone"] .modulo-card--atencao {
     background: linear-gradient(180deg, rgba(255, 149, 0, 0.20) 0%, var(--color-glass) 70%);
-    border-color: rgba(255, 149, 0, 0.30);
+    border: 1.5px solid var(--color-modulo-borda-atencao);
 }
 body[data-sistema="iphone"] .modulo-card--critico {
     background: linear-gradient(180deg, rgba(255, 59, 48, 0.20) 0%, var(--color-glass) 70%);
-    border-color: rgba(255, 59, 48, 0.30);
+    border: 1.5px solid var(--color-modulo-borda-critico);
 }
 body[data-sistema="iphone"] .modulo-card--concluido {
     background: linear-gradient(180deg, rgba(255, 184, 0, 0.22) 0%, var(--color-glass) 70%);
-    border-color: rgba(255, 184, 0, 0.32);
+    border: 1.5px solid var(--color-modulo-borda-concluido);
 }
 body[data-sistema="iphone"][data-tema="escuro"] .modulo-card--ativo {
     background: linear-gradient(180deg, rgba(48, 209, 88, 0.20) 0%, var(--color-glass) 70%);
@@ -1169,10 +1272,29 @@ body[data-sistema="iphone"][data-tema="escuro"] .modulo-card--critico {
 body[data-sistema="iphone"][data-tema="escuro"] .modulo-card--concluido {
     background: linear-gradient(180deg, rgba(255, 204, 0, 0.20) 0%, var(--color-glass) 70%);
 }
+
+/* v0.70 — Android: base do card sem sobrescrever estado */
 body[data-sistema="android"] .modulo-card {
     border: 1px solid var(--color-border-visible);
     background: var(--color-surface-2);
     padding: var(--pad-card);
+}
+/* v0.70 — Android: seletores específicos de estado (antes sobrescritos) */
+body[data-sistema="android"] .modulo-card--ativo {
+    border: 2px solid var(--color-modulo-borda-ativo);
+    background: linear-gradient(135deg, var(--color-surface-2) 0%, var(--color-success-light) 100%);
+}
+body[data-sistema="android"] .modulo-card--atencao {
+    border: 2px solid var(--color-modulo-borda-atencao);
+    background: linear-gradient(135deg, var(--color-surface-2) 0%, var(--color-warning-light) 100%);
+}
+body[data-sistema="android"] .modulo-card--critico {
+    border: 2px solid var(--color-modulo-borda-critico);
+    background: linear-gradient(135deg, var(--color-surface-2) 0%, var(--color-danger-light) 100%);
+}
+body[data-sistema="android"] .modulo-card--concluido {
+    border: 2px solid var(--color-modulo-borda-concluido);
+    background: linear-gradient(135deg, var(--color-surface-2) 0%, var(--color-gold-light) 100%);
 }
 
 .modulo-nome {
@@ -1277,7 +1399,9 @@ body[data-sistema="iphone"] .modulo-pct {
 body[data-sistema="iphone"] .pct-concluido { font-size: 1.05rem; }
 
 /* ============================================================
-   CHECKLIST — TOPIC / SUBTOPIC
+   CHECKLIST — v0.70
+   Tópico pai neutro (não clicável, não colapsa)
+   Subtópico colorido por estado, clicável, colapsa seu bloco
    ============================================================ */
 .checklist-group {
     background: var(--color-surface);
@@ -1315,27 +1439,26 @@ body[data-sistema="android"] .checklist-group {
     100% { box-shadow: var(--shadow-card); }
 }
 
+/* v0.70 — Tópico pai neutro */
 .topic-header {
-    background: var(--color-primary);
-    color: var(--color-primary-fg);
+    background: var(--color-header-neutro-bg);
+    color: var(--color-header-neutro-text);
     padding: var(--pad-card-tight) var(--pad-card);
     display: flex;
     align-items: center;
     gap: 10px;
-    cursor: pointer;
-    transition: background-color var(--dur-fast) ease;
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18);
+    border-bottom: 1px solid var(--color-header-neutro-linha);
+    box-shadow: none;
     user-select: none;
 }
 body[data-sistema="iphone"] .topic-header {
-    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-hover) 100%);
-    color: var(--color-primary-fg);
-    border-bottom: 0.5px solid var(--color-glass-border);
+    background: var(--color-header-neutro-bg);
+    color: var(--color-header-neutro-text);
+    border-bottom: 0.5px solid var(--color-header-neutro-linha);
 }
 body[data-sistema="android"] .topic-header {
     padding: var(--space-4) var(--space-5);
 }
-.topic-header:hover { opacity: 0.94; }
 .topic-title {
     flex: 1;
     font-size: 0.9rem;
@@ -1350,36 +1473,44 @@ body[data-sistema="iphone"] .topic-title {
     letter-spacing: -0.022em;
 }
 .topic-title__icon { font-size: 1.2rem; flex-shrink: 0; }
-.topic-arrow {
-    font-size: 0.75rem;
-    transition: transform var(--dur-normal) var(--ease-standard);
-    margin-left: 4px;
-    flex-shrink: 0;
+
+.topic-content { display: block; }
+
+/* v0.70 — Subtópico colorido por estado + clicável + colapsa */
+.subtopic-bloco {
+    border-top: 1px solid var(--color-border-visible);
+    transition: all var(--motion-dur) var(--motion-ease);
 }
-.topic-header.collapsed .topic-arrow { transform: rotate(-90deg); }
+.subtopic-bloco:first-child { border-top: none; }
 
 .subtopic-header {
-    background: var(--color-primary-light);
-    color: var(--color-primary);
     padding: 10px var(--pad-card);
     display: flex;
     align-items: center;
     gap: 10px;
-    border-top: 0.5px solid var(--color-border-visible);
-    border-bottom: 0.5px solid var(--color-border-visible);
     flex-wrap: wrap;
+    cursor: pointer;
+    user-select: none;
+    transition: opacity var(--dur-fast) ease, background-color var(--dur-fast) ease;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18);
+    color: #ffffff;
 }
+.subtopic-header:hover { opacity: 0.94; }
+
+/* Cor por estado — fundo escuro do estado */
+.subtopic-header[data-estado="ativo"]     { background: var(--color-header-ativo); }
+.subtopic-header[data-estado="atencao"]   { background: var(--color-header-atencao); }
+.subtopic-header[data-estado="critico"]   { background: var(--color-header-critico); }
+.subtopic-header[data-estado="concluido"] { background: var(--color-header-concluido); }
+
 body[data-sistema="iphone"] .subtopic-header {
-    background: rgba(0, 122, 255, 0.14);
-    backdrop-filter: saturate(180%) blur(10px);
-    -webkit-backdrop-filter: saturate(180%) blur(10px);
-    color: var(--color-primary);
     padding: var(--space-3) var(--pad-card);
+    border-bottom: none;
 }
 body[data-sistema="android"] .subtopic-header {
-    border-top: 1px solid var(--color-border-visible);
-    border-bottom: 1px solid var(--color-border-visible);
+    padding: var(--space-4) var(--space-5);
 }
+
 .subtopic-title {
     flex: 1;
     font-size: 0.85rem;
@@ -1388,8 +1519,27 @@ body[data-sistema="android"] .subtopic-header {
     align-items: center;
     gap: 8px;
     min-width: 0;
+    color: #ffffff;
 }
+.subtopic-title__icon { font-size: 1.05rem; flex-shrink: 0; }
 
+.subtopic-arrow {
+    font-size: 0.75rem;
+    transition: transform var(--dur-base) var(--ease-standard);
+    flex-shrink: 0;
+    color: #ffffff;
+    opacity: 0.9;
+}
+.subtopic-header.collapsed .subtopic-arrow { transform: rotate(-90deg); }
+
+.subtopic-conteudo {
+    display: block;
+}
+.subtopic-bloco.collapsed .subtopic-conteudo { display: none; }
+
+/* ============================================================
+   BOTÕES PILL / FOCO TOTAL
+   ============================================================ */
 .btn-pill {
     display: inline-flex;
     align-items: center;
@@ -1399,7 +1549,7 @@ body[data-sistema="android"] .subtopic-header {
     border: 1px solid rgba(255, 255, 255, 0.4);
     border-radius: var(--radius-btn);
     background: rgba(255, 255, 255, 0.18);
-    color: var(--color-primary-fg);
+    color: #ffffff;
     font-family: var(--font-base);
     font-size: 0.72rem;
     font-weight: var(--font-weight-semibold);
@@ -1433,6 +1583,9 @@ body[data-sistema="android"] .btn-pill {
     body[data-sistema="android"] .btn-pill { padding: 8px 16px; font-size: 0.72rem; }
 }
 
+/* ============================================================
+   CRONÔMETRO
+   ============================================================ */
 .cronometro {
     display: flex;
     align-items: center;
@@ -1542,6 +1695,9 @@ body[data-sistema="android"] .btn-outlined--success {
     color: var(--color-warning-dark);
 }
 
+/* ============================================================
+   TABELA
+   ============================================================ */
 .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
 table {
     width: 100%;
@@ -1720,7 +1876,8 @@ body[data-sistema="iphone"] .m3-check--success:checked {
 .btn-nota--ativo { color: var(--color-primary); font-weight: 700; }
 
 /* ============================================================
-   BANNER COMPARTILHE — v0.69 (reposicionado, sem duplicidade)
+   BANNER COMPARTILHE — v0.70
+   Desktop: 50% de largura + centralizado
    ============================================================ */
 .banner {
     position: relative;
@@ -1731,6 +1888,12 @@ body[data-sistema="iphone"] .m3-check--success:checked {
     overflow: hidden;
     box-shadow: var(--shadow-card);
     transition: all var(--motion-dur) var(--motion-ease);
+}
+@media (min-width: 900px) {
+    .banner {
+        width: 50%;
+        margin: 0 auto;
+    }
 }
 body[data-sistema="iphone"] .banner {
     background:
@@ -1863,6 +2026,7 @@ body[data-sistema="android"] .share-btn { min-height: 48px; }
 .share-btn:hover { transform: translateY(-1px); box-shadow: var(--shadow-elevated); }
 .share-btn:active { transform: scale(0.97); }
 .share-btn svg { width: 15px; height: 15px; flex-shrink: 0; fill: currentColor; }
+/* v0.70 — cores da ferramenta mantidas no modo escuro */
 .share-btn--wa  { background: #25d366; }
 .share-btn--tg  { background: #229ed9; }
 .share-btn--em  { background: #d44638; }
@@ -2126,7 +2290,8 @@ body[data-sistema="iphone"] .notificacoes-painel {
 }
 
 /* ============================================================
-   MENU LATERAL
+   MENU LATERAL — v0.70
+   Altura natural (cresce conforme conteúdo) + cantos arredondados embaixo
    ============================================================ */
 .menu-overlay {
     position: fixed;
@@ -2145,19 +2310,28 @@ body[data-sistema="iphone"] .notificacoes-painel {
     left: -320px;
     width: 300px;
     max-width: 85vw;
-    height: 100vh;
+    height: auto;
+    max-height: 100vh;
     background: var(--color-surface);
     box-shadow: var(--shadow-elevated);
     z-index: 90;
     transition: left var(--dur-slow) var(--ease-standard);
     overflow-y: auto;
     border-right: 1px solid var(--color-border-visible);
+    border-bottom: 1px solid var(--color-border-visible);
+    border-bottom-left-radius: var(--radius-card);
+    border-bottom-right-radius: var(--radius-card);
 }
 body[data-sistema="iphone"] .menu-lateral {
     background: var(--color-glass);
     backdrop-filter: saturate(180%) blur(20px);
     -webkit-backdrop-filter: saturate(180%) blur(20px);
     border-right: 0.5px solid var(--color-glass-border);
+    border-bottom: 0.5px solid var(--color-glass-border);
+}
+body[data-sistema="android"] .menu-lateral {
+    border-bottom-left-radius: var(--radius-card);
+    border-bottom-right-radius: var(--radius-card);
 }
 .menu-lateral.visivel { left: 0; }
 .menu-lateral-header {
@@ -2168,6 +2342,8 @@ body[data-sistema="iphone"] .menu-lateral {
     align-items: center;
     background: var(--color-primary);
     color: var(--color-primary-fg);
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
 }
 .menu-lateral-header h3 { font-size: 1rem; font-weight: 600; }
 .btn-fechar-menu {
@@ -2194,7 +2370,11 @@ body[data-sistema="iphone"] .menu-lateral {
     color: inherit;
     min-height: var(--min-touch);
 }
-.menu-item:last-child { border-bottom: none; }
+.menu-item:last-child {
+    border-bottom: none;
+    border-bottom-left-radius: var(--radius-card);
+    border-bottom-right-radius: var(--radius-card);
+}
 .menu-item:hover { background: var(--color-surface-2); }
 .menu-item.ativo {
     background: var(--color-primary-light);
@@ -2387,7 +2567,7 @@ body[data-sistema="iphone"] .modal-anotacao-content {
 }
 
 /* ============================================================
-   MODAL AVALIAÇÃO — v0.69
+   MODAL AVALIAÇÃO
    ============================================================ */
 .modal-aval-overlay {
     position: fixed;
@@ -3064,7 +3244,7 @@ body[data-sistema="iphone"] .dashboard-quadrante {
 }
 
 /* ============================================================
-   TELAS DE LISTA — v0.69 (botões em coluna)
+   TELAS DE LISTA
    ============================================================ */
 .filtros-bar {
     background: var(--color-surface);
@@ -3172,7 +3352,6 @@ body[data-sistema="iphone"] .filtros-bar {
 }
 .filtro-contador strong { color: var(--color-primary); }
 
-/* Lista em linhas (substitui item-card) */
 .lista-itens {
     display: flex;
     flex-direction: column;
@@ -3617,6 +3796,29 @@ body[data-sistema="iphone"] .config-card {
 }
 .btn-simulacao.zerar:hover { background: var(--color-danger); color: #fff; }
 
+/* v0.70 — botão Modo Mobile (Dev) */
+.btn-modo-mobile-dev {
+    background: #333333;
+    color: #f0f0f0;
+    border: 1px solid #1a1a1a;
+    padding: 10px 16px;
+    border-radius: var(--radius-btn);
+    font-family: var(--font-base);
+    font-size: 0.85rem;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: var(--shadow-card);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    white-space: nowrap;
+    min-height: var(--min-touch);
+    transition: all var(--dur-fast) ease;
+}
+.btn-modo-mobile-dev:hover { background: #404040; }
+.btn-modo-mobile-dev:active { transform: scale(0.98); }
+
 .seletor-tema {
     display: flex;
     flex-direction: column;
@@ -3683,7 +3885,9 @@ body[data-sistema="iphone"] .config-card {
 }
 
 /* ============================================================
-   MODO FOCO TOTAL — v0.69
+   MODO FOCO TOTAL — v0.70
+   Desktop: abas dentro do painel lateral, acima do relógio
+   Mobile: Sair ao lado do título; abas descem para a linha do Sair
    ============================================================ */
 .modo-foco {
     position: fixed;
@@ -3696,7 +3900,6 @@ body[data-sistema="iphone"] .config-card {
 }
 .modo-foco.ativo { display: flex; }
 
-/* Barra do topo — título + abas + Sair */
 .foco-barra {
     display: flex;
     align-items: center;
@@ -3719,8 +3922,9 @@ body[data-sistema="iphone"] .config-card {
     flex-shrink: 0;
     white-space: nowrap;
 }
+/* v0.70 — no desktop, as abas saem da barra do topo e vão para o painel */
 .foco-barra-abas {
-    display: flex;
+    display: none;
     gap: 6px;
     flex: 1;
     justify-content: center;
@@ -3864,7 +4068,6 @@ body[data-sistema="iphone"] .config-card {
     filter: grayscale(0) brightness(1) drop-shadow(0 0 4px rgba(255, 100, 100, 0.6));
 }
 
-/* Painel lateral */
 .foco-relogio-painel {
     width: 340px;
     flex-shrink: 0;
@@ -3883,6 +4086,43 @@ body[data-sistema="iphone"] .config-card {
     gap: 14px;
 }
 .painel-conteudo.ativo { display: flex; }
+
+/* v0.70 — abas dentro do painel lateral (desktop) */
+.painel-abas-interno {
+    display: flex;
+    gap: 6px;
+    padding: 4px;
+    background: #0a0a0a;
+    border: 1px solid #1f1f1f;
+    border-radius: var(--radius-card);
+    flex-shrink: 0;
+}
+.painel-abas-interno .painel-aba {
+    flex: 1;
+    padding: 8px 10px;
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: var(--radius-btn);
+    color: #888;
+    font-family: var(--font-base);
+    font-size: 0.75rem;
+    font-weight: 700;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    transition: all var(--dur-fast) ease;
+}
+.painel-abas-interno .painel-aba:hover {
+    color: #ccc;
+}
+.painel-abas-interno .painel-aba.ativa {
+    background: #1e3a2a;
+    border-color: #6ccb5f;
+    color: #6ccb5f;
+    box-shadow: 0 0 0 1px #2d6b2d inset;
+}
 
 .foco-relogio-display {
     font-family: var(--font-mono);
@@ -4224,6 +4464,110 @@ body[data-sistema="iphone"] .config-card {
 .opcao-ciclo.ativa .opcao-ciclo-desc { color: #a8d89a; }
 
 /* ============================================================
+   MODO MOBILE (DEV) — v0.70
+   ============================================================ */
+.modo-mobile-dev {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: #3a3a3a;
+    z-index: 9700;
+    display: none;
+    flex-direction: column;
+}
+.modo-mobile-dev.ativo { display: flex; }
+
+.modo-mobile-barra {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 16px;
+    background: #1a1a1a;
+    border-bottom: 1px solid #000;
+    flex-shrink: 0;
+    flex-wrap: wrap;
+}
+.modo-mobile-titulo {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #f0f0f0;
+    flex: 1;
+    min-width: 180px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.modo-mobile-dispositivos {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+.btn-dispositivo {
+    background: transparent;
+    border: 1px solid #444;
+    color: #ccc;
+    padding: 6px 12px;
+    border-radius: var(--radius-btn);
+    font-family: var(--font-base);
+    font-size: 0.75rem;
+    font-weight: 700;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    transition: all var(--dur-fast) ease;
+}
+.btn-dispositivo:hover { background: #2a2a2a; color: #fff; border-color: #666; }
+.btn-dispositivo.ativo {
+    background: #1e3a2a;
+    border-color: #6ccb5f;
+    color: #6ccb5f;
+}
+.btn-sair-mobile {
+    background: transparent;
+    border: 1px solid #444;
+    color: #ccc;
+    padding: 6px 14px;
+    border-radius: var(--radius-btn);
+    font-family: var(--font-base);
+    font-size: 0.75rem;
+    font-weight: 700;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    flex-shrink: 0;
+    transition: all var(--dur-fast) ease;
+}
+.btn-sair-mobile:hover { background: #5a1a1a; border-color: #a33; color: #fff; }
+
+.modo-mobile-area {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: auto;
+    padding: 24px;
+}
+.modo-mobile-frame {
+    background: #000;
+    border-radius: 20px;
+    box-shadow:
+        0 0 0 2px #222,
+        0 20px 60px rgba(0, 0, 0, 0.7),
+        0 0 0 10px #1a1a1a;
+    overflow: hidden;
+    transition: width var(--dur-base) var(--ease-standard), height var(--dur-base) var(--ease-standard);
+    flex-shrink: 0;
+}
+.modo-mobile-frame iframe {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: none;
+    background: #ffffff;
+}
+
+/* ============================================================
    RESPONSIVO MODO FOCO
    ============================================================ */
 @media (max-width: 899px) {
@@ -4242,6 +4586,28 @@ body[data-sistema="iphone"] .config-card {
     .foco-table thead th.assunto-col { min-width: 180px; padding-left: 10px; }
     .foco-table tbody td { padding: 8px 2px; font-size: 0.75rem; }
     .foco-table tbody td.assunto-col { padding-left: 10px; font-size: 0.78rem; }
+
+    /* v0.70 — mobile: Sair sobe para o lado do título; abas descem para a linha do Sair */
+    .foco-barra {
+        justify-content: space-between;
+        flex-wrap: wrap;
+        row-gap: 8px;
+    }
+    .foco-barra-titulo {
+        order: 1;
+        flex: 0 0 auto;
+    }
+    .btn-sair-topo {
+        order: 2;
+        margin-left: auto;
+    }
+    .foco-barra-abas {
+        display: flex;
+        order: 3;
+        flex: 1 0 100%;
+        justify-content: center;
+    }
+    .painel-abas-interno { display: none; }
 }
 
 /* Landscape mobile — muito compacto */
@@ -4408,6 +4774,8 @@ body[data-sistema="iphone"] .config-card {
     .topbar__version { font-size: 0.6rem; padding: 2px 6px; }
     .aval-estrela { font-size: 2rem; }
     .modal-aval-content { max-width: 95vw; }
+    .subtopic-header { padding: 10px 12px; }
+    .subtopic-title { font-size: 0.78rem; }
 }
 
 @media (max-width: 380px) {
@@ -4418,6 +4786,8 @@ body[data-sistema="iphone"] .config-card {
     .trofeu-grande { font-size: 2.2rem; }
     .btn-pill { font-size: 0.62rem; padding: 5px 10px; }
     .cronometro__display { font-size: 0.9rem; min-width: 78px; }
+    .subtopic-header { padding: 8px 10px; }
+    .subtopic-title { font-size: 0.72rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -4511,7 +4881,7 @@ body[data-sistema="iphone"] .config-card {
                     <div class="topbar__title">
                         <span>📋</span>
                         <span>CheckAprovação</span>
-                        <span class="topbar__version">v0.69</span>
+                        <span class="topbar__version">v0.70</span>
                     </div>
                     <button class="icon-btn" id="btnSino" aria-label="Notificações">
                         🔔
@@ -5056,6 +5426,9 @@ body[data-sistema="iphone"] .config-card {
 
                     <div class="config-card-rodape">
                         <button class="btn-ms" id="btnVerAvaliacoes" style="background:var(--color-gold); color:#fff;">⭐ Ver avaliações</button>
+                        <!-- DEV ONLY — Modo Mobile (Dev) -->
+                        <button class="btn-modo-mobile-dev" id="btnModoMobileDev">📱 Modo Mobile (Dev)</button>
+                        <!-- /DEV ONLY -->
                         <button class="btn-ms danger" id="btnResetar">🗑️ Resetar Progresso</button>
                         <button class="btn-reset-geral" id="btnResetGeral">⚠️ Reset Geral</button>
                     </div>
@@ -5066,9 +5439,10 @@ body[data-sistema="iphone"] .config-card {
 
 </div>
 <!-- /app-shell -->
-
 <!-- ============================================================
-     MODO FOCO TOTAL
+     MODO FOCO TOTAL — v0.70
+     Desktop: abas dentro do painel lateral, acima do relógio
+     Mobile: Sair ao lado do título; abas descem para a linha do Sair
      ============================================================ -->
 <div class="modo-foco" id="modoFoco">
     <div class="foco-barra">
@@ -5077,6 +5451,7 @@ body[data-sistema="iphone"] .config-card {
             <span>Modo Foco</span>
         </div>
 
+        <!-- v0.70 — no mobile, as abas aparecem aqui (ordem 3) -->
         <div class="foco-barra-abas">
             <button class="painel-aba ativa" data-aba="padrao">
                 <span>⏱️</span>
@@ -5116,6 +5491,19 @@ body[data-sistema="iphone"] .config-card {
         </div>
 
         <div class="foco-relogio-painel">
+
+            <!-- v0.70 — Abas internas do painel (desktop). No mobile ficam ocultas via CSS -->
+            <div class="painel-abas-interno" id="painelAbasInterno">
+                <button class="painel-aba ativa" data-aba="padrao">
+                    <span>⏱️</span>
+                    <span>Padrão</span>
+                </button>
+                <button class="painel-aba" data-aba="pomodoro">
+                    <span>🍅</span>
+                    <span>Pomodoro</span>
+                </button>
+            </div>
+
             <div class="painel-conteudo ativo" id="conteudoPadrao">
                 <div class="foco-relogio-botoes">
                     <div class="foco-relogio-display parado" id="relogioPadrao">00:00</div>
@@ -5212,6 +5600,38 @@ body[data-sistema="iphone"] .config-card {
         </div>
     </div>
 </div>
+
+<!-- ============================================================
+     MODO MOBILE (DEV) — v0.70
+     Marcação DEV ONLY: remover junto com o botão em Configurações
+     ============================================================ -->
+<!-- DEV ONLY -->
+<div class="modo-mobile-dev" id="modoMobileDev">
+    <div class="modo-mobile-barra">
+        <div class="modo-mobile-titulo" id="modoMobileTitulo">📱 Modo Mobile — 360×800 (Galaxy A32 5G)</div>
+        <div class="modo-mobile-dispositivos">
+            <button class="btn-dispositivo" data-dispositivo="iphone">
+                <span>📱</span>
+                <span>iPhone</span>
+            </button>
+            <button class="btn-dispositivo ativo" data-dispositivo="android">
+                <span>🤖</span>
+                <span>Android</span>
+            </button>
+            <button class="btn-dispositivo" data-dispositivo="tablet">
+                <span>📱</span>
+                <span>Tablet</span>
+            </button>
+        </div>
+        <button class="btn-sair-mobile" id="btnSairModoMobile">✕ Sair</button>
+    </div>
+    <div class="modo-mobile-area">
+        <div class="modo-mobile-frame" id="modoMobileFrame" style="width:360px; height:800px;">
+            <iframe id="modoMobileIframe" src="about:blank" title="Modo Mobile (Dev)"></iframe>
+        </div>
+    </div>
+</div>
+<!-- /DEV ONLY -->
 
 <!-- ============================================================
      MENU LATERAL
@@ -5448,7 +5868,7 @@ body[data-sistema="iphone"] .config-card {
     let avaliacoes = [];
     let chaveAnotacaoAtual = null;
     let temaAtivo = 'claro';
-    let sistemaAtivo = null;  /* CORREÇÃO: começa null para forçar detecção */
+    let sistemaAtivo = null;  /* começa null para forçar detecção */
     let tempoEstudo = {};
     let cronometroAtivo = false;
     let cronometroPausado = false;
@@ -5516,6 +5936,15 @@ body[data-sistema="iphone"] .config-card {
 
     let audioCtx = null;
 
+    /* v0.70 — Modo Mobile (Dev) */
+    let modoMobileAtivo = false;
+    let dispositivoAtual = 'android';
+    const DISPOSITIVOS_MODO_MOBILE = {
+        iphone:  { nome: 'iPhone 14 Pro',      largura: 390, altura: 844 },
+        android: { nome: 'Galaxy A32 5G',      largura: 360, altura: 800 },
+        tablet:  { nome: 'iPad (retrato)',     largura: 768, altura: 1024 }
+    };
+
     /* ============ CONSTANTES ============ */
     const CHAVE_STORAGE = 'checkaprovacao_v69';
     const CHAVE_AVALIACOES = 'checkaprovacao_avaliacoes';
@@ -5566,6 +5995,7 @@ body[data-sistema="iphone"] .config-card {
             pomodoroTempoFoco: pomodoroTempoFoco,
             pomodoroTempoPausa: pomodoroTempoPausa
             /* bannerReduzido NÃO é salvo — sempre começa reduzido */
+            /* modoMobileAtivo NÃO é salvo — sempre volta ao desktop */
         };
         const json = JSON.stringify(dados);
         if (armazenamento.disponivel) {
@@ -5621,7 +6051,7 @@ body[data-sistema="iphone"] .config-card {
                 telaAtual = parsed.telaAtual || 'principal';
                 anotacoes = parsed.anotacoes || {};
                 temaAtivo = parsed.temaAtivo || 'claro';
-                sistemaAtivo = parsed.sistemaAtivo || null;  /* não força windows */
+                sistemaAtivo = parsed.sistemaAtivo || null;
                 tempoEstudo = parsed.tempoEstudo || {};
                 cronometroAtivo = parsed.cronometroAtivo || false;
                 cronometroPausado = parsed.cronometroPausado || false;
@@ -6058,12 +6488,12 @@ body[data-sistema="iphone"] .config-card {
         {
             id: 'portugues',
             titulo: '📚 Língua Portuguesa',
-            subtopicos: [{ titulo: null, assuntos: assuntos.portugues }]
+            subtopicos: [{ titulo: null, assuntos: assuntos.portugues, modulo: 'portugues' }]
         },
         {
             id: 'legislacao',
             titulo: '⚖️ Legislação Específica',
-            subtopicos: [{ titulo: null, assuntos: assuntos.legislacao }]
+            subtopicos: [{ titulo: null, assuntos: assuntos.legislacao, modulo: 'legislacao' }]
         },
         {
             id: 'direito',
@@ -6078,7 +6508,7 @@ body[data-sistema="iphone"] .config-card {
         {
             id: 'complementar',
             titulo: '🌐 Legislação Complementar e Temas Transversais',
-            subtopicos: [{ titulo: null, assuntos: assuntos.complementar }]
+            subtopicos: [{ titulo: null, assuntos: assuntos.complementar, modulo: 'complementar' }]
         }
     ];
 
@@ -6120,6 +6550,7 @@ body[data-sistema="iphone"] .config-card {
     const btnResetar = document.getElementById('btnResetar');
     const btnResetGeral = document.getElementById('btnResetGeral');
     const btnVerAvaliacoes = document.getElementById('btnVerAvaliacoes');
+    const btnModoMobileDev = document.getElementById('btnModoMobileDev');
     const nomeUsuarioInput = document.getElementById('nomeUsuario');
     const concursoInput = document.getElementById('concursoInput');
     const cargoInput = document.getElementById('cargoInput');
@@ -6277,6 +6708,13 @@ body[data-sistema="iphone"] .config-card {
     const cardBotoes = document.getElementById('cardBotoes');
     const btnSairTopo = document.getElementById('btnSairTopo');
 
+    /* v0.70 — Modo Mobile (Dev) */
+    const modoMobileDev = document.getElementById('modoMobileDev');
+    const modoMobileTitulo = document.getElementById('modoMobileTitulo');
+    const modoMobileFrame = document.getElementById('modoMobileFrame');
+    const modoMobileIframe = document.getElementById('modoMobileIframe');
+    const btnSairModoMobile = document.getElementById('btnSairModoMobile');
+
     function atualizarEstadoDataSimulada() {
         if (usarDataSistema) {
             dataSimuladaInput.disabled = true;
@@ -6286,8 +6724,60 @@ body[data-sistema="iphone"] .config-card {
         }
     }
 
-    /* ============ SCROLL PARA MÓDULO ============ */
-    function scrollParaModulo(topicoId) {
+    /* ============ v0.70 — CÁLCULO DE ESTADO DO MÓDULO (compartilhado) ============
+       Retorna 'ativo' | 'atencao' | 'critico' | 'concluido' | 'neutro'
+       Usado tanto pelos cards de "Progresso por Módulo" quanto pelo checklist. */
+    function calcularEstadoModulo(chaveModulo) {
+        const total = contarAssuntosModulo(chaveModulo);
+        const concluidos = contarPorTipo('Concluido', chaveModulo);
+        const lidos = contarPorTipo('Lido', chaveModulo);
+        const ultimaAtividade = ultimasAtividades[chaveModulo] || null;
+
+        /* 1. Concluído */
+        if (total > 0 && concluidos >= total) {
+            return { estado: 'concluido', alerta: '', total: total, concluidos: concluidos, restantes: 0, lidos: lidos, percentual: 100 };
+        }
+
+        /* 2. Nunca tocou */
+        if (concluidos === 0 && lidos === 0) {
+            const hoje = obterDataAtual();
+            const dataIni = dataInicial ? new Date(dataInicial + 'T00:00:00') : null;
+            let diasDesdeInicio = 0;
+            if (dataIni) {
+                diasDesdeInicio = Math.floor((hoje.getTime() - dataIni.getTime()) / (1000 * 60 * 60 * 24));
+            }
+            const restantes = total - concluidos;
+            const percentual = total > 0 ? Math.round((concluidos / total) * 100) : 0;
+            if (diasDesdeInicio > 10) {
+                return { estado: 'critico', alerta: 'Não iniciado', total: total, concluidos: concluidos, restantes: restantes, lidos: lidos, percentual: percentual };
+            }
+            return { estado: 'atencao', alerta: 'Não iniciado', total: total, concluidos: concluidos, restantes: restantes, lidos: lidos, percentual: percentual };
+        }
+
+        /* 3. Tem atividade — avalia dias */
+        let diasSemEstudar = 0;
+        if (ultimaAtividade) {
+            const hoje = obterDataAtual();
+            const dataUltima = new Date(ultimaAtividade);
+            dataUltima.setHours(0, 0, 0, 0);
+            diasSemEstudar = Math.floor((hoje.getTime() - dataUltima.getTime()) / (1000 * 60 * 60 * 24));
+        }
+        const restantes = total - concluidos;
+        const percentual = total > 0 ? Math.round((concluidos / total) * 100) : 0;
+
+        if (diasSemEstudar <= 3) {
+            return { estado: 'ativo', alerta: '', total: total, concluidos: concluidos, restantes: restantes, lidos: lidos, percentual: percentual };
+        }
+        if (diasSemEstudar <= 9) {
+            return { estado: 'atencao', alerta: diasSemEstudar + ' dias sem estudar', total: total, concluidos: concluidos, restantes: restantes, lidos: lidos, percentual: percentual };
+        }
+        return { estado: 'critico', alerta: diasSemEstudar + ' dias sem estudar', total: total, concluidos: concluidos, restantes: restantes, lidos: lidos, percentual: percentual };
+    }
+
+    /* ============ SCROLL PARA MÓDULO — v0.70 ============
+       Recebe a CHAVE do módulo (ex: 'dirAdmin', 'portugues').
+       Rola até o bloco do módulo no checklist, abre-o se colapsado, destaca. */
+    function scrollParaModulo(chaveModulo) {
         let mudou = false;
         if (saudacaoFechada) { saudacaoFechada = false; mudou = true; }
         if (progressoFechado) { progressoFechado = false; mudou = true; }
@@ -6297,14 +6787,21 @@ body[data-sistema="iphone"] .config-card {
             salvarDados();
         }
 
-        const target = document.getElementById('modulo-' + topicoId);
+        const target = document.getElementById('modulo-' + chaveModulo);
         if (!target) return;
-        const header = target.querySelector('.topic-header');
-        const content = target.querySelector('.topic-content');
-        if (header && content && content.style.display === 'none') {
+
+        /* Se for bloco de subtópico, abre se colapsado */
+        const header = target.querySelector('.subtopic-header');
+        if (header && target.classList.contains('collapsed')) {
+            target.classList.remove('collapsed');
             header.classList.remove('collapsed');
-            content.style.display = 'block';
         }
+        /* Se for tópico simples (sem subtópico), apenas garante visível */
+        const topicContent = target.querySelector('.topic-content');
+        if (topicContent && topicContent.style.display === 'none') {
+            topicContent.style.display = 'block';
+        }
+
         requestAnimationFrame(function() {
             target.scrollIntoView({ behavior: 'smooth', block: 'start' });
         });
@@ -6313,7 +6810,6 @@ body[data-sistema="iphone"] .config-card {
         target.classList.add('destaque');
         setTimeout(function() { target.classList.remove('destaque'); }, 1800);
     }
-
     /* ============ BANNER COMPARTILHE ============ */
     function obterContadorCompartilhamentos() {
         try {
@@ -6422,7 +6918,7 @@ body[data-sistema="iphone"] .config-card {
             sugestao: (dados.sugestao || '').trim(),
             categoriaSugerida: calcularCategoriaSugerida(dados.elogio, dados.reclamacao, dados.sugestao),
             sistema: sistemaAtivo || 'windows',
-            versao: '0.69',
+            versao: '0.70',
             nomeUsuario: nomeUsuario || '',
             origem: dados.origem || 'menu',
             userId: obterUserId()
@@ -6466,7 +6962,6 @@ body[data-sistema="iphone"] .config-card {
                 b.textContent = '☆';
             }
         });
-        /* Habilita textareas */
         const habilitar = n > 0;
         avalElogio.disabled = !habilitar;
         avalReclamacao.disabled = !habilitar;
@@ -6684,14 +7179,14 @@ body[data-sistema="iphone"] .config-card {
             html += '<div class="reco-item">';
             html += '<div class="reco-num ' + rec.numeroClasse + '">' + numSimbolo + '</div>';
             html += '<div class="reco-body">';
-            html += '<div class="reco-name">' + mod.icone + ' <a class="reco-link" data-topico="' + mod.topicoId + '" data-modulo="' + mod.chave + '">' + mod.nome + '</a></div>';
+            html += '<div class="reco-name">' + mod.icone + ' <a class="reco-link" data-modulo="' + mod.chave + '">' + mod.nome + '</a></div>';
             html += '<div class="reco-desc">' + rec.justificativa + '</div>';
             html += '</div></div>';
         });
         container.innerHTML = html;
         container.querySelectorAll('.reco-link').forEach(function(link) {
             link.addEventListener('click', function() {
-                scrollParaModulo(this.dataset.topico);
+                scrollParaModulo(this.dataset.modulo);
             });
         });
     }
@@ -6709,11 +7204,11 @@ body[data-sistema="iphone"] .config-card {
                 const icone = modulo ? modulo.icone : '📚';
                 const nomeModulo = modulo ? modulo.nome : '';
                 const nomeAssunto = obterNomeAssunto(rev.chave);
-                const topicoId = modulo ? modulo.topicoId : '';
+                const chaveModulo = modulo ? modulo.chave : '';
                 html += '<div class="reco-item">';
                 html += '<div class="reco-num reco-num--ok">' + (idx + 1) + '</div>';
                 html += '<div class="reco-body">';
-                html += '<div class="reco-name">🔄 ' + icone + ' <a class="reco-link" data-topico="' + topicoId + '">' + nomeModulo + ' - ' + nomeAssunto + '</a></div>';
+                html += '<div class="reco-name">🔄 ' + icone + ' <a class="reco-link" data-modulo="' + chaveModulo + '">' + nomeModulo + ' - ' + nomeAssunto + '</a></div>';
                 html += '<div class="reco-desc">Revisão ' + rev.tipo + ' (venceu em ' + rev.data.split('-').reverse().join('/') + ')</div>';
                 html += '</div></div>';
             });
@@ -6721,7 +7216,7 @@ body[data-sistema="iphone"] .config-card {
         container.innerHTML = html;
         container.querySelectorAll('.reco-link').forEach(function(link) {
             link.addEventListener('click', function() {
-                scrollParaModulo(this.dataset.topico);
+                scrollParaModulo(this.dataset.modulo);
             });
         });
     }
@@ -6746,11 +7241,11 @@ body[data-sistema="iphone"] .config-card {
             const icone = modulo ? modulo.icone : '📚';
             const nomeModulo = modulo ? modulo.nome : '';
             const nomeAssunto = obterNomeAssunto(rev.chave);
-            const topicoId = modulo ? modulo.topicoId : '';
+            const chaveModulo = modulo ? modulo.chave : '';
             const badgeClass = rev.tipo === '24h' ? 'rev24' : rev.tipo === '7d' ? 'rev7' : 'rev15';
             html += '<div class="revisao-item-tela" data-chave="' + rev.chave + '" data-tipo="' + rev.tipo + '" data-data="' + rev.data + '">';
             html += '<span class="revisao-badge-tela ' + badgeClass + '">' + rev.tipo + '</span>';
-            html += '<div class="revisao-info-tela"><div class="revisao-nome-tela">' + icone + ' <a class="reco-link" data-topico="' + topicoId + '">' + nomeModulo + ' - ' + nomeAssunto + '</a></div><div class="revisao-data-tela">Venceu em: ' + rev.data.split('-').reverse().join('/') + '</div></div>';
+            html += '<div class="revisao-info-tela"><div class="revisao-nome-tela">' + icone + ' <a class="reco-link" data-modulo="' + chaveModulo + '">' + nomeModulo + ' - ' + nomeAssunto + '</a></div><div class="revisao-data-tela">Venceu em: ' + rev.data.split('-').reverse().join('/') + '</div></div>';
             html += '<button class="btn-revisao baixar">✓ Baixar</button>';
             html += '<button class="btn-revisao descartar">✗ Descartar</button>';
             html += '</div>';
@@ -6758,7 +7253,7 @@ body[data-sistema="iphone"] .config-card {
         lista.innerHTML = html;
         lista.querySelectorAll('.reco-link').forEach(function(link) {
             link.addEventListener('click', function() {
-                scrollParaModulo(this.dataset.topico);
+                scrollParaModulo(this.dataset.modulo);
             });
         });
         lista.querySelectorAll('.revisao-item-tela').forEach(function(item) {
@@ -6835,16 +7330,11 @@ body[data-sistema="iphone"] .config-card {
         }
     }
 
-    /* ============ APLICAR ESTADO SEÇÕES ============
-       CORREÇÃO v0.69: o botão × da saudação fecha APENAS o bloco de saudação.
-       O cabeçalho (menu, título, sino, concurso, cargo) permanece sempre visível.
-    */
     function aplicarEstadoSecoes() {
         const saudacaoContainer = document.getElementById('saudacaoContainer');
         const blocoProgresso = document.getElementById('blocoProgresso');
         const blocoModulos = document.getElementById('blocoModulos');
 
-        /* Saudação: fecha somente o bloco #saudacaoContainer */
         if (saudacaoContainer) {
             if (saudacaoFechada) saudacaoContainer.style.display = 'none';
             else saudacaoContainer.style.display = 'flex';
@@ -6942,75 +7432,25 @@ body[data-sistema="iphone"] .config-card {
         return !!estadoCheckboxes[chaveBase + '-Importante'];
     }
 
-    /* ============ RENDERIZAR MÓDULOS — v0.69 com 4 estados ============ */
+    /* ============ RENDERIZAR MÓDULOS — v0.70 (usando calcularEstadoModulo) ============ */
     function renderizarModulos() {
         modulosGrid.innerHTML = '';
         let ativos = 0, atencao = 0, criticos = 0, concluidosTotal = 0;
-        const hoje = obterDataAtual();
-        const dataIni = dataInicial ? new Date(dataInicial + 'T00:00:00') : null;
 
         const dadosModulos = modulos.map(function(modulo) {
-            const total = contarAssuntosModulo(modulo.chave);
-            const concluidos = contarPorTipo('Concluido', modulo.chave);
-            const lidos = contarPorTipo('Lido', modulo.chave);
-            const restantes = total - concluidos;
-            const percentual = total > 0 ? Math.round((concluidos / total) * 100) : 0;
-            const ultimaAtividade = ultimasAtividades[modulo.chave] || null;
-
-            let estado = 'ativo';
-            let alerta = '';
-
-            /* 1. Concluído */
-            if (total > 0 && concluidos >= total) {
-                estado = 'concluido';
-                concluidosTotal++;
-            }
-            /* 2. Nunca tocou */
-            else if (concluidos === 0 && lidos === 0) {
-                let diasDesdeInicio = 0;
-                if (dataIni) {
-                    diasDesdeInicio = Math.floor((hoje.getTime() - dataIni.getTime()) / (1000 * 60 * 60 * 24));
-                }
-                if (diasDesdeInicio > 10) {
-                    estado = 'critico';
-                    alerta = 'Não iniciado';
-                    criticos++;
-                } else {
-                    estado = 'atencao';
-                    alerta = 'Não iniciado';
-                    atencao++;
-                }
-            }
-            /* 3. Tem atividade registrada — avalia dias */
-            else {
-                let diasSemEstudar = 0;
-                if (ultimaAtividade) {
-                    const dataUltima = new Date(ultimaAtividade);
-                    dataUltima.setHours(0, 0, 0, 0);
-                    diasSemEstudar = Math.floor((hoje.getTime() - dataUltima.getTime()) / (1000 * 60 * 60 * 24));
-                }
-                if (diasSemEstudar <= 3) {
-                    estado = 'ativo';
-                    ativos++;
-                } else if (diasSemEstudar <= 9) {
-                    estado = 'atencao';
-                    alerta = diasSemEstudar + ' dias sem estudar';
-                    atencao++;
-                } else {
-                    estado = 'critico';
-                    alerta = diasSemEstudar + ' dias sem estudar';
-                    criticos++;
-                }
-            }
-
+            const info = calcularEstadoModulo(modulo.chave);
+            if (info.estado === 'ativo') ativos++;
+            else if (info.estado === 'atencao') atencao++;
+            else if (info.estado === 'critico') criticos++;
+            else if (info.estado === 'concluido') concluidosTotal++;
             return {
                 ...modulo,
-                total: total,
-                concluidos: concluidos,
-                restantes: restantes,
-                percentual: percentual,
-                estado: estado,
-                alerta: alerta
+                total: info.total,
+                concluidos: info.concluidos,
+                restantes: info.restantes,
+                percentual: info.percentual,
+                estado: info.estado,
+                alerta: info.alerta
             };
         });
 
@@ -7026,7 +7466,7 @@ body[data-sistema="iphone"] .config-card {
 
         dadosModulos.forEach(function(modulo) {
             const card = document.createElement('a');
-            card.href = '#modulo-' + modulo.topicoId;
+            card.href = '#modulo-' + modulo.chave;
 
             if (modulo.estado === 'concluido') {
                 card.className = 'modulo-card modulo-card--concluido';
@@ -7054,7 +7494,7 @@ body[data-sistema="iphone"] .config-card {
 
             card.addEventListener('click', function(e) {
                 e.preventDefault();
-                scrollParaModulo(modulo.topicoId);
+                scrollParaModulo(modulo.chave);
             });
             modulosGrid.appendChild(card);
         });
@@ -7336,7 +7776,6 @@ body[data-sistema="iphone"] .config-card {
                     mostrarToast('🏆', 'Módulo concluído: ' + modulo.nome + '!');
                 }
 
-                /* Convite de avaliação pós-módulo */
                 if (!jaAvaliou()) {
                     conviteModuloAtual = modulo.nome;
                     convitePendente = true;
@@ -7390,6 +7829,7 @@ body[data-sistema="iphone"] .config-card {
             });
         });
     }
+
     /* ============ DASHBOARD ============ */
     function renderizarDashboard() {
         const hoje = obterDataAtual();
@@ -7964,6 +8404,7 @@ body[data-sistema="iphone"] .config-card {
                 renderizarRecomendacao();
                 renderizarRevisaoEspacada();
                 atualizarGraficoStatus();
+                atualizarEstadoTopicos();
             });
         } else if (tipo === 'Exercitado') {
             input.addEventListener('change', function() {
@@ -8041,77 +8482,136 @@ body[data-sistema="iphone"] .config-card {
                 atualizarGraficoStatus();
                 atualizarSaudacao();
                 verificarMetaDiaria();
+                atualizarEstadoTopicos();
             });
         }
     }
 
+    /* ============ v0.70 — ATUALIZAR ESTADO DAS FAIXAS DO CHECKLIST ============
+       Percorre cada bloco de módulo e atualiza data-estado do subtopic-header. */
+    function atualizarEstadoTopicos() {
+        modulos.forEach(function(modulo) {
+            const info = calcularEstadoModulo(modulo.chave);
+            const bloco = document.getElementById('modulo-' + modulo.chave);
+            if (!bloco) return;
+            const header = bloco.querySelector('.subtopic-header');
+            if (header) header.setAttribute('data-estado', info.estado);
+        });
+    }
+
+    /* ============ RENDERIZAR TÓPICOS — v0.70 ============
+       Pai = rótulo neutro (não clicável, não colapsa)
+       Filho = bloco colorido por estado, clicável, colapsa seu conteúdo. */
     function renderizarTopicos() {
         conteudoPrincipal.innerHTML = '';
         estruturaTopicos.forEach(function(topico) {
             const topicSection = document.createElement('div');
             topicSection.className = 'checklist-group';
-            topicSection.id = 'modulo-' + topico.id;
+            topicSection.id = 'modulo-topico-' + topico.id;
             topicSection.dataset.topic = topico.id;
 
             const temSubtopicos = topico.subtopicos.length > 1 ||
                 (topico.subtopicos[0] && topico.subtopicos[0].titulo);
 
-            const topicHeader = document.createElement('div');
-            topicHeader.className = 'topic-header collapsed';
-
             const partes = topico.titulo.split(' ');
             const icone = partes[0] || '📚';
             const nome = partes.slice(1).join(' ');
 
-            let headerHtml = '<span class="topic-arrow">▼</span>' +
-                '<div class="topic-title"><span class="topic-title__icon">' + icone + '</span><span>' + nome + '</span></div>';
+            /* Pai neutro — sempre exibido como rótulo (não clicável) */
+            if (temSubtopicos) {
+                const topicHeader = document.createElement('div');
+                topicHeader.className = 'topic-header';
+                topicHeader.innerHTML =
+                    '<div class="topic-title"><span class="topic-title__icon">' + icone + '</span><span>' + nome + '</span></div>';
+                topicSection.appendChild(topicHeader);
 
-            if (!temSubtopicos) {
-                const moduloSimples = topico.subtopicos[0].modulo || topico.id;
-                headerHtml += '<button class="btn-pill btn-foco-total" data-modulo="' + moduloSimples +
-                    '" data-titulo="' + topico.titulo + '" data-tipo="modulo"><span>🎯</span> Foco Total</button>';
-            }
-            topicHeader.innerHTML = headerHtml;
+                const topicContent = document.createElement('div');
+                topicContent.className = 'topic-content';
+                topicContent.style.display = 'block';
 
-            topicHeader.addEventListener('click', function(e) {
-                if (e.target.closest('.btn-foco-total')) return;
-                const content = this.nextElementSibling;
-                if (content) {
-                    const isHidden = content.style.display === 'none';
-                    content.style.display = isHidden ? 'block' : 'none';
-                    this.classList.toggle('collapsed', !isHidden);
-                }
-            });
-            topicSection.appendChild(topicHeader);
+                topico.subtopicos.forEach(function(subtopico) {
+                    const moduloChave = subtopico.modulo || topico.id;
+                    const info = calcularEstadoModulo(moduloChave);
 
-            const topicContent = document.createElement('div');
-            topicContent.className = 'topic-content';
-            topicContent.style.display = 'none';
+                    const bloco = document.createElement('div');
+                    bloco.className = 'subtopic-bloco';
+                    bloco.id = 'modulo-' + moduloChave;
+                    bloco.dataset.modulo = moduloChave;
 
-            topico.subtopicos.forEach(function(subtopico) {
-                const moduloChave = subtopico.modulo || topico.id;
+                    const subHeader = document.createElement('div');
+                    subHeader.className = 'subtopic-header collapsed';
+                    subHeader.setAttribute('data-estado', info.estado);
 
-                if (subtopico.titulo) {
-                    const subtopicHeader = document.createElement('div');
-                    subtopicHeader.className = 'subtopic-header';
                     const partesSub = subtopico.titulo.split(' ');
                     const iconeSub = partesSub[0] || '📌';
                     const nomeSub = partesSub.slice(1).join(' ');
-                    subtopicHeader.innerHTML = '<div class="subtopic-title"><span>' + iconeSub + '</span><span>' + nomeSub + '</span></div>' +
-                        '<button class="btn-pill btn-foco-total" data-modulo="' + moduloChave +
-                        '" data-titulo="' + subtopico.titulo + '" data-tipo="subtopico"><span>🎯</span> Foco Total</button>';
-                    topicContent.appendChild(subtopicHeader);
-                    topicContent.appendChild(criarCronometroContainer(moduloChave));
-                    topicContent.appendChild(criarTabelaModulo(moduloChave));
-                } else {
-                    topicContent.appendChild(criarCronometroContainer(moduloChave));
-                    topicContent.appendChild(criarTabelaModulo(moduloChave));
-                }
-            });
 
-            topicSection.appendChild(topicContent);
+                    subHeader.innerHTML =
+                        '<span class="subtopic-arrow">▼</span>' +
+                        '<div class="subtopic-title"><span class="subtopic-title__icon">' + iconeSub + '</span><span>' + nomeSub + '</span></div>' +
+                        '<button class="btn-pill btn-foco-total" data-modulo="' + moduloChave + '" data-titulo="' + subtopico.titulo + '" data-tipo="subtopico"><span>🎯</span> Foco Total</button>';
+
+                    subHeader.addEventListener('click', function(e) {
+                        if (e.target.closest('.btn-foco-total')) return;
+                        const blocoPai = this.closest('.subtopic-bloco');
+                        const isCollapsed = blocoPai.classList.toggle('collapsed');
+                        this.classList.toggle('collapsed', isCollapsed);
+                    });
+
+                    bloco.appendChild(subHeader);
+
+                    const conteudo = document.createElement('div');
+                    conteudo.className = 'subtopic-conteudo';
+                    conteudo.appendChild(criarCronometroContainer(moduloChave));
+                    conteudo.appendChild(criarTabelaModulo(moduloChave));
+                    bloco.appendChild(conteudo);
+
+                    topicContent.appendChild(bloco);
+                });
+
+                topicSection.appendChild(topicContent);
+            } else {
+                /* Módulo simples (Português, Legislação, Complementar) — sem pai neutro extra */
+                const moduloChave = topico.subtopicos[0].modulo || topico.id;
+                const info = calcularEstadoModulo(moduloChave);
+
+                const bloco = document.createElement('div');
+                bloco.className = 'subtopic-bloco';
+                bloco.id = 'modulo-' + moduloChave;
+                bloco.dataset.modulo = moduloChave;
+
+                const subHeader = document.createElement('div');
+                subHeader.className = 'subtopic-header collapsed';
+                subHeader.setAttribute('data-estado', info.estado);
+
+                subHeader.innerHTML =
+                    '<span class="subtopic-arrow">▼</span>' +
+                    '<div class="subtopic-title"><span class="subtopic-title__icon">' + icone + '</span><span>' + nome + '</span></div>' +
+                    '<button class="btn-pill btn-foco-total" data-modulo="' + moduloChave + '" data-titulo="' + topico.titulo + '" data-tipo="modulo"><span>🎯</span> Foco Total</button>';
+
+                subHeader.addEventListener('click', function(e) {
+                    if (e.target.closest('.btn-foco-total')) return;
+                    const blocoPai = this.closest('.subtopic-bloco');
+                    const isCollapsed = blocoPai.classList.toggle('collapsed');
+                    this.classList.toggle('collapsed', isCollapsed);
+                });
+
+                bloco.appendChild(subHeader);
+
+                const conteudo = document.createElement('div');
+                conteudo.className = 'subtopic-conteudo';
+                conteudo.appendChild(criarCronometroContainer(moduloChave));
+                conteudo.appendChild(criarTabelaModulo(moduloChave));
+                bloco.appendChild(conteudo);
+
+                topicSection.appendChild(bloco);
+            }
+
             conteudoPrincipal.appendChild(topicSection);
         });
+
+        /* Atualizar estados das faixas */
+        atualizarEstadoTopicos();
 
         document.querySelectorAll('.btn-foco-total').forEach(function(btn) {
             btn.addEventListener('click', function(e) {
@@ -8191,7 +8691,7 @@ body[data-sistema="iphone"] .config-card {
         });
 
         if (cronometroAtivo && cronometroModulo === moduloChave) {
-            // já rodando neste módulo
+            /* já rodando neste módulo */
         } else {
             if (cronometroAtivo) {
                 pararCronometro(false);
@@ -8236,6 +8736,7 @@ body[data-sistema="iphone"] .config-card {
                 renderizarRecomendacao();
                 renderizarRevisaoEspacada();
                 atualizarGraficoStatus();
+                atualizarEstadoTopicos();
             });
         } else if (tipo === 'Exercitado') {
             input.addEventListener('change', function() {
@@ -8282,6 +8783,7 @@ body[data-sistema="iphone"] .config-card {
                 atualizarGraficoStatus();
                 atualizarSaudacao();
                 verificarMetaDiaria();
+                atualizarEstadoTopicos();
             });
         } else if (tipo === 'Rev24h' || tipo === 'Rev7d' || tipo === 'Rev15d') {
             input.addEventListener('change', function() {
@@ -8341,10 +8843,11 @@ body[data-sistema="iphone"] .config-card {
     }
 
     function trocarAba(destino) {
-        const abas = document.querySelectorAll('.painel-aba');
-        abas.forEach(function(a) { a.classList.remove('ativa'); });
-        const abaAlvo = document.querySelector('.painel-aba[data-aba="' + destino + '"]');
-        if (abaAlvo) abaAlvo.classList.add('ativa');
+        /* Atualiza todas as abas (barra do topo + internas do painel) */
+        const abas = document.querySelectorAll('.foco-barra-abas .painel-aba, .painel-abas-interno .painel-aba');
+        abas.forEach(function(a) {
+            a.classList.toggle('ativa', a.dataset.aba === destino);
+        });
         if (destino === 'padrao') {
             document.getElementById('conteudoPadrao').classList.add('ativo');
             document.getElementById('conteudoPomodoro').classList.remove('ativo');
@@ -8585,7 +9088,7 @@ body[data-sistema="iphone"] .config-card {
         atualizarBotoesPomodoro();
     }
 
-    /* ============ TELA IMPORTANTES — v0.69 botões em coluna ============ */
+    /* ============ TELA IMPORTANTES ============ */
     function renderizarImportantes() {
         const container = listaImportantesEl;
         const contador = contadorImportantesEl;
@@ -8597,7 +9100,7 @@ body[data-sistema="iphone"] .config-card {
             const mod = chaveBase.split('-')[0];
             if (importantesFiltroModulo !== 'todos' && mod !== importantesFiltroModulo) continue;
             const nomeAssunto = obterNomeAssunto(chaveBase);
-            const modInfo = modulos.find(function(m) { return m.chave === mod; }) || { nome: mod, icone: '📚', topicoId: '' };
+            const modInfo = modulos.find(function(m) { return m.chave === mod; }) || { nome: mod, icone: '📚', chave: '' };
             if (importantesBusca) {
                 const alvo = (nomeAssunto + ' ' + modInfo.nome).toLowerCase();
                 if (!alvo.includes(importantesBusca.toLowerCase())) continue;
@@ -8626,7 +9129,7 @@ body[data-sistema="iphone"] .config-card {
             html += '</div>';
             html += '<div class="item-linha-acoes">';
             html += '<button class="btn-acao-icon importante ativo" data-acao="desmarcar" title="Desmarcar importante">📌</button>';
-            html += '<button class="btn-acao-icon" data-acao="ver" data-topico="' + item.modInfo.topicoId + '" title="Ver no checklist">🔗</button>';
+            html += '<button class="btn-acao-icon" data-acao="ver" data-modulo="' + item.mod + '" title="Ver no checklist">🔗</button>';
             html += '<button class="btn-acao-mais" data-acao="mais">⋯</button>';
             html += '</div>';
             html += '</div>';
@@ -8639,7 +9142,7 @@ body[data-sistema="iphone"] .config-card {
                 const acao = this.dataset.acao;
                 const linha = this.closest('.item-linha');
                 const chave = linha ? linha.dataset.chave : '';
-                const topicoId = this.dataset.topico;
+                const moduloChave = this.dataset.modulo;
                 if (acao === 'desmarcar') {
                     delete estadoCheckboxes[chave + '-Importante'];
                     salvarDados();
@@ -8649,7 +9152,7 @@ body[data-sistema="iphone"] .config-card {
                     mostrarToast('🔖', 'Removido da lista de assuntos importantes', 'remover');
                 } else if (acao === 'ver') {
                     mostrarTela('principal');
-                    setTimeout(function() { scrollParaModulo(topicoId); }, 200);
+                    setTimeout(function() { scrollParaModulo(moduloChave); }, 200);
                 } else if (acao === 'mais') {
                     abrirPopoverAcoes(e, linha, [
                         { icone: '📌', texto: 'Desmarcar importante', onClick: function() {
@@ -8662,7 +9165,7 @@ body[data-sistema="iphone"] .config-card {
                         }},
                         { icone: '🔗', texto: 'Ver no checklist', onClick: function() {
                             mostrarTela('principal');
-                            setTimeout(function() { scrollParaModulo(topicoId); }, 200);
+                            setTimeout(function() { scrollParaModulo(moduloChave); }, 200);
                         }}
                     ]);
                 }
@@ -8682,6 +9185,7 @@ body[data-sistema="iphone"] .config-card {
         acoes.forEach(function(a) {
             const btn = document.createElement('button');
             btn.innerHTML = '<span>' + a.icone + '</span><span>' + a.texto + '</span>';
+            if (a.perigo) btn.classList.add('danger');
             btn.addEventListener('click', function(ev) {
                 ev.stopPropagation();
                 a.onClick();
@@ -8727,7 +9231,7 @@ body[data-sistema="iphone"] .config-card {
         }
     }
 
-    /* ============ TELA CENTRAL DE ANOTAÇÕES — v0.69 botões em coluna ============ */
+    /* ============ TELA CENTRAL DE ANOTAÇÕES ============ */
     function dataParaNum(d) {
         const partes = d.split('/').map(function(n) { return parseInt(n); });
         return partes[2] * 10000 + partes[1] * 100 + partes[0];
@@ -8743,7 +9247,7 @@ body[data-sistema="iphone"] .config-card {
             const mod = chaveBase.split('-')[0];
             if (anotacoesFiltroModulo !== 'todos' && mod !== anotacoesFiltroModulo) continue;
             const nomeAssunto = obterNomeAssunto(chaveBase);
-            const modInfo = modulos.find(function(m) { return m.chave === mod; }) || { nome: mod, icone: '📚', topicoId: '' };
+            const modInfo = modulos.find(function(m) { return m.chave === mod; }) || { nome: mod, icone: '📚', chave: '' };
             anotacoes[chaveAnot].forEach(function(anot, idx) {
                 if (anotacoesBusca) {
                     const alvo = (anot.texto + ' ' + nomeAssunto + ' ' + modInfo.nome).toLowerCase();
@@ -8790,7 +9294,7 @@ body[data-sistema="iphone"] .config-card {
             html += '<div class="item-linha-acoes">';
             html += '<button class="btn-acao-icon" data-acao="editar" title="Editar">✏️</button>';
             html += '<button class="btn-acao-icon" data-acao="copiar" title="Copiar">📋</button>';
-            html += '<button class="btn-acao-icon" data-acao="ver" data-topico="' + item.modInfo.topicoId + '" title="Ver no checklist">🔗</button>';
+            html += '<button class="btn-acao-icon" data-acao="ver" data-modulo="' + item.mod + '" title="Ver no checklist">🔗</button>';
             html += '<button class="btn-acao-icon danger" data-acao="excluir" title="Excluir">🗑️</button>';
             html += '<button class="btn-acao-mais" data-acao="mais">⋯</button>';
             html += '</div>';
@@ -8805,7 +9309,7 @@ body[data-sistema="iphone"] .config-card {
                 const linha = this.closest('.item-linha');
                 const chaveAnot = linha.dataset.chave;
                 const idx = parseInt(linha.dataset.idx);
-                const topicoId = this.dataset.topico;
+                const moduloChave = this.dataset.modulo;
 
                 if (acao === 'editar') editarAnotacaoInline(linha, chaveAnot, idx);
                 else if (acao === 'copiar') {
@@ -8816,7 +9320,7 @@ body[data-sistema="iphone"] .config-card {
                     });
                 } else if (acao === 'ver') {
                     mostrarTela('principal');
-                    setTimeout(function() { scrollParaModulo(topicoId); }, 200);
+                    setTimeout(function() { scrollParaModulo(moduloChave); }, 200);
                 } else if (acao === 'excluir') {
                     if (confirm('Excluir esta anotação?')) {
                         anotacoes[chaveAnot].splice(idx, 1);
@@ -8839,7 +9343,7 @@ body[data-sistema="iphone"] .config-card {
                         }},
                         { icone: '🔗', texto: 'Ver no checklist', onClick: function() {
                             mostrarTela('principal');
-                            setTimeout(function() { scrollParaModulo(topicoId); }, 200);
+                            setTimeout(function() { scrollParaModulo(moduloChave); }, 200);
                         }},
                         { icone: '🗑️', texto: 'Excluir', perigo: true, onClick: function() {
                             if (confirm('Excluir esta anotação?')) {
@@ -9010,7 +9514,8 @@ body[data-sistema="iphone"] .config-card {
         atualizarSaudacao();
         atualizarBadgesMenu();
     }
-    /* ============ NAVEGAÇÃO ENTRE TELAS (COM SCROLL PARA O TOPO) ============ */
+
+    /* ============ NAVEGAÇÃO ENTRE TELAS ============ */
     function mostrarTela(nomeTela) {
         telaAtual = nomeTela;
         telaPrincipal.classList.remove('ativa');
@@ -9053,7 +9558,6 @@ body[data-sistema="iphone"] .config-card {
         menuAvalie.classList.toggle('ativo', nomeTela === 'avaliacoes');
         menuConfig.classList.toggle('ativo', nomeTela === 'config');
 
-        /* CORREÇÃO: rolar para o topo ao trocar de tela */
         try {
             window.scrollTo({ top: 0, behavior: 'instant' });
         } catch (e) {
@@ -9067,8 +9571,63 @@ body[data-sistema="iphone"] .config-card {
         salvarDados();
     }
 
+    /* ============ v0.70 — MODO MOBILE (DEV) ============ */
+    function ativarModoMobile() {
+        if (modoMobileAtivo) return;
+        modoMobileAtivo = true;
+
+        /* Esconde .app-shell */
+        const appShellEl = document.getElementById('appShell');
+        if (appShellEl) appShellEl.style.display = 'none';
+
+        /* Define o iframe para a própria página */
+        const url = window.location.href.split('#')[0];
+        modoMobileIframe.src = url;
+
+        /* Aplica dispositivo padrão (Android) */
+        alterarDispositivo('android');
+
+        /* Mostra a tela do modo mobile */
+        modoMobileDev.classList.add('ativo');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function desativarModoMobile() {
+        if (!modoMobileAtivo) return;
+
+        /* Remove o iframe (limpa src para liberar recursos) */
+        modoMobileIframe.src = 'about:blank';
+
+        /* Esconde a tela do modo mobile */
+        modoMobileDev.classList.remove('ativo');
+        document.body.style.overflow = '';
+
+        /* Mostra .app-shell novamente */
+        const appShellEl = document.getElementById('appShell');
+        if (appShellEl) appShellEl.style.display = '';
+
+        modoMobileAtivo = false;
+
+        /* Recarrega a página para garantir sincronia total */
+        window.location.reload();
+    }
+
+    function alterarDispositivo(tipo) {
+        const conf = DISPOSITIVOS_MODO_MOBILE[tipo];
+        if (!conf) return;
+        dispositivoAtual = tipo;
+
+        modoMobileFrame.style.width = conf.largura + 'px';
+        modoMobileFrame.style.height = conf.altura + 'px';
+
+        modoMobileTitulo.textContent = '📱 Modo Mobile — ' + conf.largura + '×' + conf.altura + ' (' + conf.nome + ')';
+
+        document.querySelectorAll('.btn-dispositivo').forEach(function(b) {
+            b.classList.toggle('ativo', b.dataset.dispositivo === tipo);
+        });
+    }
+
     /* ============ EVENT LISTENERS ============ */
-    /* Fechar saudação — fecha SOMENTE o bloco de saudação, mantém cabeçalho */
     btnFecharSaudacaoEl.addEventListener('click', function() {
         saudacaoFechada = true;
         aplicarEstadoSecoes();
@@ -9113,6 +9672,7 @@ body[data-sistema="iphone"] .config-card {
         renderizarRecomendacao();
         gerarNotificacoes();
         renderizarNotificacoes();
+        atualizarEstadoTopicos();
     });
 
     if (seletorTema) {
@@ -9475,7 +10035,6 @@ body[data-sistema="iphone"] .config-card {
         btnFecharBanner.addEventListener('click', function() {
             bannerReduzido = true;
             aplicarEstadoBanner();
-            /* NÃO salva — sempre começa reduzido na próxima sessão */
         });
     }
     if (btnReabrirBanner) {
@@ -9502,8 +10061,8 @@ body[data-sistema="iphone"] .config-card {
         });
     }
 
-    /* Modo Foco — abas integradas no topo */
-    document.querySelectorAll('.foco-barra-abas .painel-aba').forEach(function(aba) {
+    /* Modo Foco — abas (barra do topo + painel interno) */
+    document.querySelectorAll('.foco-barra-abas .painel-aba, .painel-abas-interno .painel-aba').forEach(function(aba) {
         aba.addEventListener('click', function() {
             inicializarAudio();
             trocarAba(this.dataset.aba);
@@ -9575,9 +10134,23 @@ body[data-sistema="iphone"] .config-card {
 
     btnSairTopo.addEventListener('click', sairModoFoco);
 
+    /* v0.70 — Modo Mobile (Dev) — eventos */
+    if (btnModoMobileDev) {
+        btnModoMobileDev.addEventListener('click', ativarModoMobile);
+    }
+    if (btnSairModoMobile) {
+        btnSairModoMobile.addEventListener('click', desativarModoMobile);
+    }
+    document.querySelectorAll('.btn-dispositivo').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            alterarDispositivo(this.dataset.dispositivo);
+        });
+    });
+
     document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape') {
             if (focoAtivo) sairModoFoco();
+            else if (modoMobileAtivo) desativarModoMobile();
             else if (modalCicloOverlay.classList.contains('visivel')) modalCicloOverlay.classList.remove('visivel');
             else if (modalAnotacaoOverlay.classList.contains('visivel')) fecharModalAnotacao();
             else if (modalAvalOverlay.classList.contains('visivel')) fecharModalAvaliacao();
@@ -9709,12 +10282,17 @@ body[data-sistema="iphone"] .config-card {
         carregarDados();
         carregarAvaliacoes();
 
-        /* CORREÇÃO CRÍTICA: se sistemaAtivo for null, detecta agora */
         if (!sistemaAtivo) sistemaAtivo = detectarSistema();
         if (!temaAtivo) temaAtivo = 'claro';
         aplicarSistemaETema();
 
-        /* CORREÇÃO CRÍTICA: garantir que telaPrincipal comece com .ativa */
+        /* Se estiver dentro de um iframe (Modo Mobile Dev), ocultar o botão DEV para evitar recursão */
+        try {
+            if (window.self !== window.top && btnModoMobileDev) {
+                btnModoMobileDev.style.display = 'none';
+            }
+        } catch (e) {}
+
         document.querySelectorAll('.tela').forEach(function(t) { t.classList.remove('ativa'); });
         telaPrincipal.classList.add('ativa');
 
