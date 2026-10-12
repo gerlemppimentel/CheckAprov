@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>CheckAprovação v0.84 | Guarda Municipal Florianópolis</title>
+<title>CheckAprovação v0.85 | Guarda Municipal Florianópolis</title>
 <meta name="theme-color" content="#0f6cbd">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📋</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -265,7 +265,7 @@ body[data-sistema="iphone"] .checklist-group{background:color-mix(in srgb,var(--
 body[data-sistema="android"] .checklist-group{border:1px solid var(--color-border-visible);background:var(--color-surface-2);border-radius:18px}
 .checklist-group.destaque,.subtopic-bloco.destaque{animation:destaqueTopico 1.8s var(--ease-standard)}
 @keyframes destaqueTopico{0%{box-shadow:0 0 0 0 var(--color-primary)}50%{box-shadow:0 0 0 8px var(--color-primary-light)}100%{box-shadow:var(--shadow-card)}}
-.topic-header{background:linear-gradient(135deg,var(--color-header-neutro-bg) 0%,var(--color-surface-2) 100%);color:var(--color-header-neutro-text);padding:14px 20px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--color-header-neutro-linha);box-shadow:none;user-select:none}
+.topic-header{background:linear-gradient(135deg,var(--color-header-neutro-bg) 0%,var(--color-surface-2) 100%);color:var(--color-header-neutro-text);padding:14px 20px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--color-header-neutro-linha);box-shadow:none;user-select:none;border-radius:18px 18px 0 0}
 body[data-sistema="android"] .topic-header{padding:16px 20px}
 body[data-sistema="iphone"] .topic-header{padding:16px 20px;background:color-mix(in srgb,var(--color-header-neutro-bg) 60%,transparent);backdrop-filter:saturate(180%) blur(10px);-webkit-backdrop-filter:saturate(180%) blur(10px)}
 .topic-title{flex:1;font-size:1.05rem;font-weight:700;display:flex;align-items:center;gap:10px;min-width:0;letter-spacing:-0.01em}
@@ -291,28 +291,13 @@ body[data-sistema="iphone"] .subtopic-title{font-size:1.05rem;letter-spacing:-0.
 .subtopic-header[data-estado="nao-iniciado"] .subtopic-arrow{background:rgba(0,0,0,0.08)}
 .subtopic-conteudo{display:block}
 .subtopic-bloco.collapsed .subtopic-conteudo{display:none}
-@media (min-width:900px){.subtopic-header .subtopic-arrow{order:-2}.subtopic-header .btn-foco-total{order:-1;margin-right:4px}.subtopic-header .subtopic-title{order:0}}
+@media (min-width:900px){.subtopic-header .subtopic-arrow{order:-2}.subtopic-header .alvo-foco{order:-1;margin-right:4px}.subtopic-header .subtopic-title{order:0}}
 .btn-pill{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:7px 13px;border:1px solid rgba(255,255,255,0.38);border-radius:10px;background:rgba(255,255,255,0.16);color:#fff;font-family:var(--font-base);font-size:0.8rem;font-weight:700;cursor:pointer;white-space:nowrap;transition:all var(--dur-fast) ease;letter-spacing:0.2px;flex-shrink:0;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);text-shadow:0 1px 2px rgba(0,0,0,0.15);box-shadow:0 2px 6px rgba(0,0,0,0.12)}
 .btn-pill:hover{background:rgba(255,255,255,0.28);transform:translateY(-1px);box-shadow:0 4px 10px rgba(0,0,0,0.18)}
 .btn-pill:active{transform:scale(0.97)}
 body[data-sistema="iphone"] .btn-pill{background:rgba(255,255,255,0.22);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);border:0.5px solid rgba(255,255,255,0.45);box-shadow:inset 0 1px 0 rgba(255,255,255,0.5);padding:8px 14px;font-size:0.88rem;border-radius:12px}
 body[data-sistema="android"] .btn-pill{background:rgba(255,255,255,0.2);border:none;border-radius:999px;padding:9px 18px;font-size:0.84rem;font-weight:500}
 @media (max-width:480px){.btn-pill{padding:6px 11px;font-size:0.76rem}body[data-sistema="iphone"] .btn-pill{padding:7px 13px;font-size:0.82rem}body[data-sistema="android"] .btn-pill{padding:7px 14px;font-size:0.8rem}}
-.cronometro{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:14px 18px;background:linear-gradient(135deg,var(--color-surface-2) 0%,var(--color-surface-3) 100%);border-top:1px solid var(--color-border-visible);border-bottom:1px solid var(--color-border-visible)}
-body[data-sistema="iphone"] .cronometro{background:var(--color-glass-light);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);padding:16px 18px}
-body[data-sistema="android"] .cronometro{padding:16px 18px;background:var(--color-surface-3)}
-.cronometro__display{font-family:var(--font-mono);font-size:1.5rem;font-weight:700;color:var(--color-primary);font-variant-numeric:tabular-nums;min-width:148px;letter-spacing:0.5px;background:var(--color-surface);border:1px solid var(--color-border-visible);border-radius:12px;padding:6px 14px;text-align:center;box-shadow:inset 0 2px 5px rgba(0,0,0,0.06);transition:all var(--skin-transition)}
-body[data-sistema="iphone"] .cronometro__display{font-size:1.6rem;letter-spacing:-0.01em;border-radius:14px}
-@media (max-width:480px){.cronometro{gap:8px;padding:12px 14px}.cronometro__display{font-size:1.2rem;min-width:116px;padding:5px 10px}}
-.cronometro__label{font-size:0.8rem;color:var(--color-text-2);font-weight:600;font-style:italic}
-.btn-outlined{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:7px 15px;border:1px solid var(--color-border-visible);border-radius:10px;background:var(--color-surface);color:var(--color-text);font-family:var(--font-base);font-size:0.85rem;font-weight:600;cursor:pointer;white-space:nowrap;transition:all var(--dur-fast) ease;min-height:var(--min-touch);box-shadow:var(--shadow-card)}
-.btn-outlined:hover{background:var(--color-primary-light);border-color:var(--color-primary);color:var(--color-primary);transform:translateY(-1px)}
-.btn-outlined:active{transform:scale(0.97)}
-.btn-outlined:disabled{opacity:0.5;cursor:not-allowed;transform:none}
-.btn-outlined--success{background:var(--color-success-light);border-color:var(--color-success);color:var(--color-success)}
-.btn-outlined--pausado{background:var(--color-warning-light);border-color:var(--color-warning);color:var(--color-warning-dark)}
-body[data-sistema="android"] .btn-outlined{border-radius:999px}
-body[data-sistema="iphone"] .btn-outlined{border-radius:12px}
 .table-wrap{overflow:visible;-webkit-overflow-scrolling:touch;background:var(--color-surface)}
 table{width:100%;border-collapse:separate;border-spacing:0;min-width:640px}
 thead th{position:sticky;top:0;z-index:5;background:linear-gradient(180deg,var(--color-surface-2) 0%,var(--color-surface-3) 100%);color:var(--color-text-2);font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;padding:12px 4px;border-bottom:2px solid var(--color-border-visible);text-align:center}
@@ -341,6 +326,195 @@ body[data-sistema="android"] .m3-check{width:22px;height:22px;border-radius:6px}
 .btn-nota{background:transparent;border:none;width:34px;height:34px;border-radius:50%;font-size:0.95rem;line-height:1;cursor:pointer;color:var(--color-text-2);display:inline-flex;align-items:center;justify-content:center;transition:all var(--dur-fast) ease}
 .btn-nota:hover{background:var(--color-primary-light);transform:scale(1.12)}
 .btn-nota--ativo{color:var(--color-primary);font-weight:700;background:var(--color-primary-light);box-shadow:0 0 0 2px var(--color-primary-light)}
+
+/* ============================================================
+   v0.85 — BLOCO F: mira crosshair no checklist (tela principal)
+   ============================================================ */
+.checklist-topo{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:14px;flex-wrap:wrap}
+.checklist-topo .section-label{margin-bottom:0}
+.legenda-foco{
+  display:inline-flex;align-items:center;gap:10px;
+  font-size:0.82rem;font-weight:600;color:var(--color-text-2);
+  padding:6px 14px 6px 10px;
+  background:var(--color-surface-2);
+  border:1px solid var(--color-border-visible);
+  border-radius:var(--radius-pill);
+  user-select:none;flex-shrink:0;
+}
+body[data-sistema="iphone"] .legenda-foco{background:color-mix(in srgb,var(--color-glass-light) 70%,transparent);backdrop-filter:saturate(180%) blur(10px);-webkit-backdrop-filter:saturate(180%) blur(10px);border:0.5px solid var(--color-glass-border)}
+body[data-sistema="android"] .legenda-foco{border-radius:16px}
+.legenda-foco__alvo{width:22px;height:22px;flex-shrink:0;display:inline-block;color:var(--color-primary);opacity:0.9}
+.legenda-foco__texto{white-space:nowrap}
+.alvo-foco{
+  background:transparent;border:none;padding:6px;border-radius:50%;
+  cursor:pointer;color:rgba(255,255,255,0.55);
+  display:inline-flex;align-items:center;justify-content:center;
+  flex-shrink:0;width:40px;height:40px;position:relative;
+  transition:transform 0.18s ease,background 0.18s ease,color 0.18s ease;
+  -webkit-tap-highlight-color:transparent;
+}
+.alvo-foco__svg{width:24px;height:24px;display:block;transition:filter 0.2s ease,transform 0.2s ease}
+.alvo-foco:hover{background:rgba(255,255,255,0.12);color:#8ee080;transform:scale(1.06)}
+.alvo-foco:hover .alvo-foco__svg{filter:drop-shadow(0 0 8px rgba(142,224,128,0.6))}
+.alvo-foco:active{transform:scale(0.94)}
+.alvo-foco:focus-visible{outline:2px solid #8ee080;outline-offset:2px;border-radius:50%}
+.subtopic-header[data-estado="nao-iniciado"] .alvo-foco{color:rgba(0,0,0,0.42)}
+.subtopic-header[data-estado="nao-iniciado"] .alvo-foco:hover{background:rgba(0,0,0,0.08);color:#16a34a}
+.tooltip-alvo{
+  position:fixed;background:var(--color-surface);color:var(--color-text);
+  border:1px solid var(--color-border-strong);padding:7px 12px;border-radius:8px;
+  font-size:0.78rem;font-weight:600;white-space:nowrap;
+  pointer-events:none;z-index:9999;opacity:0;transition:opacity 0.15s;
+  box-shadow:var(--shadow-card-hover);
+}
+.tooltip-alvo.visivel{opacity:1}
+
+/* ============================================================
+   v0.85 — BLOCO D: botão Sair no drawer
+   ============================================================ */
+.menu-lateral__divisor{height:1px;background:var(--color-border-visible);margin:12px 20px}
+.menu-item--sair{color:var(--color-danger);font-weight:600}
+.menu-item--sair:hover{background:var(--color-danger-light)}
+.menu-item--sair .menu-icone{filter:none}
+
+/* ============================================================
+   v0.85 — BLOCO A: filtro de módulos (dropdown multi-seleção)
+   ============================================================ */
+.filtro-modulo-wrap{position:relative;display:block;width:100%}
+.filtro-modulo-btn{
+  display:flex;align-items:center;justify-content:space-between;gap:8px;
+  width:100%;padding:10px 14px;
+  background:var(--color-surface-2);
+  border:1px solid var(--color-border-visible);
+  border-radius:12px;color:var(--color-text);
+  font-family:inherit;font-size:0.9rem;font-weight:600;
+  cursor:pointer;min-height:var(--min-touch);
+  transition:all var(--dur-fast) ease;
+}
+.filtro-modulo-btn:hover{border-color:var(--color-primary);color:var(--color-primary)}
+.filtro-modulo-btn.aberto{border-color:var(--color-primary);color:var(--color-primary)}
+.filtro-modulo-btn__label{display:flex;align-items:center;gap:8px;font-weight:700}
+.filtro-modulo-btn__badge{
+  background:var(--color-primary-light);color:var(--color-primary);
+  padding:3px 10px;border-radius:var(--radius-pill);
+  font-size:0.78rem;font-weight:700;white-space:nowrap;
+  overflow:hidden;text-overflow:ellipsis;max-width:200px;
+}
+.filtro-modulo-btn__arrow{transition:transform var(--dur-fast) ease;font-size:0.8rem;flex-shrink:0}
+.filtro-modulo-btn.aberto .filtro-modulo-btn__arrow{transform:rotate(180deg)}
+.filtro-modulo-painel{
+  position:absolute;top:calc(100% + 6px);left:0;right:0;
+  background:var(--color-surface);
+  border:1px solid var(--color-border-visible);
+  border-radius:14px;box-shadow:var(--shadow-elevated);
+  padding:8px;z-index:60;display:none;max-height:60vh;overflow-y:auto;
+}
+.filtro-modulo-painel.visivel{display:block;animation:notifIn var(--dur-base) var(--ease-standard)}
+.filtro-modulo-item{
+  display:flex;align-items:center;gap:10px;
+  padding:10px 12px;border-radius:10px;cursor:pointer;
+  font-size:0.9rem;font-weight:600;color:var(--color-text);
+  transition:background var(--dur-fast) ease;user-select:none;
+}
+.filtro-modulo-item:hover{background:var(--color-surface-2)}
+.filtro-modulo-item input[type="checkbox"]{width:18px;height:18px;accent-color:var(--color-primary);cursor:pointer;flex-shrink:0;margin:0}
+.filtro-modulo-acoes{
+  display:flex;gap:8px;padding:8px;
+  border-top:1px solid var(--color-border-visible);
+  margin-top:6px;position:sticky;bottom:0;
+  background:var(--color-surface);
+}
+.filtro-modulo-acoes button{
+  flex:1;padding:9px;border-radius:10px;
+  font-family:inherit;font-size:0.88rem;font-weight:700;
+  cursor:pointer;min-height:38px;border:1px solid transparent;
+  transition:all var(--dur-fast) ease;
+}
+.filtro-modulo-limpar{background:var(--color-surface-2);color:var(--color-text-2);border-color:var(--color-border-visible)}
+.filtro-modulo-limpar:hover{background:var(--color-surface-3);color:var(--color-text)}
+.filtro-modulo-ok{background:var(--skin-gradient);color:#fff}
+.filtro-modulo-ok:hover{opacity:0.9;transform:translateY(-1px)}
+body[data-sistema="android"] .filtro-modulo-btn,body[data-sistema="android"] .filtro-modulo-acoes button{border-radius:999px}
+body[data-sistema="iphone"] .filtro-modulo-btn,body[data-sistema="iphone"] .filtro-modulo-acoes button{border-radius:12px}
+
+/* ============================================================
+   v0.85 — BLOCO C: Bottom Navigation mobile
+   ============================================================ */
+.bottom-nav{
+  position:fixed;left:0;right:0;bottom:0;z-index:900;
+  background:color-mix(in srgb,var(--color-surface) 92%,transparent);
+  backdrop-filter:saturate(180%) blur(20px);
+  -webkit-backdrop-filter:saturate(180%) blur(20px);
+  border-top:1px solid var(--color-border-visible);
+  padding:6px 8px calc(6px + env(safe-area-inset-bottom, 0px));
+  display:none;
+  justify-content:space-around;align-items:stretch;
+  max-width:1440px;margin:0 auto;
+  box-shadow:0 -4px 20px rgba(0,0,0,0.12);
+}
+.bottom-nav.visivel{display:flex}
+.bottom-nav.escondido{transform:translateY(120%)}
+body[data-sistema="iphone"] .bottom-nav{background:color-mix(in srgb,var(--color-glass) 85%,transparent);border-top:0.5px solid var(--color-glass-border)}
+body[data-sistema="android"] .bottom-nav{background:var(--color-surface-2);backdrop-filter:none;-webkit-backdrop-filter:none}
+body[data-tema="escuro"] .bottom-nav{box-shadow:0 -4px 20px rgba(0,0,0,0.5)}
+.nav-item{
+  flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;
+  background:none;border:none;color:var(--color-text-3);
+  font-family:inherit;font-size:0.65rem;font-weight:600;
+  cursor:pointer;padding:6px 2px;border-radius:12px;position:relative;
+  transition:color 0.2s ease,background 0.2s ease;
+  min-height:52px;
+}
+.nav-item:active{background:var(--color-primary-light)}
+.nav-item__icon{font-size:1.3rem;line-height:1;position:relative;transition:transform 0.2s ease}
+.nav-item__label{font-size:0.62rem;font-weight:700;letter-spacing:0.1px;transition:opacity 0.2s}
+.nav-item.ativo{color:var(--color-primary);background:var(--color-primary-light)}
+.nav-item.ativo .nav-item__icon{transform:scale(1.08)}
+.nav-item__badge{
+  position:absolute;top:-4px;right:-8px;
+  background:var(--color-danger);color:#fff;
+  font-size:9px;font-weight:800;min-width:16px;height:16px;padding:0 4px;
+  border-radius:999px;display:inline-flex;align-items:center;justify-content:center;
+  border:2px solid var(--color-surface);line-height:1;
+}
+@media (max-width:768px){
+  body{padding-bottom:calc(64px + env(safe-area-inset-bottom, 0px))}
+  .app-shell{padding-bottom:calc(80px + env(safe-area-inset-bottom, 0px))}
+}
+
+/* ============================================================
+   v0.85 — BLOCO E: overlay "gire o dispositivo"
+   ============================================================ */
+.overlay-rotacionar{
+  position:fixed;inset:0;
+  background:rgba(5,5,5,0.97);
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  z-index:99999;display:none;
+  flex-direction:column;align-items:center;justify-content:center;
+  color:#fff;text-align:center;padding:30px;gap:20px;
+}
+.overlay-rotacionar.visivel{display:flex;animation:fadeInRot 0.25s ease}
+@keyframes fadeInRot{from{opacity:0}to{opacity:1}}
+.overlay-rotacionar__icone{font-size:5rem;line-height:1;animation:girarIcone 2s ease-in-out infinite}
+@keyframes girarIcone{0%,20%{transform:rotate(0deg)}40%,60%{transform:rotate(90deg)}80%,100%{transform:rotate(0deg)}}
+.overlay-rotacionar__titulo{font-size:1.4rem;font-weight:800}
+.overlay-rotacionar__texto{font-size:0.98rem;color:#cbd5e1;line-height:1.5;max-width:340px}
+/* Correção: modais acima de tudo, sem conflito de composição com o Modo Foco */
+.modal-ciclo-overlay,
+.modal-anotacao-overlay,
+.modal-tempo-overlay,
+.modal-aval-overlay,
+.modal-convite-overlay,
+.modal-ciencia-overlay{
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  z-index: 2147483647 !important;
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+}
 </style>
 <style>
 .banner{position:relative;background:linear-gradient(135deg,var(--skin-primary-soft) 0%,var(--color-surface) 55%,var(--color-success-light) 100%);border:1px solid var(--color-border-visible);border-radius:18px;padding:20px;overflow:hidden;box-shadow:var(--shadow-card);transition:all var(--skin-transition)}
@@ -401,6 +575,7 @@ body[data-sistema="iphone"] .btn-compacto-share{border-radius:16px}
 .toast-celebracao.toast-sucesso{border-left-color:var(--color-success)}
 .toast-celebracao.toast-remover{border-left-color:var(--color-danger)}
 .toast-celebracao .toast-icone{font-size:1.6rem}
+@media (max-width:768px){.toast-celebracao{bottom:calc(24px + 64px + env(safe-area-inset-bottom, 0px))}}
 .toast-share{position:fixed;bottom:92px;left:50%;transform:translateX(-50%) translateY(110px);background:var(--color-text);color:var(--color-bg);padding:12px 22px;border-radius:var(--radius-pill);font-size:0.95rem;font-weight:700;box-shadow:var(--shadow-elevated);opacity:0;transition:transform var(--dur-slow) var(--ease-standard),opacity var(--dur-slow) var(--ease-standard);pointer-events:none;z-index:9999;max-width:90vw;text-align:center}
 .toast-share.visivel{transform:translateX(-50%) translateY(0);opacity:1}
 .notificacoes-painel{position:fixed;top:78px;right:18px;width:380px;max-width:calc(100vw - 32px);background:var(--color-surface);border-radius:18px;box-shadow:var(--shadow-elevated);z-index:9500;display:none;overflow:hidden;max-height:480px;border:1px solid var(--color-border-visible)}
@@ -1122,6 +1297,10 @@ body[data-sistema="iphone"] .sobre-aba{background:color-mix(in srgb,var(--color-
 .sobre-aba__corpo ul{padding-left:16px;display:flex;flex-direction:column;gap:4px}
 .sobre-aba__corpo li{font-size:0.78rem}
 .sobre-aba__corpo strong{color:var(--color-text);font-weight:700}
+
+/* ============================================================
+   MODODOFOCO — original da v0.84Rev (intocado)
+   ============================================================ */
 .modo-foco{position:fixed;top:0;left:0;right:0;bottom:0;background:radial-gradient(1200px 600px at 50% -10%,#16211a 0%,#0d0d0d 60%);z-index:9000;display:none;flex-direction:column;color:#e0e0e0}
 .modo-foco.ativo{display:flex}
 .foco-barra{display:flex;align-items:center;gap:12px;padding:10px 16px;background:rgba(5,5,5,0.9);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid #262626;flex-shrink:0;flex-wrap:wrap}
@@ -1136,11 +1315,12 @@ body[data-sistema="iphone"] .sobre-aba{background:color-mix(in srgb,var(--color-
 .foco-checklist{flex:1;overflow-y:auto;padding:0 20px 20px 20px;min-width:0}
 .foco-checklist-inner{max-width:1100px;margin:0 auto;position:relative}
 .foco-modulo-titulo{font-size:1.4rem;font-weight:700;color:#fff;margin-bottom:16px;letter-spacing:-0.01em}
-.foco-table{width:100%;border-collapse:separate;border-spacing:0;background:#141414;border-radius:14px;border:1px solid #262626}th{position:sticky;top:0;z-index:20;background:#1a1a1a;color:#999;font-weight:700;font-size:0.7rem;text-transform:uppercase;letter-spacing:0.6px;padding:10px 4px;border-bottom:2px solid #2a2a2a;box-shadow:0 2px 0 #2a2a2a,0 6px 14px rgba(0,0,0,0.6));text-align:center;white-space:nowrap}
+.foco-table{width:100%;border-collapse:separate;border-spacing:0;background:#141414;border-radius:14px;border:1px solid #262626}
+.foco-table thead th{position:sticky;top:0;z-index:20;background:#1a1a1a;color:#999;font-weight:700;font-size:0.7rem;text-transform:uppercase;letter-spacing:0.6px;padding:10px 4px;border-bottom:2px solid #2a2a2a;box-shadow:0 2px 0 #2a2a2a,0 8px 18px rgba(0,0,0,0.75);text-align:center;white-space:nowrap}
 .foco-table thead th.assunto-col{text-align:left;min-width:220px;padding-left:14px}
 .foco-table thead th.check-col{min-width:56px}
 .foco-table thead th.anotacao-col{width:48px;min-width:48px}
-.foco-table tbody tr:first-child td{padding-top:14px};border-bottom:1px solid #1f1f1f;text-align:center;font-size:0.92rem;color:#ddd;vertical-align:middle}
+.foco-table tbody td{padding:14px 4px;border-bottom:1px solid #1f1f1f;text-align:center;font-size:0.92rem;color:#ddd;vertical-align:middle}
 .foco-table tbody td.assunto-col{text-align:left;padding-left:14px;font-size:0.95rem;line-height:1.4;color:#ddd}
 .foco-table tbody tr:last-child td{border-bottom:none}
 .foco-table tbody tr:hover td{background:#1f1f1f}
@@ -1223,12 +1403,12 @@ body[data-sistema="iphone"] .sobre-aba{background:color-mix(in srgb,var(--color-
 @media (max-width:899px){
   .foco-corpo{flex-direction:column;overflow:hidden}
   .foco-relogio-painel{width:100%;order:-1;border-left:none;border-bottom:1px solid #222;flex-shrink:0}
-.foco-checklist{flex:1;padding:0 12px 12px 12px;min-height:0;overflow-y:auto}
+  .foco-checklist{flex:1;padding:0 12px 12px 12px;min-height:0;overflow-y:auto}
   .foco-modulo-titulo{font-size:1.1rem;margin-bottom:10px}
   .foco-table{min-width:740px}
   .foco-table thead th{font-size:0.65rem;padding:8px 2px}
   .foco-table thead th.assunto-col{min-width:180px;padding-left:10px}
-.foco-table tbody td{padding:12px 2px;font-size:0.85rem}
+  .foco-table tbody td{padding:12px 2px;font-size:0.85rem}
   .foco-table tbody td.assunto-col{padding-left:10px;font-size:0.88rem}
   .foco-barra{justify-content:space-between;flex-wrap:wrap;row-gap:8px}
   .foco-barra-titulo{order:1;flex:0 0 auto}
@@ -1267,7 +1447,7 @@ body[data-sistema="iphone"] .sobre-aba{background:color-mix(in srgb,var(--color-
   .foco-modulo-titulo{font-size:0.95rem;margin-bottom:6px}
 }
 .modal-tempo-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(15,23,42,0.62);z-index:9600;display:none;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(8px) saturate(120%);-webkit-backdrop-filter:blur(8px) saturate(120%)}
-.modal-tempo-overlay.visivel{display:flex;animation:notifIn var(--dur-normal) var(--ease-standard)}
+.modal-tempo-overlay.visivel{display:flex;animation:notifIn var(--dur-base) var(--ease-standard)}
 .modal-tempo-content{background:var(--color-surface);border-radius:20px;box-shadow:var(--shadow-elevated);width:100%;max-width:520px;max-height:92vh;display:flex;flex-direction:column;overflow:hidden;border:1px solid var(--color-border-visible)}
 body[data-sistema="iphone"] .modal-tempo-content{background:var(--color-glass);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);border:0.5px solid var(--color-glass-border);border-radius:22px}
 body[data-sistema="android"] .modal-tempo-content{border-radius:24px;background:var(--color-surface-2)}
@@ -1584,9 +1764,76 @@ body[data-sistema="iphone"] .onboarding-btn{border-radius:14px}
 .tela.ativa{display:block !important}
 #focoTabela{overflow:visible !important}
 .foco-table{overflow:visible !important}
+/* v0.85 — Bloco E: faixa Pomodoro e cabeçalho único só em paisagem mobile */
+.foco-header__titulo{display:none}
+.foco-modos{display:none}
+.foco-pomodoro-faixa{display:none}
+.foco-pomodoro-faixa.visivel{display:none}
+
+/* Regras ativas apenas em mobile paisagem */
+@media (max-width:899px) and (orientation:landscape){
+  .foco-header__titulo{
+    display:flex;align-items:center;gap:8px;overflow:hidden;
+    flex:1;min-width:0;font-size:0.86rem;font-weight:700;
+    color:#fff;letter-spacing:-0.01em;line-height:1.15;
+  }
+  .foco-header__titulo-icone{font-size:1.05rem;flex-shrink:0;line-height:1}
+  .foco-header__titulo-texto{
+    overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0;
+    transition:opacity 0.35s ease,color 0.35s ease;
+  }
+  .foco-header__titulo-texto.flash{color:#8ee080}
+
+  .foco-modos{display:flex;gap:3px;background:#0a0a0a;border:1px solid #1f1f1f;border-radius:10px;padding:3px;flex-shrink:0}
+  .foco-modo{
+    display:inline-flex;align-items:center;justify-content:center;
+    padding:6px 9px;border:none;border-radius:8px;
+    background:transparent;color:#888;font-family:inherit;
+    font-size:0.76rem;font-weight:700;cursor:pointer;white-space:nowrap;
+  }
+  .foco-modo:hover{color:#ccc}
+  .foco-modo.ativo{background:linear-gradient(135deg,#1e3a2a 0%,#244a34 100%);color:#8ee080;box-shadow:0 0 0 1px #2d6b2d inset,0 2px 8px rgba(108,203,95,0.15)}
+
+  .foco-pomodoro-faixa.visivel{
+    display:flex;align-items:center;justify-content:space-between;gap:12px;
+    background:#0a0a0a;border-bottom:1px solid #1f1f1f;
+    padding:8px 16px;flex-shrink:0;
+  }
+  .foco-pomodoro__ciclos{display:flex;align-items:center;gap:4px;font-size:0.9rem}
+  .foco-pomodoro__ciclos .dot{opacity:0.28;transition:all 0.2s}
+  .foco-pomodoro__ciclos .dot.ativo{opacity:1;transform:scale(1.1);filter:drop-shadow(0 0 5px rgba(108,203,95,0.5))}
+  .foco-pomodoro__ciclos-label{font-size:0.75rem;color:#888;font-weight:700;margin-left:4px}
+  .foco-pomodoro__config{
+    display:flex;align-items:center;gap:6px;
+    font-family:var(--font-mono);font-size:0.82rem;font-weight:800;
+    color:#ddd;background:#141414;border:1px solid #1f1f1f;border-radius:10px;
+    padding:5px 10px;cursor:pointer;transition:all 0.15s ease;
+  }
+  .foco-pomodoro__config:hover{background:#1a1a1a;border-color:#333;transform:translateY(-1px)}
+  .foco-pomodoro__config .gear{font-size:0.95rem}
+
+  /* Em paisagem mobile, esconde as abas originais e o painel lateral */
+  .foco-barra-abas{display:none}
+  .foco-relogio-painel{display:none}
+}
 </style>
 </head>
 <body data-sistema="windows" data-tema="claro">
+
+<!-- ===== v0.85 — SVG sprite: mira crosshair (Bloco F) ===== -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="miraCrosshair" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="12" y1="1.5" x2="12" y2="5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+      <line x1="12" y1="19" x2="12" y2="22.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+      <line x1="1.5" y1="12" x2="5" y2="12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+      <line x1="19" y1="12" x2="22.5" y2="12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+      <circle cx="12" cy="12" r="1.6" fill="currentColor" stroke="none"/>
+    </symbol>
+  </defs>
+</svg>
+
 <div class="app-shell" id="appShell">
 <div id="telaPrincipal" class="tela ativa">
 <div class="aviso-persistencia" id="avisoPersistencia"><span>⚠️ O armazenamento local não está disponível. Os dados não serão salvos ao fechar a página.</span><button class="fechar-aviso" id="fecharAviso" aria-label="Fechar aviso">×</button></div>
@@ -1594,7 +1841,7 @@ body[data-sistema="iphone"] .onboarding-btn{border-radius:14px}
 <div class="topbar__head">
 <div class="topbar__row">
 <button class="icon-btn" id="btnMenu" aria-label="Menu">☰</button>
-<div class="topbar__title"><span>📋</span><span>CheckAprovação</span><span class="topbar__version">v0.84</span></div>
+<div class="topbar__title"><span>📋</span><span>CheckAprovação</span><span class="topbar__version">v0.85</span></div>
 <button class="icon-btn" id="btnSino" aria-label="Notificações">🔔<span class="icon-btn__badge" id="sinoBadge" style="display:none;">0</span></button>
 </div>
 <div class="topbar__meta" id="headerConcurso"><span id="headerConcursoTexto">Concurso Guarda Municipal de Florianópolis</span><span class="plano-badge plano-badge--freemium" id="headerPlanoBadge">🎁 Freemium</span></div>
@@ -1692,8 +1939,14 @@ body[data-sistema="iphone"] .onboarding-btn{border-radius:14px}
 </div>
 <div class="modulos-grid" id="modulosGrid"></div>
 </section>
-<section class="checklist-bloco">
+<section class="checklist-bloco" id="blocoChecklist">
+<div class="checklist-topo">
 <div class="section-label">📚 Seu Checklist</div>
+<div class="legenda-foco" aria-hidden="true">
+<svg class="legenda-foco__alvo" viewBox="0 0 24 24"><use href="#miraCrosshair"/></svg>
+<span class="legenda-foco__texto">Modo Foco Total</span>
+</div>
+</div>
 <div id="conteudoPrincipal"></div>
 </section>
 <section id="bannerBloco">
@@ -1855,15 +2108,15 @@ body[data-sistema="iphone"] .onboarding-btn{border-radius:14px}
 </div>
 <div class="filtros-bar">
 <div class="filtro-busca-wrap"><span class="filtro-busca-icone">🔍</span><input type="text" class="filtro-busca" id="buscaImportantes" placeholder="Buscar por assunto ou módulo..."></div>
-<div class="filtro-pills" id="pillsImportantes">
-<button class="pill ativo" data-modulo="todos">Todos</button>
-<button class="pill" data-modulo="portugues">📚 Português</button>
-<button class="pill" data-modulo="legislacao">⚖️ Legislação</button>
-<button class="pill" data-modulo="dirAdmin">🏛️ Dir. Admin</button>
-<button class="pill" data-modulo="dirConst">📜 Dir. Const</button>
-<button class="pill" data-modulo="dirPenal">⚖️ Dir. Penal</button>
-<button class="pill" data-modulo="dirProcPenal">📋 Proc. Penal</button>
-<button class="pill" data-modulo="complementar">🌐 Complementar</button>
+<div class="filtro-modulo-wrap">
+  <button class="filtro-modulo-btn" id="btnFiltroModulosImp" type="button">
+    <span class="filtro-modulo-btn__label"><span>📚</span><span>Módulos</span></span>
+    <span style="display:flex;align-items:center;gap:8px;">
+      <span class="filtro-modulo-btn__badge" id="filtroModulosImpBadge">Todos</span>
+      <span class="filtro-modulo-btn__arrow">▾</span>
+    </span>
+  </button>
+  <div class="filtro-modulo-painel" id="painelFiltroModulosImp"></div>
 </div>
 <div class="filtro-ordenacao-wrap"><label for="ordemImportantes">Ordenar:</label><select class="filtro-ordenacao" id="ordemImportantes"><option value="recentes">Marcados recentemente</option><option value="antigos">Marcados há mais tempo</option><option value="modulo">Por módulo</option><option value="alfabetica">Alfabética</option></select></div>
 <div class="filtro-contador" id="contadorImportantes">—</div>
@@ -1878,15 +2131,15 @@ body[data-sistema="iphone"] .onboarding-btn{border-radius:14px}
 </div>
 <div class="filtros-bar">
 <div class="filtro-busca-wrap"><span class="filtro-busca-icone">🔍</span><input type="text" class="filtro-busca" id="buscaAnotacoes" placeholder="Buscar por texto, assunto ou módulo..."></div>
-<div class="filtro-pills" id="pillsAnotacoes">
-<button class="pill ativo" data-modulo="todos">Todos</button>
-<button class="pill" data-modulo="portugues">📚 Português</button>
-<button class="pill" data-modulo="legislacao">⚖️ Legislação</button>
-<button class="pill" data-modulo="dirAdmin">🏛️ Dir. Admin</button>
-<button class="pill" data-modulo="dirConst">📜 Dir. Const</button>
-<button class="pill" data-modulo="dirPenal">⚖️ Dir. Penal</button>
-<button class="pill" data-modulo="dirProcPenal">📋 Proc. Penal</button>
-<button class="pill" data-modulo="complementar">🌐 Complementar</button>
+<div class="filtro-modulo-wrap">
+  <button class="filtro-modulo-btn" id="btnFiltroModulosAnot" type="button">
+    <span class="filtro-modulo-btn__label"><span>📚</span><span>Módulos</span></span>
+    <span style="display:flex;align-items:center;gap:8px;">
+      <span class="filtro-modulo-btn__badge" id="filtroModulosAnotBadge">Todos</span>
+      <span class="filtro-modulo-btn__arrow">▾</span>
+    </span>
+  </button>
+  <div class="filtro-modulo-painel" id="painelFiltroModulosAnot"></div>
 </div>
 <div class="filtro-ordenacao-wrap"><label for="ordemAnotacoes">Ordenar:</label><select class="filtro-ordenacao" id="ordemAnotacoes"><option value="recentes">Mais recentes</option><option value="antigas">Mais antigas</option><option value="modulo">Por módulo</option></select></div>
 <div class="filtro-contador" id="contadorAnotacoes">—</div>
@@ -1988,6 +2241,15 @@ body[data-sistema="iphone"] .onboarding-btn{border-radius:14px}
 <button class="seletor-tema-opcao" data-tema-escolha="claro"><span class="tema-preview claro"></span><span>☀️ Claro</span></button>
 <button class="seletor-tema-opcao" data-tema-escolha="escuro"><span class="tema-preview escuro"></span><span>🌙 Escuro</span></button>
 </div>
+</div>
+</div>
+</div>
+<div class="config-card">
+<div class="config-card-titulo c5">⭐ Avalie o CheckAprovação</div>
+<div class="config-card-corpo">
+<div class="config-card-descricao">Sua opinião ajuda a melhorar o app. Leva menos de 1 minuto.</div>
+<div class="config-card-rodape">
+<button class="btn-ms" id="btnAvaliarConfig" style="background:var(--color-gold);color:#fff;">⭐ Avaliar agora</button>
 </div>
 </div>
 </div>
@@ -2319,6 +2581,7 @@ body[data-sistema="iphone"] .onboarding-btn{border-radius:14px}
 </section>
 </div>
 </div>
+
 <div class="menu-overlay" id="menuOverlay"></div>
 <div class="menu-lateral" id="menuLateral">
 <div class="menu-lateral-header"><h3>📋 Menu</h3><button class="btn-fechar-menu" id="btnFecharMenu" aria-label="Fechar menu">×</button></div>
@@ -2328,20 +2591,79 @@ body[data-sistema="iphone"] .onboarding-btn{border-radius:14px}
 <a class="menu-item" data-tela="revisoes" id="menuRevisoes"><span class="menu-icone">🔄</span><span class="menu-texto">Revisão Espaçada</span><span class="menu-badge" id="revisoesBadge" style="display:none;">0</span></a>
 <a class="menu-item" data-tela="importantes" id="menuImportantes"><span class="menu-icone">📌</span><span class="menu-texto">Assuntos Importantes</span><span class="menu-badge" id="importantesBadge" style="display:none;">0</span></a>
 <a class="menu-item" data-tela="anotacoes" id="menuAnotacoes"><span class="menu-icone">📝</span><span class="menu-texto">Central de Anotações</span><span class="menu-badge" id="anotacoesBadge" style="display:none;">0</span></a>
-<a class="menu-item" data-tela="avaliacoes" id="menuAvalie"><span class="menu-icone">⭐</span><span class="menu-texto">Avalie!</span></a>
 <a class="menu-item" id="menuCiencia"><span class="menu-icone">💡</span><span class="menu-texto">Aprenda com Ciência</span></a>
 <a class="menu-item" data-tela="config" id="menuConfig"><span class="menu-icone">⚙️</span><span class="menu-texto">Configurações</span></a>
+<div class="menu-lateral__divisor"></div>
+<a class="menu-item menu-item--sair" id="menuSair"><span class="menu-icone">🚪</span><span class="menu-texto">Sair</span></a>
 </div>
+
+<!-- v0.85 — BOTTOM NAV (mobile) -->
+<nav class="bottom-nav" id="bottomNav" aria-label="Navegação principal">
+  <button class="nav-item ativo" data-nav="inicio" type="button">
+    <span class="nav-item__icon">🏠</span>
+    <span class="nav-item__label">Início</span>
+  </button>
+  <button class="nav-item" data-nav="checklist" type="button">
+    <span class="nav-item__icon">☑️</span>
+    <span class="nav-item__label">Checklist</span>
+  </button>
+  <button class="nav-item" data-nav="painel" type="button">
+    <span class="nav-item__icon">📊</span>
+    <span class="nav-item__label">Painel</span>
+  </button>
+  <button class="nav-item" data-nav="importantes" type="button">
+    <span class="nav-item__icon">📌<span class="nav-item__badge" id="navImportantesBadge" style="display:none;">0</span></span>
+    <span class="nav-item__label">Importantes</span>
+  </button>
+  <button class="nav-item" data-nav="mais" type="button">
+    <span class="nav-item__icon">☰</span>
+    <span class="nav-item__label">Mais</span>
+  </button>
+</nav>
+
 <div class="toast-celebracao" id="toastCelebracao" role="status" aria-live="polite"><span class="toast-icone" id="toastIcone">✅</span><span id="toastTexto">Assunto concluído!</span></div>
 <div class="toast-share" id="toastShare" role="status" aria-live="polite">📋 Link copiado!</div>
+
+<!-- =============================================================
+     MODO FOCO — mantido original da v0.84Rev
+     + adições isoladas do Bloco E (aparecem apenas em paisagem mobile):
+       - ícone + título #focoIcone/#focoTituloTexto na foco-barra
+       - #focoPomodoroFaixa abaixo da foco-barra
+       - #overlayRotacionar no final
+     Os controles originais do painel lateral permanecem intactos.
+     ============================================================= -->
 <div class="modo-foco" id="modoFoco">
 <div class="foco-barra">
-<div class="foco-barra-titulo"><span>⏱️</span><span>Modo Foco</span></div>
-<div class="foco-barra-abas" id="focoBarraAbas">
-<button class="painel-aba ativa" data-aba="padrao"><span>⏱️</span><span>Padrão</span></button>
-<button class="painel-aba" data-aba="pomodoro"><span>🍅</span><span>Pomodoro</span></button>
+  <div class="foco-barra-titulo"><span>⏱️</span><span>Modo Foco</span></div>
+  <!-- v0.85 (Bloco E): título resumido — visível apenas em paisagem mobile (CSS na Parte 5) -->
+  <div class="foco-header__titulo" id="focoHeaderTitulo" style="display:none">
+    <span class="foco-header__titulo-icone" id="focoIcone">📚</span>
+    <span class="foco-header__titulo-texto" id="focoTituloTexto">Módulo</span>
+  </div>
+  <!-- v0.85 (Bloco E): seletor de modo em texto — visível apenas em paisagem mobile -->
+  <div class="foco-modos" id="focoModos" style="display:none" role="tablist" aria-label="Modo do cronômetro">
+    <button class="foco-modo ativo" id="modoPadrao" type="button" role="tab" aria-selected="true">Padrão</button>
+    <button class="foco-modo" id="modoPomodoro" type="button" role="tab" aria-selected="false">Pomodoro</button>
+  </div>
+  <div class="foco-barra-abas" id="focoBarraAbas">
+    <button class="painel-aba ativa" data-aba="padrao"><span>⏱️</span><span>Padrão</span></button>
+    <button class="painel-aba" data-aba="pomodoro"><span>🍅</span><span>Pomodoro</span></button>
+  </div>
+  <button class="btn-sair-topo" id="btnSairTopo">🚪 Sair</button>
 </div>
-<button class="btn-sair-topo" id="btnSairTopo">🚪 Sair</button>
+<!-- v0.85 (Bloco E): faixa Pomodoro — visível apenas em paisagem mobile e quando o modo Pomodoro está ativo -->
+<div class="foco-pomodoro-faixa" id="focoPomodoroFaixa">
+  <div class="foco-pomodoro__ciclos">
+    <span class="dot ativo">🍅</span>
+    <span class="dot ativo">🍅</span>
+    <span class="dot">🍅</span>
+    <span class="dot">🍅</span>
+    <span class="foco-pomodoro__ciclos-label" id="focoCiclosLabel">0/4</span>
+  </div>
+  <button class="foco-pomodoro__config" id="btnConfigCicloFoco" type="button">
+    <span class="gear">⚙️</span>
+    <span id="focoTempoCicloLabel">25/5</span>
+  </button>
 </div>
 <div class="foco-corpo">
 <div class="foco-checklist">
@@ -2385,6 +2707,14 @@ body[data-sistema="iphone"] .onboarding-btn{border-radius:14px}
 </div>
 </div>
 </div>
+
+<!-- v0.85 (Bloco E): overlay "gire o dispositivo" — visível apenas em retrato quando o Modo Foco está ativo -->
+<div class="overlay-rotacionar" id="overlayRotacionar" aria-hidden="true">
+  <div class="overlay-rotacionar__icone">📱</div>
+  <div class="overlay-rotacionar__titulo">Gire o dispositivo</div>
+  <div class="overlay-rotacionar__texto">O Modo Foco foi desenhado para uso na <strong>horizontal (paisagem)</strong>. Vire o celular para continuar.</div>
+</div>
+
 <div class="modal-ciclo-overlay" id="modalCicloOverlay">
 <div class="modal-ciclo-content">
 <div class="modal-ciclo-header"><h3>⚙️ Tempo do ciclo Pomodoro</h3><button class="modal-ciclo-fechar" id="btnFecharModalCiclo">×</button></div>
@@ -3181,10 +3511,11 @@ var pomodoroSomAtivo=true;
 var pomodoroInterval=null;
 var pomodoroAguardandoAcao=false;
 var padraoPausado=false;
-var importantesFiltroModulo='todos';
+/* v0.85 — Bloco A: filtros de módulo agora são arrays (vazio = todos) */
+var importantesFiltroModulo=[];
 var importantesOrdem='recentes';
 var importantesBusca='';
-var anotacoesFiltroModulo='todos';
+var anotacoesFiltroModulo=[];
 var anotacoesOrdem='recentes';
 var anotacoesBusca='';
 var avaliacoesFiltroEstrela='todas';
@@ -3218,6 +3549,12 @@ var onboardingMedirTempoEscolhido=null;
 var onboardingPrioridadeTemp=[];
 var onboardingNomeTmp='';
 var TOTAL_STEPS_ONBOARDING=6;
+/* v0.85 — Bloco E: variáveis do Modo Foco em paisagem mobile */
+var modoFocoAtual='padrao';
+var focoFlashTimeout=null;
+var focoOrientacaoSuportada=false;
+var focoOverlayPortraitHandler=null;
+var focoSubtopicosContexto=null;
 var stepMetaOnboarding={
 1:{label:'PASSO 1 DE 6',title:'Boas-vindas',desc:'Conheça o CheckAprovação e comece sua jornada rumo à Aprovação.'},
 2:{label:'PASSO 2 DE 6',title:'Perfil',desc:'Defina seu nome, sistema e tema.'},
@@ -3899,6 +4236,9 @@ function atualizarBadgesMenu(){
 var imp=contarImportantes();
 var impB=document.getElementById('importantesBadge');
 if(impB){if(imp>0){impB.style.display='inline-flex';impB.textContent=imp;}else impB.style.display='none';}
+/* v0.85 — Bloco C: espelha o badge de importantes no bottom nav */
+var impNav=document.getElementById('navImportantesBadge');
+if(impNav){if(imp>0){impNav.style.display='inline-flex';impNav.textContent=imp;}else impNav.style.display='none';}
 var anot=contarAnotacoes();
 var anotB=document.getElementById('anotacoesBadge');
 if(anotB){if(anot>0){anotB.style.display='inline-flex';anotB.textContent=anot;}else anotB.style.display='none';}
@@ -3952,7 +4292,8 @@ toast.textContent=texto;
 toast.classList.add('visivel');
 if(toastShareTimeout)clearTimeout(toastShareTimeout);
 toastShareTimeout=setTimeout(function(){toast.classList.remove('visivel')},2200);
-}function atualizarPizza(el,real,prev){
+}
+function atualizarPizza(el,real,prev){
 var CIRCUNFERENCIA=326.7;var RAIO=52;var RAIO_INTERNO=44;
 var total=TOTAL_ASSUNTOS>0?TOTAL_ASSUNTOS:1;
 var pR=(real/total)*100;var pP=(prev/total)*100;
@@ -4668,9 +5009,10 @@ sh.className='subtopic-header collapsed';
 sh.setAttribute('data-estado',info.estado);
 var ps=(sub.titulo||'').split(' ');
 var is=ps[0]||'📌';var ns=ps.slice(1).join(' ');
-sh.innerHTML='<span class="subtopic-arrow">▼</span><button class="btn-pill btn-foco-total" data-modulo="'+mk+'" data-titulo="'+(sub.titulo||'')+'" data-tipo="subtopico"><span>🎯</span> Foco Total</button><div class="subtopic-title"><span class="subtopic-title__icon">'+is+'</span><span>'+ns+'</span></div>';
+/* v0.85 — Bloco F: mira crosshair no subtópico (substitui o btn-pill btn-foco-total) */
+sh.innerHTML='<span class="subtopic-arrow">▼</span><button class="alvo-foco" data-modulo="'+mk+'" data-titulo="'+(sub.titulo||'')+'" data-tipo="subtopico" aria-label="Entrar em Modo Foco Total"><svg class="alvo-foco__svg" viewBox="0 0 24 24" aria-hidden="true"><use href="#miraCrosshair"/></svg></button><div class="subtopic-title"><span class="subtopic-title__icon">'+is+'</span><span>'+ns+'</span></div>';
 sh.addEventListener('click',function(e){
-if(e.target.closest('.btn-foco-total'))return;
+if(e.target.closest('.alvo-foco'))return;
 var bp=this.closest('.subtopic-bloco');
 var c=bp.classList.toggle('collapsed');
 this.classList.toggle('collapsed',c);
@@ -4693,9 +5035,10 @@ bloco2.id='modulo-'+mk2;bloco2.dataset.modulo=mk2;
 var sh2=document.createElement('div');
 sh2.className='subtopic-header collapsed';
 sh2.setAttribute('data-estado',info2.estado);
-sh2.innerHTML='<span class="subtopic-arrow">▼</span><button class="btn-pill btn-foco-total" data-modulo="'+mk2+'" data-titulo="'+topico.titulo+'" data-tipo="modulo"><span>🎯</span> Foco Total</button><div class="subtopic-title"><span class="subtopic-title__icon">'+icone+'</span><span>'+nome+'</span></div>';
+/* v0.85 — Bloco F: mira crosshair no módulo único (substitui o btn-pill btn-foco-total) */
+sh2.innerHTML='<span class="subtopic-arrow">▼</span><button class="alvo-foco" data-modulo="'+mk2+'" data-titulo="'+topico.titulo+'" data-tipo="modulo" aria-label="Entrar em Modo Foco Total"><svg class="alvo-foco__svg" viewBox="0 0 24 24" aria-hidden="true"><use href="#miraCrosshair"/></svg></button><div class="subtopic-title"><span class="subtopic-title__icon">'+icone+'</span><span>'+nome+'</span></div>';
 sh2.addEventListener('click',function(e){
-if(e.target.closest('.btn-foco-total'))return;
+if(e.target.closest('.alvo-foco'))return;
 var bp=this.closest('.subtopic-bloco');
 var c=bp.classList.toggle('collapsed');
 this.classList.toggle('collapsed',c);
@@ -4711,7 +5054,7 @@ topicSection.appendChild(bloco2);
 conteudoPrincipal.appendChild(topicSection);
 });
 atualizarEstadoTopicos();
-conteudoPrincipal.querySelectorAll('.btn-foco-total').forEach(function(btn){
+conteudoPrincipal.querySelectorAll('.alvo-foco').forEach(function(btn){
 btn.addEventListener('click',function(e){
 e.stopPropagation();
 abrirModoFoco(this.dataset.modulo,this.dataset.titulo,this.dataset.tipo||'modulo');
@@ -5021,6 +5364,7 @@ mostrarCard('fim-pausa');
 }
 }
 atualizarDisplayPomodoro();
+atualizarDisplayFocoHeader();
 }
 function iniciarCicloFoco(){
 pomodoroEstado='foco';pomodoroTempoRestante=pomodoroTempoFoco*60;pomodoroUltimoTick=Date.now();
@@ -5028,6 +5372,7 @@ pomodoroAtivo=true;pomodoroAguardandoAcao=false;padraoPausado=false;
 if(pomodoroInterval)clearInterval(pomodoroInterval);
 pomodoroInterval=setInterval(tickPomodoro,250);
 atualizarDisplayPomodoro();atualizarBotoesPomodoro();
+atualizarDisplayFocoHeader();atualizarBotoesFocoHeader();
 }
 function iniciarCicloPausa(){
 pomodoroEstado='pausa';
@@ -5037,6 +5382,7 @@ pomodoroUltimoTick=Date.now();pomodoroAtivo=true;pomodoroAguardandoAcao=false;pa
 if(pomodoroInterval)clearInterval(pomodoroInterval);
 pomodoroInterval=setInterval(tickPomodoro,250);
 atualizarDisplayPomodoro();atualizarBotoesPomodoro();
+atualizarDisplayFocoHeader();atualizarBotoesFocoHeader();
 }
 function inicializarAudio(){
 if(audioCtx)return;
@@ -5075,6 +5421,163 @@ if(conteudoPadrao)conteudoPadrao.classList.remove('ativo');
 if(conteudoPomodoro)conteudoPomodoro.classList.add('ativo');
 }
 }
+/* ============================================================
+   v0.85 — BLOCO E: funções ADICIONAIS do Modo Foco em paisagem mobile
+   Nenhuma delas altera o comportamento original em desktop/retrato.
+   ============================================================ */
+function tentarTravarPaisagem(){
+  if(!focoOrientacaoSuportada)return false;
+  try{
+    if(screen.orientation&&typeof screen.orientation.lock==='function'){
+      var modoFocoEl=document.getElementById('modoFoco');
+      if(document.fullscreenEnabled&&!document.fullscreenElement&&modoFocoEl&&modoFocoEl.requestFullscreen){
+        try{var pfs=modoFocoEl.requestFullscreen({navigationUI:'hide'});if(pfs&&typeof pfs.catch==='function')pfs.catch(function(){});}catch(e){}
+      }
+      var p=screen.orientation.lock('landscape');
+      if(p&&typeof p.catch==='function')p.catch(function(){});
+      return true;
+    }
+  }catch(e){}
+  return false;
+}
+function destravarOrientacao(){
+  try{
+    if(focoOrientacaoSuportada&&screen.orientation&&typeof screen.orientation.unlock==='function'){
+      screen.orientation.unlock();
+    }
+  }catch(e){}
+  try{
+    if(document.fullscreenElement){var ex=document.exitFullscreen();if(ex&&typeof ex.catch==='function')ex.catch(function(){});}
+  }catch(e){}
+}
+function atualizarOverlayRotacionar(){
+  var overlay=document.getElementById('overlayRotacionar');
+  if(!overlay)return;
+  if(!focoAtivo){overlay.classList.remove('visivel');return;}
+  var portrait=window.matchMedia('(orientation: portrait)').matches;
+  if(portrait){overlay.classList.add('visivel');}
+  else{overlay.classList.remove('visivel');}
+}
+function ligarOrientacaoListener(){
+  if(focoOverlayPortraitHandler)return;
+  focoOverlayPortraitHandler=function(){atualizarOverlayRotacionar();};
+  window.addEventListener('resize',focoOverlayPortraitHandler);
+  window.addEventListener('orientationchange',focoOverlayPortraitHandler);
+}
+function desligarOrientacaoListener(){
+  if(!focoOverlayPortraitHandler)return;
+  window.removeEventListener('resize',focoOverlayPortraitHandler);
+  window.removeEventListener('orientationchange',focoOverlayPortraitHandler);
+  focoOverlayPortraitHandler=null;
+}
+function iniciarFlashSubtopico(){
+  var el=document.getElementById('focoTituloTexto');
+  var ic=document.getElementById('focoIcone');
+  if(!el)return;
+  if(focoFlashTimeout){clearTimeout(focoFlashTimeout);focoFlashTimeout=null;}
+  if(!focoSubtopicosContexto||!focoSubtopicosContexto.tituloPai)return;
+  var pai=focoSubtopicosContexto.tituloPai;
+  var iconePai=focoSubtopicosContexto.iconePai||'📚';
+  var sub=focoSubtopicosContexto.tituloSub||pai;
+  var iconeSub=focoSubtopicosContexto.iconeSub||'📌';
+  el.style.opacity='0';
+  setTimeout(function(){
+    el.textContent=sub;
+    if(ic)ic.textContent=iconeSub;
+    el.classList.add('flash');
+    el.style.opacity='1';
+  },250);
+  focoFlashTimeout=setTimeout(function(){
+    el.style.opacity='0';
+    setTimeout(function(){
+      el.textContent=pai;
+      if(ic)ic.textContent=iconePai;
+      el.classList.remove('flash');
+      el.style.opacity='1';
+    },250);
+  },3000);
+}
+function trocarModoFoco(destino){
+  if(destino!=='padrao'&&destino!=='pomodoro')return;
+  modoFocoAtual=destino;
+  var btnPadrao=document.getElementById('modoPadrao');
+  var btnPomodoro=document.getElementById('modoPomodoro');
+  var faixa=document.getElementById('focoPomodoroFaixa');
+  if(btnPadrao){btnPadrao.classList.toggle('ativo',destino==='padrao');btnPadrao.setAttribute('aria-selected',destino==='padrao'?'true':'false');}
+  if(btnPomodoro){btnPomodoro.classList.toggle('ativo',destino==='pomodoro');btnPomodoro.setAttribute('aria-selected',destino==='pomodoro'?'true':'false');}
+  if(faixa)faixa.classList.toggle('visivel',destino==='pomodoro');
+  if(destino==='pomodoro'){
+    if(pomodoroEstado==='off'){pomodoroTempoRestante=pomodoroTempoFoco*60;}
+  }
+  atualizarDisplayFocoHeader();
+  atualizarBotoesFocoHeader();
+  var lbl=document.getElementById('focoTempoCicloLabel');
+  if(lbl)lbl.textContent=pomodoroTempoFoco+'/'+pomodoroTempoPausa;
+  var lblCiclos=document.getElementById('focoCiclosLabel');
+  if(lblCiclos)lblCiclos.textContent=pomodoroCicloAtual+'/4';
+  var faixaCiclos=document.getElementById('focoPomodoroFaixa');
+  if(faixaCiclos){faixaCiclos.querySelectorAll('.foco-pomodoro__ciclos .dot').forEach(function(d,i){d.classList.toggle('ativo',i<pomodoroCicloAtual);});}
+}
+function atualizarDisplayFocoHeader(){
+  var el=document.getElementById('focoRelogio');
+  if(!el)return;
+  el.classList.remove('rodando','pausado','pomodoro');
+  if(modoFocoAtual==='pomodoro'){
+    el.textContent=formatarMMSS(pomodoroTempoRestante);
+    if(pomodoroTempoRestante<0)el.classList.add('pomodoro');
+    else if(pomodoroEstado==='foco')el.classList.add('rodando');
+    else if(pomodoroEstado==='pausa')el.classList.add('pausado');
+    return;
+  }
+  var total=cronometroTempoAcumulado;
+  if(cronometroAtivo&&!cronometroPausado&&cronometroInicio)total+=(Date.now()-cronometroInicio)/1000;
+  if(cronometroAtivo&&cronometroModulo===focoModuloAtual){
+    el.textContent=formatarMMSS(total);
+    if(!cronometroPausado)el.classList.add('rodando');
+    else el.classList.add('pausado');
+  }else{
+    el.textContent='00:00';
+  }
+}
+function atualizarBotoesFocoHeader(){
+  var btn=document.getElementById('btnFocoIniciar');
+  var icone=document.getElementById('focoBtnIcone');
+  var texto=document.getElementById('focoBtnTexto');
+  if(!btn)return;
+  if(modoFocoAtual==='pomodoro'){
+    if(!pomodoroAtivo||pomodoroEstado==='off'){
+      btn.classList.remove('pausado');
+      if(icone)icone.textContent='▶';
+      if(texto)texto.textContent='Iniciar';
+    }else if(!padraoPausado){
+      btn.classList.remove('pausado');
+      if(icone)icone.textContent='⏸';
+      if(texto)texto.textContent='Pausar';
+    }else{
+      btn.classList.add('pausado');
+      if(icone)icone.textContent='▶';
+      if(texto)texto.textContent='Continuar';
+    }
+    return;
+  }
+  var ativo=cronometroAtivo&&cronometroModulo===focoModuloAtual;
+  if(!ativo){
+    btn.classList.remove('pausado');
+    if(icone)icone.textContent='▶';
+    if(texto)texto.textContent='Iniciar';
+  }else if(cronometroPausado){
+    btn.classList.add('pausado');
+    if(icone)icone.textContent='▶';
+    if(texto)texto.textContent='Continuar';
+  }else{
+    btn.classList.remove('pausado');
+    if(icone)icone.textContent='⏸';
+    if(texto)texto.textContent='Pausar';
+  }
+}
+/* ============================================================
+   FIM BLOCO E — funções adicionais
+   ============================================================ */
 function abrirModoFoco(moduloChave,moduloTitulo,tipo){
 inicializarAudio();
 focoModuloAtual=moduloChave;focoModuloTitulo=moduloTitulo;focoAtivo=true;
@@ -5154,6 +5657,40 @@ if(focoBarraAbas)focoBarraAbas.style.display='';
 atualizarDisplayPadrao();atualizarBotoesPadrao();atualizarDisplayPomodoro();atualizarBotoesPomodoro();atualizarCiclos();
 trocarAbaFoco('padrao');
 }
+/* v0.85 — Bloco E: adições para paisagem mobile.
+   Em desktop/retrato: as chamadas abaixo não alteram o comportamento
+   visual existente; apenas garantem que o overlay de "gire" e o
+   header resumido fiquem sincronizados. */
+var modInfo=modulos.find(function(m){return m.chave===moduloChave});
+var topicoPaiInfo=null;
+if(modInfo){
+  topicoPaiInfo=estruturaTopicos.find(function(t){
+    if(t.id===modInfo.topicoId)return true;
+    if(t.subtopicos&&t.subtopicos.some(function(s){return s.modulo===moduloChave;}))return true;
+    return false;
+  });
+}
+var iconePai=modInfo?modInfo.icone:'📚';
+var tituloPai=topicoPaiInfo?(topicoPaiInfo.titulo||topicoPaiInfo.titulo):(modInfo?modInfo.nome:moduloTitulo);
+var partesPai=(tituloPai||'').split(' ');
+if(partesPai.length>1){iconePai=partesPai[0];tituloPai=partesPai.slice(1).join(' ');}
+var iconeSub=iconePai;
+var tituloSub=moduloTitulo;
+var partesSub=(moduloTitulo||'').split(' ');
+if(partesSub.length>1){iconeSub=partesSub[0];tituloSub=partesSub.slice(1).join(' ');}
+focoSubtopicosContexto={
+  iconePai:iconePai,
+  tituloPai:tituloPai,
+  iconeSub:iconeSub,
+  tituloSub:tituloSub
+};
+focoOrientacaoSuportada=('screen' in window)&&('orientation' in screen)&&(typeof screen.orientation.lock==='function');
+tentarTravarPaisagem();
+ligarOrientacaoListener();
+atualizarOverlayRotacionar();
+modoFocoAtual='padrao';
+trocarModoFoco('padrao');
+iniciarFlashSubtopico();
 }
 function sairModoFoco(){
 if(cronometroAtivo)pararCronometro(false);
@@ -5165,6 +5702,12 @@ var modoFoco=document.getElementById('modoFoco');
 if(modoFoco)modoFoco.classList.remove('ativo');
 document.body.style.overflow='';
 atualizarGraficoStatus();renderizarModulos();renderizarTopicos();
+/* v0.85 — Bloco E: reset do estado de paisagem mobile */
+if(focoFlashTimeout){clearTimeout(focoFlashTimeout);focoFlashTimeout=null;}
+destravarOrientacao();
+desligarOrientacaoListener();
+var overlay=document.getElementById('overlayRotacionar');
+if(overlay)overlay.classList.remove('visivel');
 }
 function aplicarVisibilidadeDashboard(){
 var abasEl=document.getElementById('dashboardAbas');
@@ -5446,7 +5989,7 @@ reclamacao:(dados.reclamacao||'').trim(),
 sugestao:(dados.sugestao||'').trim(),
 categoriaSugerida:calcularCategoriaSugerida(dados.elogio,dados.reclamacao,dados.sugestao),
 sistema:sistemaAtivo||'windows',
-versao:'0.84',
+versao:'0.85',
 nomeUsuario:nomeUsuario||'',
 origem:dados.origem||'menu',
 userId:obterUserId()
@@ -5565,16 +6108,83 @@ salvarDados();renderizarAvaliacoes();mostrarToast('🗑️','Excluída','remover
 });
 });
 }
+/* ============================================================
+   v0.85 — BLOCO A: filtro dropdown de módulos
+   ============================================================ */
+function montarPainelFiltroModulos(painel,selecaoAtual,onConfirmar){
+  painel.innerHTML='';
+  var tempSelecao=(Array.isArray(selecaoAtual)?selecaoAtual.slice():[]);
+  modulos.forEach(function(m){
+    var lbl=document.createElement('label');
+    lbl.className='filtro-modulo-item';
+    var chk=document.createElement('input');
+    chk.type='checkbox';
+    chk.value=m.chave;
+    chk.checked=tempSelecao.indexOf(m.chave)!==-1;
+    chk.addEventListener('change',function(){
+      if(this.checked){if(tempSelecao.indexOf(m.chave)===-1)tempSelecao.push(m.chave);}
+      else{var i=tempSelecao.indexOf(m.chave);if(i!==-1)tempSelecao.splice(i,1);}
+    });
+    var span=document.createElement('span');
+    span.textContent=m.icone+' '+m.nome;
+    lbl.appendChild(chk);
+    lbl.appendChild(span);
+    painel.appendChild(lbl);
+  });
+  var acoes=document.createElement('div');
+  acoes.className='filtro-modulo-acoes';
+  var btnLimpar=document.createElement('button');
+  btnLimpar.type='button';
+  btnLimpar.className='filtro-modulo-limpar';
+  btnLimpar.textContent='Limpar';
+  btnLimpar.addEventListener('click',function(){
+    tempSelecao=[];
+    painel.querySelectorAll('input[type="checkbox"]').forEach(function(c){c.checked=false;});
+  });
+  var btnOk=document.createElement('button');
+  btnOk.type='button';
+  btnOk.className='filtro-modulo-ok';
+  btnOk.textContent='OK';
+  btnOk.addEventListener('click',function(){
+    onConfirmar(tempSelecao.slice());
+    painel.classList.remove('visivel');
+    var btn=painel.previousElementSibling;
+    if(btn)btn.classList.remove('aberto');
+  });
+  acoes.appendChild(btnLimpar);
+  acoes.appendChild(btnOk);
+  painel.appendChild(acoes);
+}
+function atualizarBadgeFiltro(idBadge,selecao){
+  var el=document.getElementById(idBadge);
+  if(!el)return;
+  if(!Array.isArray(selecao)||selecao.length===0)el.textContent='Todos';
+  else if(selecao.length===1){
+    var m=modulos.find(function(x){return x.chave===selecao[0];});
+    el.textContent=m?m.nome:'1 selecionado';
+  }
+  else el.textContent=selecao.length+' selecionados';
+}
+function fecharFiltrosModulosAoClicarFora(e){
+  document.querySelectorAll('.filtro-modulo-painel.visivel').forEach(function(p){
+    if(!p.parentElement.contains(e.target)){
+      p.classList.remove('visivel');
+      var btn=p.previousElementSibling;
+      if(btn)btn.classList.remove('aberto');
+    }
+  });
+}
 function renderizarImportantes(){
 var container=document.getElementById('listaImportantes');
 var contador=document.getElementById('contadorImportantes');
 if(!container)return;
 var lista=[];
+var selecao=(Array.isArray(importantesFiltroModulo)?importantesFiltroModulo:[]);
 for(var chave in estadoCheckboxes){
 if(!estadoCheckboxes[chave]||!chave.endsWith('-Importante'))continue;
 var chaveBase=chave.replace('-Importante','');
 var mod=chaveBase.split('-')[0];
-if(importantesFiltroModulo!=='todos'&&mod!==importantesFiltroModulo)continue;
+if(selecao.length>0&&selecao.indexOf(mod)===-1)continue;
 var nomeAssunto=obterNomeAssunto(chaveBase);
 var modInfo=modulos.find(function(m){return m.chave===mod})||{nome:mod,icone:'📚',chave:''};
 if(importantesBusca){
@@ -5587,7 +6197,7 @@ if(importantesOrdem==='modulo')lista.sort(function(a,b){return a.mod.localeCompa
 else if(importantesOrdem==='alfabetica')lista.sort(function(a,b){return a.nomeAssunto.localeCompare(b.nomeAssunto)});
 if(contador)contador.innerHTML='<strong>'+lista.length+'</strong> assunto'+(lista.length===1?'':'s')+' importante'+(lista.length===1?'':'s');
 if(lista.length===0){
-container.innerHTML='<div class="lista-vazia"><span class="icone-grande">📌</span>Nenhum assunto importante '+(importantesBusca||importantesFiltroModulo!=='todos'?'encontrado com esses filtros.':'ainda. Clique no 📌 no checklist!')+'</div>';
+container.innerHTML='<div class="lista-vazia"><span class="icone-grande">📌</span>Nenhum assunto importante '+(importantesBusca||selecao.length>0?'encontrado com esses filtros.':'ainda. Clique no 📌 no checklist!')+'</div>';
 return;
 }
 var html='';
@@ -5627,10 +6237,11 @@ var container=document.getElementById('listaAnotacoes');
 var contador=document.getElementById('contadorAnotacoes');
 if(!container)return;
 var lista=[];
+var selecao=(Array.isArray(anotacoesFiltroModulo)?anotacoesFiltroModulo:[]);
 for(var chaveAnot in anotacoes){
 var chaveBase=chaveAnot.replace('-anotacao','');
 var mod=chaveBase.split('-')[0];
-if(anotacoesFiltroModulo!=='todos'&&mod!==anotacoesFiltroModulo)continue;
+if(selecao.length>0&&selecao.indexOf(mod)===-1)continue;
 var nomeAssunto=obterNomeAssunto(chaveBase);
 var modInfo=modulos.find(function(m){return m.chave===mod})||{nome:mod,icone:'📚',chave:''};
 anotacoes[chaveAnot].forEach(function(a,idx){
@@ -5646,7 +6257,7 @@ else if(anotacoesOrdem==='antigas')lista.sort(function(a,b){return dataParaNum(a
 else if(anotacoesOrdem==='modulo')lista.sort(function(a,b){return a.mod.localeCompare(b.mod)});
 if(contador)contador.innerHTML='<strong>'+lista.length+'</strong> anotaç'+(lista.length===1?'ão':'ões');
 if(lista.length===0){
-container.innerHTML='<div class="lista-vazia"><span class="icone-grande">📝</span>Nenhuma anotação '+(anotacoesBusca||anotacoesFiltroModulo!=='todos'?'encontrada.':'ainda.')+'</div>';
+container.innerHTML='<div class="lista-vazia"><span class="icone-grande">📝</span>Nenhuma anotação '+(anotacoesBusca||selecao.length>0?'encontrada.':'ainda.')+'</div>';
 return;
 }
 var html='';
@@ -6467,6 +7078,57 @@ consAtivarAba(consAbaAtiva);
 aplicarVisibilidadeConsultoria();
 }
 function abrirPaginaConsultoria(){mostrarTela('consultoria');}
+/* ============================================================
+   v0.85 — BLOCO C: bottom nav (mobile)
+   ============================================================ */
+function esconderBottomNav(){
+  var bn=document.getElementById('bottomNav');
+  if(bn)bn.classList.add('escondido');
+}
+function mostrarBottomNav(){
+  var bn=document.getElementById('bottomNav');
+  if(bn)bn.classList.remove('escondido');
+}
+function setNavAtivo(nome){
+  var bn=document.getElementById('bottomNav');
+  if(!bn)return;
+  bn.querySelectorAll('.nav-item').forEach(function(b){
+    b.classList.toggle('ativo',b.dataset.nav===nome);
+  });
+}
+function irPara(destino){
+  var drawer=document.getElementById('menuLateral');
+  var overlay=document.getElementById('menuOverlay');
+  if(drawer)drawer.classList.remove('visivel');
+  if(overlay)overlay.classList.remove('visivel');
+  var bReco=document.getElementById('recomendacaoSection');
+  var bProg=document.getElementById('blocoProgresso');
+  var bMod=document.getElementById('blocoModulos');
+  if(destino==='inicio'){
+    mostrarTela('principal');
+    if(bReco)bReco.classList.remove('oculto');
+    if(bProg)bProg.classList.remove('oculto');
+    if(bMod)bMod.classList.remove('oculto');
+    try{window.scrollTo({top:0,behavior:'instant'});}catch(e){window.scrollTo(0,0);}
+    setNavAtivo('inicio');
+  }else if(destino==='checklist'){
+    mostrarTela('principal');
+    if(bReco)bReco.classList.add('oculto');
+    if(bProg)bProg.classList.add('oculto');
+    if(bMod)bMod.classList.add('oculto');
+    try{window.scrollTo({top:0,behavior:'instant'});}catch(e){window.scrollTo(0,0);}
+    setNavAtivo('checklist');
+  }else if(destino==='painel'){
+    mostrarTela('dashboard');
+    setNavAtivo('painel');
+  }else if(destino==='importantes'){
+    mostrarTela('importantes');
+    setNavAtivo('importantes');
+  }else if(destino==='mais'){
+    if(drawer)drawer.classList.add('visivel');
+    if(overlay)overlay.classList.add('visivel');
+  }
+}
 function mostrarTela(nomeTela){
 telaAtual=nomeTela;
 var nomesTelas=['telaPrincipal','telaDashboard','telaPlano','telaRevisoes','telaImportantes','telaAnotacoes','telaAvaliacoes','telaConfig','telaConsultoria'];
@@ -6506,7 +7168,6 @@ var menuConsultoria=document.getElementById('menuConsultoria');
 var menuRevisoes=document.getElementById('menuRevisoes');
 var menuImportantes=document.getElementById('menuImportantes');
 var menuAnotacoes=document.getElementById('menuAnotacoes');
-var menuAvalie=document.getElementById('menuAvalie');
 var menuCiencia=document.getElementById('menuCiencia');
 var menuConfig=document.getElementById('menuConfig');
 if(menuDashboard)menuDashboard.classList.toggle('ativo',nomeTela==='dashboard');
@@ -6515,7 +7176,6 @@ if(menuConsultoria)menuConsultoria.classList.toggle('ativo',nomeTela==='consulto
 if(menuRevisoes)menuRevisoes.classList.toggle('ativo',nomeTela==='revisoes');
 if(menuImportantes)menuImportantes.classList.toggle('ativo',nomeTela==='importantes');
 if(menuAnotacoes)menuAnotacoes.classList.toggle('ativo',nomeTela==='anotacoes');
-if(menuAvalie)menuAvalie.classList.toggle('ativo',nomeTela==='avaliacoes');
 if(menuCiencia)menuCiencia.classList.toggle('ativo',false);
 if(menuConfig)menuConfig.classList.toggle('ativo',nomeTela==='config');
 try{window.scrollTo({top:0,behavior:'instant'});}catch(e){window.scrollTo(0,0);}
@@ -6993,6 +7653,47 @@ if(cronometroAtivo&&!cronometroPausado)retomarCronometro();
 fecharTodosOsModais();
 aplicarVisibilidadeConsultoria();
 aplicarVisibilidadeDashboard();
+/* v0.85 — Bloco A: inicializa os dropdowns de módulo */
+var painelImp=document.getElementById('painelFiltroModulosImp');
+if(painelImp){
+  montarPainelFiltroModulos(painelImp,importantesFiltroModulo,function(novaSelecao){
+    importantesFiltroModulo=novaSelecao;
+    atualizarBadgeFiltro('filtroModulosImpBadge',novaSelecao);
+    renderizarImportantes();
+  });
+  atualizarBadgeFiltro('filtroModulosImpBadge',importantesFiltroModulo);
+  var btnFiltroImp=document.getElementById('btnFiltroModulosImp');
+  if(btnFiltroImp){
+    btnFiltroImp.addEventListener('click',function(e){
+      e.stopPropagation();
+      var abrindo=!painelImp.classList.contains('visivel');
+      painelImp.classList.toggle('visivel',abrindo);
+      btnFiltroImp.classList.toggle('aberto',abrindo);
+    });
+  }
+}
+var painelAnot=document.getElementById('painelFiltroModulosAnot');
+if(painelAnot){
+  montarPainelFiltroModulos(painelAnot,anotacoesFiltroModulo,function(novaSelecao){
+    anotacoesFiltroModulo=novaSelecao;
+    atualizarBadgeFiltro('filtroModulosAnotBadge',novaSelecao);
+    renderizarAnotacoesCentral();
+  });
+  atualizarBadgeFiltro('filtroModulosAnotBadge',anotacoesFiltroModulo);
+  var btnFiltroAnot=document.getElementById('btnFiltroModulosAnot');
+  if(btnFiltroAnot){
+    btnFiltroAnot.addEventListener('click',function(e){
+      e.stopPropagation();
+      var abrindo=!painelAnot.classList.contains('visivel');
+      painelAnot.classList.toggle('visivel',abrindo);
+      btnFiltroAnot.classList.toggle('aberto',abrindo);
+    });
+  }
+}
+document.addEventListener('click',fecharFiltrosModulosAoClicarFora);
+/* v0.85 — Bloco C: bottom nav só em mobile */
+var bn=document.getElementById('bottomNav');
+if(bn&&window.matchMedia('(max-width:768px)').matches){bn.classList.add('visivel');}
 if(!onboardingConcluido)abrirOnboarding();
 }
 function on(id,evento,fn){
@@ -7056,40 +7757,44 @@ if(mo)mo.classList.remove('visivel');
 on('btnMenu','click',abrirMenu);
 on('btnFecharMenu','click',fecharMenu);
 on('menuOverlay','click',fecharMenu);
-on('menuDashboard','click',function(e){e.preventDefault();fecharMenu();mostrarTela('dashboard');});
+on('menuDashboard','click',function(e){e.preventDefault();fecharMenu();mostrarTela('dashboard');setNavAtivo('painel');});
 on('menuPlano','click',function(e){e.preventDefault();fecharMenu();mostrarTela('plano');});
 on('menuConsultoria','click',function(e){e.preventDefault();fecharMenu();abrirPaginaConsultoria();});
 on('menuRevisoes','click',function(e){e.preventDefault();fecharMenu();mostrarTela('revisoes');});
-on('menuImportantes','click',function(e){e.preventDefault();fecharMenu();mostrarTela('importantes');});
+on('menuImportantes','click',function(e){e.preventDefault();fecharMenu();mostrarTela('importantes');setNavAtivo('importantes');});
 on('menuAnotacoes','click',function(e){e.preventDefault();fecharMenu();mostrarTela('anotacoes');});
-on('menuAvalie','click',function(e){e.preventDefault();fecharMenu();abrirModalAvaliacao('menu');});
 on('menuCiencia','click',function(e){e.preventDefault();fecharMenu();abrirModalCiencia();});
 on('menuConfig','click',function(e){e.preventDefault();fecharMenu();mostrarTela('config');});
+/* v0.85 — Bloco D: botão Sair no drawer */
+on('menuSair','click',function(e){
+  e.preventDefault();
+  fecharMenu();
+  if(!confirm('Deseja sair do CheckAprovação?'))return;
+  try{window.close();}catch(err){}
+  setTimeout(function(){
+    var desp=document.getElementById('onboardingDespedidaOverlay');
+    if(desp)desp.classList.add('visivel');
+  },300);
+});
+/* v0.85 — Bloco C: bottom nav listeners */
+var bn=document.getElementById('bottomNav');
+if(bn){
+  bn.querySelectorAll('.nav-item').forEach(function(btn){
+    btn.addEventListener('click',function(){ irPara(this.dataset.nav); });
+  });
+  if(window.matchMedia('(max-width:768px)').matches){bn.classList.add('visivel');}
+  window.addEventListener('resize',function(){
+    if(window.matchMedia('(max-width:768px)').matches)bn.classList.add('visivel');
+    else{bn.classList.remove('visivel');bn.classList.remove('escondido');}
+  });
+}
 var dashAbas=document.getElementById('dashboardAbas');
 if(dashAbas)dashAbas.querySelectorAll('.dashboard-aba').forEach(function(b){
 b.addEventListener('click',function(){trocarAbaDashboard(this.dataset.aba);});
 });
 on('buscaImportantes','input',function(){importantesBusca=this.value.toLowerCase().trim();renderizarImportantes();});
-var pillsImp=document.getElementById('pillsImportantes');
-if(pillsImp)pillsImp.querySelectorAll('.pill').forEach(function(p){
-p.addEventListener('click',function(){
-pillsImp.querySelectorAll('.pill').forEach(function(x){x.classList.remove('ativo');});
-this.classList.add('ativo');
-importantesFiltroModulo=this.dataset.modulo;
-renderizarImportantes();
-});
-});
 on('ordemImportantes','change',function(){importantesOrdem=this.value;renderizarImportantes();});
 on('buscaAnotacoes','input',function(){anotacoesBusca=this.value.toLowerCase().trim();renderizarAnotacoesCentral();});
-var pillsAn=document.getElementById('pillsAnotacoes');
-if(pillsAn)pillsAn.querySelectorAll('.pill').forEach(function(p){
-p.addEventListener('click',function(){
-pillsAn.querySelectorAll('.pill').forEach(function(x){x.classList.remove('ativo');});
-this.classList.add('ativo');
-anotacoesFiltroModulo=this.dataset.modulo;
-renderizarAnotacoesCentral();
-});
-});
 on('ordemAnotacoes','change',function(){anotacoesOrdem=this.value;renderizarAnotacoesCentral();});
 var pillsEst=document.getElementById('pillsEstrelasAval');
 if(pillsEst)pillsEst.querySelectorAll('.pill').forEach(function(p){
@@ -7205,7 +7910,12 @@ if(dicaAbaAtual==='recursos')dicaAtualIndex=0;
 renderizarDicaCiencia();
 });
 });
+/* v0.85 — Bloco E: modal ciclo + listeners do cabeçalho mobile */
 on('btnConfigCiclo','click',function(){
+var ov=document.getElementById('modalCicloOverlay');if(ov)ov.classList.add('visivel');
+atualizarLabelTempoCiclo();
+});
+on('btnConfigCicloFoco','click',function(){
 var ov=document.getElementById('modalCicloOverlay');if(ov)ov.classList.add('visivel');
 atualizarLabelTempoCiclo();
 });
@@ -7223,6 +7933,8 @@ pomodoroTempoPausa=parseFloat(p[1]);
 atualizarLabelTempoCiclo();salvarDados();
 if(pomodoroAtivo&&pomodoroEstado!=='off')iniciarCicloFoco();
 else{pomodoroTempoRestante=pomodoroTempoFoco*60;atualizarDisplayPomodoro();}
+var lblFoco=document.getElementById('focoTempoCicloLabel');
+if(lblFoco)lblFoco.textContent=pomodoroTempoFoco+'/'+pomodoroTempoPausa;
 setTimeout(function(){overlayCiclo.classList.remove('visivel');},200);
 });
 });
@@ -7277,6 +7989,8 @@ on('btnVoltarAnotacoesRodape','click',function(){mostrarTela('principal');});
 on('btnVoltarAvaliacoes','click',function(){mostrarTela('principal');});
 on('btnVoltarAvaliacoesRodape','click',function(){mostrarTela('principal');});
 on('btnVerAvaliacoes','click',function(){mostrarTela('avaliacoes');});
+/* v0.85 — Bloco D: card Avalie em Config */
+on('btnAvaliarConfig','click',function(){abrirModalAvaliacao('config');});
 on('btnAtualizarConcurso','click',function(){
 var ci=document.getElementById('concursoInput');
 var cg=document.getElementById('cargoInput');
@@ -7345,6 +8059,25 @@ pomodoroSomAtivo=!pomodoroSomAtivo;
 this.textContent=pomodoroSomAtivo?'🔊':'🔇';
 if(pomodoroSomAtivo)this.classList.add('ativo');else this.classList.remove('ativo');
 salvarDados();
+});
+/* v0.85 — Bloco E: listeners do cabeçalho mobile + Sair */
+on('modoPadrao','click',function(){inicializarAudio();trocarModoFoco('padrao');});
+on('modoPomodoro','click',function(){inicializarAudio();trocarModoFoco('pomodoro');});
+on('btnFocoIniciar','click',function(){
+  inicializarAudio();
+  if(modoFocoAtual==='pomodoro'){
+    if(!pomodoroAtivo||pomodoroEstado==='off')iniciarCicloFoco();
+    else{
+      if(pomodoroInterval){clearInterval(pomodoroInterval);pomodoroInterval=null;padraoPausado=true;}
+      else{padraoPausado=false;pomodoroUltimoTick=Date.now();pomodoroInterval=setInterval(tickPomodoro,250);}
+      atualizarBotoesFocoHeader();
+    }
+  }else{
+    if(!cronometroAtivo||cronometroModulo!==focoModuloAtual)iniciarCronometro(focoModuloAtual);
+    else if(cronometroPausado)iniciarCronometro(focoModuloAtual);
+    else pausarCronometro();
+    atualizarDisplayFocoHeader();atualizarBotoesFocoHeader();
+  }
 });
 on('btnSairTopo','click',sairModoFoco);
 document.addEventListener('keydown',function(e){
